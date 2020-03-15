@@ -33,14 +33,11 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 
-		// Reset the connection indicator during startup
-		this.setState('info.connection', false, true);
 		// Random number generator to avoid all ioBroker instances calling the API at the same time
 		const timer_1 = (Math.random() * (10 - 1) + 1) * 1000;
 		// additional 1.2 seconde delay for second call
 		const timer_2 = timer_1 + 1200;
 		this.log.debug('Timer 1 : ' + timer_1 + ' Timer 2 : ' + timer_2);
-
 
 		this.timersOne = setTimeout(() => {
 			this.timersOne = null;
@@ -55,7 +52,6 @@ class Covid19 extends utils.Adapter {
 					.on('error', e => this.log.error(e));
 
 			} catch (e) { 
-				this.setState('info.connection', false, true);
 				this.log.error('Unable to reach COIVD-19 API : ' + e); 
 			}		
 		}, timer_1);
@@ -73,15 +69,14 @@ class Covid19 extends utils.Adapter {
 
 					Object.keys(values).forEach(item => {
 						let country = item['country'];
-						country = country.replace(/\s/g, "_");
-						country = country.replace(/\./g, "");
+						country = country.replace(/\s/g, '_');
+						country = country.replace(/\./g, '');
 						this.log.debug(country);
 						Object.keys(item).forEach(y => y !== 'country' && this.createState(country + '.' + y, y, item[y]));
 					});
 				})
 					.on('error', e => this.log.error(e));
 			} catch (e) { 
-				this.setState('info.connection', false, true);
 				this.log.error('Unable to reach COIVD-19 API : ' + e); 
 			}
 		}, timer_2);
