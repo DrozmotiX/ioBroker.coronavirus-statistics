@@ -1,0 +1,101 @@
+{
+	"common": {
+		"name": "covid-19",
+		"version": "0.1.0",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "COVID-19 live information",
+		"titleLang": {
+			"en": "Live information about COVID-19",
+			"de": "Live-Informationen zu COVID-19",
+			"ru": "Живая информация о COVID-19",
+			"pt": "Informação ao vivo sobre COVID-19",
+			"nl": "Live informatie over COVID-19",
+			"fr": "Informations en direct sur COVID-19",
+			"it": "Informazioni in diretta su COVID-19",
+			"es": "Información en vivo sobre COVID-19",
+			"pl": "Informacje na żywo o COVID-19",
+			"zh-cn": "有关COVID-19的实时信息"
+		},
+		"desc": {
+			"en": "Adapter to show Global Corona Virus information and current reports",
+			"de": "Adapter zur Anzeige von Informationen zum globalen Corona-Virus und aktuellen Berichten",
+			"ru": "Адаптер для отображения информации о вирусе глобальной короны и текущих отчетов",
+			"pt": "Adaptador para mostrar informações sobre o vírus Corona global e relatórios atuais",
+			"nl": "Adapter om Global Corona Virus-informatie en actuele rapporten weer te geven",
+			"fr": "Adaptateur pour afficher les informations sur le virus Corona global et les rapports actuels",
+			"it": "Adattatore per mostrare le informazioni del Global Corona Virus e i rapporti correnti",
+			"es": "Adaptador para mostrar información e informes actuales del Virus Global Corona",
+			"pl": "Adapter do wyświetlania informacji o globalnym wirusie Corona i bieżących raportów",
+			"zh-cn": "显示全球冠状病毒信息和当前报告的适配器"
+		},
+		"authors": [
+			"DutchmanNL <rdrozda86@gmail.com>"
+		],
+		"keywords": [
+			"virus",
+			"covid",
+			"corona",
+			"pandemie"
+		],
+		"license": "MIT",
+		"noConfig": true,
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "covid-19.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.covid-19/master/admin/covid-19.png",
+		"readme": "https://github.com/iobroker-community-adapters/ioBroker.covid-19/blob/master/README.md",
+		"loglevel": "info",
+		"mode": "schedule",
+		"schedule": "*/15 * * * *",
+		"allowInit": true,
+		"type": "health",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"materialize": true,
+		"dependencies": [
+			{
+				"js-controller": ">=1.4.2"
+			}
+		]
+	},
+	"native": {},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		}
+	]
+}
