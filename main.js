@@ -6,11 +6,10 @@
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-const utils = require('@iobroker/adapter-core');
-
-// Load your modules here, e.g.:
-// const fs = require("fs");
-const state_attr = require(__dirname + '/lib/state_attr.js');
+const utils       = require('@iobroker/adapter-core');
+const request     = require('request');
+const adapterName = require('./package.json').name.split('.').pop();
+const stateAttr   = require('./lib/stateAttr.js');
 
 class Covid19 extends utils.Adapter {
 
@@ -20,10 +19,13 @@ class Covid19 extends utils.Adapter {
 	constructor(options) {
 		super({
 			...options,
-			name: 'covid-19',
+			name: adapterName,
 		});
 		this.on('ready', this.onReady.bind(this));
 		this.on('unload', this.onUnload.bind(this));
+		this.timersOne  = null;
+		this.timersTwo  = null;
+		this.timersTree = null;
 	}
 
 	/**
@@ -37,24 +39,20 @@ class Covid19 extends utils.Adapter {
 		const timer_1 = (Math.random() * (10 - 1) + 1) * 1000;
 		// additional 1.2 seconde delay for second call
 		const timer_2 = timer_1 + 1200;
-		// this.log.info(timer);
+		this.log.debug('Timer 1 : ' + timer_1 + ' Timer 2 : ' + timer_2);
 
 
-		setTimeout(() => {
-
+		this.timersOne = setTimeout(() => {
+			this.timersOne = null;
 			// Try to call API and get global information
 			try {
 				this.setState('info.connection', true, true);
-				require('request')('https://corona.lmao.ninja/all', (error, response, result) => {
+				request('https://corona.lmao.ninja/all', (error, response, result) => {
 					this.log.debug('Data from COVID-19 API received : ' + result);
 					const values = JSON.parse(result);
-					for (const i in values) {
-
-						this.create_state('global_totals.' + i, i, values[i]);
-
-					}
-					
-				}).on('error', (e) => {this.log.error(e);});
+					Object.keys(values).forEach(i => this.createState('global_totals.' + i, i, values[i]))
+				})
+					.on('error', e => this.log.error(e));
 
 			} catch (e) { 
 				this.setState('info.connection', false, true);
@@ -63,28 +61,25 @@ class Covid19 extends utils.Adapter {
 		}, timer_1);
 
 		// Try to call API and get all details by country
-		setTimeout(() => {
+		this.timersTwo = setTimeout(() => {
+			this.timersTwo = null;
+
 			try {
 				this.setState('info.connection', true, true);
-				require('request')('https://corona.lmao.ninja/countries', (error, response, result) => {
+
+				request('https://corona.lmao.ninja/countries', (error, response, result) => {
 					this.log.debug('Data from COVID-19 API received : ' + result);
 					const values = JSON.parse(result);
-					for (const i in values) {
-						let country = values[i]['country'];
+
+					Object.keys(values).forEach(item => {
+						let country = item['country'];
 						country = country.replace(/\s/g, "_");
 						country = country.replace(/\./g, "");
 						this.log.debug(country);
-						for (const y in values[i]) {
-
-							if (y !== 'country') {
-								this.create_state(country + '.' + y, y, values[i][y]);
-							}
-						}
-
-					}
-					
-				}).on('error', (e) => {this.log.error(e);});
-
+						Object.keys(item).forEach(y => y !== 'country' && this.createState(country + '.' + y, y, item[y]));
+					});
+				})
+					.on('error', e => this.log.error(e));
 			} catch (e) { 
 				this.setState('info.connection', false, true);
 				this.log.error('Unable to reach COIVD-19 API : ' + e); 
@@ -93,24 +88,26 @@ class Covid19 extends utils.Adapter {
 
 		// force terminate after 1min
 		// don't know why it does not terminate by itself...
-		setTimeout(() => {
+		this.timersTree = setTimeout(() => {
+			this.timersTree = null;
 			this.log.debug(this.name + ' force terminate');
 			this.terminate ? this.terminate() : process.exit();
-		}, 50000);
-
+		}, 90000);
 	}
 
-	async create_state(state, name, value){
+	async createState(state, name, value){
 		this.log.debug('Create_state called for : ' + state + ' with value : ' + value);
 
 		try {
 			// Try to get details from state lib, if not use defaults. throw warning if states is not known in attribute list
-			if((state_attr[name] === undefined)){this.log.warn('State attribute definition missing for + ' + name);}
-			const writable = (state_attr[name] !== undefined) ?  state_attr[name].write || false : false;
-			const state_name = (state_attr[name] !== undefined) ?  state_attr[name].name || name : name;
-			const role = (state_attr[name] !== undefined) ?  state_attr[name].role || 'state' : 'state';
-			const type = (state_attr[name] !== undefined) ?  state_attr[name].type || 'mixed' : 'mixed';
-			const unit = (state_attr[name] !== undefined) ?  state_attr[name].unit || '' : '';
+			if (stateAttr[name] === undefined) {
+				this.log.warn('State attribute definition missing for + ' + name);
+			}
+			const writable   = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
+			const state_name = stateAttr[name] !== undefined ? stateAttr[name].name  || name : name;
+			const role       = stateAttr[name] !== undefined ? stateAttr[name].role  || 'state' : 'state';
+			const type       = stateAttr[name] !== undefined ? stateAttr[name].type  || 'mixed' : 'mixed';
+			const unit       = stateAttr[name] !== undefined ? stateAttr[name].unit  || '' : '';
 			this.log.debug('Write value : ' + writable);
 
 			await this.extendObjectAsync(state, {
@@ -126,11 +123,12 @@ class Covid19 extends utils.Adapter {
 			});
 
 			// Only set value if input != null
-			if (value !== null) {await this.setState(state, {val: value, ack: true});}
+			if (value !== null) {
+				await this.setState(state, {val: value, ack: true});
+			}
 
 			// Subscribe on state changes if writable
-			if (writable === true) {this.subscribeStates(state);}
-
+			writable && this.subscribeStates(state);
 		} catch (error) {
 			this.log.error('Create state error = ' + error);
 		}
@@ -143,6 +141,14 @@ class Covid19 extends utils.Adapter {
 	onUnload(callback) {
 		try {
 			this.log.info('cleaned everything up...');
+			this.timersOne && clearTimeout(this.timersOne);
+			this.timersOne  = null;
+
+			this.timersTwo && clearTimeout(this.timersTwo);
+			this.timersTwo  = null;
+
+			this.timersTree && clearTimeout(this.timersTree);
+			this.timersTree = null;
 			callback();
 		} catch (e) {
 			callback();

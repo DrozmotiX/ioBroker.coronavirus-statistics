@@ -1,7 +1,7 @@
 {
 	"common": {
 		"name": "covid-19",
-		"version": "0.1.0",
+		"version": "0.1.1",
 		"news": {
 			"0.0.1": {
 				"en": "initial release",
@@ -44,6 +44,9 @@
 		"authors": [
 			"DutchmanNL <rdrozda86@gmail.com>"
 		],
+		"contributors": [
+			"GermanBluefox"
+		],
 		"keywords": [
 			"virus",
 			"covid",
@@ -75,27 +78,5 @@
 	},
 	"native": {},
 	"objects": [],
-	"instanceObjects": [
-		{
-			"_id": "info",
-			"type": "channel",
-			"common": {
-				"name": "Information"
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.connection",
-			"type": "state",
-			"common": {
-				"role": "indicator.connected",
-				"name": "Device or service connected",
-				"type": "boolean",
-				"read": true,
-				"write": false,
-				"def": false
-			},
-			"native": {}
-		}
-	]
+	"instanceObjects": []
 }
