@@ -1,9 +1,21 @@
 {
 	"common": {
 		"name": "covid-19",
-		"version": "0.1.1",
+		"version": "0.1.2",
 		"news": {
-			"0.0.1": {
+			"0.1.2": {
+				"en": "Widgets added & code improvements",
+				"de": "Widgets hinzugefügt und Code verbessert",
+				"ru": "Добавлены виджеты и улучшения кода",
+				"pt": "Widgets adicionados e aprimoramentos de código",
+				"nl": "Widgets toegevoegd en codeverbeteringen",
+				"fr": "Widgets ajoutés et améliorations du code",
+				"it": "Widget aggiunti e miglioramenti del codice",
+				"es": "Widgets agregados y mejoras de código",
+				"pl": "Dodano widżety i ulepszenia kodu",
+				"zh-cn": "添加了小部件并改进了代码"
+			},
+			"0.1.0": {
 				"en": "initial release",
 				"de": "Erstveröffentlichung",
 				"ru": "Начальная версия",

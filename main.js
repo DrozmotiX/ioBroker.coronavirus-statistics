@@ -8,7 +8,8 @@
 // you need to create an adapter
 const utils       = require('@iobroker/adapter-core');
 const request     = require('request');
-const stateAttr = require(__dirname + '/lib/state_attr.js');
+const adapterName = require('./package.json').name.split('.').pop();
+const stateAttr = require('./lib/stateAttr.js');
 
 class Covid19 extends utils.Adapter {
 
@@ -16,9 +17,10 @@ class Covid19 extends utils.Adapter {
 	 * @param {Partial<ioBroker.AdapterOptions>} [options={}]
 	 */
 	constructor(options) {
+		// @ts-ignore
 		super({
 			...options,
-			name: 'covid-19',
+			name: adapterName,
 		});
 		this.on('ready', this.onReady.bind(this));
 		this.on('unload', this.onUnload.bind(this));
@@ -47,11 +49,9 @@ class Covid19 extends utils.Adapter {
 				request('https://corona.lmao.ninja/all', (error, response, result) => {
 					this.log.debug('Data from COVID-19 API received : ' + result);
 					const values = JSON.parse(result);
-					for (const i in values) {
-						this.create_State('global_totals.' + i, i, values[i]);
-					}
-					
-				}).on('error', (e) => {this.log.error(e);});
+					Object.keys(values).forEach(i => this.create_State('global_totals.' + i, i, values[i]));
+				})
+					.on('error', e => this.log.error(e));
 			} catch (e) { 
 				this.log.error('Unable to reach COIVD-19 API : ' + e); 
 			}		
@@ -70,8 +70,8 @@ class Covid19 extends utils.Adapter {
 					const values = JSON.parse(result);
 					for (const i in values) {
 						let country = values[i]['country'];
-						country = country.replace(/\s/g, "_");
-						country = country.replace(/\./g, "");
+						country = country.replace(/\s/g, '_');
+						country = country.replace(/\./g, '');
 						this.log.debug(country);
 						for (const y in values[i]) {
 

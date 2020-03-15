@@ -1,6 +1,6 @@
 {
   "name": "iobroker.covid-19",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Adapter to show Global Corona Virus information and current reports",
   "author": {
     "name": "DutchmanNL",

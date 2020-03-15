@@ -39,7 +39,7 @@ Please be aware this adapter uses as much as possible up-to-date information but
 
 ## Changelog
 
-### 0.1.1
+### 0.1.2 Widgets added & code improvements
 * (@DutchmanNL) code improvements
 * (@GermanBluefox) add widgets
 
