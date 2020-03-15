@@ -1,3 +1,4 @@
+![Logo](admin/corvid-19.png)
 # ioBroker.covid-19
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.covid-19.svg)](https://www.npmjs.com/package/iobroker.covid-19)
