@@ -8,8 +8,7 @@
 // you need to create an adapter
 const utils       = require('@iobroker/adapter-core');
 const request     = require('request');
-const adapterName = require('./package.json').name.split('.').pop();
-const stateAttr   = require('./lib/stateAttr.js');
+const stateAttr = require(__dirname + '/lib/state_attr.js');
 
 class Covid19 extends utils.Adapter {
 
@@ -19,7 +18,7 @@ class Covid19 extends utils.Adapter {
 	constructor(options) {
 		super({
 			...options,
-			name: adapterName,
+			name: 'covid-19',
 		});
 		this.on('ready', this.onReady.bind(this));
 		this.on('unload', this.onUnload.bind(this));
@@ -39,6 +38,7 @@ class Covid19 extends utils.Adapter {
 		const timer_2 = timer_1 + 1200;
 		this.log.debug('Timer 1 : ' + timer_1 + ' Timer 2 : ' + timer_2);
 
+		this.timersOne && clearTimeout(this.timersOne);
 		this.timersOne = setTimeout(() => {
 			this.timersOne = null;
 			// Try to call API and get global information
@@ -47,16 +47,18 @@ class Covid19 extends utils.Adapter {
 				request('https://corona.lmao.ninja/all', (error, response, result) => {
 					this.log.debug('Data from COVID-19 API received : ' + result);
 					const values = JSON.parse(result);
-					Object.keys(values).forEach(i => this.createState('global_totals.' + i, i, values[i]))
-				})
-					.on('error', e => this.log.error(e));
-
+					for (const i in values) {
+						this.create_State('global_totals.' + i, i, values[i]);
+					}
+					
+				}).on('error', (e) => {this.log.error(e);});
 			} catch (e) { 
 				this.log.error('Unable to reach COIVD-19 API : ' + e); 
 			}		
 		}, timer_1);
 
 		// Try to call API and get all details by country
+		this.timersTwo && clearTimeout(this.timersTwo);
 		this.timersTwo = setTimeout(() => {
 			this.timersTwo = null;
 
@@ -66,16 +68,21 @@ class Covid19 extends utils.Adapter {
 				request('https://corona.lmao.ninja/countries', (error, response, result) => {
 					this.log.debug('Data from COVID-19 API received : ' + result);
 					const values = JSON.parse(result);
-
-					Object.keys(values).forEach(item => {
-						let country = item['country'];
-						country = country.replace(/\s/g, '_');
-						country = country.replace(/\./g, '');
+					for (const i in values) {
+						let country = values[i]['country'];
+						country = country.replace(/\s/g, "_");
+						country = country.replace(/\./g, "");
 						this.log.debug(country);
-						Object.keys(item).forEach(y => y !== 'country' && this.createState(country + '.' + y, y, item[y]));
-					});
-				})
-					.on('error', e => this.log.error(e));
+						for (const y in values[i]) {
+
+							if (y !== 'country') {
+								this.create_State(country + '.' + y, y, values[i][y]);
+							}
+						}
+
+					}
+					
+				}).on('error', (e) => {this.log.error(e);});
 			} catch (e) { 
 				this.log.error('Unable to reach COIVD-19 API : ' + e); 
 			}
@@ -83,6 +90,7 @@ class Covid19 extends utils.Adapter {
 
 		// force terminate after 1min
 		// don't know why it does not terminate by itself...
+		this.timersTree && clearTimeout(this.timersTree);
 		this.timersTree = setTimeout(() => {
 			this.timersTree = null;
 			this.log.debug(this.name + ' force terminate');
@@ -90,7 +98,7 @@ class Covid19 extends utils.Adapter {
 		}, 90000);
 	}
 
-	async createState(state, name, value){
+	async create_State(state, name, value){
 		this.log.debug('Create_state called for : ' + state + ' with value : ' + value);
 
 		try {
@@ -123,7 +131,7 @@ class Covid19 extends utils.Adapter {
 			}
 
 			// Subscribe on state changes if writable
-			writable && this.subscribeStates(state);
+			// writable && this.subscribeStates(state);
 		} catch (error) {
 			this.log.error('Create state error = ' + error);
 		}
