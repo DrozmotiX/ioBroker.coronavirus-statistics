@@ -56,7 +56,7 @@
 		"titleLang": {
 			"en": "Live information about COVID-19",
 			"de": "Live-Informationen zu COVID-19",
-			"ru": "Живая информация о COVID-19",
+			"ru": "Актуальная информация о COVID-19",
 			"pt": "Informação ao vivo sobre COVID-19",
 			"nl": "Live informatie over COVID-19",
 			"fr": "Informations en direct sur COVID-19",
@@ -68,7 +68,7 @@
 		"desc": {
 			"en": "Adapter to show Global Corona Virus information and current reports",
 			"de": "Adapter zur Anzeige von Informationen zum globalen Corona-Virus und aktuellen Berichten",
-			"ru": "Адаптер для отображения информации о вирусе глобальной короны и текущих отчетов",
+			"ru": "Адаптер для отображения информации о корона вирусе и текущих отчетов",
 			"pt": "Adaptador para mostrar informações sobre o vírus Corona global e relatórios atuais",
 			"nl": "Adapter om Global Corona Virus-informatie en actuele rapporten weer te geven",
 			"fr": "Adaptateur pour afficher les informations sur le virus Corona global et les rapports actuels",
