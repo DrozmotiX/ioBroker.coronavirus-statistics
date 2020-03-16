@@ -6,10 +6,11 @@
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-const utils       = require('@iobroker/adapter-core');
-const request     = require('request');
+const utils = require('@iobroker/adapter-core');
+const request = require('request-promise-native');
 const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
+const { wait } = require('./lib/tools');
 
 class Covid19 extends utils.Adapter {
 
@@ -24,9 +25,6 @@ class Covid19 extends utils.Adapter {
 		});
 		this.on('ready', this.onReady.bind(this));
 		this.on('unload', this.onUnload.bind(this));
-		this.timersOne  = null;
-		this.timersTwo  = null;
-		this.timersTree = null;
 	}
 
 	/**
@@ -34,71 +32,51 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 
+		const loadAll = async () => {
+			// Try to call API and get global information
+			const result = await request('https://corona.lmao.ninja/all');
+			this.log.debug('Data from COVID-19 API received : ' + result);
+			const values = JSON.parse(result);
+			for (const i of Object.keys(values)) {
+				await this.create_State('global_totals.' + i, i, values[i])
+			}
+		};
+
+		const loadCountries = async () => {
+			const result = await request('https://corona.lmao.ninja/countries');
+			this.log.debug('Data from COVID-19 API received : ' + result);
+			const values = JSON.parse(result);
+			for (const i in values) {
+				let country = values[i]['country'];
+				country = country.replace(/\s/g, '_');
+				country = country.replace(/\./g, '');
+				this.log.debug(country);
+				for (const y in values[i]) {
+					if (y !== 'country') {
+						await this.create_State(country + '.' + y, y, values[i][y]);
+					}
+				}
+			}
+		}
+
+
 		// Random number generator to avoid all ioBroker instances calling the API at the same time
 		const timer_1 = (Math.random() * (10 - 1) + 1) * 1000;
-		// additional 1.2 seconde delay for second call
-		const timer_2 = timer_1 + 1200;
-		this.log.debug('Timer 1 : ' + timer_1 + ' Timer 2 : ' + timer_2);
+		await wait(timer_1);
+		this.setState('info.connection', true, true);
 
-		this.timersOne && clearTimeout(this.timersOne);
-		this.timersOne = setTimeout(() => {
-			this.timersOne = null;
-			// Try to call API and get global information
-			try {
-				this.setState('info.connection', true, true);
-				request('https://corona.lmao.ninja/all', async (error, response, result) => {
-					this.log.debug('Data from COVID-19 API received : ' + result);
-					const values = JSON.parse(result);
-					for (const i of Object.keys(values)) {
-						await this.create_State('global_totals.' + i, i, values[i])
-					}
-				})
-					.on('error', e => this.log.error(e));
-			} catch (e) { 
-				this.log.error('Unable to reach COIVD-19 API : ' + e); 
-			}		
-		}, timer_1);
+		try {
+			await loadAll();
+			await loadCountries();
+		} catch (e) {
+			this.log.error('Unable to reach COVID-19 API : ' + e);
+		}
 
-		// Try to call API and get all details by country
-		this.timersTwo && clearTimeout(this.timersTwo);
-		this.timersTwo = setTimeout(() => {
-			this.timersTwo = null;
-
-			try {
-				this.setState('info.connection', true, true);
-
-				request('https://corona.lmao.ninja/countries', async (error, response, result) => {
-					this.log.debug('Data from COVID-19 API received : ' + result);
-					const values = JSON.parse(result);
-					for (const i in values) {
-						let country = values[i]['country'];
-						country = country.replace(/\s/g, '_');
-						country = country.replace(/\./g, '');
-						this.log.debug(country);
-						for (const y in values[i]) {
-							if (y !== 'country') {
-								await this.create_State(country + '.' + y, y, values[i][y]);
-							}
-						}
-					}
-					
-				}).on('error', (e) => {this.log.error(e);});
-			} catch (e) { 
-				this.log.error('Unable to reach COIVD-19 API : ' + e); 
-			}
-		}, timer_2);
-
-		// force terminate after 1min
-		// don't know why it does not terminate by itself...
-		this.timersTree && clearTimeout(this.timersTree);
-		this.timersTree = setTimeout(() => {
-			this.timersTree = null;
-			this.log.debug(this.name + ' force terminate');
-			this.terminate ? this.terminate() : process.exit();
-		}, 90000);
+		// Always terminate at the end
+		this.terminate ? this.terminate() : process.exit();
 	}
 
-	async create_State(state, name, value){
+	async create_State(state, name, value) {
 		this.log.debug('Create_state called for : ' + state + ' with value : ' + value);
 
 		try {
@@ -120,14 +98,14 @@ class Covid19 extends utils.Adapter {
 					role: role,
 					type: type,
 					unit: unit,
-					write : writable
+					write: writable
 				},
 				native: {},
 			});
 
 			// Only set value if input != null
 			if (value !== null) {
-				await this.setState(state, {val: value, ack: true});
+				await this.setState(state, { val: value, ack: true });
 			}
 
 			// Subscribe on state changes if writable
@@ -143,15 +121,6 @@ class Covid19 extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
-			this.log.info('cleaned everything up...');
-			this.timersOne && clearTimeout(this.timersOne);
-			this.timersOne  = null;
-
-			this.timersTwo && clearTimeout(this.timersTwo);
-			this.timersTwo  = null;
-
-			this.timersTree && clearTimeout(this.timersTree);
-			this.timersTree = null;
 			callback();
 		} catch (e) {
 			callback();
