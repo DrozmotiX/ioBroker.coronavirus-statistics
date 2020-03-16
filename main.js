@@ -46,10 +46,12 @@ class Covid19 extends utils.Adapter {
 			// Try to call API and get global information
 			try {
 				this.setState('info.connection', true, true);
-				request('https://corona.lmao.ninja/all', (error, response, result) => {
+				request('https://corona.lmao.ninja/all', async (error, response, result) => {
 					this.log.debug('Data from COVID-19 API received : ' + result);
 					const values = JSON.parse(result);
-					Object.keys(values).forEach(i => this.create_State('global_totals.' + i, i, values[i]));
+					for (const i of Object.keys(values)) {
+						await this.create_State('global_totals.' + i, i, values[i])
+					}
 				})
 					.on('error', e => this.log.error(e));
 			} catch (e) { 
@@ -65,7 +67,7 @@ class Covid19 extends utils.Adapter {
 			try {
 				this.setState('info.connection', true, true);
 
-				request('https://corona.lmao.ninja/countries', (error, response, result) => {
+				request('https://corona.lmao.ninja/countries', async (error, response, result) => {
 					this.log.debug('Data from COVID-19 API received : ' + result);
 					const values = JSON.parse(result);
 					for (const i in values) {
@@ -74,12 +76,10 @@ class Covid19 extends utils.Adapter {
 						country = country.replace(/\./g, '');
 						this.log.debug(country);
 						for (const y in values[i]) {
-
 							if (y !== 'country') {
-								this.create_State(country + '.' + y, y, values[i][y]);
+								await this.create_State(country + '.' + y, y, values[i][y]);
 							}
 						}
-
 					}
 					
 				}).on('error', (e) => {this.log.error(e);});
