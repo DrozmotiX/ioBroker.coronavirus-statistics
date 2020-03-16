@@ -34,30 +34,39 @@ class Covid19 extends utils.Adapter {
 
 		const loadAll = async () => {
 			// Try to call API and get global information
-			const result = await request('https://corona.lmao.ninja/all');
-			this.log.debug('Data from COVID-19 API received : ' + result);
-			const values = JSON.parse(result);
-			for (const i of Object.keys(values)) {
-				await this.create_State('global_totals.' + i, i, values[i])
+			try {
+				const result = await request('https://corona.lmao.ninja/all');
+				this.log.debug('Data from COVID-19 API received : ' + result);
+				const values = JSON.parse(result);
+				for (const i of Object.keys(values)) {
+					await this.create_State('global_totals.' + i, i, values[i]);
+				}
+			} catch (error) {
+				this.log.warn('Error getting API response, will retry at next shedule');
 			}
 		};
 
 		const loadCountries = async () => {
-			const result = await request('https://corona.lmao.ninja/countries');
-			this.log.debug('Data from COVID-19 API received : ' + result);
-			const values = JSON.parse(result);
-			for (const i in values) {
-				let country = values[i]['country'];
-				country = country.replace(/\s/g, '_');
-				country = country.replace(/\./g, '');
-				this.log.debug(country);
-				for (const y in values[i]) {
-					if (y !== 'country') {
-						await this.create_State(country + '.' + y, y, values[i][y]);
+			try {
+				const result = await request('https://corona.lmao.ninja/countries');
+				this.log.debug('Data from COVID-19 API received : ' + result);
+				const values = JSON.parse(result);
+				for (const i in values) {
+					let country = values[i]['country'];
+					country = country.replace(/\s/g, '_');
+					country = country.replace(/\./g, '');
+					this.log.debug(country);
+					for (const y in values[i]) {
+						if (y !== 'country') {
+							await this.create_State(country + '.' + y, y, values[i][y]);
+						}
 					}
 				}
+			} catch (error) {
+				this.log.warn('Error getting API response, will retry at next shedule');
 			}
-		}
+
+		};
 
 
 		// Random number generator to avoid all ioBroker instances calling the API at the same time
@@ -68,6 +77,8 @@ class Covid19 extends utils.Adapter {
 		try {
 			await loadAll();
 			await loadCountries();
+			const time = new Date();
+			await this.create_State('_Last_Update', 'Last Update', time);
 		} catch (e) {
 			this.log.error('Unable to reach COVID-19 API : ' + e);
 		}

@@ -39,12 +39,18 @@ Please be aware this adapter uses as much as possible up-to-date information but
 
 ## Changelog
 
+### 0.2.0 Code optimized & released
+* (DutchmanNL) Stable release
+* (DutchmanNL) Added retry if API does not provide correct information
+* (DutchmanNL) Added last time stamp of data collection
+* (AlCalzone) Code optimized
+
 ### 0.1.6 Adapter renamed
 * (@DutchmanNL) Adapter renamed
 
 ### 0.1.2 Widgets added & code improvements
-* (@DutchmanNL) code improvements
-* (@GermanBluefox) add widgets
+* (DutchmanNL) code improvements
+* (GermanBluefox) add widgets
 
 ### 0.1.0
 * (DutchmanNL) initial release

@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.1.6",
+		"version": "0.2.0",
 		"news": {
+			"0.2.0": {
+				"en": "Code optimized & released",
+				"de": "Code optimiert und freigegeben",
+				"ru": "Код оптимизирован и выпущен",
+				"pt": "Código otimizado e liberado",
+				"nl": "Code geoptimaliseerd en vrijgegeven",
+				"fr": "Code optimisé et publié",
+				"it": "Codice ottimizzato e rilasciato",
+				"es": "Código optimizado y lanzado",
+				"pl": "Kod zoptymalizowany i wydany",
+				"zh-cn": "优化和发布代码"
+			},
 			"0.1.6": {
 				"en": "Adapter renamed",
 				"de": "Adapter umbenannt",
@@ -69,7 +81,8 @@
 			"DutchmanNL <rdrozda86@gmail.com>"
 		],
 		"contributors": [
-			"GermanBluefox"
+			"GermanBluefox",
+			"AlCalzone"
 		],
 		"keywords": [
 			"virus",
