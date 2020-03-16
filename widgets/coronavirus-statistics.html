@@ -1,5 +1,5 @@
 <!--
-    ioBroker.vis covid-19 Widget-Set
+    ioBroker.vis coronavirus-statistics Widget-Set
 
     version: "0.1.0"
 -->
@@ -2032,18 +2032,18 @@
         });
     }
 
-    vis.binds['covid-19'] = {
+    vis.binds['coronavirus-statistics'] = {
 		version: "0.1.0",
 		showVersion: function () {
-			if (vis.binds['covid-19'].version) {
-				console.log('Version covid-19: ' + vis.binds['covid-19'].version);
-				vis.binds['covid-19'].version = null;
+			if (vis.binds['coronavirus-statistics'].version) {
+				console.log('Version coronavirus-statistics: ' + vis.binds['coronavirus-statistics'].version);
+				vis.binds['coronavirus-statistics'].version = null;
 			}
 		},
         one: function (data, type, count) {
 		    return '<div class="covid-div" style="width: ' + ((100 / count) - 0.5).toFixed(2) +'%">\n' +
                 '                    <div class="covid-div-title">' + _(type) + '</div>\n' +
-                '                    <img class="covid-div-img" src="widgets/covid-19/img/' + type + '.svg">\n' +
+                '                    <img class="covid-div-img" src="widgets/coronavirus-statistics/img/' + type + '.svg">\n' +
                 '                    <div class="covid-div-number">' + data[type] + '</div>\n' +
                 '                </div>';
         },
@@ -2051,7 +2051,7 @@
             var $div = $('#' + wid);
             if (!$div.length) {
                 setTimeout(function () {
-                    vis.binds['covid-19'].init(wid, view, data, style);
+                    vis.binds['coronavirus-statistics'].init(wid, view, data, style);
                 }, 100);
                 return;
             }
@@ -2068,9 +2068,9 @@
                         count += data.deaths    === true || data.deaths    === 'true' ? 1 : 0;
                         count += data.recovered === true || data.recovered === 'true' ? 1 : 0;
 
-                        text += data.cases      === true || data.cases     === 'true' ? vis.binds['covid-19'].one(info, 'cases',     count) : '';
-                        text += data.recovered  === true || data.recovered === 'true' ? vis.binds['covid-19'].one(info, 'recovered', count) : '';
-                        text += data.deaths     === true || data.deaths    === 'true' ? vis.binds['covid-19'].one(info, 'deaths',    count) : '';
+                        text += data.cases      === true || data.cases     === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'cases',     count) : '';
+                        text += data.recovered  === true || data.recovered === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'recovered', count) : '';
+                        text += data.deaths     === true || data.deaths    === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'deaths',    count) : '';
                         $div.html(text + '</div>');
                     });
             } else {
@@ -2090,13 +2090,13 @@
                         count += data.critical    === true || data.critical    === 'true' ? 1 : 0;
 
                         var info = datas.find(it => it.country === data.country);
-                        text += data.cases       === true || data.cases       === 'true' ? vis.binds['covid-19'].one(info, 'cases',       count) : '';
-                        text += data.todayCases  === true || data.todayCases  === 'true' ? vis.binds['covid-19'].one(info, 'todayCases',  count) : '';
-                        text += data.recovered   === true || data.recovered   === 'true' ? vis.binds['covid-19'].one(info, 'recovered',   count) : '';
-                        text += data.active      === true || data.active      === 'true' ? vis.binds['covid-19'].one(info, 'active',      count) : '';
-                        text += data.critical    === true || data.critical    === 'true' ? vis.binds['covid-19'].one(info, 'critical',    count) : '';
-                        text += data.deaths      === true || data.deaths      === 'true' ? vis.binds['covid-19'].one(info, 'deaths',      count) : '';
-                        text += data.todayDeaths === true || data.todayDeaths === 'true' ? vis.binds['covid-19'].one(info, 'todayDeaths', count) : '';
+                        text += data.cases       === true || data.cases       === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'cases',       count) : '';
+                        text += data.todayCases  === true || data.todayCases  === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'todayCases',  count) : '';
+                        text += data.recovered   === true || data.recovered   === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'recovered',   count) : '';
+                        text += data.active      === true || data.active      === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'active',      count) : '';
+                        text += data.critical    === true || data.critical    === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'critical',    count) : '';
+                        text += data.deaths      === true || data.deaths      === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'deaths',      count) : '';
+                        text += data.todayDeaths === true || data.todayDeaths === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'todayDeaths', count) : '';
                         $div.html(text + '</div>');
                     });
             }
@@ -2106,26 +2106,26 @@
             });
             // every 3 hours
             $div.data('interval', setInterval(function () {
-                vis.binds['covid-19'].init(wid, view, data, style);
+                vis.binds['coronavirus-statistics'].init(wid, view, data, style);
             }, 3 * 3600000));
         },
     };
 
-	vis.binds['covid-19'].showVersion();
+	vis.binds['coronavirus-statistics'].showVersion();
 </script>
 
 <script id="tplCovidInfo"
      type="text/ejs"
      class="vis-tpl"
-     data-vis-prev='<img src="widgets/covid-19/img/Prev_tplCovidInfo.png"></img>'
-     data-vis-set="covid-19"
+     data-vis-prev='<img src="widgets/coronavirus-statistics/img/Prev_tplCovidInfo.png"></img>'
+     data-vis-set="coronavirus-statistics"
      data-vis-type="ctrl,color"
      data-vis-name="Covid-19 info"
      data-vis-attrs="country/select,all,Germany,Austria,Switzerland,Russia,China,Italy,Iran,S. Korea,Spain,France,USA,UK,Norway,Netherlands,Sweden,Belgium,Denmark,Japan,Diamond Princess,Malaysia,Qatar,Greece,Canada,Australia,Portugal,Finland,Czechia,Singapore,Slovenia,Bahrain,Israel,Estonia,Iceland,Hong Kong,Philippines,Romania,Ireland,Brazil,Poland,Indonesia,Thailand,Kuwait,Iraq,India,Egypt,Saudi Arabia,San Marino,Lebanon,UAE,Chile,Luxembourg,Taiwan,Vietnam,Slovakia,Pakistan,Bulgaria,South Africa,Brunei,Croatia,Algeria,Serbia,Argentina,Panama,Peru,Albania,Mexico,Palestine,Colombia,Georgia,Hungary,Latvia,Ecuador,Morocco,Belarus,Costa Rica,Armenia,Cyprus,Senegal,Bosnia and Herzegovina,Azerbaijan,Moldova,Oman,Malta,North Macedonia,Sri Lanka,Tunisia,Afghanistan,Maldives,Cambodia,Lithuania,Dominican Republic,Faeroe Islands,Macao,Bolivia,Martinique,Venezuela,Kazakhstan,Jordan,New Zealand,Jamaica,French Guiana,Liechtenstein,Paraguay,Réunion,Ghana,Turkey,Uruguay,Andorra,Bangladesh,Guyana,Ivory Coast,Cuba,Ethiopia,Puerto Rico,Ukraine,Burkina Faso,Channel Islands,French Polynesia,Guadeloupe,Guam,Honduras,Kenya,Monaco,Nigeria,Aruba,Cameroon,Curaçao,DRC,Namibia,Saint Lucia,Saint Martin,Seychelles,Trinidad and Tobago,Sudan,Nepal,Antigua and Barbuda,Bhutan,Cayman Islands,CAR,Congo,Equatorial Guinea,Gabon,Gibraltar,Guatemala,Guinea,Vatican City,Mauritania,Mayotte,Mongolia,Rwanda,St. Barth,St. Vincent Grenadines,Suriname,Eswatini,Togo,U.S. Virgin Islands,Uzbekistan;"
      data-vis-attrs0="cases[true]/checkbox;todayCases[true]/checkbox;recovered[true]/checkbox;active[true]/checkbox;critical[true]/checkbox;deaths[true]/checkbox;todayDeaths[true]/checkbox;"
 >
     <div class="vis-widget <%== this.data.attr('class') %>" style="width: 400px; height: 50px" id="<%= this.data.attr('wid') %>">
-        <%= (el) -> vis.binds['covid-19'].init(this.data.wid, this.view, this.data, this.style) %>
+        <%= (el) -> vis.binds['coronavirus-statistics'].init(this.data.wid, this.view, this.data, this.style) %>
     </div>
 </script>
 

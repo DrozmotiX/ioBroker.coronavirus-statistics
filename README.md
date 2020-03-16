@@ -1,18 +1,18 @@
-![Logo](admin/corvid-19.png)
-# ioBroker.covid-19
+![Logo](admin/coronavirus-statistics.png)
+# ioBroker.coronavirus-statistics
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.covid-19.svg)](https://www.npmjs.com/package/iobroker.covid-19)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.covid-19.svg)](https://www.npmjs.com/package/iobroker.covid-19)
-![Number of Installations (latest)](http://iobroker.live/badges/covid-19-installed.svg)
-![Number of Installations (stable)](http://iobroker.live/badges/covid-19-stable.svg)
-[![Dependency Status](https://img.shields.io/david/iobroker-community-adapters/iobroker.covid-19.svg)](https://david-dm.org/iobroker-community-adapters/iobroker.covid-19)
-[![Known Vulnerabilities](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.covid-19/badge.svg)](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.covid-19)
+[![NPM version](http://img.shields.io/npm/v/iobroker.coronavirus-statistics.svg)](https://www.npmjs.com/package/iobroker.coronavirus-statistics)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.coronavirus-statistics.svg)](https://www.npmjs.com/package/iobroker.coronavirus-statistics)
+![Number of Installations (latest)](http://iobroker.live/badges/coronavirus-statistics-installed.svg)
+![Number of Installations (stable)](http://iobroker.live/badges/coronavirus-statistics-stable.svg)
+[![Dependency Status](https://img.shields.io/david/iobroker-community-adapters/iobroker.coronavirus-statistics.svg)](https://david-dm.org/iobroker-community-adapters/iobroker.coronavirus-statistics)
+[![Known Vulnerabilities](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.coronavirus-statistics/badge.svg)](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.coronavirus-statistics)
 
-[![NPM](https://nodei.co/npm/iobroker.covid-19.png?downloads=true)](https://nodei.co/npm/iobroker.covid-19/)
+[![NPM](https://nodei.co/npm/iobroker.coronavirus-statistics.png?downloads=true)](https://nodei.co/npm/iobroker.coronavirus-statistics/)
 
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/iobroker-community-adapters/ioBroker.covid-19/master.svg)](https://travis-ci.org/iobroker-community-adapters/ioBroker.covid-19)
+**Tests:**: [![Travis-CI](http://img.shields.io/travis/iobroker-community-adapters/ioBroker.coronavirus-statistics/master.svg)](https://travis-ci.org/iobroker-community-adapters/ioBroker.coronavirus-statistics)
 
-## covid-19 adapter for ioBroker
+## Coronavirus Live Statistics adapter for ioBroker
 
 Adapter to show Global Corona Virus information and current reports
 
@@ -38,6 +38,9 @@ The following information is available :
 Please be aware this adapter uses as much as possible up-to-date information but there can be an delay of several hours depending on the country's report.
 
 ## Changelog
+
+### 0.1.6 Adapter renamed
+* (@DutchmanNL) Adapter renamed
 
 ### 0.1.2 Widgets added & code improvements
 * (@DutchmanNL) code improvements
