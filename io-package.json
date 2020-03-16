@@ -1,8 +1,20 @@
 {
 	"common": {
-		"name": "covid-19",
-		"version": "0.1.2",
+		"name": "Coronavirus Statistics",
+		"version": "0.1.5",
 		"news": {
+			"0.1.5": {
+				"en": "Adapter renamed",
+				"de": "Adapter umbenannt",
+				"ru": "Адаптер переименован",
+				"pt": "Adaptador renomeado",
+				"nl": "Adapter hernoemd",
+				"fr": "Adaptateur renommé",
+				"it": "Adattatore rinominato",
+				"es": "Adaptador renombrado",
+				"pl": "Zmiana nazwy adaptera",
+				"zh-cn": "适配器已重命名"
+			},
 			"0.1.2": {
 				"en": "Widgets added & code improvements",
 				"de": "Widgets hinzugefügt und Code verbessert",
@@ -69,10 +81,10 @@
 		"noConfig": true,
 		"platform": "Javascript/Node.js",
 		"main": "main.js",
-		"icon": "covid-19.png",
+		"icon": "coronavirus-statistics.png",
 		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.covid-19/master/admin/covid-19.png",
-		"readme": "https://github.com/iobroker-community-adapters/ioBroker.covid-19/blob/master/README.md",
+		"extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.coronavirus-statistics/master/admin/coronavirus-statistics.png",
+		"readme": "https://github.com/iobroker-community-adapters/ioBroker.coronavirus-statistics/blob/master/README.md",
 		"loglevel": "info",
 		"mode": "schedule",
 		"schedule": "*/15 * * * *",
