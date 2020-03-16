@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.2.0",
+		"version": "0.2.1",
 		"news": {
+			"0.2.0": {
+				"en": "* (DutchmanNL) Fixed error \"State attribute definition missing\"",
+				"de": "* (DutchmanNL) Fehler \"State attribute definition missing\"",
+				"ru": "* (DutchmanNL) Исправлена ошибка «Отсутствует определение атрибута состояния»",
+				"pt": "* (DutchmanNL) Corrigido o erro \"State attribute definition missing\"",
+				"nl": "* (DutchmanNL) Fout verholpen \"State attribuutdefinitie ontbreekt\"",
+				"fr": "* (DutchmanNL) Correction d'une erreur \"Définition d'attribut d'état manquante\"",
+				"it": "* (DutchmanNL) Risolto errore \"State attribute definition missing\"",
+				"es": "* (DutchmanNL) Se corrigió el error \"State attribute definition missing\"",
+				"pl": "* (DutchmanNL) Naprawiono błąd „Brak definicji atrybutu stanu”",
+				"zh-cn": "*（DutchmanNL）修复了错误“缺少状态属性定义”"
+			  }
+			},
 			"0.2.0": {
 				"en": "Code optimized & released",
 				"de": "Code optimiert und freigegeben",

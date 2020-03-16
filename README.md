@@ -39,6 +39,9 @@ Please be aware this adapter uses as much as possible up-to-date information but
 
 ## Changelog
 
+### 0.2.1
+* (DutchmanNL) Fixed error "State attribute definition missing"
+
 ### 0.2.0 Code optimized & released
 * (DutchmanNL) Stable release
 * (DutchmanNL) Added retry if API does not provide correct information
