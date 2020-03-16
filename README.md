@@ -41,6 +41,8 @@ Please be aware this adapter uses as much as possible up-to-date information but
 
 ### 0.2.1
 * (DutchmanNL) Fixed error "State attribute definition missing"
+* (DutchmanNL) Moved "_Laste_Update" to updated within global_totals tree
+* (GermanBluefox) fix logo size
 
 ### 0.2.0 Code optimized & released
 * (DutchmanNL) Stable release

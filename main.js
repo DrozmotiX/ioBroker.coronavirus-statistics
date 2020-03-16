@@ -77,8 +77,6 @@ class Covid19 extends utils.Adapter {
 		try {
 			await loadAll();
 			await loadCountries();
-			const time = new Date();
-			await this.create_State('_Last_Update', 'Last Update', time);
 		} catch (e) {
 			this.log.error('Unable to reach COVID-19 API : ' + e);
 		}
