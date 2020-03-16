@@ -21,7 +21,8 @@
   "dependencies": {
     "@iobroker/adapter-core": "^2.2.1",
     "request": "^2.88.2",
-    "request-promise-native": "^1.0.8"
+    "request-promise-native": "^1.0.8",
+    "axios": "^0.19.2"
   },
   "devDependencies": {
     "@iobroker/testing": "^2.1.0",
