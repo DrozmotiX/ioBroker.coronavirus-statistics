@@ -39,7 +39,7 @@ Please be aware this adapter uses as much as possible up-to-date information but
 
 ## Changelog
 
-### 0.1.5 Adapter renamed
+### 0.1.6 Adapter renamed
 * (@DutchmanNL) Adapter renamed
 
 ### 0.1.2 Widgets added & code improvements
