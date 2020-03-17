@@ -3,6 +3,18 @@
 		"name": "coronavirus-statistics",
 		"version": "0.2.1",
 		"news": {
+			"0.2.2": {
+				"en": "fixed widget countries",
+				"de": "feste Widget-Länder",
+				"ru": "фиксированные страны виджетов",
+				"pt": "países de widget fixo",
+				"nl": "vaste widget-landen",
+				"fr": "pays de widgets fixes",
+				"it": "Paesi con widget fissi",
+				"es": "países de widgets fijos",
+				"pl": "naprawiono kraje widgetów",
+				"zh-cn": "固定小工具国家"
+			},
 			"0.2.1": {
 				"en": "* (DutchmanNL) Fixed error \"State attribute definition missing\"",
 				"de": "* (DutchmanNL) Fehler \"State attribute definition missing\"",

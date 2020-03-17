@@ -11,7 +11,6 @@
     }
     .covid-div-title {
         font-weight: bold;
-        font-size: 14px;
         text-align: center;
         width: 100%;
     }
@@ -20,13 +19,13 @@
         height: calc(100% - 40px);
     }
     .covid-div-number {
-        font-size: 12px;
+        font-size: smaller;
         text-align: center;
         width: 100%;
     }
     .covid-title {
         font-weight: bold;
-        font-size: 16px;
+        font-size: larger;
     }
 </style>
 <script type="text/javascript">
@@ -58,7 +57,7 @@
         },
         "recovered": {
             "en": "Recovered",
-            "de": "Gesung",
+            "de": "Gesund",
             "ru": "Здоровы",
             "pt": "Recuperado",
             "nl": "Hersteld",
@@ -1364,7 +1363,7 @@
             "pl": "Paragwaj",
             "zh-cn": "巴拉圭"
         },
-        "Réunion": {
+        "Reunion": {
             "en": "Réunion",
             "de": "Wiedervereinigung",
             "ru": "Реюньон",
@@ -1640,7 +1639,7 @@
             "pl": "Kamerun",
             "zh-cn": "喀麦隆"
         },
-        "Curaçao": {
+        "Curacao": {
             "en": "Curaçao",
             "de": "Curacao",
             "ru": "Кюрасао",
@@ -2028,6 +2027,66 @@
                 "es": "País",
                 "pl": "Kraj",
                 "zh-cn": "国家"
+            },
+            "showCountry": {
+                "en": "Show country",
+                "de": "Land anzeigen",
+                "ru": "Показать страну",
+                "pt": "Mostrar país",
+                "nl": "Land weergeven",
+                "fr": "Afficher le pays",
+                "it": "Mostra paese",
+                "es": "Mostrar país",
+                "pl": "Pokaż kraj",
+                "zh-cn": "显示国家"
+            },
+            "countryFontSize": {
+                "en": "Country",
+                "de": "Land",
+                "ru": "Страна",
+                "pt": "País",
+                "nl": "Land",
+                "fr": "Pays",
+                "it": "Nazione",
+                "es": "País",
+                "pl": "Kraj",
+                "zh-cn": "国家"
+            },
+            "typeFontSize": {
+                "en": "Type",
+                "de": "Art",
+                "ru": "Тип",
+                "pt": "Tipo",
+                "nl": "Type",
+                "fr": "Type",
+                "it": "genere",
+                "es": "Tipo",
+                "pl": "Rodzaj",
+                "zh-cn": "类型"
+            },
+            "numberFontSize": {
+                "en": "Numbers",
+                "de": "Zahlen",
+                "ru": "чисел",
+                "pt": "Números",
+                "nl": "Nummers",
+                "fr": "Nombres",
+                "it": "Numeri",
+                "es": "Números",
+                "pl": "Liczby",
+                "zh-cn": "号码"
+            },
+            "group_fonts": {
+                "en": "Font size",
+                "de": "Schriftgröße",
+                "ru": "Размер шрифта",
+                "pt": "Tamanho da fonte",
+                "nl": "Lettertypegrootte",
+                "fr": "Taille de police",
+                "it": "Dimensione del font",
+                "es": "Tamaño de fuente",
+                "pl": "Rozmiar czcionki",
+                "zh-cn": "字体大小"
             }
         });
     }
@@ -2040,11 +2099,11 @@
 				vis.binds['coronavirus-statistics'].version = null;
 			}
 		},
-        one: function (data, type, count) {
+        one: function (data, type, count, fontTitleSize, fontNumberSize) {
 		    return '<div class="covid-div" style="width: ' + ((100 / count) - 0.5).toFixed(2) +'%">\n' +
-                '                    <div class="covid-div-title">' + _(type) + '</div>\n' +
-                '                    <img class="covid-div-img" src="widgets/coronavirus-statistics/img/' + type + '.svg">\n' +
-                '                    <div class="covid-div-number">' + data[type] + '</div>\n' +
+                '                    <div class="covid-div-title" style="' + (fontTitleSize ? 'font-size: ' + fontTitleSize : '') + '">' + _(type) + '</div>\n' +
+                '                    <img class="covid-div-img" src="widgets/coronavirus-statistics/img/' + type + '.svg" alt="' + type + '"/>\n' +
+                '                    <div class="covid-div-number" style="' + (fontNumberSize ? 'font-size: ' + fontNumberSize : '') + '">' + data[type] + '</div>\n' +
                 '                </div>';
         },
         init: function (wid, view, data, style) {
@@ -2055,7 +2114,23 @@
                 }, 100);
                 return;
             }
-            var text = '<div class="vis-widget-body"><div class="covid-title">' + _(!data.country || data.country === 'all' ? 'Worldwide' : data.country) + '</div>';
+            var text = '<div class="vis-widget-body">';
+            if (data.showCountry !== 'false' && data.showCountry !== false) {
+                var countryFontSize = data.countryFontSize;
+                if (countryFontSize && countryFontSize.match(/\d$/)) {
+                    countryFontSize += 'px';
+                }
+                text += '<div class="covid-title" style="' + (countryFontSize ? 'font-size: ' + countryFontSize : '') + '">' + _(!data.country || data.country === 'all' ? 'Worldwide' : data.country) + '</div>';
+            }
+
+            var fontTitleSize = data.typeFontSize;
+            if (fontTitleSize && fontTitleSize.match(/\d$/)) {
+                fontTitleSize += 'px';
+            }
+            var fontNumberSize = data.numberFontSize;
+            if (fontNumberSize && fontNumberSize.match(/\d$/)) {
+                fontNumberSize += 'px';
+            }
             if (!data.country || data.country === 'all') {
                 // https://coronavirus-19-api.herokuapp.com/all
                 fetch('https://coronavirus-19-api.herokuapp.com/all')
@@ -2068,9 +2143,9 @@
                         count += data.deaths    === true || data.deaths    === 'true' ? 1 : 0;
                         count += data.recovered === true || data.recovered === 'true' ? 1 : 0;
 
-                        text += data.cases      === true || data.cases     === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'cases',     count) : '';
-                        text += data.recovered  === true || data.recovered === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'recovered', count) : '';
-                        text += data.deaths     === true || data.deaths    === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'deaths',    count) : '';
+                        text += data.cases      === true || data.cases     === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'cases',     count, fontTitleSize, fontNumberSize) : '';
+                        text += data.recovered  === true || data.recovered === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'recovered', count, fontTitleSize, fontNumberSize) : '';
+                        text += data.deaths     === true || data.deaths    === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'deaths',    count, fontTitleSize, fontNumberSize) : '';
                         $div.html(text + '</div>');
                     });
             } else {
@@ -2083,20 +2158,20 @@
                         var count = 0;
                         count += data.cases       === true || data.cases       === 'true' ? 1 : 0;
                         count += data.todayCases  === true || data.todayCases  === 'true' ? 1 : 0;
-                        count += data.recovered  === true || data.recovered    === 'true' ? 1 : 0;
+                        count += data.recovered   === true || data.recovered   === 'true' ? 1 : 0;
                         count += data.deaths      === true || data.deaths      === 'true' ? 1 : 0;
                         count += data.todayDeaths === true || data.todayDeaths === 'true' ? 1 : 0;
                         count += data.active      === true || data.active      === 'true' ? 1 : 0;
                         count += data.critical    === true || data.critical    === 'true' ? 1 : 0;
 
                         var info = datas.find(it => it.country === data.country);
-                        text += data.cases       === true || data.cases       === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'cases',       count) : '';
-                        text += data.todayCases  === true || data.todayCases  === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'todayCases',  count) : '';
-                        text += data.recovered   === true || data.recovered   === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'recovered',   count) : '';
-                        text += data.active      === true || data.active      === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'active',      count) : '';
-                        text += data.critical    === true || data.critical    === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'critical',    count) : '';
-                        text += data.deaths      === true || data.deaths      === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'deaths',      count) : '';
-                        text += data.todayDeaths === true || data.todayDeaths === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'todayDeaths', count) : '';
+                        text += data.cases       === true || data.cases       === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'cases',       count, fontTitleSize, fontNumberSize) : '';
+                        text += data.todayCases  === true || data.todayCases  === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'todayCases',  count, fontTitleSize, fontNumberSize) : '';
+                        text += data.recovered   === true || data.recovered   === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'recovered',   count, fontTitleSize, fontNumberSize) : '';
+                        text += data.active      === true || data.active      === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'active',      count, fontTitleSize, fontNumberSize) : '';
+                        text += data.critical    === true || data.critical    === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'critical',    count, fontTitleSize, fontNumberSize) : '';
+                        text += data.deaths      === true || data.deaths      === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'deaths',      count, fontTitleSize, fontNumberSize) : '';
+                        text += data.todayDeaths === true || data.todayDeaths === 'true' ? vis.binds['coronavirus-statistics'].one(info, 'todayDeaths', count, fontTitleSize, fontNumberSize) : '';
                         $div.html(text + '</div>');
                     });
             }
@@ -2121,10 +2196,11 @@
      data-vis-set="coronavirus-statistics"
      data-vis-type="ctrl,color"
      data-vis-name="Covid-19 info"
-     data-vis-attrs="country/select,all,Germany,Austria,Switzerland,Russia,China,Italy,Iran,S. Korea,Spain,France,USA,UK,Norway,Netherlands,Sweden,Belgium,Denmark,Japan,Diamond Princess,Malaysia,Qatar,Greece,Canada,Australia,Portugal,Finland,Czechia,Singapore,Slovenia,Bahrain,Israel,Estonia,Iceland,Hong Kong,Philippines,Romania,Ireland,Brazil,Poland,Indonesia,Thailand,Kuwait,Iraq,India,Egypt,Saudi Arabia,San Marino,Lebanon,UAE,Chile,Luxembourg,Taiwan,Vietnam,Slovakia,Pakistan,Bulgaria,South Africa,Brunei,Croatia,Algeria,Serbia,Argentina,Panama,Peru,Albania,Mexico,Palestine,Colombia,Georgia,Hungary,Latvia,Ecuador,Morocco,Belarus,Costa Rica,Armenia,Cyprus,Senegal,Bosnia and Herzegovina,Azerbaijan,Moldova,Oman,Malta,North Macedonia,Sri Lanka,Tunisia,Afghanistan,Maldives,Cambodia,Lithuania,Dominican Republic,Faeroe Islands,Macao,Bolivia,Martinique,Venezuela,Kazakhstan,Jordan,New Zealand,Jamaica,French Guiana,Liechtenstein,Paraguay,Réunion,Ghana,Turkey,Uruguay,Andorra,Bangladesh,Guyana,Ivory Coast,Cuba,Ethiopia,Puerto Rico,Ukraine,Burkina Faso,Channel Islands,French Polynesia,Guadeloupe,Guam,Honduras,Kenya,Monaco,Nigeria,Aruba,Cameroon,Curaçao,DRC,Namibia,Saint Lucia,Saint Martin,Seychelles,Trinidad and Tobago,Sudan,Nepal,Antigua and Barbuda,Bhutan,Cayman Islands,CAR,Congo,Equatorial Guinea,Gabon,Gibraltar,Guatemala,Guinea,Vatican City,Mauritania,Mayotte,Mongolia,Rwanda,St. Barth,St. Vincent Grenadines,Suriname,Eswatini,Togo,U.S. Virgin Islands,Uzbekistan;"
-     data-vis-attrs0="cases[true]/checkbox;todayCases[true]/checkbox;recovered[true]/checkbox;active[true]/checkbox;critical[true]/checkbox;deaths[true]/checkbox;todayDeaths[true]/checkbox;"
+     data-vis-attrs="country/select,all,Germany,Austria,Switzerland,Russia,China,Italy,Iran,S. Korea,Spain,France,USA,UK,Norway,Netherlands,Sweden,Belgium,Denmark,Japan,Diamond Princess,Malaysia,Qatar,Greece,Canada,Australia,Portugal,Finland,Czechia,Singapore,Slovenia,Bahrain,Israel,Estonia,Iceland,Hong Kong,Philippines,Romania,Ireland,Brazil,Poland,Indonesia,Thailand,Kuwait,Iraq,India,Egypt,Saudi Arabia,San Marino,Lebanon,UAE,Chile,Luxembourg,Taiwan,Vietnam,Slovakia,Pakistan,Bulgaria,South Africa,Brunei,Croatia,Algeria,Serbia,Argentina,Panama,Peru,Albania,Mexico,Palestine,Colombia,Georgia,Hungary,Latvia,Ecuador,Morocco,Belarus,Costa Rica,Armenia,Cyprus,Senegal,Bosnia and Herzegovina,Azerbaijan,Moldova,Oman,Malta,North Macedonia,Sri Lanka,Tunisia,Afghanistan,Maldives,Cambodia,Lithuania,Dominican Republic,Faeroe Islands,Macao,Bolivia,Martinique,Venezuela,Kazakhstan,Jordan,New Zealand,Jamaica,French Guiana,Liechtenstein,Paraguay,Reunion,Ghana,Turkey,Uruguay,Andorra,Bangladesh,Guyana,Ivory Coast,Cuba,Ethiopia,Puerto Rico,Ukraine,Burkina Faso,Channel Islands,French Polynesia,Guadeloupe,Guam,Honduras,Kenya,Monaco,Nigeria,Aruba,Cameroon,Curacao,DRC,Namibia,Saint Lucia,Saint Martin,Seychelles,Trinidad and Tobago,Sudan,Nepal,Antigua and Barbuda,Bhutan,Cayman Islands,CAR,Congo,Equatorial Guinea,Gabon,Gibraltar,Guatemala,Guinea,Vatican City,Mauritania,Mayotte,Mongolia,Rwanda,St. Barth,St. Vincent Grenadines,Suriname,Eswatini,Togo,U.S. Virgin Islands,Uzbekistan;"
+     data-vis-attrs0="showCountry[true]/checkbox;todayCases[true]/checkbox;recovered[true]/checkbox;active[true]/checkbox;critical[true]/checkbox;deaths[true]/checkbox;todayDeaths[true]/checkbox;"
+     data-vis-attrs1="group.fonts;countryFontSize[16]/slider,6,32,1;typeFontSize[14]/slider,6,32,1;numberFontSize[12]/slider,6,32,1;"
 >
-    <div class="vis-widget <%== this.data.attr('class') %>" style="width: 400px; height: 110px" id="<%= this.data.attr('wid') %>">
+    <div class="vis-widget <%== this.data.attr('class') %>" style="width: 400px; height: 110px; font-size: 14px" id="<%= this.data.attr('wid') %>">
         <%= (el) -> vis.binds['coronavirus-statistics'].init(this.data.wid, this.view, this.data, this.style) %>
     </div>
 </script>

@@ -1,6 +1,6 @@
 {
   "name": "iobroker.coronavirus-statistics",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Adapter to show Global Corona Virus information and current reports",
   "author": {
     "name": "DutchmanNL",
