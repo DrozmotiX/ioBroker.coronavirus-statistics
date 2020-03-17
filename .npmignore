@@ -9,6 +9,8 @@ gulpfile.js
 .github
 .gitignore
 .npmignore
+iob_npm.done
+main.test.js
 
 # CI test files
 test/
