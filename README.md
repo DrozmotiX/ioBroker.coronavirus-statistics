@@ -36,6 +36,7 @@ The following information is available :
 
 
 Please be aware this adapter uses as much as possible up-to-date information but there can be an delay of several hours depending on the country's report.
+Source : https://coronavirus-19-api.herokuapp.com
 
 ## Changelog
 ### 0.2.2
