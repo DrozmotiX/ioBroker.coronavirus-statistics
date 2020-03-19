@@ -39,6 +39,10 @@ Please be aware this adapter uses as much as possible up-to-date information but
 Source : https://coronavirus-19-api.herokuapp.com
 
 ## Changelog
+
+### 0.2.3
+* (DutchmanNL) Error message for new attribute solved
+
 ### 0.2.2
 * (GermanBluefox) fixed widget countries
 

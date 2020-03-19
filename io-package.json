@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.2.2",
+		"version": "0.2.3",
 		"news": {
+			"0.2.3": {
+				"en": "Error message for new attribute solved",
+				"de": "Fehlermeldung für neues Attribut behoben",
+				"ru": "Сообщение об ошибке для нового атрибута решено",
+				"pt": "Mensagem de erro para o novo atributo resolvido",
+				"nl": "Foutmelding voor nieuw attribuut opgelost",
+				"fr": "Message d'erreur pour le nouvel attribut résolu",
+				"it": "Risolto il messaggio di errore per il nuovo attributo",
+				"es": "Mensaje de error para el nuevo atributo resuelto",
+				"pl": "Komunikat o błędzie dotyczący nowego atrybutu rozwiązany",
+				"zh-cn": "解决了新属性的错误消息"
+			},
 			"0.2.2": {
 				"en": "fixed widget countries",
 				"de": "feste Widget-Länder",
