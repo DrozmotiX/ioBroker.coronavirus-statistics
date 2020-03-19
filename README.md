@@ -40,6 +40,9 @@ Source : https://coronavirus-19-api.herokuapp.com
 
 ## Changelog
 
+### 0.2.4
+* (Scrounger) Grouping by continents implemented
+
 ### 0.2.3
 * (DutchmanNL) Error message for new attribute solved
 
