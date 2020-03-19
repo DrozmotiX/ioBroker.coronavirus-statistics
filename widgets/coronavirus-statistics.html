@@ -2103,7 +2103,7 @@
 		    return '<div class="covid-div" style="width: ' + ((100 / count) - 0.5).toFixed(2) +'%">\n' +
                 '                    <div class="covid-div-title" style="' + (fontTitleSize ? 'font-size: ' + fontTitleSize : '') + '">' + _(type) + '</div>\n' +
                 '                    <img class="covid-div-img" src="widgets/coronavirus-statistics/img/' + type + '.svg" alt="' + type + '"/>\n' +
-                '                    <div class="covid-div-number" style="' + (fontNumberSize ? 'font-size: ' + fontNumberSize : '') + '">' + data[type] + '</div>\n' +
+                '                    <div class="covid-div-number" style="' + (fontNumberSize ? 'font-size: ' + fontNumberSize : '') + '">' + data[type].toLocaleString() + '</div>\n' +
                 '                </div>';
         },
         init: function (wid, view, data, style) {
