@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.2.3",
+		"version": "0.2.4",
 		"news": {
+			"0.2.4": {
+				"en": "Grouping by continents implemented",
+				"de": "Gruppierung nach Kontinenten implementiert",
+				"ru": "Осуществлена группировка по континентам",
+				"pt": "Agrupamento por continentes implementados",
+				"nl": "Groeperen op continenten geïmplementeerd",
+				"fr": "Regroupement par continents mis en œuvre",
+				"it": "Raggruppamento per continenti implementato",
+				"es": "Agrupación por continentes implementada",
+				"pl": "Wprowadzono grupowanie według kontynentów",
+				"zh-cn": "已按大洲分组"
+			},
 			"0.2.3": {
 				"en": "Error message for new attribute solved",
 				"de": "Fehlermeldung für neues Attribut behoben",
@@ -118,7 +130,8 @@
 		],
 		"contributors": [
 			"GermanBluefox",
-			"AlCalzone"
+			"AlCalzone",
+			"Scrounger"
 		],
 		"keywords": [
 			"virus",
