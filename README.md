@@ -1,5 +1,9 @@
-![Logo](admin/coronavirus-statistics.png)
-# ioBroker.coronavirus-statistics
+<h1>
+
+<img  src="admin/coronavirus-statistics.png"  width="64"/>
+    ioBroker.coronavirus-statistics
+
+</h1>
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.coronavirus-statistics.svg)](https://www.npmjs.com/package/iobroker.coronavirus-statistics)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.coronavirus-statistics.svg)](https://www.npmjs.com/package/iobroker.coronavirus-statistics)
