@@ -32,7 +32,8 @@ const countryTranslator = {
 	"Congo": "Republic of the Congo",
 	"CAR": "Central African Republic",
 	"DRC": "Democratic Republic of the Congo",
-	"Channel_Islands": "France"                             // gehört zu Europa, deshalb Frankreich einfach vergeben
+	"Channel_Islands": "France",                             // gehört zu Europa, deshalb Frankreich einfach vergeben
+	"Cabo_Verde": "Cape Verde"
 }
 
 class Covid19 extends utils.Adapter {
