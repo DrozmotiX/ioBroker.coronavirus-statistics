@@ -167,5 +167,19 @@
 	},
 	"native": {},
 	"objects": [],
-	"instanceObjects": []
+	"instanceObjects": [
+		{
+			"_id": "countryTranslator",
+			"type": "state",
+			"common": {
+				"role": "",
+				"name": "Translator for unknow country names",
+				"type": "string",
+				"read": true,
+				"write": true,
+				"def": 0
+			},
+			"native": {}
+		}
+	]
 }
