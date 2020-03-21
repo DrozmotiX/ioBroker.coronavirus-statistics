@@ -44,7 +44,7 @@ Source : https://coronavirus-19-api.herokuapp.com
 
 ## Changelog
 
-### 0.2.5
+### 0.2.5 Bugfix : Cabo_Verde not found in lib!
 * (Scrounger) Bugfix : Cabo_Verde not found in lib! Must be added to the country name translator
 
 ### 0.2.4
