@@ -1,8 +1,11 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.2.4",
+		"version": "0.2.5",
 		"news": {
+			"0.2.5": {
+				"en": "Bugfix : Cabo_Verde not found in lib! Must be added to the country name translator"
+			},
 			"0.2.4": {
 				"en": "Grouping by continents implemented",
 				"de": "Gruppierung nach Kontinenten implementiert",
