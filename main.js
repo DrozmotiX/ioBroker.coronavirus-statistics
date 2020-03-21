@@ -11,29 +11,29 @@ const request = require('request-promise-native');
 const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
-const countryJs = require("country-list-js");
+const countryJs = require('country-list-js');
 
 // Translator if country names are not iso conform
 const countryTranslator = {
 	// https://github.com/i-rocky/country-list-js/blob/master/data/names.json
-	"Vatican_City": "Vatican",
-	"USA": "United States",
-	"UK": "United Kingdom",
-	"UAE": "United Arab Emirates",
-	"US_Virgin_Islands": "U.S. Virgin Islands",
-	"St_Vincent_Grenadines": "Saint Vincent and the Grenadines",
-	"St_Barth": "Saint Barthelemy",
-	"S_Korea": "South Korea",
-	"Palestine": "Palestinian Territory",
-	"North_Macedonia": "Macedonia",
-	"Faeroe_Islands": "Faroe Islands",
-	"Eswatini": "Swaziland",
-	"Czechia": "Czech Republic",
-	"Congo": "Republic of the Congo",
-	"CAR": "Central African Republic",
-	"DRC": "Democratic Republic of the Congo",
-	"Channel_Islands": "France"                             // gehört zu Europa, deshalb Frankreich einfach vergeben
-}
+	'Vatican_City': 'Vatican',
+	'USA': 'United States',
+	'UK': 'United Kingdom',
+	'UAE': 'United Arab Emirates',
+	'US_Virgin_Islands': 'U.S. Virgin Islands',
+	'St_Vincent_Grenadines': 'Saint Vincent and the Grenadines',
+	'St_Barth': 'Saint Barthelemy',
+	'S_Korea': 'South Korea',
+	'Palestine': 'Palestinian Territory',
+	'North_Macedonia': 'Macedonia',
+	'Faeroe_Islands': 'Faroe Islands',
+	'Eswatini': 'Swaziland',
+	'Czechia': 'Czech Republic',
+	'Congo': 'Republic of the Congo',
+	'CAR': 'Central African Republic',
+	'DRC': 'Democratic Republic of the Congo',
+	'Channel_Islands': 'France'                             // gehört zu Europa, deshalb Frankreich einfach vergeben
+};
 
 class Covid19 extends utils.Adapter {
 	/**
@@ -72,7 +72,7 @@ class Covid19 extends utils.Adapter {
 
 		const loadCountries = async () => {
 			try {
-				let continentsStats = {};
+				const continentsStats = {};
 				continentsStats['America'] = {};
 				continentsStats['World_Sum'] = {};
 
@@ -86,7 +86,7 @@ class Covid19 extends utils.Adapter {
 						country = country.replace(/\s/g, '_');
 						country = country.replace(/\./g, '');
 
-						let continent = await this.getContinent(country);
+						const continent = await this.getContinent(country);
 						this.log.debug(`${country} (${continent})`);
 
 						for (const y in values[i]) {
