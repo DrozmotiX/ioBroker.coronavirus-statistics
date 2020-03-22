@@ -1,9 +1,5 @@
 'use strict';
 
-/*
- * Created with @iobroker/create-adapter v1.22.0
- */
-
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
@@ -27,13 +23,13 @@ class Covid19 extends utils.Adapter {
 			name: adapterName,
 		});
 		this.on('ready', this.onReady.bind(this));
-		this.on('unload', this.onUnload.bind(this));
 	}
 
 	/**
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	async onReady() {
+		this.config.countries = this.config.countries || [];
 
 		const loadAll = async () => {
 			// Try to call API and get global information
@@ -43,7 +39,7 @@ class Covid19 extends utils.Adapter {
 				const values = JSON.parse(result);
 				for (const i of Object.keys(values)) {
 					if (values[i]) {
-						await this.create_State('global_totals.' + i, i, values[i]);
+						await this.localCreateState('global_totals.' + i, i, values[i]);
 					}
 				}
 			} catch (error) {
@@ -64,9 +60,10 @@ class Covid19 extends utils.Adapter {
 				await this.addUserCountriesTranslator();
 
 				const values = JSON.parse(result);
+
 				for (const i in values) {
-					if (values[i] && values[i]['country']) {
-						let country = values[i]['country'];
+					if (values.hasOwnProperty(i) && values[i] && values[i].country) {
+						let country = values[i].country;
 						country = country.replace(/\s/g, '_');
 						country = country.replace(/\./g, '');
 
@@ -74,16 +71,16 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`${country} (${continent})`);
 
 						for (const y in values[i]) {
-							if (y !== 'country') {
-								await this.create_State(country + '.' + y, y, values[i][y]);
+							if (values[i].hasOwnProperty(y) && y !== 'country') {
+								if (!this.config.countries.length || this.config.countries.includes(values[i].country)) {
+									await this.localCreateState(country + '.' + y, y, values[i][y]);
+								} else {
+									await this.localDeleteState(country + '.' + y);
+								}
 
 								if (continent) {
-									if (!continentsStats.hasOwnProperty(continent)) {
-										continentsStats[continent] = {};
-									}
-									if (!continentsStats[continent].hasOwnProperty(y)) {
-										continentsStats[continent][y] = 0;
-									}
+									continentsStats[continent] = continentsStats[continent] || {};
+									continentsStats[continent][y] = continentsStats[continent][y] || 0;
 
 									if (!continentsStats['America'].hasOwnProperty(y) && (continent === 'North_America' || continent === 'South_America')) {
 										continentsStats['America'][y] = 0;
@@ -110,10 +107,14 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(c + ': ' + JSON.stringify(continentsStats[c]));
 
 						for (const val in continentsStats[c]) {
-							await this.create_State('global_continents.' + c + '.' + val, val, continentsStats[c][val]);
+							if (continentsStats[c].hasOwnProperty(val)) {
+								await this.localCreateState('global_continents.' + c + '.' + val, val, continentsStats[c][val]);
+							}
 						}
 					}
 				}
+
+				// todo delete disabled countries
 
 			} catch (error) {
 				this.log.warn('Error getting API response, will retry at next shedule');
@@ -121,8 +122,8 @@ class Covid19 extends utils.Adapter {
 		};
 
 		// Random number generator to avoid all ioBroker instances calling the API at the same time
-		const timer_1 = (Math.random() * (10 - 1) + 1) * 1000;
-		await wait(timer_1);
+		const timer1 = (Math.random() * (10 - 1) + 1) * 1000;
+		await wait(timer1);
 		this.setState('info.connection', true, true);
 
 		try {
@@ -136,7 +137,7 @@ class Covid19 extends utils.Adapter {
 		this.terminate ? this.terminate() : process.exit();
 	}
 
-	async create_State(state, name, value) {
+	async localCreateState(state, name, value) {
 		this.log.debug('Create_state called for : ' + state + ' with value : ' + value);
 
 		try {
@@ -144,11 +145,11 @@ class Covid19 extends utils.Adapter {
 			if (stateAttr[name] === undefined) {
 				this.log.warn('State attribute definition missing for + ' + name);
 			}
-			const writable = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
-			const state_name = stateAttr[name] !== undefined ? stateAttr[name].name || name : name;
-			const role = stateAttr[name] !== undefined ? stateAttr[name].role || 'state' : 'state';
-			const type = stateAttr[name] !== undefined ? stateAttr[name].type || 'mixed' : 'mixed';
-			const unit = stateAttr[name] !== undefined ? stateAttr[name].unit || '' : '';
+			const writable   = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
+			const state_name = stateAttr[name] !== undefined ? stateAttr[name].name  || name : name;
+			const role       = stateAttr[name] !== undefined ? stateAttr[name].role  || 'state' : 'state';
+			const type       = stateAttr[name] !== undefined ? stateAttr[name].type  || 'mixed' : 'mixed';
+			const unit       = stateAttr[name] !== undefined ? stateAttr[name].unit  || '' : '';
 			this.log.debug('Write value : ' + writable);
 
 			await this.extendObjectAsync(state, {
@@ -172,6 +173,17 @@ class Covid19 extends utils.Adapter {
 			// writable && this.subscribeStates(state);
 		} catch (error) {
 			this.log.error('Create state error = ' + error);
+		}
+	}
+
+	async localDeleteState(state) {
+		try {
+			const obj = await this.getObjectAsync(state);
+			if (obj) {
+				await this.delObjectAsync(state);
+			}
+		} catch (error) {
+			// do nothing
 		}
 	}
 
@@ -205,30 +217,17 @@ class Covid19 extends utils.Adapter {
 			// add user defined country translation to countryTranslator
 			try {
 				let userCountries = JSON.parse(userCountryTranslator.val);
-				for (const countryId in userCountries) {
-					if (!countryTranslator.hasOwnProperty(countryId)) {								
+				Object.keys(userCountries).forEach(countryId => {
+					if (!countryTranslator.hasOwnProperty(countryId)) {
 						countryTranslator[countryId] = userCountries[countryId];
-						this.log.info(`user defined country translation added: ${countryId} -> ${userCountries[countryId]}`)
+						this.log.info(`user defined country translation added: ${countryId} -> ${userCountries[countryId]}`);
 					}
-				}
+				});
 			} catch (parseError) {
 				this.log.error(`Can not parse json string for user defined country translation! Check input of datapoint '.countryTranslator'. error: ${parseError.message}`);
 			}
 		}
 	}
-
-	/**
-	 * Is called when adapter shuts down - callback has to be called under any circumstances!
-	 * @param {() => void} callback
-	 */
-	onUnload(callback) {
-		try {
-			callback();
-		} catch (e) {
-			callback();
-		}
-	}
-
 }
 
 // @ts-ignore parent is a valid property on module

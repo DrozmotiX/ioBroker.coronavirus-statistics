@@ -1,10 +1,31 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.2.5",
+		"version": "0.3.0",
 		"news": {
+			"0.3.0": {
+				"en": "The number of data points was reduced by selection of countries",
+				"de": "Die Anzahl der Datenpunkte wurde durch Auswahl der Länder reduziert",
+				"ru": "Количество точек данных было сокращено при выборе стран",
+				"pt": "O número de pontos de dados foi reduzido pela seleção de países",
+				"nl": "Door selectie van landen is het aantal datapunten verminderd",
+				"fr": "Le nombre de points de données a été réduit par la sélection des pays",
+				"it": "Il numero di punti dati è stato ridotto dalla selezione dei paesi",
+				"es": "El número de puntos de datos se redujo mediante la selección de países.",
+				"pl": "Liczba punktów danych została zmniejszona przez wybór krajów",
+				"zh-cn": "通过选择国家减少了数据点的数量"
+			},
 			"0.2.5": {
-				"en": "Bugfix : Cabo_Verde not found in lib! Must be added to the country name translator"
+				"en": "Bugfix : Cabo_Verde not found in lib! Must be added to the country name translator",
+				"de": "Bugfix: Cabo_Verde nicht in lib gefunden! Muss dem Ländernamenübersetzer hinzugefügt werden",
+				"ru": "Исправлено: Cabo_Verde не найден в lib! Должен быть добавлен к переводчику названия страны",
+				"pt": "Correção de bug: Cabo_Verde não encontrado na lib! Deve ser adicionado ao tradutor do nome do país",
+				"nl": "Bugfix: Cabo_Verde niet gevonden in lib! Moet worden toegevoegd aan de vertaler van de landnaam",
+				"fr": "Bugfix: Cabo_Verde introuvable dans la lib! Doit être ajouté au traducteur du nom du pays",
+				"it": "Bugfix: Cabo_Verde non trovato in lib! Deve essere aggiunto al traduttore del nome del paese",
+				"es": "Bugfix: Cabo_Verde no encontrado en lib! Debe agregarse al traductor del nombre del país",
+				"pl": "Bugfix: Nie znaleziono Cabo_Verde w lib! Należy dodać do tłumacza nazwy kraju",
+				"zh-cn": "错误修正：lib中找不到Cabo_Verde！必须添加到国家/地区名称翻译器中"
 			},
 			"0.2.4": {
 				"en": "Grouping by continents implemented",
@@ -143,7 +164,6 @@
 			"pandemie"
 		],
 		"license": "MIT",
-		"noConfig": true,
 		"platform": "Javascript/Node.js",
 		"main": "main.js",
 		"icon": "coronavirus-statistics.png",
@@ -165,7 +185,9 @@
 			}
 		]
 	},
-	"native": {},
+	"native": {
+		"countries": ["Germany"]
+	},
 	"objects": [],
 	"instanceObjects": [
 		{

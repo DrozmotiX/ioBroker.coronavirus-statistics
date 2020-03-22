@@ -1,9 +1,5 @@
-<h1>
-
-<img  src="admin/coronavirus-statistics.png"  width="64"/>
-    ioBroker.coronavirus-statistics
-
-</h1>
+!(logo)[admin/coronavirus-statistics.png]
+# ioBroker.coronavirus-statistics
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.coronavirus-statistics.svg)](https://www.npmjs.com/package/iobroker.coronavirus-statistics)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.coronavirus-statistics.svg)](https://www.npmjs.com/package/iobroker.coronavirus-statistics)
@@ -66,8 +62,10 @@ The JSON string then looks like this, for example:
 As first value the name from the warning message must be taken from the log. The name of the country from the [List with country names](https://github.com/i-rocky/country-list-js/blob/master/data/names.json) is then assigned to this.
 
 ## Changelog
-
-### 0.2.5 Bugfix : Cabo_Verde not found in lib!
+### 0.3.0 (2020-03-22)
+* (bluefox) The number of data points was reduced by selection of countries
+ 
+### 0.2.5 
 * (Scrounger) Bugfix : Cabo_Verde not found in lib! Must be added to the country name translator
 
 ### 0.2.4
