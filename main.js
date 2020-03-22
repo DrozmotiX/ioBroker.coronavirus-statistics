@@ -8,6 +8,7 @@ const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
 const countryJs = require('country-list-js');
+const allCountrys = [];
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
@@ -64,6 +65,7 @@ class Covid19 extends utils.Adapter {
 				for (const i in values) {
 					if (values.hasOwnProperty(i) && values[i] && values[i].country) {
 						let country = values[i].country;
+						allCountrys.push(country);
 						country = country.replace(/\s/g, '_');
 						country = country.replace(/\./g, '');
 
@@ -115,6 +117,13 @@ class Covid19 extends utils.Adapter {
 				}
 
 				// todo delete disabled countries
+				this.log.debug(JSON.stringify(allCountrys));
+
+				await this.extendObjectAsync('countryTranslator', {
+					native: {
+						allCountrys
+					},
+				});
 
 			} catch (error) {
 				this.log.warn('Error getting API response, will retry at next shedule');
@@ -212,11 +221,11 @@ class Covid19 extends utils.Adapter {
 	}
 
 	async addUserCountriesTranslator(){
-		let userCountryTranslator = await this.getStateAsync('countryTranslator');
+		const userCountryTranslator = await this.getStateAsync('countryTranslator');
 		if (userCountryTranslator && userCountryTranslator.val) {
 			// add user defined country translation to countryTranslator
 			try {
-				let userCountries = JSON.parse(userCountryTranslator.val);
+				const userCountries = JSON.parse(userCountryTranslator.val);
 				Object.keys(userCountries).forEach(countryId => {
 					if (!countryTranslator.hasOwnProperty(countryId)) {
 						countryTranslator[countryId] = userCountries[countryId];

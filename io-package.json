@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.3.1",
+		"version": "0.3.2",
 		"news": {
+			"0.3.2": {
+				"en": "Enable configuration",
+				"de": "Konfiguration aktivieren",
+				"ru": "Включить настройку",
+				"pt": "Ativar configuração",
+				"nl": "Configuratie inschakelen",
+				"fr": "Activer la configuration",
+				"it": "Abilita configurazione",
+				"es": "Habilitar configuración",
+				"pl": "Włącz konfigurację",
+				"zh-cn": "启用配置"
+			},			
 			"0.3.1": {
 				"en": "Enable configuration",
 				"de": "Konfiguration aktivieren",

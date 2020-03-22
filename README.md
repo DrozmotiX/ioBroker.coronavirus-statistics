@@ -62,6 +62,11 @@ The JSON string then looks like this, for example:
 As first value the name from the warning message must be taken from the log. The name of the country from the [List with country names](https://github.com/i-rocky/country-list-js/blob/master/data/names.json) is then assigned to this.
 
 ## Changelog
+
+### 0.3.2
+* (DutchmanNL) Improved configuration page
+* (DutchmanNL) Make country list in configuration variable
+
 ### 0.3.1
 * (DutchmanNL) Enable configuration
 
