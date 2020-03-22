@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.3.0",
+		"version": "0.3.1",
 		"news": {
+			"0.3.1": {
+				"en": "Enable configuration",
+				"de": "Konfiguration aktivieren",
+				"ru": "Включить настройку",
+				"pt": "Ativar configuração",
+				"nl": "Configuratie inschakelen",
+				"fr": "Activer la configuration",
+				"it": "Abilita configurazione",
+				"es": "Habilitar configuración",
+				"pl": "Włącz konfigurację",
+				"zh-cn": "启用配置"
+			},
 			"0.3.0": {
 				"en": "The number of data points was reduced by selection of countries",
 				"de": "Die Anzahl der Datenpunkte wurde durch Auswahl der Länder reduziert",
@@ -164,6 +176,7 @@
 			"pandemie"
 		],
 		"license": "MIT",
+		"noConfig": false,
 		"platform": "Javascript/Node.js",
 		"main": "main.js",
 		"icon": "coronavirus-statistics.png",
