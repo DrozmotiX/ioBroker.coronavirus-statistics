@@ -35,7 +35,7 @@ const countryTranslator = {
 	'Channel_Islands': 'France',                             // gehört zu Europa, deshalb Frankreich einfach vergeben
 	'Cabo_Verde': 'Cape Verde',
 	'Timor-Leste': 'East Timor'
-};
+}
 
 class Covid19 extends utils.Adapter {
 	/**
@@ -80,6 +80,9 @@ class Covid19 extends utils.Adapter {
 
 				const result = await request('https://corona.lmao.ninja/countries');
 				this.log.debug('Data from COVID-19 API received : ' + result);
+
+				// add user defined country translation to countryTranslator
+				await this.addUserCountriesTranslator();
 
 				const values = JSON.parse(result);
 				for (const i in values) {
@@ -215,6 +218,24 @@ class Covid19 extends utils.Adapter {
 		}
 
 		return undefined;
+	}
+
+	async addUserCountriesTranslator(){
+		let userCountryTranslator = await this.getStateAsync('countryTranslator');
+		if (userCountryTranslator && userCountryTranslator.val) {
+			// add user defined country translation to countryTranslator
+			try {
+				let userCountries = JSON.parse(userCountryTranslator.val);
+				for (const countryId in userCountries) {
+					if (!countryTranslator.hasOwnProperty(countryId)) {								
+						countryTranslator[countryId] = userCountries[countryId];
+						this.log.info(`user defined country translation added: ${countryId} -> ${userCountries[countryId]}`)
+					}
+				}
+			} catch (parseError) {
+				this.log.error(`Can not parse json string for user defined country translation! Check input of datapoint '.countryTranslator'. error: ${parseError.message}`);
+			}
+		}
 	}
 
 	/**
