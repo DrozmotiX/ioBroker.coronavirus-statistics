@@ -63,6 +63,11 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
+### 0.4.0 Data-points added for Top 5 of countries with most cases
+* (KLVN) BugFix : German (and some other) translations corrected
+* (DutchmanNL) Add gulp i18n translation structure
+
+
 ### 0.3.5 Data-points added for Top 5 of countries with most cases
 * (DutchmanNL) Data-points added for Top 5 of countries with most cases
 * (DutchmanNL) BugFix : Flag datapoints are not deleted
