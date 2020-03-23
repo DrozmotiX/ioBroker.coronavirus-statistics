@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.3.3",
+		"version": "0.3.4",
 		"news": {
+			"0.3.4": {
+				"en": "Added button to read \"All Countrys\"",
+				"de": "Schaltfläche zum Lesen von \"Alle Länder\" hinzugefügt",
+				"ru": "Добавлена кнопка \"Все страны\"",
+				"pt": "Adicionado botão para ler \"Todos os países\"",
+				"nl": "Knop toegevoegd om \"Alle landen\" te lezen",
+				"fr": "Ajout d'un bouton pour lire \"Tous les pays\"",
+				"it": "Aggiunto il pulsante per leggere \"All Countrys\"",
+				"es": "Botón agregado para leer \"Todos los países\"",
+				"pl": "Dodano przycisk do czytania „Wszystkie kraje”",
+				"zh-cn": "添加了按钮以阅读“所有国家”"
+			},	
 			"0.3.3": {
 				"en": "Improved configuration page",
 				"de": "Verbesserte Konfigurationsseite",
@@ -212,6 +224,7 @@
 	},
 	"native": {
 	  "deleteUnused" : false,
+	  "loadAllCountrys" : false,
 	  "countries": [
 		"Germany"
 	  ]

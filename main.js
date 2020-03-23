@@ -74,9 +74,23 @@ class Covid19 extends utils.Adapter {
 
 						for (const y in values[i]) {
 							if (values[i].hasOwnProperty(y) && y !== 'country') {
-								if (!this.config.countries.length || this.config.countries.includes(values[i].country)) {
-									await this.localCreateState(country + '.' + y, y, values[i][y]);
+								// if ((!this.config.countries.length || this.config.countries.includes(values[i].country)) && this.config.loadAllCountrys === false ) {
+								if ((!this.config.countries.length || this.config.countries.includes(values[i].country)) && this.config.loadAllCountrys === false) {
+									if(y !== 'countryInfo'){
+										await this.localCreateState(country + '.' + y, y, values[i][y]);	
+									} else {
+										// Only take the flag from country info
+										await this.localCreateState(country + '.flag', 'flag', values[i][y].flag);
+									}
+								} else if (this.config.loadAllCountrys === true ) {
+									if(y !== 'countryInfo'){
+										await this.localCreateState(country + '.' + y, y, values[i][y]);	
+									} else {
+										// Only take the flag from country info
+										await this.localCreateState(country + '.flag', 'flag', values[i][y].flag);
+									}
 								} else {
+									// this.log.info('delete routine');
 									await this.localDeleteState(country + '.' + y);
 								}
 
@@ -109,7 +123,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(c + ': ' + JSON.stringify(continentsStats[c]));
 
 						for (const val in continentsStats[c]) {
-							if (continentsStats[c].hasOwnProperty(val)) {
+							if (continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo') {
 								await this.localCreateState('global_continents.' + c + '.' + val, val, continentsStats[c][val]);
 							}
 						}
