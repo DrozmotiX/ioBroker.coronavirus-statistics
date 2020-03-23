@@ -76,13 +76,13 @@ systemDictionary = {
 	},
 	"Iran": {
 		"en": "Iran",
-		"de": "Ich rannte",
-		"ru": "Иран",
-		"pt": "Eu corri",
-		"nl": "Ik rende",
-		"fr": "J'ai couru",
-		"it": "Mi sono imbattuto",
-		"es": "Corrí",
+		"de": "Iran",
+		"ru": "Iran",
+		"pt": "Iran",
+		"nl": "Iran",
+		"fr": "Iran",
+		"it": "Iran",
+		"es": "Iran",
 		"pl": "Iran",
 		"zh-cn": "伊朗"
 	},
@@ -280,7 +280,7 @@ systemDictionary = {
 	},
 	"Czechia": {
 		"en": "Czechia",
-		"de": "Tschechien",
+		"de": "Tschechische Republik",
 		"ru": "Чехия",
 		"pt": "Czechia",
 		"nl": "Tsjechië",
@@ -292,7 +292,7 @@ systemDictionary = {
 	},
 	"Turkey": {
 		"en": "Turkey",
-		"de": "Truthahn",
+		"de": "Türkei",
 		"ru": "индейка",
 		"pt": "Peru",
 		"nl": "kalkoen",
@@ -352,7 +352,7 @@ systemDictionary = {
 	},
 	"Diamond Princess": {
 		"en": "Diamond Princess",
-		"de": "Diamantprinzessin",
+		"de": "Diamond Princess (Kreuzfahrtschiff)",
 		"ru": "Алмазная принцесса",
 		"pt": "Diamond Princess",
 		"nl": "Diamond Princess",
@@ -808,7 +808,7 @@ systemDictionary = {
 	},
 	"UAE": {
 		"en": "UAE",
-		"de": "VAE",
+		"de": "Vereinigte Arabische Emirate",
 		"ru": "ОАЭ",
 		"pt": "UAE",
 		"nl": "VAE",
@@ -892,7 +892,7 @@ systemDictionary = {
 	},
 	"North Macedonia": {
 		"en": "North Macedonia",
-		"de": "Nordmakedonien",
+		"de": "Nordmazedonien",
 		"ru": "Северная Македония",
 		"pt": "Macedônia do Norte",
 		"nl": "Noord-Macedonië",
@@ -952,7 +952,7 @@ systemDictionary = {
 	},
 	"Jordan": {
 		"en": "Jordan",
-		"de": "Jordan",
+		"de": "Jordanien",
 		"ru": "Иордания",
 		"pt": "Jordânia",
 		"nl": "Jordanië",
@@ -1180,7 +1180,7 @@ systemDictionary = {
 	},
 	"Georgia": {
 		"en": "Georgia",
-		"de": "Georgia",
+		"de": "Georgien",
 		"ru": "Грузия",
 		"pt": "Geórgia",
 		"nl": "Georgië",
@@ -1228,7 +1228,7 @@ systemDictionary = {
 	},
 	"Réunion": {
 		"en": "Réunion",
-		"de": "Wiedervereinigung",
+		"de": "Réunion",
 		"ru": "Реюньон",
 		"pt": "Reunião",
 		"nl": "Bijeenkomst",
@@ -1371,15 +1371,15 @@ systemDictionary = {
 		"zh-cn": "玻利维亚"
 	},
 	"DRC": {
-		"en": "DRC",
-		"de": "DRC",
-		"ru": "DRC",
-		"pt": "RDC",
-		"nl": "DRC",
-		"fr": "RDC",
-		"it": "RDC",
-		"es": "DRC",
-		"pl": "DRK",
+		"en": "Democratic Republic of the Congo",
+		"de": "Demokratische Republik Kongo",
+		"ru": "Democratic Republic of the Congo",
+		"pt": "Democratic Republic of the Congo",
+		"nl": "Democratic Republic of the Congo",
+		"fr": "Democratic Republic of the Congo",
+		"it": "Democratic Republic of the Congo",
+		"es": "Democratic Republic of the Congo",
+		"pl": "Democratic Republic of the Congo",
 		"zh-cn": "刚果民主共和国"
 	},
 	"Puerto Rico": {
@@ -1432,7 +1432,7 @@ systemDictionary = {
 	},
 	"Macao": {
 		"en": "Macao",
-		"de": "Macao",
+		"de": "Macau",
 		"ru": "Macao",
 		"pt": "Macau",
 		"nl": "Macao",
@@ -1540,19 +1540,19 @@ systemDictionary = {
 	},
 	"Togo": {
 		"en": "Togo",
-		"de": "Gehen",
+		"de": "Togo",
 		"ru": "Идти",
 		"pt": "Ir",
-		"nl": "Gaan",
-		"fr": "Aller",
-		"it": "Andare",
-		"es": "Ir",
+		"nl": "Togo",
+		"fr": "Togo",
+		"it": "Togo",
+		"es": "Togo",
 		"pl": "Iść",
 		"zh-cn": "多哥"
 	},
 	"French Polynesia": {
 		"en": "French Polynesia",
-		"de": "Französisch Polynesien",
+		"de": "Französisch-Polynesien",
 		"ru": "Французская Полинезия",
 		"pt": "Polinésia Francesa",
 		"nl": "Frans-Polynesië",
@@ -1720,7 +1720,7 @@ systemDictionary = {
 	},
 	"U.S. Virgin Islands": {
 		"en": "U.S. Virgin Islands",
-		"de": "US Jungferninseln",
+		"de": "Amerikanische Jungferninseln (U.S. Virgin Islands)",
 		"ru": "Виргинские острова США",
 		"pt": "Ilhas Virgens Americanas",
 		"nl": "Amerikaanse Maagdeneilanden",
@@ -1792,7 +1792,7 @@ systemDictionary = {
 	},
 	"New Caledonia": {
 		"en": "New Caledonia",
-		"de": "Neu-Kaledonien",
+		"de": "Neukaledonien",
 		"ru": "Новая Каледония",
 		"pt": "Nova Caledônia",
 		"nl": "Nieuw-Caledonië",
@@ -1804,7 +1804,7 @@ systemDictionary = {
 	},
 	"Eswatini": {
 		"en": "Eswatini",
-		"de": "Eswatini",
+		"de": "Swasiland",
 		"ru": "Eswatini",
 		"pt": "Eswatini",
 		"nl": "Eswatini",
@@ -1840,7 +1840,7 @@ systemDictionary = {
 	},
 	"Cabo Verde": {
 		"en": "Cabo Verde",
-		"de": "Cabo Verde",
+		"de": "Kap Verde",
 		"ru": "Кабо Верде",
 		"pt": "Cabo Verde",
 		"nl": "Cabo Verde",
@@ -1851,15 +1851,15 @@ systemDictionary = {
 		"zh-cn": "佛得角"
 	},
 	"CAR": {
-		"en": "CAR",
-		"de": "AUTO",
-		"ru": "МАШИНА",
-		"pt": "CARRO",
-		"nl": "AUTO",
-		"fr": "VOITURE",
-		"it": "AUTO",
-		"es": "COCHE",
-		"pl": "SAMOCHÓD",
+		"en": "Central African Republic",
+		"de": "Zentralafrikanische Republik",
+		"ru": "Central African Republic",
+		"pt": "Central African Republic",
+		"nl": "Central African Republic",
+		"fr": "Central African Republic",
+		"it": "Central African Republic",
+		"es": "Central African Republic",
+		"pl": "Central African Republic",
 		"zh-cn": "汽车"
 	},
 	"Congo": {
@@ -1924,7 +1924,7 @@ systemDictionary = {
 	},
 	"St. Barth": {
 		"en": "St. Barth",
-		"de": "St. Barth",
+		"de": "Saint-Barthélemy",
 		"ru": "Сен-Барт",
 		"pt": "St. Barth",
 		"nl": "St. Barth",
@@ -2116,7 +2116,7 @@ systemDictionary = {
 	},
 	"Saint Lucia": {
 		"en": "Saint Lucia",
-		"de": "St. Lucia",
+		"de": "Sankt Lucia",
 		"ru": "Сент-Люсия",
 		"pt": "Santa Lúcia",
 		"nl": "Saint Lucia",
@@ -2212,7 +2212,7 @@ systemDictionary = {
 	},
 	"Papua New Guinea": {
 		"en": "Papua New Guinea",
-		"de": "Papua Neu-Guinea",
+		"de": "Papua-Neuguinea",
 		"ru": "Папуа - Новая Гвинея",
 		"pt": "Papua Nova Guiné",
 		"nl": "Papoea-Nieuw-Guinea",
@@ -2224,7 +2224,7 @@ systemDictionary = {
 	},
 	"St. Vincent Grenadines": {
 		"en": "St. Vincent Grenadines",
-		"de": "St. Vincent Grenadinen",
+		"de": "Sankt Vincent und die Grenadinen",
 		"ru": "Сент-Винсент Гренадины",
 		"pt": "São Vicente e Granadinas",
 		"nl": "St. Vincent Grenadines",
@@ -2260,7 +2260,7 @@ systemDictionary = {
 	},
 	"Timor-Leste": {
 		"en": "Timor-Leste",
-		"de": "Timor-Leste",
+		"de": "Timor-Leste (Osttimor)",
 		"ru": "Восточный Тимор",
 		"pt": "Timor-Leste",
 		"nl": "Oost-Timor",
