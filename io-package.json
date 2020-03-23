@@ -1,19 +1,19 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.3.2",
+		"version": "0.3.3",
 		"news": {
-			"0.3.2": {
-				"en": "Enable configuration",
-				"de": "Konfiguration aktivieren",
-				"ru": "Включить настройку",
-				"pt": "Ativar configuração",
-				"nl": "Configuratie inschakelen",
-				"fr": "Activer la configuration",
-				"it": "Abilita configurazione",
-				"es": "Habilitar configuración",
-				"pl": "Włącz konfigurację",
-				"zh-cn": "启用配置"
+			"0.3.3": {
+				"en": "Improved configuration page",
+				"de": "Verbesserte Konfigurationsseite",
+				"ru": "Улучшенная страница конфигурации",
+				"pt": "Página de configuração aprimorada",
+				"nl": "Verbeterde configuratiepagina",
+				"fr": "Page de configuration améliorée",
+				"it": "Pagina di configurazione migliorata",
+				"es": "Página de configuración mejorada",
+				"pl": "Ulepszona strona konfiguracji",
+				"zh-cn": "改进的配置页面"
 			},			
 			"0.3.1": {
 				"en": "Enable configuration",
@@ -30,203 +30,206 @@
 			"0.3.0": {
 				"en": "The number of data points was reduced by selection of countries",
 				"de": "Die Anzahl der Datenpunkte wurde durch Auswahl der Länder reduziert",
-				"ru": "Количество точек данных было сокращено при выборе стран",
-				"pt": "O número de pontos de dados foi reduzido pela seleção de países",
-				"nl": "Door selectie van landen is het aantal datapunten verminderd",
-				"fr": "Le nombre de points de données a été réduit par la sélection des pays",
-				"it": "Il numero di punti dati è stato ridotto dalla selezione dei paesi",
-				"es": "El número de puntos de datos se redujo mediante la selección de países.",
-				"pl": "Liczba punktów danych została zmniejszona przez wybór krajów",
-				"zh-cn": "通过选择国家减少了数据点的数量"
-			},
-			"0.2.5": {
-				"en": "Bugfix : Cabo_Verde not found in lib! Must be added to the country name translator",
-				"de": "Bugfix: Cabo_Verde nicht in lib gefunden! Muss dem Ländernamenübersetzer hinzugefügt werden",
-				"ru": "Исправлено: Cabo_Verde не найден в lib! Должен быть добавлен к переводчику названия страны",
-				"pt": "Correção de bug: Cabo_Verde não encontrado na lib! Deve ser adicionado ao tradutor do nome do país",
-				"nl": "Bugfix: Cabo_Verde niet gevonden in lib! Moet worden toegevoegd aan de vertaler van de landnaam",
-				"fr": "Bugfix: Cabo_Verde introuvable dans la lib! Doit être ajouté au traducteur du nom du pays",
-				"it": "Bugfix: Cabo_Verde non trovato in lib! Deve essere aggiunto al traduttore del nome del paese",
-				"es": "Bugfix: Cabo_Verde no encontrado en lib! Debe agregarse al traductor del nombre del país",
-				"pl": "Bugfix: Nie znaleziono Cabo_Verde w lib! Należy dodać do tłumacza nazwy kraju",
-				"zh-cn": "错误修正：lib中找不到Cabo_Verde！必须添加到国家/地区名称翻译器中"
-			},
-			"0.2.4": {
-				"en": "Grouping by continents implemented",
-				"de": "Gruppierung nach Kontinenten implementiert",
-				"ru": "Осуществлена группировка по континентам",
-				"pt": "Agrupamento por continentes implementados",
-				"nl": "Groeperen op continenten geïmplementeerd",
-				"fr": "Regroupement par continents mis en œuvre",
-				"it": "Raggruppamento per continenti implementato",
-				"es": "Agrupación por continentes implementada",
-				"pl": "Wprowadzono grupowanie według kontynentów",
-				"zh-cn": "已按大洲分组"
-			},
-			"0.2.3": {
-				"en": "Error message for new attribute solved",
-				"de": "Fehlermeldung für neues Attribut behoben",
-				"ru": "Сообщение об ошибке для нового атрибута решено",
-				"pt": "Mensagem de erro para o novo atributo resolvido",
-				"nl": "Foutmelding voor nieuw attribuut opgelost",
-				"fr": "Message d'erreur pour le nouvel attribut résolu",
-				"it": "Risolto il messaggio di errore per il nuovo attributo",
-				"es": "Mensaje de error para el nuevo atributo resuelto",
-				"pl": "Komunikat o błędzie dotyczący nowego atrybutu rozwiązany",
-				"zh-cn": "解决了新属性的错误消息"
-			},
-			"0.2.2": {
-				"en": "fixed widget countries",
-				"de": "feste Widget-Länder",
-				"ru": "фиксированные страны виджетов",
-				"pt": "países de widget fixo",
-				"nl": "vaste widget-landen",
-				"fr": "pays de widgets fixes",
-				"it": "Paesi con widget fissi",
-				"es": "países de widgets fijos",
-				"pl": "naprawiono kraje widgetów",
-				"zh-cn": "固定小工具国家"
-			},
-			"0.2.1": {
-				"en": "* (DutchmanNL) Fixed error \"State attribute definition missing\"",
-				"de": "* (DutchmanNL) Fehler \"State attribute definition missing\"",
-				"ru": "* (DutchmanNL) Исправлена ошибка «Отсутствует определение атрибута состояния»",
-				"pt": "* (DutchmanNL) Corrigido o erro \"State attribute definition missing\"",
-				"nl": "* (DutchmanNL) Fout verholpen \"State attribuutdefinitie ontbreekt\"",
-				"fr": "* (DutchmanNL) Correction d'une erreur \"Définition d'attribut d'état manquante\"",
-				"it": "* (DutchmanNL) Risolto errore \"State attribute definition missing\"",
-				"es": "* (DutchmanNL) Se corrigió el error \"State attribute definition missing\"",
-				"pl": "* (DutchmanNL) Naprawiono błąd „Brak definicji atrybutu stanu”",
-				"zh-cn": "*（DutchmanNL）修复了错误“缺少状态属性定义”"
-			},
-			"0.2.0": {
-				"en": "Code optimized & released",
-				"de": "Code optimiert und freigegeben",
-				"ru": "Код оптимизирован и выпущен",
-				"pt": "Código otimizado e liberado",
-				"nl": "Code geoptimaliseerd en vrijgegeven",
-				"fr": "Code optimisé et publié",
-				"it": "Codice ottimizzato e rilasciato",
-				"es": "Código optimizado y lanzado",
-				"pl": "Kod zoptymalizowany i wydany",
-				"zh-cn": "优化和发布代码"
-			},
-			"0.1.6": {
-				"en": "Adapter renamed",
-				"de": "Adapter umbenannt",
-				"ru": "Адаптер переименован",
-				"pt": "Adaptador renomeado",
-				"nl": "Adapter hernoemd",
-				"fr": "Adaptateur renommé",
-				"it": "Adattatore rinominato",
-				"es": "Adaptador renombrado",
-				"pl": "Zmiana nazwy adaptera",
-				"zh-cn": "适配器已重命名"
-			},
-			"0.1.2": {
-				"en": "Widgets added & code improvements",
-				"de": "Widgets hinzugefügt und Code verbessert",
-				"ru": "Добавлены виджеты и улучшения кода",
-				"pt": "Widgets adicionados e aprimoramentos de código",
-				"nl": "Widgets toegevoegd en codeverbeteringen",
-				"fr": "Widgets ajoutés et améliorations du code",
-				"it": "Widget aggiunti e miglioramenti del codice",
-				"es": "Widgets agregados y mejoras de código",
-				"pl": "Dodano widżety i ulepszenia kodu",
-				"zh-cn": "添加了小部件并改进了代码"
-			},
-			"0.1.0": {
-				"en": "initial release",
-				"de": "Erstveröffentlichung",
-				"ru": "Начальная версия",
-				"pt": "lançamento inicial",
-				"nl": "Eerste uitgave",
-				"fr": "Première version",
-				"it": "Versione iniziale",
-				"es": "Versión inicial",
-				"pl": "Pierwsze wydanie",
-				"zh-cn": "首次出版"
-			}
+		  "ru": "Количество точек данных было сокращено при выборе стран",
+		  "pt": "O número de pontos de dados foi reduzido pela seleção de países",
+		  "nl": "Door selectie van landen is het aantal datapunten verminderd",
+		  "fr": "Le nombre de points de données a été réduit par la sélection des pays",
+		  "it": "Il numero di punti dati è stato ridotto dalla selezione dei paesi",
+		  "es": "El número de puntos de datos se redujo mediante la selección de países.",
+		  "pl": "Liczba punktów danych została zmniejszona przez wybór krajów",
+		  "zh-cn": "通过选择国家减少了数据点的数量"
 		},
-		"title": "COVID-19 live information",
-		"titleLang": {
-			"en": "Live information about COVID-19",
-			"de": "Live-Informationen zu COVID-19",
-			"ru": "Актуальная информация о COVID-19",
-			"pt": "Informação ao vivo sobre COVID-19",
-			"nl": "Live informatie over COVID-19",
-			"fr": "Informations en direct sur COVID-19",
-			"it": "Informazioni in diretta su COVID-19",
-			"es": "Información en vivo sobre COVID-19",
-			"pl": "Informacje na żywo o COVID-19",
-			"zh-cn": "有关COVID-19的实时信息"
+		"0.2.5": {
+		  "en": "Bugfix : Cabo_Verde not found in lib! Must be added to the country name translator",
+		  "de": "Bugfix: Cabo_Verde nicht in lib gefunden! Muss dem Ländernamenübersetzer hinzugefügt werden",
+		  "ru": "Исправлено: Cabo_Verde не найден в lib! Должен быть добавлен к переводчику названия страны",
+		  "pt": "Correção de bug: Cabo_Verde não encontrado na lib! Deve ser adicionado ao tradutor do nome do país",
+		  "nl": "Bugfix: Cabo_Verde niet gevonden in lib! Moet worden toegevoegd aan de vertaler van de landnaam",
+		  "fr": "Bugfix: Cabo_Verde introuvable dans la lib! Doit être ajouté au traducteur du nom du pays",
+		  "it": "Bugfix: Cabo_Verde non trovato in lib! Deve essere aggiunto al traduttore del nome del paese",
+		  "es": "Bugfix: Cabo_Verde no encontrado en lib! Debe agregarse al traductor del nombre del país",
+		  "pl": "Bugfix: Nie znaleziono Cabo_Verde w lib! Należy dodać do tłumacza nazwy kraju",
+		  "zh-cn": "错误修正：lib中找不到Cabo_Verde！必须添加到国家/地区名称翻译器中"
 		},
-		"desc": {
-			"en": "Adapter to show Global Corona Virus information and current reports",
-			"de": "Adapter zur Anzeige von Informationen zum globalen Corona-Virus und aktuellen Berichten",
-			"ru": "Адаптер для отображения информации о корона вирусе и текущих отчетов",
-			"pt": "Adaptador para mostrar informações sobre o vírus Corona global e relatórios atuais",
-			"nl": "Adapter om Global Corona Virus-informatie en actuele rapporten weer te geven",
-			"fr": "Adaptateur pour afficher les informations sur le virus Corona global et les rapports actuels",
-			"it": "Adattatore per mostrare le informazioni del Global Corona Virus e i rapporti correnti",
-			"es": "Adaptador para mostrar información e informes actuales del Virus Global Corona",
-			"pl": "Adapter do wyświetlania informacji o globalnym wirusie Corona i bieżących raportów",
-			"zh-cn": "显示全球冠状病毒信息和当前报告的适配器"
+		"0.2.4": {
+		  "en": "Grouping by continents implemented",
+		  "de": "Gruppierung nach Kontinenten implementiert",
+		  "ru": "Осуществлена группировка по континентам",
+		  "pt": "Agrupamento por continentes implementados",
+		  "nl": "Groeperen op continenten geïmplementeerd",
+		  "fr": "Regroupement par continents mis en œuvre",
+		  "it": "Raggruppamento per continenti implementato",
+		  "es": "Agrupación por continentes implementada",
+		  "pl": "Wprowadzono grupowanie według kontynentów",
+		  "zh-cn": "已按大洲分组"
 		},
-		"authors": [
-			"DutchmanNL <rdrozda86@gmail.com>"
-		],
-		"contributors": [
-			"GermanBluefox",
-			"AlCalzone",
-			"Scrounger"
-		],
-		"keywords": [
-			"virus",
-			"covid",
-			"corona",
-			"pandemie"
-		],
-		"license": "MIT",
-		"noConfig": false,
-		"platform": "Javascript/Node.js",
-		"main": "main.js",
-		"icon": "coronavirus-statistics.png",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.coronavirus-statistics/master/admin/coronavirus-statistics.png",
-		"readme": "https://github.com/iobroker-community-adapters/ioBroker.coronavirus-statistics/blob/master/README.md",
-		"loglevel": "info",
-		"mode": "schedule",
-		"schedule": "*/15 * * * *",
-		"allowInit": true,
-		"type": "health",
-		"compact": true,
-		"connectionType": "cloud",
-		"dataSource": "poll",
-		"materialize": true,
-		"dependencies": [
+		"0.2.3": {
+		  "en": "Error message for new attribute solved",
+		  "de": "Fehlermeldung für neues Attribut behoben",
+		  "ru": "Сообщение об ошибке для нового атрибута решено",
+		  "pt": "Mensagem de erro para o novo atributo resolvido",
+		  "nl": "Foutmelding voor nieuw attribuut opgelost",
+		  "fr": "Message d'erreur pour le nouvel attribut résolu",
+		  "it": "Risolto il messaggio di errore per il nuovo attributo",
+		  "es": "Mensaje de error para el nuevo atributo resuelto",
+		  "pl": "Komunikat o błędzie dotyczący nowego atrybutu rozwiązany",
+		  "zh-cn": "解决了新属性的错误消息"
+		},
+		"0.2.2": {
+		  "en": "fixed widget countries",
+		  "de": "feste Widget-Länder",
+		  "ru": "фиксированные страны виджетов",
+		  "pt": "países de widget fixo",
+		  "nl": "vaste widget-landen",
+		  "fr": "pays de widgets fixes",
+		  "it": "Paesi con widget fissi",
+		  "es": "países de widgets fijos",
+		  "pl": "naprawiono kraje widgetów",
+		  "zh-cn": "固定小工具国家"
+		},
+		"0.2.1": {
+		  "en": "* (DutchmanNL) Fixed error \"State attribute definition missing\"",
+		  "de": "* (DutchmanNL) Fehler \"State attribute definition missing\"",
+		  "ru": "* (DutchmanNL) Исправлена ошибка «Отсутствует определение атрибута состояния»",
+		  "pt": "* (DutchmanNL) Corrigido o erro \"State attribute definition missing\"",
+		  "nl": "* (DutchmanNL) Fout verholpen \"State attribuutdefinitie ontbreekt\"",
+		  "fr": "* (DutchmanNL) Correction d'une erreur \"Définition d'attribut d'état manquante\"",
+		  "it": "* (DutchmanNL) Risolto errore \"State attribute definition missing\"",
+		  "es": "* (DutchmanNL) Se corrigió el error \"State attribute definition missing\"",
+		  "pl": "* (DutchmanNL) Naprawiono błąd „Brak definicji atrybutu stanu”",
+		  "zh-cn": "*（DutchmanNL）修复了错误“缺少状态属性定义”"
+		},
+		"0.2.0": {
+		  "en": "Code optimized & released",
+		  "de": "Code optimiert und freigegeben",
+		  "ru": "Код оптимизирован и выпущен",
+		  "pt": "Código otimizado e liberado",
+		  "nl": "Code geoptimaliseerd en vrijgegeven",
+		  "fr": "Code optimisé et publié",
+		  "it": "Codice ottimizzato e rilasciato",
+		  "es": "Código optimizado y lanzado",
+		  "pl": "Kod zoptymalizowany i wydany",
+		  "zh-cn": "优化和发布代码"
+		},
+		"0.1.6": {
+		  "en": "Adapter renamed",
+		  "de": "Adapter umbenannt",
+		  "ru": "Адаптер переименован",
+		  "pt": "Adaptador renomeado",
+		  "nl": "Adapter hernoemd",
+		  "fr": "Adaptateur renommé",
+		  "it": "Adattatore rinominato",
+		  "es": "Adaptador renombrado",
+		  "pl": "Zmiana nazwy adaptera",
+		  "zh-cn": "适配器已重命名"
+		},
+		"0.1.2": {
+		  "en": "Widgets added & code improvements",
+		  "de": "Widgets hinzugefügt und Code verbessert",
+		  "ru": "Добавлены виджеты и улучшения кода",
+		  "pt": "Widgets adicionados e aprimoramentos de código",
+		  "nl": "Widgets toegevoegd en codeverbeteringen",
+		  "fr": "Widgets ajoutés et améliorations du code",
+		  "it": "Widget aggiunti e miglioramenti del codice",
+		  "es": "Widgets agregados y mejoras de código",
+		  "pl": "Dodano widżety i ulepszenia kodu",
+		  "zh-cn": "添加了小部件并改进了代码"
+		},
+		"0.1.0": {
+		  "en": "initial release",
+		  "de": "Erstveröffentlichung",
+		  "ru": "Начальная версия",
+		  "pt": "lançamento inicial",
+		  "nl": "Eerste uitgave",
+		  "fr": "Première version",
+		  "it": "Versione iniziale",
+		  "es": "Versión inicial",
+		  "pl": "Pierwsze wydanie",
+		  "zh-cn": "首次出版"
+		}
+	  },
+	  "title": "COVID-19 live information",
+	  "titleLang": {
+		"en": "Live information about COVID-19",
+		"de": "Live-Informationen zu COVID-19",
+		"ru": "Актуальная информация о COVID-19",
+		"pt": "Informação ao vivo sobre COVID-19",
+		"nl": "Live informatie over COVID-19",
+		"fr": "Informations en direct sur COVID-19",
+		"it": "Informazioni in diretta su COVID-19",
+		"es": "Información en vivo sobre COVID-19",
+		"pl": "Informacje na żywo o COVID-19",
+		"zh-cn": "有关COVID-19的实时信息"
+	  },
+	  "desc": {
+		"en": "Adapter to show Global Corona Virus information and current reports",
+		"de": "Adapter zur Anzeige von Informationen zum globalen Corona-Virus und aktuellen Berichten",
+		"ru": "Адаптер для отображения информации о корона вирусе и текущих отчетов",
+		"pt": "Adaptador para mostrar informações sobre o vírus Corona global e relatórios atuais",
+		"nl": "Adapter om Global Corona Virus-informatie en actuele rapporten weer te geven",
+		"fr": "Adaptateur pour afficher les informations sur le virus Corona global et les rapports actuels",
+		"it": "Adattatore per mostrare le informazioni del Global Corona Virus e i rapporti correnti",
+		"es": "Adaptador para mostrar información e informes actuales del Virus Global Corona",
+		"pl": "Adapter do wyświetlania informacji o globalnym wirusie Corona i bieżących raportów",
+		"zh-cn": "显示全球冠状病毒信息和当前报告的适配器"
+	  },
+	  "authors": [
+		"DutchmanNL <rdrozda86@gmail.com>"
+	  ],
+	  "contributors": [
+		"GermanBluefox",
+		"AlCalzone",
+		"Scrounger"
+	  ],
+	  "keywords": [
+		"virus",
+		"covid",
+		"corona",
+		"pandemie"
+	  ],
+	  "license": "MIT",
+	  "noConfig": false,
+	  "platform": "Javascript/Node.js",
+	  "main": "main.js",
+	  "icon": "coronavirus-statistics.png",
+	  "enabled": true,
+	  "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.coronavirus-statistics/master/admin/coronavirus-statistics.png",
+	  "readme": "https://github.com/iobroker-community-adapters/ioBroker.coronavirus-statistics/blob/master/README.md",
+	  "loglevel": "info",
+	  "mode": "schedule",
+	  "schedule": "*/15 * * * *",
+	  "allowInit": true,
+	  "type": "health",
+	  "compact": true,
+	  "connectionType": "cloud",
+	  "dataSource": "poll",
+	  "materialize": true,
+	  "dependencies": [
 			{
 				"js-controller": ">=1.4.2"
 			}
 		]
 	},
 	"native": {
-		"countries": ["Germany"]
+	  "deleteUnused" : false,
+	  "countries": [
+		"Germany"
+	  ]
 	},
 	"objects": [],
 	"instanceObjects": [
-		{
-			"_id": "countryTranslator",
-			"type": "state",
-			"common": {
-				"role": "",
-				"name": "Translator for unknow country names",
-				"type": "string",
-				"read": true,
-				"write": true,
-				"def": 0
-			},
-			"native": {}
+	  {
+		"_id": "countryTranslator",
+		"type": "state",
+		"common": {
+		  "role": "",
+		  "name": "Translator for unknow country names",
+		  "type": "string",
+		  "read": true,
+		  "write": true,
+		  "def": 0
+		},
+		"native": {}
 		}
 	]
 }

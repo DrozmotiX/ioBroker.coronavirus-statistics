@@ -63,9 +63,10 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
-### 0.3.2
+### 0.3.3
 * (DutchmanNL) Improved configuration page
 * (DutchmanNL) Make country list in configuration variable	
+* (DutchmanNL) Implement choice if non-selected countrys should be deleted from states (if already there, default No!) 
 
 ### 0.3.1
 * (DutchmanNL) Enable configuration

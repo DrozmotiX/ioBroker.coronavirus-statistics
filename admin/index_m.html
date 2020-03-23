@@ -90,6 +90,21 @@
 			_onChange = onChange;
 			settings.countries = settings.countries || [];
 
+			$('.value').each(function () {
+				let $key = $(this);
+				let id = $key.attr('id');
+				if ($key.attr('type') === 'checkbox') {
+					// do not call onChange direct, because onChange could expect some arguments
+					$key.prop('checked', settings[id])
+						.on('change', () => onChange());
+				} else {
+					// do not call onChange direct, because onChange could expect some arguments
+					$key.val(settings[id])
+						.on('change', () => onChange())
+						.on('keyup', () => onChange())
+				}
+			});
+
 			// Load all countrys
 			loadCountrys(settings);
 		}
@@ -101,6 +116,20 @@
 			$('.country').each(function () {
 				if ($(this).prop('checked')) {
 					obj.countries.push($(this).data('country'));
+				}
+			});
+
+			$('.value').each(function () {
+				var $this = $(this);
+				var id = $this.attr('id');
+				if ($this.attr('type') === 'checkbox') {
+					obj[id] = $this.prop('checked');
+				} else {
+					var value = $this.val();
+					if (id === 'Password') {
+						value = encrypt(secret, value);
+					}
+					obj[id] = value;
 				}
 			});
 
@@ -121,8 +150,18 @@
 		</div>
 
 		<div class="row">
-			<div class="col s12">
-				<h5 class="translate">Countries</h5>
+			<div class="col s12 input-field">
+				<h5 class="translate col s5">Countries</h5>
+				<!-- Button to handle removal of unused states-->
+				<h5 class="switch col s5 right-align valign">
+					<label>
+						<class="translate">Keep all States</class>
+							<input type="checkbox" class="value" id="deleteUnused">
+							<span class="lever"></span>
+							<class="translate">Delete unused States</class>
+					</label>
+				</h5>
+				<!-- Button to handle removal of unused states-->
 			</div>
 		</div>
 		<div class="row" id="countries">

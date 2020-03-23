@@ -187,9 +187,11 @@ class Covid19 extends utils.Adapter {
 
 	async localDeleteState(state) {
 		try {
-			const obj = await this.getObjectAsync(state);
-			if (obj) {
-				await this.delObjectAsync(state);
+			if (this.config.deleteUnused === true){
+				const obj = await this.getObjectAsync(state);
+				if (obj) {
+					await this.delObjectAsync(state);
+				}
 			}
 		} catch (error) {
 			// do nothing
