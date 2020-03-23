@@ -9,7 +9,7 @@ const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
 const countryJs = require('country-list-js');
 const allCountrys = [];
-
+	
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
 
@@ -56,12 +56,12 @@ class Covid19 extends utils.Adapter {
 
 				const result = await request('https://corona.lmao.ninja/countries');
 				this.log.debug('Data from COVID-19 API received : ' + result);
+				const values = JSON.parse(result);
 
 				// add user defined country translation to countryTranslator
 				await this.addUserCountriesTranslator();
 
-				const values = JSON.parse(result);
-
+				// Write all country states depending on filter
 				for (const i in values) {
 					if (values.hasOwnProperty(i) && values[i] && values[i].country) {
 						let country = values[i].country;
@@ -72,26 +72,32 @@ class Covid19 extends utils.Adapter {
 						const continent = await this.getContinent(country);
 						this.log.debug(`${country} (${continent})`);
 
+						// Write states for all countrys in API
 						for (const y in values[i]) {
 							if (values[i].hasOwnProperty(y) && y !== 'country') {
 								// if ((!this.config.countries.length || this.config.countries.includes(values[i].country)) && this.config.loadAllCountrys === false ) {
 								if ((!this.config.countries.length || this.config.countries.includes(values[i].country)) && this.config.loadAllCountrys === false) {
-									if(y !== 'countryInfo'){
-										await this.localCreateState(country + '.' + y, y, values[i][y]);	
+									if (y !== 'countryInfo') {
+										await this.localCreateState(country + '.' + y, y, values[i][y]);
 									} else {
 										// Only take the flag from country info
 										await this.localCreateState(country + '.flag', 'flag', values[i][y].flag);
 									}
-								} else if (this.config.loadAllCountrys === true ) {
-									if(y !== 'countryInfo'){
-										await this.localCreateState(country + '.' + y, y, values[i][y]);	
+								} else if (this.config.loadAllCountrys === true) {
+									if (y !== 'countryInfo') {
+										await this.localCreateState(country + '.' + y, y, values[i][y]);
 									} else {
 										// Only take the flag from country info
 										await this.localCreateState(country + '.flag', 'flag', values[i][y].flag);
 									}
 								} else {
-									// this.log.info('delete routine');
-									await this.localDeleteState(country + '.' + y);
+									if (y !== 'countryInfo') {
+										await this.localDeleteState(country + '.' + y);
+									} else {
+										// Only take the flag from country info
+										this.log.debug('delete routine : ' + y + ' for : ' + country);
+										await this.localDeleteState(country + '.flag');
+									}
 								}
 
 								if (continent) {
@@ -118,6 +124,39 @@ class Covid19 extends utils.Adapter {
 					}
 				}
 
+				// Write Top 5
+				this.log.debug('Top 5 Countries : ' + JSON.stringify(values.slice(0, 5)));
+				const top_Arrary = values.slice(0, 5);
+				let count = 1;
+				for (const i in top_Arrary) {
+					if (count <= 5 ) {
+						let country = top_Arrary[i].country;
+
+						await this.extendObjectAsync('country_Top_5.' + count, {
+							type: 'channel',
+							common: {
+								name: 'Rank ' + count + ' : ' + country,
+							},
+							native: {},
+						});
+
+						country = country.replace(/\s/g, '_');
+						country = country.replace(/\./g, '');
+						this.log.debug('Country loop rank : ' + count + ' ' + JSON.stringify(country));
+						for (const y in values[i]) {
+							if (y !== 'countryInfo') {
+								await this.localCreateState('country_Top_5.' + count + '.' + y, y, values[i][y]);
+							} else {
+								// Only take the flag from country info
+								await this.localCreateState('country_Top_5.' + count + '.flag', 'flag', values[i][y].flag);
+							}
+						}
+					}
+					count = count + 1;
+				}
+
+
+				// Write continent information
 				if (continentsStats) {
 					for (const c in continentsStats) {
 						this.log.debug(c + ': ' + JSON.stringify(continentsStats[c]));
@@ -130,9 +169,6 @@ class Covid19 extends utils.Adapter {
 					}
 				}
 
-				// todo delete disabled countries
-				this.log.debug(JSON.stringify(allCountrys));
-
 				await this.extendObjectAsync('countryTranslator', {
 					native: {
 						allCountrys
@@ -140,7 +176,7 @@ class Covid19 extends utils.Adapter {
 				});
 
 			} catch (error) {
-				this.log.warn('Error getting API response, will retry at next shedule');
+				this.log.warn('Error getting API response, will retry at next shedule ' + error);
 			}
 		};
 
@@ -201,7 +237,7 @@ class Covid19 extends utils.Adapter {
 
 	async localDeleteState(state) {
 		try {
-			if (this.config.deleteUnused === true){
+			if (this.config.deleteUnused === true) {
 				const obj = await this.getObjectAsync(state);
 				if (obj) {
 					await this.delObjectAsync(state);
@@ -236,7 +272,7 @@ class Covid19 extends utils.Adapter {
 		return undefined;
 	}
 
-	async addUserCountriesTranslator(){
+	async addUserCountriesTranslator() {
 		const userCountryTranslator = await this.getStateAsync('countryTranslator');
 		if (userCountryTranslator && userCountryTranslator.val) {
 			// add user defined country translation to countryTranslator
