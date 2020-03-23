@@ -65,7 +65,7 @@ As first value the name from the warning message must be taken from the log. The
 
 ### 0.3.2
 * (DutchmanNL) Improved configuration page
-* (DutchmanNL) Make country list in configuration variable
+* (DutchmanNL) Make country list in configuration variable	
 
 ### 0.3.1
 * (DutchmanNL) Enable configuration
