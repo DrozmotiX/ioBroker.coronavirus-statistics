@@ -1,8 +1,20 @@
 {
 	"common": {
 		"name": "coronavirus-statistics",
-		"version": "0.3.4",
+		"version": "0.3.5",
 		"news": {
+			"0.3.5": {
+				"en": "Data-points added for Top 5 of countries with most cases",
+				"de": "Datenpunkte für Top 5 der Länder mit den meisten Fällen hinzugefügt",
+				"ru": "Добавлены точки данных для Топ-5 стран с большинством случаев",
+				"pt": "Dados adicionados aos 5 principais países com a maioria dos casos",
+				"nl": "Gegevenspunten toegevoegd voor Top 5 van landen met de meeste gevallen",
+				"fr": "Points de données ajoutés pour le top 5 des pays avec la plupart des cas",
+				"it": "Aggiunti punti dati per la Top 5 dei paesi con la maggior parte dei casi",
+				"es": "Se agregaron puntos de datos para los 5 principales países con la mayoría de los casos",
+				"pl": "Dodano punkty danych dla 5 najlepszych krajów z większością przypadków",
+				"zh-cn": "在大多数情况下为前5个国家/地区添加了数据点"		
+			},	
 			"0.3.4": {
 				"en": "Added button to read \"All Countrys\"",
 				"de": "Schaltfläche zum Lesen von \"Alle Länder\" hinzugefügt",
