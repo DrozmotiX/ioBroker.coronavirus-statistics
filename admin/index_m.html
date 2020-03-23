@@ -31,7 +31,7 @@
 	<script type="text/javascript">
 		// var countries = ["China","Italy","Spain","USA","Germany","Iran","France","S. Korea","Switzerland","UK","Netherlands","Belgium","Austria","Norway","Sweden","Portugal","Denmark","Australia","Canada","Malaysia","Brazil","Japan","Czechia","Turkey","Israel","Luxembourg","Ireland","Pakistan","Diamond Princess","Chile","Finland","Thailand","Iceland","Poland","Ecuador","Greece","Indonesia","Saudi Arabia","Qatar","Singapore","Romania","Slovenia","India","Philippines","Russia","Bahrain","Estonia","Peru","Egypt","Hong Kong","Mexico","Lebanon","Panama","South Africa","Croatia","Iraq","Argentina","Colombia","Dominican Republic","Armenia","Serbia","Kuwait","Slovakia","San Marino","Bulgaria","Taiwan","UAE","Algeria","Latvia","Uruguay","Hungary","Lithuania","Costa Rica","North Macedonia","Faeroe Islands","Andorra","Morocco","Vietnam","Jordan","Bosnia and Herzegovina","Malta","Albania","Cyprus","Brunei","Sri Lanka","Moldova","Belarus","Burkina Faso","Tunisia","Venezuela","New Zealand","Azerbaijan","Palestine","Kazakhstan","Guadeloupe","Senegal","Oman","Georgia","Cambodia","Trinidad and Tobago","Ukraine","Réunion","Uzbekistan","Cameroon","Martinique","Liechtenstein","Afghanistan","Channel Islands","Bangladesh","Guam","Nigeria","Honduras","Bolivia","DRC","Puerto Rico","Paraguay","Cuba","Ghana","Macao","Jamaica","Guyana","Mauritius","Monaco","French Guiana","Guatemala","Rwanda","Montenegro","Togo","French Polynesia","Barbados","Ivory Coast","Kyrgyzstan","Maldives","Tanzania","Ethiopia","Mayotte","Gibraltar","Mongolia","Aruba","Kenya","Seychelles","Equatorial Guinea","U.S. Virgin Islands","Gabon","Isle of Man","Saint Martin","Suriname","Bahamas","New Caledonia","Eswatini","Cayman Islands","Curaçao","Cabo Verde","CAR","Congo","El Salvador","Liberia","Madagascar","Namibia","St. Barth","Zambia","Zimbabwe","Sudan","Nepal","Angola","Benin","Bermuda","Bhutan","Fiji","Greenland","Guinea","Haiti","Mauritania","Nicaragua","Niger","Saint Lucia","Antigua and Barbuda","Chad","Djibouti","Eritrea","Gambia","Vatican City","Montserrat","Papua New Guinea","St. Vincent Grenadines","Sint Maarten","Somalia","Timor-Leste","Uganda"];
 		var countries = null;
-		let retryTimer = null, _change = null;
+		let retryTimer = null, _onChange = null;
 		function loadCountrys(settings) {
 
 			// Read all countrys from countryTranslator object
@@ -68,10 +68,10 @@
 					var $countries = $('#countries');
 					var text = '';
 					for (var i = 0; i < countries.length; i++) {
-						text += '<div class="col s3 input-field">' +
+						text += '<label class="col s3 input-field">' +
 							'<input type="checkbox" class="country" ' + (settings.countries.indexOf(countries[i]) !== -1 ? 'checked ' : '') + ' data-country="' + countries[i] + '" />' +
-							'<span>' + _(countries[i]) + '</span>' +
-							'</div>';
+							'<span class="black-text">' + _(countries[i]) + '</span>' +
+							'</label>';
 					}
 					$countries.html(text);
 				}
@@ -87,7 +87,7 @@
 		// This will be called by the admin adapter when the settings page loads
 		function load(settings, onChange) {
 			if (!settings) return;
-			_change = onChange;
+			_onChange = onChange;
 			settings.countries = settings.countries || [];
 
 			// Load all countrys
