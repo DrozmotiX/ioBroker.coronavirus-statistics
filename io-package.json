@@ -263,11 +263,15 @@
         "deleteUnused": false,
         "getContinents": true,
         "getGermanFederalStates": false,
+        "getGermanCountyStates": true,
         "getAllGermanFederalStates": true,
+        "getAllGermanCountyStates": true,
         "loadAllCountrys": false,
         "countries": [
             "Germany"
-        ]
+        ],
+        "allGermanFederalStates": [],
+        "allGermanCounty": []
     },
     "objects": [],
     "instanceObjects": [

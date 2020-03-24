@@ -9,6 +9,7 @@ const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
 const countryJs = require('country-list-js');
 const allCountrys = [];
+let allGermanFederalStates = [],  allGermanCounty = [];
 	
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
@@ -44,7 +45,7 @@ class Covid19 extends utils.Adapter {
 					}
 				}
 			} catch (error) {
-				this.log.warn('Error getting API response, will retry at next shedule');
+				this.log.warn('Error getting LoadAll  API response, will retry at next shedule');
 			}
 		};
 
@@ -125,8 +126,8 @@ class Covid19 extends utils.Adapter {
 				}
 
 				// Write Top 5
-				this.log.debug('Top 5 Countries : ' + JSON.stringify(values.slice(0, 5)));
 				const top_Arrary = values.slice(0, 5);
+				this.log.debug('Top 5 Countries : ' + JSON.stringify(values.slice(0, 5)));
 				let count = 1;
 				for (const i in top_Arrary) {
 					if (count <= 5 ) {
@@ -155,7 +156,6 @@ class Covid19 extends utils.Adapter {
 					count = count + 1;
 				}
 
-
 				// Write continent information
 				if (continentsStats && this.config.getContinents === true) {
 					for (const c in continentsStats) {
@@ -176,13 +176,14 @@ class Covid19 extends utils.Adapter {
 				});
 
 			} catch (error) {
-				this.log.warn('Error getting API response, will retry at next shedule ' + error);
+				this.log.warn('Error getting loadCountries API response, will retry at next shedule ' + error);
 			}
 		};
 
 		const germanyFederalStates = async () => {
 			// Try to call API and get global information
 			try {
+				// RKI Corona Bundesländer : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0/geoservice?geometry=-23.491%2C46.270%2C39.746%2C55.886
 				// DataSource too build query https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0?geometry=-23.491%2C46.270%2C39.746%2C55.886
 				const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
 				this.log.debug('Data from RKI Corona Bundesländer API received : ' + result);
@@ -192,6 +193,7 @@ class Covid19 extends utils.Adapter {
 					if (values.features[i]) {
 						this.log.debug('Getting data for Federal State : ' + JSON.stringify(values.features[i].attributes.LAN_ew_GEN));
 						const federalStateName = values.features[i].attributes.LAN_ew_GEN;
+						allGermanFederalStates.push(federalStateName);
 
 						// Create Channel for each Federal State		
 						await this.extendObjectAsync('Germany.Federal_States.' + federalStateName, {
@@ -225,8 +227,62 @@ class Covid19 extends utils.Adapter {
 					}
 				}
 
+				allGermanFederalStates = allGermanFederalStates.sort();
+				await this.extendObjectAsync('countryTranslator', {
+					native: {
+						allGermanFederalStates
+					},
+				});
+
 			} catch (error) {
 				this.log.warn('Error getting API response, will retry at next shedule');
+			}
+		};
+
+		const germanyCounties = async () => {
+			// Try to call API and get global information
+			try {
+				// RKI Corona Landkreise : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0/geoservice?selectedAttribute=BSG
+				const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county&returnGeometry=false&outSR=4326&f=json');
+				this.log.info('Data from RKI Corona Landkreise API received : ' + result);
+				const values = JSON.parse(result);
+
+				for (const i of Object.keys(values.features)) {
+					if (values.features[i]) {
+						this.log.debug('Getting data for Landkreise : ' + JSON.stringify(values.features[i].attributes.LAN_ew_GEN));
+						const countyName = values.features[i].attributes.GEN;
+						allGermanCounty.push(countyName);
+
+						// Create Channel for each Federal State		
+						await this.extendObjectAsync('Germany.county.' + countyName, {
+							type: 'channel',
+							common: {
+								name: countyName,
+							},
+							native: {},
+						});
+
+						for (const y in values.features[i].attributes) {
+
+							if (y !== 'county' && y !== 'GEN' && y !== 'BEZ' && y !== 'OBJECTID') {
+
+								await this.localCreateState('Germany.county.' + countyName + '.' + y , y, values.features[i].attributes[y]);
+				}
+					}
+				}
+				}
+
+				allGermanCounty = allGermanCounty.sort();
+				this.log.info('allGermanCounty : ' + JSON.stringify(allGermanCounty));
+
+				await this.extendObjectAsync('countryTranslator', {
+					native: {
+						allGermanCounty
+					},
+				});
+
+			} catch (error) {
+				this.log.warn('Error getting Landkreise API response, will retry at next shedule');
 			}
 		};
 
@@ -241,6 +297,11 @@ class Covid19 extends utils.Adapter {
 			if (this.config.getGermanFederalStates === true) {
 				await germanyFederalStates(); // Detailed Federal state statistics for germany
 			}
+
+			if (this.config.getGermanCountyStates === true) {
+				await germanyCounties(); // Detailed Federal state statistics for germany
+			}
+
 		} catch (e) {
 			this.log.error('Unable to reach COVID-19 API : ' + e);
 		}
