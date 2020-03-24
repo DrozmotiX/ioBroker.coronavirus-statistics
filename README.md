@@ -35,8 +35,9 @@ The following information is available :
 | todayDeaths | Amount of totally known people died today |
 
 
-Please be aware this adapter uses as much as possible up-to-date information but there can be an delay of several hours depending on the country's report.
-Source : https://coronavirus-19-api.herokuapp.com
+Please be aware this adapter uses as much as possible up-to-date information but there can be an delay of several hours depending on the country's report.  
+German Federal States : https://npgeo-corona-npgeo-de.hub.arcgis.com/  s
+Generic Source : https://coronavirus-19-api.herokuapp.com
 
 ## Add missing countries
 It may happen that countries are not recognized correctly because the API delivers some country names not ISO conform. In such a case you will get a warning message in the log, which looks like this
@@ -62,6 +63,11 @@ The JSON string then looks like this, for example:
 As first value the name from the warning message must be taken from the log. The name of the country from the [List with country names](https://github.com/i-rocky/country-list-js/blob/master/data/names.json) is then assigned to this.
 
 ## Changelog
+
+
+### 0.4.2 Federal States for Germany implemented
+* (DutchmanNL) Configuration redesigned, moved options to "Advanced Settings" tab
+* (DutchmanNL) Federal States for Germany implemented, thanks to : https://npgeo-corona-npgeo-de.hub.arcgis.com/ 
 
 ### 0.4.0 Data-points added for Top 5 of countries with most cases
 * (KLVN) BugFix : German (and some other) translations corrected

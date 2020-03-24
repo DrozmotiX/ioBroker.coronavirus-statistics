@@ -157,7 +157,7 @@ class Covid19 extends utils.Adapter {
 
 
 				// Write continent information
-				if (continentsStats) {
+				if (continentsStats && this.config.getContinents === true) {
 					for (const c in continentsStats) {
 						this.log.debug(c + ': ' + JSON.stringify(continentsStats[c]));
 
@@ -180,14 +180,67 @@ class Covid19 extends utils.Adapter {
 			}
 		};
 
+		const germanyFederalStates = async () => {
+			// Try to call API and get global information
+			try {
+				// DataSource too build query https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0?geometry=-23.491%2C46.270%2C39.746%2C55.886
+				const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
+				this.log.debug('Data from RKI Corona Bundesländer API received : ' + result);
+				const values = JSON.parse(result);
+
+				for (const i of Object.keys(values.features)) {
+					if (values.features[i]) {
+						this.log.debug('Getting data for Federal State : ' + JSON.stringify(values.features[i].attributes.LAN_ew_GEN));
+						const federalStateName = values.features[i].attributes.LAN_ew_GEN;
+
+						// Create Channel for each Federal State		
+						await this.extendObjectAsync('Germany.Federal_States.' + federalStateName, {
+							type: 'channel',
+							common: {
+								name: federalStateName,
+							},
+							native: {},
+						});
+
+						for (const y in values.features[i].attributes) {
+
+							switch (y) {
+								case 'Aktualisierung': 	//  Last refresh date
+									await this.localCreateState('Germany.Federal_States.' + federalStateName + '.updated', 'updated', values.features[i].attributes[y]);
+									break;
+
+								case 'Death':		// Current reportet deaths
+									await this.localCreateState('Germany.Federal_States.' + federalStateName + '.deaths', 'deaths', values.features[i].attributes[y]);
+									break;
+
+								case 'Fallzahl':		// Current reportet cases
+									await this.localCreateState('Germany.Federal_States.' + federalStateName + '.cases', 'cases', values.features[i].attributes[y]);
+									break;
+
+								default:
+									this.log.debug('Data "' + y  + '" from API ignored having values : ' + values.features[i].attributes[y]);
+
+							}
+						}
+					}
+				}
+
+			} catch (error) {
+				this.log.warn('Error getting API response, will retry at next shedule');
+			}
+		};
+
 		// Random number generator to avoid all ioBroker instances calling the API at the same time
 		const timer1 = (Math.random() * (10 - 1) + 1) * 1000;
 		await wait(timer1);
 		this.setState('info.connection', true, true);
 
 		try {
-			await loadAll();
-			await loadCountries();
+			await loadAll();	// Global Worldwide statistics
+			await loadCountries(); // Detailed Worldwide statistics by country
+			if (this.config.getGermanFederalStates === true) {
+				await germanyFederalStates(); // Detailed Federal state statistics for germany
+			}
 		} catch (e) {
 			this.log.error('Unable to reach COVID-19 API : ' + e);
 		}

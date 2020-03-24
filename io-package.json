@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.4.0",
+        "version": "0.4.2",
         "news": {
+            "0.4.1": {
+                "en": "Federal States for Germany implemented",
+                "de": "Bundesländer für Deutschland umgesetzt",
+                "ru": "Федеральные штаты для Германии выполнены",
+                "pt": "Estados federais da Alemanha implementados",
+                "nl": "Bondsstaten voor Duitsland geïmplementeerd",
+                "fr": "Mise en œuvre des États fédéraux pour l'Allemagne",
+                "it": "Stati federali per la Germania attuati",
+                "es": "Estados federales para Alemania implementados",
+                "pl": "Wdrożone kraje związkowe dla Niemiec",
+                "zh-cn": "实施德国联邦制"
+            },
             "0.4.0": {
                 "en": "German (and some other) translations corrected",
                 "de": "Deutsche (und einige andere) Übersetzungen korrigiert",
@@ -249,6 +261,9 @@
     },
     "native": {
         "deleteUnused": false,
+        "getContinents": true,
+        "getGermanFederalStates": false,
+        "getAllGermanFederalStates": true,
         "loadAllCountrys": false,
         "countries": [
             "Germany"
