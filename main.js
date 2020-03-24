@@ -75,16 +75,10 @@ class Covid19 extends utils.Adapter {
 							// Don't create a state for the country
 							if (property === 'country') continue;
 							if (
-								(!this.config.countries.length || this.config.countries.includes(dataset.country))
-								&& this.config.loadAllCountrys === false
+								!this.config.countries.length
+								|| this.config.countries.includes(dataset.country)
+								|| this.config.loadAllCountrys
 							) {
-								if (property !== 'countryInfo') {
-									await this.localCreateState(country + '.' + property, property, dataset[property]);
-								} else {
-									// Only take the flag from country info
-									await this.localCreateState(country + '.flag', 'flag', dataset[property].flag);
-								}
-							} else if (this.config.loadAllCountrys === true) {
 								if (property !== 'countryInfo') {
 									await this.localCreateState(country + '.' + property, property, dataset[property]);
 								} else {
