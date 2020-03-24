@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.4.2",
+        "version": "0.4.5",
         "news": {
+            "0.4.5": {
+                "en": "Countries for Germany added",
+                "de": "Länder für Deutschland hinzugefügt",
+                "ru": "Добавлены страны для Германии",
+                "pt": "Países da Alemanha adicionados",
+                "nl": "Landen voor Duitsland toegevoegd",
+                "fr": "Pays pour l'Allemagne ajoutés",
+                "it": "Aggiunti paesi per la Germania",
+                "es": "Países para Alemania añadidos",
+                "pl": "Dodano kraje dla Niemiec",
+                "zh-cn": "德国国家已添加"
+            },
             "0.4.1": {
                 "en": "Federal States for Germany implemented",
                 "de": "Bundesländer für Deutschland umgesetzt",
@@ -262,16 +274,20 @@
     "native": {
         "deleteUnused": false,
         "getContinents": true,
-        "getGermanFederalStates": false,
+        "getGermanFederalStates": true,
         "getGermanCountyStates": true,
-        "getAllGermanFederalStates": true,
-        "getAllGermanCountyStates": true,
+        "getAllGermanFederalStates": false,
+        "getAllGermanCountyStates": false,
         "loadAllCountrys": false,
         "countries": [
-            "Germany"
+            ""
         ],
-        "allGermanFederalStates": [],
-        "allGermanCounty": []
+        "allGermanFederalStates": [
+            ""
+        ],
+        "allGermanCounty": [
+            ""
+        ]
     },
     "objects": [],
     "instanceObjects": [

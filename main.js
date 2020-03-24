@@ -77,7 +77,7 @@ class Covid19 extends utils.Adapter {
 						for (const y in values[i]) {
 							if (values[i].hasOwnProperty(y) && y !== 'country') {
 								// if ((!this.config.countries.length || this.config.countries.includes(values[i].country)) && this.config.loadAllCountrys === false ) {
-								if ((!this.config.countries.length || this.config.countries.includes(values[i].country)) && this.config.loadAllCountrys === false) {
+								if ((!this.config.countries.length || this.config.countries.includes(country)) && this.config.loadAllCountrys === false) {
 									if (y !== 'countryInfo') {
 										await this.localCreateState(country + '.' + y, y, values[i][y]);
 									} else {
@@ -195,39 +195,55 @@ class Covid19 extends utils.Adapter {
 						const federalStateName = values.features[i].attributes.LAN_ew_GEN;
 						allGermanFederalStates.push(federalStateName);
 
-						// Create Channel for each Federal State		
-						await this.extendObjectAsync('Germany.Federal_States.' + federalStateName, {
-							type: 'channel',
-							common: {
-								name: federalStateName,
-							},
-							native: {},
-						});
-
 						for (const y in values.features[i].attributes) {
+							if (((!this.config.allGermanFederalStates.length || this.config.allGermanFederalStates.includes(federalStateName)) && 
+									this.config.getAllGermanFederalStates === false) || this.config.getAllGermanFederalStates === true ) {
+								this.log.debug('Create Federal State : ' + y );
 
-							switch (y) {
-								case 'Aktualisierung': 	//  Last refresh date
-									await this.localCreateState('Germany.Federal_States.' + federalStateName + '.updated', 'updated', values.features[i].attributes[y]);
-									break;
+								switch (y) {
+									
+									case 'Aktualisierung': 	//  Last refresh date
+										await this.localCreateState('Germany.Federal_States.' + federalStateName + '.updated', 'updated', values.features[i].attributes[y]);
+										break;
+	
+									case 'Death':		// Current reportet deaths
+										await this.localCreateState('Germany.Federal_States.' + federalStateName + '.deaths', 'deaths', values.features[i].attributes[y]);
+										break;
+	
+									case 'Fallzahl':		// Current reportet cases
+										await this.localCreateState('Germany.Federal_States.' + federalStateName + '.cases', 'cases', values.features[i].attributes[y]);
+										break;
+	
+									default:
+										this.log.debug('Data "' + y  + '" from API ignored having values : ' + values.features[i].attributes[y]);
+								}
 
-								case 'Death':		// Current reportet deaths
-									await this.localCreateState('Germany.Federal_States.' + federalStateName + '.deaths', 'deaths', values.features[i].attributes[y]);
-									break;
-
-								case 'Fallzahl':		// Current reportet cases
-									await this.localCreateState('Germany.Federal_States.' + federalStateName + '.cases', 'cases', values.features[i].attributes[y]);
-									break;
-
-								default:
-									this.log.debug('Data "' + y  + '" from API ignored having values : ' + values.features[i].attributes[y]);
-
+							} else {
+								this.log.debug('Delete Federal State : ' + y );
+								switch (y) {
+									case 'Aktualisierung': 	//  Last refresh date
+										await this.localDeleteState('Germany.Federal_States.' + federalStateName + '.updated');
+										break;
+	
+									case 'Death':		// Current reportet deaths
+										await this.localDeleteState('Germany.Federal_States.' + federalStateName + '.deaths');
+										break;
+	
+									case 'Fallzahl':		// Current reportet cases
+										await this.localDeleteState('Germany.Federal_States.' + federalStateName + '.cases');
+										break;
+	
+									default:
+										await this.localDeleteState('Germany.Federal_States.' + federalStateName + '.' + y);
+								}
 							}
 						}
 					}
 				}
 
 				allGermanFederalStates = allGermanFederalStates.sort();
+				this.log.debug('allGermanFederalStates : ' + JSON.stringify(allGermanFederalStates));
+				
 				await this.extendObjectAsync('countryTranslator', {
 					native: {
 						allGermanFederalStates
@@ -235,7 +251,7 @@ class Covid19 extends utils.Adapter {
 				});
 
 			} catch (error) {
-				this.log.warn('Error getting API response, will retry at next shedule');
+				this.log.warn('Error getting germanyFederalStates API response, will retry at next shedule' + error);
 			}
 		};
 
@@ -244,36 +260,39 @@ class Covid19 extends utils.Adapter {
 			try {
 				// RKI Corona Landkreise : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0/geoservice?selectedAttribute=BSG
 				const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county&returnGeometry=false&outSR=4326&f=json');
-				this.log.info('Data from RKI Corona Landkreise API received : ' + result);
+				this.log.debug('Data from RKI Corona Landkreise API received : ' + result);
 				const values = JSON.parse(result);
 
 				for (const i of Object.keys(values.features)) {
 					if (values.features[i]) {
 						this.log.debug('Getting data for Landkreise : ' + JSON.stringify(values.features[i].attributes.LAN_ew_GEN));
-						const countyName = values.features[i].attributes.GEN;
+						let countyName = values.features[i].attributes.GEN;
+						countyName = countyName.replace(/\s/g, '_');
+						countyName = countyName.replace(/\./g, '');
 						allGermanCounty.push(countyName);
-
-						// Create Channel for each Federal State		
-						await this.extendObjectAsync('Germany.county.' + countyName, {
-							type: 'channel',
-							common: {
-								name: countyName,
-							},
-							native: {},
-						});
 
 						for (const y in values.features[i].attributes) {
 
 							if (y !== 'county' && y !== 'GEN' && y !== 'BEZ' && y !== 'OBJECTID') {
 
-								// await this.localCreateState('Germany.county.' + countyName + '.' + y , y, values.features[i].attributes[y]);
+								if (((!this.config.allGermanCounty.length || this.config.allGermanCounty.includes(countyName)) && 
+								this.config.getAllGermanCountyStates === false) || this.config.getAllGermanCountyStates === true ) {
+									this.log.debug('Create Landkreis State : ' + y );
+
+									// Create Channel for each Landkreis	
+									await this.localCreateState('Germany.county.' + countyName + '.' + y, y, values.features[i].attributes[y]);
+
+								} else {
+									this.log.debug('Delete Landkreis State : ' + 'Germany.county.' + countyName + '.' + y );
+									await this.localDeleteState('Germany.county.' + countyName + '.' + y);
+								}
 							}
 						}
 					}
 				}
 
 				allGermanCounty = allGermanCounty.sort();
-				this.log.info('allGermanCounty : ' + JSON.stringify(allGermanCounty));
+				this.log.debug('allGermanCounty : ' + JSON.stringify(allGermanCounty));
 
 				await this.extendObjectAsync('countryTranslator', {
 					native: {

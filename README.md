@@ -64,6 +64,10 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
+### 0.4.5 Countries for Germany added
+* (DutchmanNL) Countries for Germany added
+* (DutchmanNL) added selection for federal states and country's
+* (DutchmanNL) BugFix : State attribute definition missing for + deathsPerOneMillion
 
 ### 0.4.2 Federal States for Germany implemented
 * (DutchmanNL) Configuration redesigned, moved options to "Advanced Settings" tab
