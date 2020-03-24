@@ -121,14 +121,14 @@
 					var text = '';
 					for (var i = 0; i < allGermanFederalStates.length; i++) {
 						text += '<label class="col s3 input-field">' +
-							'<input type="checkbox" class="germanFederalStates" ' + (settings.allGermanFederalStates.indexOf(allGermanFederalStates[i]) !== -1 ? 'checked ' : '') + ' data-germanFederalStates="' + allGermanFederalStates[i] + '" />' +
+							'<input type="checkbox" class="germanfederalstates" ' + (settings.allGermanFederalStates.indexOf(allGermanFederalStates[i]) !== -1 ? 'checked ' : '') + ' data-germanfederalstates="' + allGermanFederalStates[i] + '" />' +
 							'<span class="black-text">' + _(allGermanFederalStates[i]) + '</span>' +
 							'</label>';
 					}
 					$allGermanFederalStates.html(text);
 				}
 
-				$('.germanFederalStates').on('change', function () { _onChange() });
+				$('.germanfederalstates').on('change', function () { _onChange() });
 				_onChange(false);
 				// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 				if (M) M.updateTextFields();
@@ -174,14 +174,14 @@
 				var text = '';
 				for (var i = 0; i < allGermanCounty.length; i++) {
 					text += '<label class="col s3 input-field">' +
-						'<input type="checkbox" class="germanCounty" ' + (settings.allGermanCounty.indexOf(allGermanCounty[i]) !== -1 ? 'checked ' : '') + ' data-germanCounty="' + allGermanCounty[i] + '" />' +
+						'<input type="checkbox" class="germancounty" ' + (settings.allGermanCounty.indexOf(allGermanCounty[i]) !== -1 ? 'checked ' : '') + ' data-germancounty="' + allGermanCounty[i] + '" />' +
 						'<span class="black-text">' + _(allGermanCounty[i]) + '</span>' +
 						'</label>';
 				}
 				$allGermanCounty.html(text);
 			}
 
-			$('.germanCounty').on('change', function () { _onChange() });
+			$('.germancounty').on('change', function () { _onChange() });
 			_onChange(false);
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
@@ -222,7 +222,9 @@
 		function save(callback) {
 			// example: select elements with class=value and build settings object
 
-			var obj = { countries: [],
+			var obj = { 
+				countries: [],
+				allGermanCounty : [],
 				allGermanFederalStates: []
 			};
 			$('.country').each(function () {
@@ -231,15 +233,15 @@
 				}
 			});
 
-			$('.germanCounty').each(function () {
+			$('.germancounty').each(function () {
 				if ($(this).prop('checked')) {
-					obj.allGermanCounty.push($(this).data('germanCounty'));
+					obj.allGermanCounty.push($(this).data('germancounty'));
 				}
 			});
 
-			$('.germanFederalStates').each(function () {
+			$('.germanfederalstates').each(function () {
 				if ($(this).prop('checked')) {
-					obj.allGermanFederalStates.push($(this).data('germanFederalStates'));
+					obj.allGermanFederalStates.push($(this).data('germanfederalstates'));
 				}
 			});
 

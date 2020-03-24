@@ -266,10 +266,10 @@ class Covid19 extends utils.Adapter {
 
 							if (y !== 'county' && y !== 'GEN' && y !== 'BEZ' && y !== 'OBJECTID') {
 
-								await this.localCreateState('Germany.county.' + countyName + '.' + y , y, values.features[i].attributes[y]);
-				}
+								// await this.localCreateState('Germany.county.' + countyName + '.' + y , y, values.features[i].attributes[y]);
+							}
+						}
 					}
-				}
 				}
 
 				allGermanCounty = allGermanCounty.sort();
