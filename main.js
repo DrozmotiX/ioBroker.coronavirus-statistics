@@ -8,9 +8,9 @@ const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
 const countryJs = require('country-list-js');
-const allCountrys = [];
-let allGermanFederalStates = [],  allGermanCounty = [];
-	
+const allCountrys = []; // Array for all countrys to store in object
+let allGermanFederalStates = [], allGermanCounty = []; // For Germany, arrays to store federal states and countys to store in object
+
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
 
@@ -32,15 +32,17 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 		this.config.countries = this.config.countries || [];
+		this.config.countries = this.config.allGermanCounty || [];
+		this.config.countries = this.config.allGermanFederalStates || [];
 
 		const loadAll = async () => {
 			// Try to call API and get global information
 			try {
 				const result = await request('https://corona.lmao.ninja/all');
-				this.log.debug('Data from COVID-19 API received : ' + result);
+				this.log.debug(`Data from COVID-19 API received : ${result}`);
 				const values = JSON.parse(result);
 				for (const i of Object.keys(values)) {
-					await this.localCreateState('global_totals.' + i, i, values[i]);
+					await this.localCreateState(`global_totals.${i}`, i, values[i]);
 				}
 			} catch (error) {
 				this.log.warn('Error getting LoadAll  API response, will retry at next shedule');
@@ -54,7 +56,7 @@ class Covid19 extends utils.Adapter {
 				continentsStats['World_Sum'] = {};
 
 				const result = await request('https://corona.lmao.ninja/countries');
-				this.log.debug('Data from COVID-19 API received : ' + result);
+				this.log.debug(`Data from COVID-19 API received : ${result}`);
 				const values = JSON.parse(result);
 
 				// add user defined country translation to countryTranslator
@@ -81,18 +83,18 @@ class Covid19 extends utils.Adapter {
 								|| this.config.loadAllCountrys
 							) {
 								if (property !== 'countryInfo') {
-									await this.localCreateState(country + '.' + property, property, dataset[property]);
+									await this.localCreateState(`${country}.${property}`, property, dataset[property]);
 								} else {
 									// Only take the flag from country info
-									await this.localCreateState(country + '.flag', 'flag', dataset[property].flag);
+									await this.localCreateState(`${country}.flag`, 'flag', dataset[property].flag);
 								}
 							} else {
 								if (property !== 'countryInfo') {
-									await this.localDeleteState(country + '.' + property);
+									await this.localDeleteState(`${country}.${property}`);
 								} else {
 									// Only take the flag from country info
-									this.log.debug('delete routine : ' + property + ' for : ' + country);
-									await this.localDeleteState(country + '.flag');
+									this.log.debug(`delete routine : ${property} for : ${country}`);
+									await this.localDeleteState(`${country}.flag`);
 								}
 							}
 
@@ -120,24 +122,24 @@ class Covid19 extends utils.Adapter {
 				}
 
 				// Write Top 5
-				this.log.debug('Top 5 Countries : ' + JSON.stringify(values.slice(0, 5)));
+				this.log.debug(`Top 5 Countries : ${JSON.stringify(values.slice(0, 5))}`);
 				for (let position = 1; position <= 5; position++) {
 					const dataset = values[position - 1]; // start at 0
 					let country = dataset.country;
 
-					const channelName = 'country_Top_5.' + position;
+					const channelName = `country_Top_5.${position}`;
 
 					await this.extendObjectAsync(channelName, {
 						type: 'channel',
 						common: {
-							name: 'Rank ' + position + ' : ' + country,
+							name: `Rank ${position} : ${country}`,
 						},
 						native: {},
 					});
 
 					country = country.replace(/\s/g, '_');
 					country = country.replace(/\./g, '');
-					this.log.debug('Country loop rank : ' + position + ' ' + JSON.stringify(country));
+					this.log.debug(`Country loop rank : ${position} ${JSON.stringify(country)}`);
 					for (const property of Object.keys(dataset)) {
 						if (property !== 'countryInfo') {
 							await this.localCreateState(`${channelName}.${property}`, property, dataset[property]);
@@ -151,7 +153,7 @@ class Covid19 extends utils.Adapter {
 				// Write continent information
 				if (this.config.getContinents === true) {
 					for (const c in continentsStats) {
-						this.log.debug(c + ': ' + JSON.stringify(continentsStats[c]));
+						this.log.debug(`${c}: ${JSON.stringify(continentsStats[c])}`);
 
 						for (const val in continentsStats[c]) {
 							if (continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo') {
@@ -168,7 +170,7 @@ class Covid19 extends utils.Adapter {
 				});
 
 			} catch (error) {
-				this.log.warn('Error getting loadCountries API response, will retry at next shedule ' + error);
+				this.log.warn(`Error getting loadCountries API response, will retry at next shedule ${error}`);
 			}
 		};
 
@@ -178,11 +180,11 @@ class Covid19 extends utils.Adapter {
 				// RKI Corona Bundesländer : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0/geoservice?geometry=-23.491%2C46.270%2C39.746%2C55.886
 				// DataSource too build query https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0?geometry=-23.491%2C46.270%2C39.746%2C55.886
 				const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
-				this.log.debug('Data from RKI Corona Bundesländer API received : ' + result);
+				this.log.debug(`Data from RKI Corona Bundesländer API received : ${result}`);
 				const values = JSON.parse(result);
 
 				for (const feature of values.features) {
-					this.log.debug('Getting data for Federal State : ' + JSON.stringify(feature.attributes.LAN_ew_GEN));
+					this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
 					const federalStateName = feature.attributes.LAN_ew_GEN;
 					const channelName = `Germany.Federal_States.${federalStateName}`;
 					allGermanFederalStates.push(federalStateName);
@@ -196,34 +198,85 @@ class Covid19 extends utils.Adapter {
 						native: {},
 					});
 
-					for (const y in feature.attributes) {
+					for (const attributeName of Object.keys(feature.attributes)) {
 
-						switch (y) {
+						switch (attributeName) {
 							case 'Aktualisierung': 	//  Last refresh date
-								await this.localCreateState(`${channelName}.updated`, 'updated', feature.attributes[y]);
+								await this.localCreateState(`${channelName}.updated`, 'updated', feature.attributes[attributeName]);
 								break;
 
 							case 'Death':		// Current reportet deaths
-								await this.localCreateState(`${channelName}.deaths`, 'deaths', feature.attributes[y]);
+								await this.localCreateState(`${channelName}.deaths`, 'deaths', feature.attributes[attributeName]);
 								break;
 
 							case 'Fallzahl':		// Current reportet cases
-								await this.localCreateState(`${channelName}.cases`, 'cases', feature.attributes[y]);
+								await this.localCreateState(`${channelName}.cases`, 'cases', feature.attributes[attributeName]);
 								break;
 
 							default:
-								this.log.debug('Data "' + y  + '" from API ignored having values : ' + feature.attributes[y]);
+								this.log.debug(`Data \\"${attributeName}\\" from API ignored having values : ${feature.attributes[attributeName]}`);
 
 						}
 					}
 				}
 
 				allGermanFederalStates = allGermanFederalStates.sort();
-				this.log.debug('allGermanFederalStates : ' + JSON.stringify(allGermanFederalStates));
+				this.log.debug(`allGermanFederalStates : ${JSON.stringify(allGermanFederalStates)}`);
 
 				await this.extendObjectAsync('countryTranslator', {
 					native: {
 						allGermanFederalStates
+					},
+				});
+
+			} catch (error) {
+				this.log.warn('Error getting Federal state API response, will retry at next shedule');
+			}
+		};
+
+		const germanyCounties = async () => {
+			// Try to call API and get global information
+			try {
+				// RKI Corona Landkreise : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0/geoservice?selectedAttribute=BSG
+				const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county&returnGeometry=false&outSR=4326&f=json');
+				this.log.debug(`Data from RKI Corona Landkreise API received : ${result}`);
+				const values = JSON.parse(result);
+
+				for (const feature of values.features) {
+					if (!feature) continue;
+
+					this.log.debug(`Getting data for Landkreise : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
+					let countyName = feature.attributes.GEN;
+					countyName = countyName.replace(/\s/g, '_');
+					countyName = countyName.replace(/\./g, '');
+					allGermanCounty.push(countyName);
+
+					for (const attributeName of Object.keys(feature.attributes)) {
+
+						if (attributeName !== 'county' && attributeName !== 'GEN' && attributeName !== 'BEZ' && attributeName !== 'OBJECTID') {
+
+							if (((!this.config.allGermanCounty.length || this.config.allGermanCounty.includes(countyName))
+								&& this.config.getAllGermanCountyStates === false)
+								|| this.config.getAllGermanCountyStates === true) {
+								this.log.debug(`Create Landkreis State : ${values}`);
+
+								// Create State for each Landkreis	
+								await this.localCreateState(`Germany.county.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
+
+							} else {
+								this.log.debug(`Delete Landkreis State : Germany.county.${countyName}.${attributeName}`);
+								await this.localDeleteState(`Germany.county.${countyName}.${attributeName}`);
+							}
+						}
+					}
+				}
+
+				allGermanCounty = allGermanCounty.sort();
+				this.log.debug(`allGermanCounty : ${JSON.stringify(allGermanCounty)}`);
+
+				await this.extendObjectAsync('countryTranslator', {
+					native: {
+						allGermanCounty
 					},
 				});
 
@@ -249,7 +302,7 @@ class Covid19 extends utils.Adapter {
 			}
 
 		} catch (e) {
-			this.log.error('Unable to reach COVID-19 API : ' + e);
+			this.log.error(`Unable to reach COVID-19 API : ${e}`);
 		}
 
 		// Always terminate at the end
@@ -257,19 +310,19 @@ class Covid19 extends utils.Adapter {
 	}
 
 	async localCreateState(state, name, value) {
-		this.log.debug('Create_state called for : ' + state + ' with value : ' + value);
+		this.log.debug(`Create_state called for : ${state} with value : ${value}`);
 
 		try {
 			// Try to get details from state lib, if not use defaults. throw warning if states is not known in attribute list
 			if (stateAttr[name] === undefined) {
-				this.log.warn('State attribute definition missing for + ' + name);
+				this.log.warn(`State attribute definition missing for + ${name}`);
 			}
-			const writable   = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
-			const state_name = stateAttr[name] !== undefined ? stateAttr[name].name  || name : name;
-			const role       = stateAttr[name] !== undefined ? stateAttr[name].role  || 'state' : 'state';
-			const type       = stateAttr[name] !== undefined ? stateAttr[name].type  || 'mixed' : 'mixed';
-			const unit       = stateAttr[name] !== undefined ? stateAttr[name].unit  || '' : '';
-			this.log.debug('Write value : ' + writable);
+			const writable = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
+			const state_name = stateAttr[name] !== undefined ? stateAttr[name].name || name : name;
+			const role = stateAttr[name] !== undefined ? stateAttr[name].role || 'state' : 'state';
+			const type = stateAttr[name] !== undefined ? stateAttr[name].type || 'mixed' : 'mixed';
+			const unit = stateAttr[name] !== undefined ? stateAttr[name].unit || '' : '';
+			this.log.debug(`Write value : ${writable}`);
 
 			await this.extendObjectAsync(state, {
 				type: 'state',
@@ -291,7 +344,7 @@ class Covid19 extends utils.Adapter {
 			// Subscribe on state changes if writable
 			// writable && this.subscribeStates(state);
 		} catch (error) {
-			this.log.error('Create state error = ' + error);
+			this.log.error(`Create state error = ${error}`);
 		}
 	}
 
