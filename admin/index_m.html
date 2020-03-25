@@ -29,7 +29,7 @@
 	</style>
 
 	<script type="text/javascript">
-		var countries = null, allGermanFederalStates = null, allGermanCounty = null, retryTimer = [], _onChange = null;
+		var countries = null, allGermanFederalStates = null, allGermanCounty = null, retryTimer = [], _onChange = null, loadGermanFederalStates = null, loadGermanCounties;
 
 		function loadCountrys(settings) {
 
@@ -39,7 +39,7 @@
 				// Error handling if countrys are not known
 				if (!state.native.allCountrys) {
 
-					console.log('Countrys not yet present, did the adapter sucessfully run for the first time ?')
+					// console.log('Countrys not yet present, did the adapter sucessfully run for the first time ?')
 
 					// Reset timer (if running) and start new one for next polling intervall
 					if (retryTimer['loadCountrys']) {
@@ -92,7 +92,7 @@
 				// Error handling if countrys are not known
 				if (!state.native.allGermanFederalStates) {
 
-					console.log('German Federal States not yet present, did the adapter sucessfully run for the first time ?')
+					// console.log('German Federal States not yet present, did the adapter sucessfully run for the first time ?')
 
 					// Reset timer (if running) and start new one for next polling intervall
 					if (retryTimer['allGermanFederalStates']) {
@@ -145,7 +145,7 @@
 			// Error handling if countrys are not known
 			if (!state.native.allGermanCounty) {
 
-				console.log('German County not yet present, did the adapter sucessfully run for the first time ?')
+				// console.log('German County not yet present, did the adapter sucessfully run for the first time ?')
 
 				// Reset timer (if running) and start new one for next polling intervall
 				if (retryTimer['allGermanCounty']) {
@@ -189,12 +189,35 @@
 
 	}
 
+		// Funtion to check if specific tables should be loaded
+		function checkTables (settings){			
+			if (loadGermanCounties) {
+				$('#tableCountys').removeClass('hide');
+				loadallGermanCounty(settings);
+			} else {
+				$('#tableCountys').addClass('hide');
+			}
+		
+			if (loadGermanFederalStates) {
+				$('#tableFederalStates').removeClass('hide');
+				loadallGermanFederalStates(settings)
+				console.log(`Show Fedral states`)
+			} else {
+				console.log(`Hide Fedral states`)
+				$('#tableFederalStates').addClass('hide');
+			}
+		};
 
 		// This will be called by the admin adapter when the settings page loads
 		function load(settings, onChange) {
 			if (!settings) return;
 			_onChange = onChange;
+			loadGermanCounties = settings.getGermanFederalStates || false;
+			loadGermanFederalStates = settings.getGermanCountyStates || false;
+			// Prepase array
 			settings.countries = settings.countries || [];
+			settings.allGermanCounty = settings.allGermanCounty || [];
+			settings.allGermanFederalStates = settings.allGermanFederalStates || [];
 
 			$('.value').each(function () {
 				let $key = $(this);
@@ -213,9 +236,35 @@
 
 			// Load all tables countrys
 			loadCountrys(settings);
-			loadallGermanCounty(settings);
-			loadallGermanFederalStates(settings);
-			
+			checkTables(settings);
+
+			$("#getGermanCountyStates").on("change", (e) =>  {
+				// checkTables(settings);
+				console.log(e.target.checked);
+
+				if (e.target.checked === true) {
+					$('#tableCountys').removeClass('hide');
+					loadGermanCounties = true;
+					checkTables(settings);
+				} else {
+					$('#tableCountys').addClass('hide');
+					loadGermanCounties = false
+					checkTables(settings);
+				}
+			});
+			$("#getGermanFederalStates").on("change", (e) =>  {
+				// checkTables(settings);
+				if (e.target.checked === true) {
+					$('#tableFederalStates').removeClass('hide');
+					loadGermanFederalStates = true;
+					checkTables(settings);
+				} else {
+					$('#tableFederalStates').addClass('hide');
+					loadGermanFederalStates = false;
+					checkTables(settings);
+				}
+			});
+
 		}
 
 		// This will be called by the admin adapter when the user presses the save button
@@ -277,10 +326,8 @@
 
 		<div class="row">
 			<div class="col s12 input-field">
-				<!--
-				<h5 class="translate col s2">Countries</h5>
-				-->
-				<!-- Top menu -->
+
+				<!-- Top menu for tabs -->
 				<div class="row">
 					<div class="col s12">
 						<ul class="tabs">
@@ -290,16 +337,18 @@
 						</ul>
 					</div>
 				</div>
-				<!-- Top menu -->
+				<!-- Top menu for tabs -->
 
+				<!-- Tab contents in a row -->
 				<div class="row">
+
 					<!-- Main section Country selector -->
 					<div id="tab-main" class="col s12 page">
 						<div class="section">
 							<h6 class="center translate">Select countries or activate "all countries" in advanced settings</h6>
 						</div>
-						<!-- Create list off all countries -->
 
+						<!-- Create list off all countries -->
 						<div class="row" id="countries">
 							<div id="wait-bar" class="progress">
 								<div class="indeterminate"></div>
@@ -312,6 +361,7 @@
 
 					<!-- Advanced settings Page -->
 					<div id="tab-settings" class="col s12 page">
+
 						<!-- Global settings -->
 						<div class="section">
 							<div class="divider"></div>
@@ -352,12 +402,14 @@
 								</label>
 							</div>
 							<!-- Button to handle removal of unused states -->
+
 							<div class="row">
 								<div class="col s12">
 									<p></p>
 								</div>
 							</div>
 						</div>
+						<!-- Global settings -->
 
 						<!-- Germany specific settings -->
 						<div class="section">
@@ -398,7 +450,7 @@
 						</div>
 						
 						<!-- German Federal State selection section -->
-						<div class="section">
+						<div class="section hide" id="tableFederalStates">
 							<!-- Button to retrieve all German Federal States -->
 							<div class="switch col s10">
 								<span class="left translate">Please select the desired federal states or activate all</span>
@@ -411,7 +463,6 @@
 							</div>
 							<!-- Button to retrieve all German Federal States -->
 
-							</div>
 							<div class="row">
 								<div class="col s12">
 									<p></p>
@@ -426,9 +477,12 @@
 								<h6 class="center translate">Selection not (yet) available, adapter must succesfully run 1 time with this section enabled !</h6>
 							</div>
 							<!-- Create list off all German Federal States -->
-						
-							<!-- German County's selection section -->
-															
+
+						</div>
+						<!-- German Federal State selection section -->
+
+						<!-- German County's selection section -->
+						<div class="section hide" id="tableCountys">						
 							<!-- Button to retrieve all German Counties -->
 							<div class="row">
 								<div class="col s12">
@@ -453,14 +507,14 @@
 								</div>
 							</div>
 
-							<!-- Create list off all German Federal States -->
+							<!-- Create list off all German countys -->
 							<div class="row" id="allGermanCounty">
 								<div id="wait-bar" class="progress">
 									<div class="indeterminate"></div>
 								</div>
 								<h6 class="center translate">Selection not (yet) available, adapter must succesfully run 1 time with this section enabled !</h6>
 							</div>
-							<!-- Create list off all German Federal States -->
+							<!-- Create list off all German countys -->
 
 						</div>
 						<!-- Germany specific settings -->
@@ -468,6 +522,8 @@
 					<!-- Advanced settings Page -->
 
 				</div>
+				<!-- Tab contents in a row -->
+
 			</div>
 
 		</div>

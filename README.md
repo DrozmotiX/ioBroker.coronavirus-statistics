@@ -64,6 +64,12 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
+### 0.4.6 Hide unused tables in advanced settings
+* (DutchmanNL  & AlCalzone) Code optimations 
+* (DutchmanNL) Hide unused tables in advanced settings
+* (DutchmanNL) BugFix : Issues with integration test solved
+* (DutchmanNL) BugFix : Ensure incorrect created states for "countryInfo" are removed
+
 ### 0.4.5 Countries for Germany added
 * (DutchmanNL) Countries for Germany added
 * (DutchmanNL) added selection for federal states and country's

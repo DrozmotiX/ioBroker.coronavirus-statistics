@@ -95,6 +95,7 @@ class Covid19 extends utils.Adapter {
 									// Only take the flag from country info
 									this.log.debug(`delete routine : ${property} for : ${country}`);
 									await this.localDeleteState(`${country}.flag`);
+									await this.localDeleteState(`${country}.${property}`); // Temporary needed for installations < 0.4.0 to cleanup states
 								}
 							}
 

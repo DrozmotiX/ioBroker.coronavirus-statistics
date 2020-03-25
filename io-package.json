@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.4.5",
+        "version": "0.4.6",
         "news": {
+            "0.4.6": {
+                "en": "Hide unused tables in advanced settings",
+                "de": "Nicht verwendete Tabellen in erweiterten Einstellungen ausblenden",
+                "ru": "Скрыть неиспользуемые таблицы в дополнительных настройках",
+                "pt": "Ocultar tabelas não utilizadas nas configurações avançadas",
+                "nl": "Verberg ongebruikte tabellen in geavanceerde instellingen",
+                "fr": "Masquer les tableaux inutilisés dans les paramètres avancés",
+                "it": "Nascondi le tabelle non utilizzate nelle impostazioni avanzate",
+                "es": "Ocultar tablas no utilizadas en configuraciones avanzadas",
+                "pl": "Ukryj nieużywane tabele w ustawieniach zaawansowanych",
+                "zh-cn": "在高级设置中隐藏未使用的表"
+            },
             "0.4.5": {
                 "en": "Countries for Germany added",
                 "de": "Länder für Deutschland hinzugefügt",
