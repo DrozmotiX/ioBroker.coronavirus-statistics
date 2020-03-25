@@ -1,4 +1,4 @@
-![Logo][admin/coronavirus-statistics.png]
+!(logo)[admin/coronavirus-statistics.png]
 # ioBroker.coronavirus-statistics
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.coronavirus-statistics.svg)](https://www.npmjs.com/package/iobroker.coronavirus-statistics)
@@ -28,8 +28,10 @@ The following information is available :
 |--|--|
 | active | Amount of current infected people |
 | cases | Amount of totally known cases |
+| casesPerOneMillion | Amount of totally known cases per million citizen |
 | critical | Amount of critical situation (Hospitalized) |
 | deaths | Amount of current registered deaths |
+| deathsPerOneMillion | Amount of current registered deaths per million citizen |
 | recovered | Amount of totally known recovered cases |
 | todayCases | New Cases by Today |
 | todayDeaths | Amount of totally known people died today |
@@ -38,6 +40,23 @@ The following information is available :
 Please be aware this adapter uses as much as possible up-to-date information but there can be an delay of several hours depending on the country's report.  
 German Federal States : https://npgeo-corona-npgeo-de.hub.arcgis.com/  s
 Generic Source : https://coronavirus-19-api.herokuapp.com
+
+## Advanced settings
+| Option | Description |
+|--|--|
+| All Countries | Get data for all countries World-Wide (Default: false) |
+| Continents | Group total amounts by continent in seperate state (Default: false) |
+| Delete unused States | Delete data when countries are deselected (Default: false) |
+| German counties | Get counties data for Germany (Selected only, Default false) |
+| German federal states | Get federal state data for Germany (Selected only, Default false) |
+| Get all German federal states | Get federal state data for Germany (Default false) |
+| Get all German counties | Get all counties data for Germany (Default false) |
+
+## For Germany only
+It's possible to get data for federal states (Bundesländer) and counties (Landeskreise).
+You can choose to recieve all data or just select specific regions in advanced settings.
+
+Please note : After activation the the adapter must run 1 time to get all federal states and counties before table loads !
 
 ## Add missing countries
 It may happen that countries are not recognized correctly because the API delivers some country names not ISO conform. In such a case you will get a warning message in the log, which looks like this
@@ -64,10 +83,12 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
-### 0.4.6 Hide unused tables in advanced settings
+### 0.4.x Hiding unused tables in advanced settings and bugfixes
 * (DutchmanNL  & AlCalzone) Code optimations 
-* (DutchmanNL) Hide unused tables in advanced settings
+* (DutchmanNL) Hiding unused tables in advanced settings
 * (DutchmanNL) BugFix : Issues with integration test solved
+* (DutchmanNL) BugFix : Deletion of unselected federal states and countys (Germany)
+* (DutchmanNL) BugFix : Button only respond when clicking on lable (not all browser)
 * (DutchmanNL) BugFix : Ensure incorrect created states for "countryInfo" are removed
 
 ### 0.4.5 Countries for Germany added

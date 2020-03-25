@@ -8,7 +8,7 @@ const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
 const countryJs = require('country-list-js');
-const allCountrys = []; // Array for all countrys to store in object
+const allCountrys = [], allGermanCountyDetails = []; // Array for all countrys to store in object
 let allGermanFederalStates = [], allGermanCounty = []; // For Germany, arrays to store federal states and countys to store in object
 
 // Translator if country names are not iso conform
@@ -57,6 +57,7 @@ class Covid19 extends utils.Adapter {
 
 				const result = await request('https://corona.lmao.ninja/countries');
 				this.log.debug(`Data from COVID-19 API received : ${result}`);
+				this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 				const values = JSON.parse(result);
 
 				// add user defined country translation to countryTranslator
@@ -77,23 +78,23 @@ class Covid19 extends utils.Adapter {
 						for (const property of Object.keys(dataset)) {
 							// Don't create a state for the country
 							if (property === 'country') continue;
-							if (
-								!this.config.countries.length
-								|| this.config.countries.includes(dataset.country)
-								|| this.config.loadAllCountrys
-							) {
+							if (this.config.loadAllCountrys || this.config.countries.includes(dataset.country) ){
+
+								// this.log.info(`Country add routine : ${property} for : ${country}`);
 								if (property !== 'countryInfo') {
 									await this.localCreateState(`${country}.${property}`, property, dataset[property]);
 								} else {
 									// Only take the flag from country info
 									await this.localCreateState(`${country}.flag`, 'flag', dataset[property].flag);
 								}
+
 							} else {
+
+								this.log.debug(`Country delete routine : ${property} for : ${country}`);
 								if (property !== 'countryInfo') {
 									await this.localDeleteState(`${country}.${property}`);
 								} else {
 									// Only take the flag from country info
-									this.log.debug(`delete routine : ${property} for : ${country}`);
 									await this.localDeleteState(`${country}.flag`);
 									await this.localDeleteState(`${country}.${property}`); // Temporary needed for installations < 0.4.0 to cleanup states
 								}
@@ -193,33 +194,58 @@ class Covid19 extends utils.Adapter {
 					const channelName = `Germany.Federal_States.${federalStateName}`;
 					allGermanFederalStates.push(federalStateName);
 
-					// Create Channel for each Federal State		
-					await this.extendObjectAsync(channelName, {
-						type: 'channel',
-						common: {
-							name: federalStateName,
-						},
-						native: {},
-					});
+					if (this.config.getAllGermanFederalStates || this.config.allGermanFederalStates.includes(federalStateName) ){
 
-					for (const attributeName of Object.keys(feature.attributes)) {
+						// Create Channel for each Federal State		
+						await this.extendObjectAsync(channelName, {
+							type: 'channel',
+							common: {
+								name: federalStateName,
+							},
+							native: {},
+						});
 
-						switch (attributeName) {
-							case 'Aktualisierung': 	//  Last refresh date
-								await this.localCreateState(`${channelName}.updated`, 'updated', feature.attributes[attributeName]);
-								break;
+						for (const attributeName of Object.keys(feature.attributes)) {
 
-							case 'Death':		// Current reportet deaths
-								await this.localCreateState(`${channelName}.deaths`, 'deaths', feature.attributes[attributeName]);
-								break;
+							switch (attributeName) {
+								case 'Aktualisierung': 	//  Last refresh date
+									await this.localCreateState(`${channelName}.updated`, 'updated', feature.attributes[attributeName]);
+									break;
 
-							case 'Fallzahl':		// Current reportet cases
-								await this.localCreateState(`${channelName}.cases`, 'cases', feature.attributes[attributeName]);
-								break;
+								case 'Death':		// Current reportet deaths
+									await this.localCreateState(`${channelName}.deaths`, 'deaths', feature.attributes[attributeName]);
+									break;
 
-							default:
-								this.log.debug(`Data \\"${attributeName}\\" from API ignored having values : ${feature.attributes[attributeName]}`);
+								case 'Fallzahl':		// Current reportet cases
+									await this.localCreateState(`${channelName}.cases`, 'cases', feature.attributes[attributeName]);
+									break;
 
+								default:
+									this.log.debug(`Data \\"${attributeName}\\" from API ignored having values : ${feature.attributes[attributeName]}`);
+							}
+						}
+
+					} else {
+
+						for (const attributeName of Object.keys(feature.attributes)) {
+
+							switch (attributeName) {
+								case 'Aktualisierung': 	//  Last refresh date
+									await this.localDeleteState(`${channelName}.updated`);
+									break;
+
+								case 'Death':		// Current reportet deaths
+									await this.localDeleteState(`${channelName}.deaths`);
+									break;
+
+								case 'Fallzahl':		// Current reportet cases
+									await this.localDeleteState(`${channelName}.cases`);
+									break;
+
+								default:
+									this.log.debug(`Data \\"${attributeName}\\" from API ignored having values : ${feature.attributes[attributeName]}`);
+									await this.localDeleteState(`${channelName}.${attributeName}`);
+							}
 						}
 					}
 				}
@@ -249,8 +275,11 @@ class Covid19 extends utils.Adapter {
 				for (const feature of values.features) {
 					if (!feature) continue;
 
-					this.log.debug(`Getting data for Landkreise : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
+					this.log.debug(`Getting data for Landkreise : ${JSON.stringify(feature.attributes.county)}`);
+					
+					// let countyName = feature.attributes.county;
 					let countyName = feature.attributes.GEN;
+					allGermanCountyDetails.push({[countyName] : {GEN : feature.attributes.GEN, county : feature.attributes.county, BEZ : feature.attributes.BEZ}});
 					countyName = countyName.replace(/\s/g, '_');
 					countyName = countyName.replace(/\./g, '');
 					allGermanCounty.push(countyName);
@@ -259,9 +288,8 @@ class Covid19 extends utils.Adapter {
 
 						if (attributeName !== 'county' && attributeName !== 'GEN' && attributeName !== 'BEZ' && attributeName !== 'OBJECTID') {
 
-							if (((!this.config.allGermanCounty.length || this.config.allGermanCounty.includes(countyName))
-								&& this.config.getAllGermanCountyStates === false)
-								|| this.config.getAllGermanCountyStates === true) {
+							if (this.config.getAllGermanCountyStates || this.config.allGermanCounty.includes(countyName) ){
+
 								this.log.debug(`Create Landkreis State : ${values}`);
 
 								// Create State for each Landkreis	
