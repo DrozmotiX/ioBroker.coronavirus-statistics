@@ -151,14 +151,17 @@ class Covid19 extends utils.Adapter {
 				}
 
 				// Write continent information
-				if (this.config.getContinents === true) {
-					for (const c in continentsStats) {
-						this.log.debug(`${c}: ${JSON.stringify(continentsStats[c])}`);
 
-						for (const val in continentsStats[c]) {
-							if (continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo') {
-								await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val]);
-							}
+				for (const c in continentsStats) {
+					this.log.debug(`${c}: ${JSON.stringify(continentsStats[c])}`);
+
+					for (const val in continentsStats[c]) {
+						if ((continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo')
+							&& this.config.getContinents === true) {
+							await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val]);
+						} else if ((continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo')
+						&& this.config.getContinents === false) {
+							await this.localDeleteState(`global_continents.${c}.${val}`);	
 						}
 					}
 				}
