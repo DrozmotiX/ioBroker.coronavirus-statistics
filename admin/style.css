@@ -6,5 +6,7 @@
 	/* Don't cut off dropdowns! */
 	overflow: initial;
 }
-
+.m .switch label .lever {
+	z-index: -1;
+}
 /* Add your styles here */

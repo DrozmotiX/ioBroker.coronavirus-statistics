@@ -325,7 +325,7 @@
 		</div>
 
 		<div class="row">
-			<div class="col s12 input-field">
+			<div class="col s12">
 
 				<!-- Top menu for tabs -->
 				<div class="row">
@@ -378,8 +378,8 @@
 							<div class="switch col s3">
 								<label>
 									<input type="checkbox" class="center value" id="loadAllCountrys" />
-									<span class="left lever"></span>
-									<span class="left translate">All Countries</span>
+									<span class="lever"></span>
+									<span class="translate">All Countries</span>
 								</label>
 							</div>
 							<!-- Button to retrieve all countrys -->
@@ -388,8 +388,8 @@
 							<div class="switch col s3">
 								<label>
 									<input type="checkbox" class="value" id="getContinents" />
-									<span class="left lever"></span>
-									<span class="left translate">Continents</span>
+									<span class="lever"></span>
+									<span class="translate">Continents</span>
 							</div>
 							<!-- Button to retrieve Continents -->
 
@@ -397,19 +397,17 @@
 							<div class="switch col s5">
 								<label>
 									<input type="checkbox" class="value" id="deleteUnused" />
-									<span class="left lever"></span>
-									<span class="left translate">Delete unused States</span>
+									<span class="lever"></span>
+									<span class="translate">Delete unused States</span>
 								</label>
 							</div>
 							<!-- Button to handle removal of unused states -->
-
 							<div class="row">
 								<div class="col s12">
 									<p></p>
 								</div>
 							</div>
 						</div>
-						<!-- Global settings -->
 
 						<!-- Germany specific settings -->
 						<div class="section">
@@ -426,8 +424,8 @@
 							<div class="switch col s3">
 								<label>
 									<input type="checkbox" class="value" id="getGermanFederalStates" />
-									<span class="left lever"></span>
-									<span class="left translate">German federal states</span>
+									<span class="lever"></span>
+									<span class="translate">German federal states</span>
 								</label>
 							</div>
 							<!-- Button to retrieve German Federal States -->
@@ -436,8 +434,8 @@
 							<div class="switch col s3">
 								<label>
 									<input type="checkbox" class="value" id="getGermanCountyStates" />
-									<span class="left lever"></span>
-									<span class="left translate">German counties</span>
+									<span class="lever"></span>
+									<span class="translate">German counties</span>
 								</label>
 							</div>
 							<!-- Button to retrieve German County -->
@@ -452,12 +450,19 @@
 						<!-- German Federal State selection section -->
 						<div class="section hide" id="tableFederalStates">
 							<!-- Button to retrieve all German Federal States -->
-							<div class="switch col s10">
-								<span class="left translate">Please select the desired federal states or activate all</span>
+
+							<div class="col s6">
+								<span class="translate">Please select the desired federal states or activate all</span>
+								
+
+							</div>
+
+							<div class="switch right col s6">
+
 								<label>
+									<span class="translate">All German federal states</span>
 									<input type="checkbox" class="value" id="getAllGermanFederalStates" />
-									<span class="right lever"></span>
-									<span class="right translate">All German federal states</span>
+									<span class="lever"></span>
 								</label>
 								
 							</div>
@@ -490,12 +495,16 @@
 								</div>
 							</div>
 							
-							<div class="switch col s10">
-								<span class="left translate">Please select the desired counties or activate all</span>
+							<div class="col s6">
+								<span class="translate">Please select the desired counties or activate all</span>								
+							</div>
+
+							<div class="switch right col s6">
+
 								<label>
+									<span class="translate">All German county's</span>
 									<input type="checkbox" class="value" id="getAllGermanCountyStates" />
-									<span class="right lever"></span>
-									<span class="right translate">All German county's</span>
+									<span class="lever"></span>
 								</label>
 								
 							</div>
