@@ -40,9 +40,7 @@ class Covid19 extends utils.Adapter {
 				this.log.debug('Data from COVID-19 API received : ' + result);
 				const values = JSON.parse(result);
 				for (const i of Object.keys(values)) {
-					if (values[i]) {
-						await this.localCreateState('global_totals.' + i, i, values[i]);
-					}
+					await this.localCreateState('global_totals.' + i, i, values[i]);
 				}
 			} catch (error) {
 				this.log.warn('Error getting LoadAll  API response, will retry at next shedule');
@@ -63,9 +61,9 @@ class Covid19 extends utils.Adapter {
 				await this.addUserCountriesTranslator();
 
 				// Write all country states depending on filter
-				for (const i in values) {
-					if (values.hasOwnProperty(i) && values[i] && values[i].country) {
-						let country = values[i].country;
+				for (const dataset of values) {
+					if (dataset.country) {
+						let country = dataset.country;
 						allCountrys.push(country);
 						country = country.replace(/\s/g, '_');
 						country = country.replace(/\./g, '');
@@ -74,51 +72,47 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`${country} (${continent})`);
 
 						// Write states for all countrys in API
-						for (const y in values[i]) {
-							if (values[i].hasOwnProperty(y) && y !== 'country') {
-								// if ((!this.config.countries.length || this.config.countries.includes(values[i].country)) && this.config.loadAllCountrys === false ) {
-								if ((!this.config.countries.length || this.config.countries.includes(country)) && this.config.loadAllCountrys === false) {
-									if (y !== 'countryInfo') {
-										await this.localCreateState(country + '.' + y, y, values[i][y]);
-									} else {
-										// Only take the flag from country info
-										await this.localCreateState(country + '.flag', 'flag', values[i][y].flag);
-									}
-								} else if (this.config.loadAllCountrys === true) {
-									if (y !== 'countryInfo') {
-										await this.localCreateState(country + '.' + y, y, values[i][y]);
-									} else {
-										// Only take the flag from country info
-										await this.localCreateState(country + '.flag', 'flag', values[i][y].flag);
-									}
+						for (const property of Object.keys(dataset)) {
+							// Don't create a state for the country
+							if (property === 'country') continue;
+							if (
+								!this.config.countries.length
+								|| this.config.countries.includes(dataset.country)
+								|| this.config.loadAllCountrys
+							) {
+								if (property !== 'countryInfo') {
+									await this.localCreateState(country + '.' + property, property, dataset[property]);
 								} else {
-									if (y !== 'countryInfo') {
-										await this.localDeleteState(country + '.' + y);
-									} else {
-										// Only take the flag from country info
-										this.log.debug('delete routine : ' + y + ' for : ' + country);
-										await this.localDeleteState(country + '.flag');
-									}
+									// Only take the flag from country info
+									await this.localCreateState(country + '.flag', 'flag', dataset[property].flag);
+								}
+							} else {
+								if (property !== 'countryInfo') {
+									await this.localDeleteState(country + '.' + property);
+								} else {
+									// Only take the flag from country info
+									this.log.debug('delete routine : ' + property + ' for : ' + country);
+									await this.localDeleteState(country + '.flag');
+								}
+							}
+
+							if (continent) {
+								continentsStats[continent] = continentsStats[continent] || {};
+								continentsStats[continent][property] = continentsStats[continent][property] || 0;
+
+								if (!continentsStats['America'].hasOwnProperty(property) && (continent === 'North_America' || continent === 'South_America')) {
+									continentsStats['America'][property] = 0;
 								}
 
-								if (continent) {
-									continentsStats[continent] = continentsStats[continent] || {};
-									continentsStats[continent][y] = continentsStats[continent][y] || 0;
+								if (!continentsStats['World_Sum'].hasOwnProperty(property)) {
+									continentsStats['World_Sum'][property] = 0;
+								}
 
-									if (!continentsStats['America'].hasOwnProperty(y) && (continent === 'North_America' || continent === 'South_America')) {
-										continentsStats['America'][y] = 0;
-									}
+								continentsStats[continent][property] = continentsStats[continent][property] + dataset[property];
+								continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] + dataset[property];
 
-									if (!continentsStats['World_Sum'].hasOwnProperty(y)) {
-										continentsStats['World_Sum'][y] = 0;
-									}
-
-									continentsStats[continent][y] = continentsStats[continent][y] + values[i][y];
-									continentsStats['World_Sum'][y] = continentsStats['World_Sum'][y] + values[i][y];
-
-									if (continent === 'North_America' || continent === 'South_America') {
-										continentsStats['America'][y] = continentsStats['America'][y] + values[i][y];
-									}
+								if (continent === 'North_America' || continent === 'South_America') {
+									continentsStats['America'][property] = continentsStats['America'][property] + dataset[property];
 								}
 							}
 						}
@@ -126,44 +120,42 @@ class Covid19 extends utils.Adapter {
 				}
 
 				// Write Top 5
-				const top_Arrary = values.slice(0, 5);
 				this.log.debug('Top 5 Countries : ' + JSON.stringify(values.slice(0, 5)));
-				let count = 1;
-				for (const i in top_Arrary) {
-					if (count <= 5 ) {
-						let country = top_Arrary[i].country;
+				for (let position = 1; position <= 5; position++) {
+					const dataset = values[position - 1]; // start at 0
+					let country = dataset.country;
 
-						await this.extendObjectAsync('country_Top_5.' + count, {
-							type: 'channel',
-							common: {
-								name: 'Rank ' + count + ' : ' + country,
-							},
-							native: {},
-						});
+					const channelName = 'country_Top_5.' + position;
 
-						country = country.replace(/\s/g, '_');
-						country = country.replace(/\./g, '');
-						this.log.debug('Country loop rank : ' + count + ' ' + JSON.stringify(country));
-						for (const y in values[i]) {
-							if (y !== 'countryInfo') {
-								await this.localCreateState('country_Top_5.' + count + '.' + y, y, values[i][y]);
-							} else {
-								// Only take the flag from country info
-								await this.localCreateState('country_Top_5.' + count + '.flag', 'flag', values[i][y].flag);
-							}
+					await this.extendObjectAsync(channelName, {
+						type: 'channel',
+						common: {
+							name: 'Rank ' + position + ' : ' + country,
+						},
+						native: {},
+					});
+
+					country = country.replace(/\s/g, '_');
+					country = country.replace(/\./g, '');
+					this.log.debug('Country loop rank : ' + position + ' ' + JSON.stringify(country));
+					for (const property of Object.keys(dataset)) {
+						if (property !== 'countryInfo') {
+							await this.localCreateState(`${channelName}.${property}`, property, dataset[property]);
+						} else {
+							// Only take the flag from country info
+							await this.localCreateState(`${channelName}.flag`, 'flag', dataset[property].flag);
 						}
 					}
-					count = count + 1;
 				}
 
 				// Write continent information
-				if (continentsStats && this.config.getContinents === true) {
+				if (this.config.getContinents === true) {
 					for (const c in continentsStats) {
 						this.log.debug(c + ': ' + JSON.stringify(continentsStats[c]));
 
 						for (const val in continentsStats[c]) {
 							if (continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo') {
-								await this.localCreateState('global_continents.' + c + '.' + val, val, continentsStats[c][val]);
+								await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val]);
 							}
 						}
 					}
@@ -189,114 +181,49 @@ class Covid19 extends utils.Adapter {
 				this.log.debug('Data from RKI Corona Bundesländer API received : ' + result);
 				const values = JSON.parse(result);
 
-				for (const i of Object.keys(values.features)) {
-					if (values.features[i]) {
-						this.log.debug('Getting data for Federal State : ' + JSON.stringify(values.features[i].attributes.LAN_ew_GEN));
-						const federalStateName = values.features[i].attributes.LAN_ew_GEN;
-						allGermanFederalStates.push(federalStateName);
+				for (const feature of values.features) {
+					this.log.debug('Getting data for Federal State : ' + JSON.stringify(feature.attributes.LAN_ew_GEN));
+					const federalStateName = feature.attributes.LAN_ew_GEN;
+					const channelName = `Germany.Federal_States.${federalStateName}`;
+					allGermanFederalStates.push(federalStateName);
 
-						for (const y in values.features[i].attributes) {
-							if (((!this.config.allGermanFederalStates.length || this.config.allGermanFederalStates.includes(federalStateName)) && 
-									this.config.getAllGermanFederalStates === false) || this.config.getAllGermanFederalStates === true ) {
-								this.log.debug('Create Federal State : ' + y );
+					// Create Channel for each Federal State		
+					await this.extendObjectAsync(channelName, {
+						type: 'channel',
+						common: {
+							name: federalStateName,
+						},
+						native: {},
+					});
 
-								switch (y) {
-									
-									case 'Aktualisierung': 	//  Last refresh date
-										await this.localCreateState('Germany.Federal_States.' + federalStateName + '.updated', 'updated', values.features[i].attributes[y]);
-										break;
-	
-									case 'Death':		// Current reportet deaths
-										await this.localCreateState('Germany.Federal_States.' + federalStateName + '.deaths', 'deaths', values.features[i].attributes[y]);
-										break;
-	
-									case 'Fallzahl':		// Current reportet cases
-										await this.localCreateState('Germany.Federal_States.' + federalStateName + '.cases', 'cases', values.features[i].attributes[y]);
-										break;
-	
-									default:
-										this.log.debug('Data "' + y  + '" from API ignored having values : ' + values.features[i].attributes[y]);
-								}
+					for (const y in feature.attributes) {
 
-							} else {
-								this.log.debug('Delete Federal State : ' + y );
-								switch (y) {
-									case 'Aktualisierung': 	//  Last refresh date
-										await this.localDeleteState('Germany.Federal_States.' + federalStateName + '.updated');
-										break;
-	
-									case 'Death':		// Current reportet deaths
-										await this.localDeleteState('Germany.Federal_States.' + federalStateName + '.deaths');
-										break;
-	
-									case 'Fallzahl':		// Current reportet cases
-										await this.localDeleteState('Germany.Federal_States.' + federalStateName + '.cases');
-										break;
-	
-									default:
-										await this.localDeleteState('Germany.Federal_States.' + federalStateName + '.' + y);
-								}
-							}
+						switch (y) {
+							case 'Aktualisierung': 	//  Last refresh date
+								await this.localCreateState(`${channelName}.updated`, 'updated', feature.attributes[y]);
+								break;
+
+							case 'Death':		// Current reportet deaths
+								await this.localCreateState(`${channelName}.deaths`, 'deaths', feature.attributes[y]);
+								break;
+
+							case 'Fallzahl':		// Current reportet cases
+								await this.localCreateState(`${channelName}.cases`, 'cases', feature.attributes[y]);
+								break;
+
+							default:
+								this.log.debug('Data "' + y  + '" from API ignored having values : ' + feature.attributes[y]);
+
 						}
 					}
 				}
 
 				allGermanFederalStates = allGermanFederalStates.sort();
 				this.log.debug('allGermanFederalStates : ' + JSON.stringify(allGermanFederalStates));
-				
+
 				await this.extendObjectAsync('countryTranslator', {
 					native: {
 						allGermanFederalStates
-					},
-				});
-
-			} catch (error) {
-				this.log.warn('Error getting germanyFederalStates API response, will retry at next shedule' + error);
-			}
-		};
-
-		const germanyCounties = async () => {
-			// Try to call API and get global information
-			try {
-				// RKI Corona Landkreise : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0/geoservice?selectedAttribute=BSG
-				const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county&returnGeometry=false&outSR=4326&f=json');
-				this.log.debug('Data from RKI Corona Landkreise API received : ' + result);
-				const values = JSON.parse(result);
-
-				for (const i of Object.keys(values.features)) {
-					if (values.features[i]) {
-						this.log.debug('Getting data for Landkreise : ' + JSON.stringify(values.features[i].attributes.LAN_ew_GEN));
-						let countyName = values.features[i].attributes.GEN;
-						countyName = countyName.replace(/\s/g, '_');
-						countyName = countyName.replace(/\./g, '');
-						allGermanCounty.push(countyName);
-
-						for (const y in values.features[i].attributes) {
-
-							if (y !== 'county' && y !== 'GEN' && y !== 'BEZ' && y !== 'OBJECTID') {
-
-								if (((!this.config.allGermanCounty.length || this.config.allGermanCounty.includes(countyName)) && 
-								this.config.getAllGermanCountyStates === false) || this.config.getAllGermanCountyStates === true ) {
-									this.log.debug('Create Landkreis State : ' + y );
-
-									// Create Channel for each Landkreis	
-									await this.localCreateState('Germany.county.' + countyName + '.' + y, y, values.features[i].attributes[y]);
-
-								} else {
-									this.log.debug('Delete Landkreis State : ' + 'Germany.county.' + countyName + '.' + y );
-									await this.localDeleteState('Germany.county.' + countyName + '.' + y);
-								}
-							}
-						}
-					}
-				}
-
-				allGermanCounty = allGermanCounty.sort();
-				this.log.debug('allGermanCounty : ' + JSON.stringify(allGermanCounty));
-
-				await this.extendObjectAsync('countryTranslator', {
-					native: {
-						allGermanCounty
 					},
 				});
 
