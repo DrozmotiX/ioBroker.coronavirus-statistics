@@ -32,9 +32,9 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 		this.config.countries = this.config.countries || [];
-		this.config.countries = this.config.allGermanCounty || [];
-		this.config.countries = this.config.allGermanFederalStates || [];
-		this.log.info(`Configuration 	object	 : ${JSON.stringify(this.config)}`);
+		this.config.allGermanCounty = this.config.allGermanCounty || [];
+		this.config.allGermanFederalStates = this.config.allGermanFederalStates || [];
+		this.log.debug(`Configuration object before config load : ${JSON.stringify(this.config)}`);
 
 		const loadAll = async () => {
 			// Try to call API and get global information
