@@ -34,6 +34,7 @@ class Covid19 extends utils.Adapter {
 		this.config.countries = this.config.countries || [];
 		this.config.countries = this.config.allGermanCounty || [];
 		this.config.countries = this.config.allGermanFederalStates || [];
+		this.log.info(`Configuration 	object	 : ${JSON.stringify(this.config)}`);
 
 		const loadAll = async () => {
 			// Try to call API and get global information
@@ -78,7 +79,7 @@ class Covid19 extends utils.Adapter {
 						for (const property of Object.keys(dataset)) {
 							// Don't create a state for the country
 							if (property === 'country') continue;
-							if (this.config.loadAllCountrys || this.config.countries.includes(dataset.country) ){
+							if (this.config.loadAllCountrys || this.config.countries.includes(country) ){
 
 								// this.log.info(`Country add routine : ${property} for : ${country}`);
 								if (property !== 'countryInfo') {
@@ -303,6 +304,7 @@ class Covid19 extends utils.Adapter {
 					}
 				}
 
+				this.log.debug(`allGermanCountyDetails : ${JSON.stringify(allGermanCountyDetails.sort())}`);
 				allGermanCounty = allGermanCounty.sort();
 				this.log.debug(`allGermanCounty : ${JSON.stringify(allGermanCounty)}`);
 
