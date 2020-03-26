@@ -62,7 +62,7 @@
 
 					countries = state.native.allCountrys;
 					countries = countries.sort();
-					console.log('All countrys sortet object : ' + JSON.stringify(countries));
+					// console.log('All countrys sortet object : ' + JSON.stringify(countries));
 
 					var $countries = $('#countries');
 					var text = '';
@@ -114,7 +114,7 @@
 					}
 
 					allGermanFederalStates = state.native.allGermanFederalStates;
-					console.log('allGermanFederalStates object : ' + JSON.stringify(allGermanFederalStates));
+					// console.log('allGermanFederalStates object : ' + JSON.stringify(allGermanFederalStates));
 					allGermanFederalStates = allGermanFederalStates.sort();
 
 					var $allGermanFederalStates = $('#allGermanFederalStates');
@@ -167,7 +167,7 @@
 				}
 
 				allGermanCounty = state.native.allGermanCounty;
-				console.log('allGermanCounty object : ' + JSON.stringify(allGermanCounty));
+				// console.log('allGermanCounty object : ' + JSON.stringify(allGermanCounty));
 				allGermanCounty = allGermanCounty.sort();
 
 				var $allGermanCounty = $('#allGermanCounty');
@@ -201,9 +201,9 @@
 			if (loadGermanFederalStates) {
 				$('#tableFederalStates').removeClass('hide');
 				loadallGermanFederalStates(settings)
-				console.log(`Show Fedral states`)
+				// console.log(`Show Fedral states`)
 			} else {
-				console.log(`Hide Fedral states`)
+				// console.log(`Hide Fedral states`)
 				$('#tableFederalStates').addClass('hide');
 			}
 		};
@@ -215,9 +215,10 @@
 			loadGermanCounties = settings.getGermanFederalStates || false;
 			loadGermanFederalStates = settings.getGermanCountyStates || false;
 			// Prepase array
-			settings.countries = settings.countries || [];
-			settings.allGermanCounty = settings.allGermanCounty || [];
-			settings.allGermanFederalStates = settings.allGermanFederalStates || [];
+				settings.countries = settings.countries || [];
+				console.log(`Selected country's ${settings.countries}`)
+				settings.allGermanCounty = settings.allGermanCounty || [];
+				settings.allGermanFederalStates = settings.allGermanFederalStates || [];
 
 			$('.value').each(function () {
 				let $key = $(this);
@@ -240,7 +241,7 @@
 
 			$("#getGermanCountyStates").on("change", (e) =>  {
 				// checkTables(settings);
-				console.log(e.target.checked);
+				// console.log(e.target.checked);
 
 				if (e.target.checked === true) {
 					$('#tableCountys').removeClass('hide');
