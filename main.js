@@ -57,10 +57,10 @@ class Covid19 extends utils.Adapter {
 					continentsStats['America'] = {};
 					continentsStats['World_Sum'] = {};
 
-					const result = await request('https://corona.lmao.ninja/countries');
-					this.log.debug(`Data from COVID-19 API received : ${result}`);
-					this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
-					const values = JSON.parse(result);
+				const result = await request('https://corona.lmao.ninja/countries?sort=cases');
+				this.log.debug(`Data from COVID-19 API received : ${result}`);
+				this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
+				const values = JSON.parse(result);
 
 					// add user defined country translation to countryTranslator
 					await this.addUserCountriesTranslator();
