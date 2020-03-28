@@ -68,7 +68,7 @@ class Covid19 extends utils.Adapter {
 					// Write all country states depending on filter
 					for (const dataset of values) {
 						if (dataset.country) {
-							let country = dataset.country;
+							let rawCountry = dataset.country;
 							let continent = undefined;
 
 							let isoCountry = await this.getIsoCountry(dataset.country, dataset['countryInfo']);
@@ -76,7 +76,7 @@ class Covid19 extends utils.Adapter {
 							if (isoCountry) {
 								if (isoCountry.name) {
 									// Iso Country Name nehmen, sofern vorhanden
-									country = isoCountry.name;
+									rawCountry = isoCountry.name;
 								}
 
 								if (isoCountry.continent) {
@@ -85,17 +85,16 @@ class Covid19 extends utils.Adapter {
 								}
 							}
 
-							allCountrys.push(country);
-							country = country.replace(/\s/g, '_');
-							country = country.replace(/\./g, '');
+							allCountrys.push(rawCountry);
+							let country = rawCountry.replace(/\s/g, '_').replace(/\./g, '');
 
-							this.log.debug(`${country} (${continent})`);
+							this.log.debug(`api name: ${dataset.country}, converted name: ${rawCountry}, dp name: ${country}, continent: ${continent}`);
 
 							// Write states for all countrys in API
 							for (const property of Object.keys(dataset)) {
 								// Don't create a state for the country
 								if (property === 'country') continue;
-								if (this.config.loadAllCountrys || this.config.countries.includes(country)) {
+								if (this.config.loadAllCountrys || this.config.countries.includes(rawCountry)) {
 
 									// this.log.info(`Country add routine : ${property} for : ${country}`);
 									if (property !== 'countryInfo') {
