@@ -69,11 +69,26 @@ class Covid19 extends utils.Adapter {
 					for (const dataset of values) {
 						if (dataset.country) {
 							let country = dataset.country;
+							let continent = undefined;
+
+							let isoCountry = await this.getIsoCountry(dataset.country, dataset['countryInfo']);
+
+							if (isoCountry) {
+								if (isoCountry.name) {
+									// Iso Country Name nehmen, sofern vorhanden
+									country = isoCountry.name;
+								}
+
+								if (isoCountry.continent) {
+									// Continent übergeben
+									continent = isoCountry.continent.replace(/\s/g, '_');
+								}
+							}
+
 							allCountrys.push(country);
 							country = country.replace(/\s/g, '_');
 							country = country.replace(/\./g, '');
 
-							const continent = await this.getContinent(country);
 							this.log.debug(`${country} (${continent})`);
 
 							// Write states for all countrys in API
@@ -401,28 +416,41 @@ class Covid19 extends utils.Adapter {
 	}
 
 	/**
-	 * @param {string} country
-	 */
-	async getContinent(country) {
+ * @param {string} country
+ * @param {Object} countryInfo
+ */
+	async getIsoCountry(country, countryInfo) {
 		try {
-			let countryObj = countryJs.findByName(country.replace(/_/g, ' ').replace('é', 'e').replace('ç', 'c'));
+			let countryObj = undefined;
+			if (countryInfo.iso2 && countryInfo.iso2 !== null) {
+				// Country Objekt über iso2 suchen
+				return countryJs.findByIso2(countryInfo.iso2);
 
-			if (countryObj) {
-				if (countryObj.continent) {
-					return countryObj.continent.replace(/\s/g, '_');
-				}
+			} else if (countryInfo.iso3 && countryInfo.iso3 !== null) {
+				// Country Objekt über iso3 suchen
+				return countryJs.findByIso3(countryInfo.iso3);
+
 			} else {
-				countryObj = countryJs.findByName(countryTranslator[country]);
+				// kein iso info vorhanden, über Name suchen
+				countryObj = countryJs.findByName(country.replace(/_/g, ' ').replace(/é/g, 'e').replace(/ç/g, 'c'));
+
 				if (countryObj) {
-					return countryObj.continent.replace(/\s/g, '_');
+					if (countryObj.continent) {
+						return countryObj;
+					}
 				} else {
-					if (country !== 'Diamond_Princess') {
-						this.log.warn(`${country} not found in lib! Must be added to the country name translator.`);
+					countryObj = countryJs.findByName(countryTranslator[country]);
+					if (countryObj) {
+						return countryObj;
+					} else {
+						if (country !== 'Diamond Princess' && country !== 'MS Zaandam') {
+							this.log.warn(`${country} (iso2: ${countryInfo.iso2}, iso3: ${countryInfo.iso3}) not found in lib! Must be added to the country name translator.`);
+						}
 					}
 				}
 			}
 		} catch (error) {
-			this.log.error(`[getContinent] error: ${error.message}, stack: ${error.stack}`);
+			this.log.error(`[getIsoCountry] error: ${error.message}, stack: ${error.stack}`);
 		}
 
 		return undefined;
