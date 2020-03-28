@@ -83,11 +83,18 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 	
-### 0.4.x Hiding unused tables in advanced settings and bugfixes
+### 0.4.9 Fixed issues in country names, added counties and cities for germany
 * (DutchmanNL  & AlCalzone) Code optimations 
+* (DutchmanNL) Cities for germany added
+* (DutchmanNL) counties for germany added
+* (DutchmanNL) Hiding tables if "all" is selected
 * (DutchmanNL) Hiding unused tables in advanced settings
-* (DutchmanNL) BugFix : Issues with integration test solved
-* (DutchmanNL) BugFix : Deletion of unselected federal states and countys (Germany)
+* (Kampfratte) BugFix : Country top 5
+* (GermanBluefox) BugFix : hidden numbers
+* (DutchmanNL) BugFix : Several translations
+* (DutchmanNL) BugFix : Issues with integration testing
+* (Scrounger)  Bugfix : Country names by ISO format (could result in new datapoints !)
+* (DutchmanNL) BugFix : Deletion of unselected federal states and counties (Germany)
 * (DutchmanNL) BugFix : Button only respond when clicking on lable (not all browser)
 * (DutchmanNL) BugFix : Ensure incorrect created states for "countryInfo" are removed
 
@@ -124,7 +131,7 @@ As first value the name from the warning message must be taken from the log. The
 * (DutchmanNL) Enable configuration
 
 ### 0.3.0 (2020-03-22)
-* (bluefox) The number of data points was reduced by selection of countries
+* (GermanBluefox) The number of data points was reduced by selection of countries
  
 ### 0.2.5 
 * (Scrounger) Bugfix : Cabo_Verde not found in lib! Must be added to the country name translator

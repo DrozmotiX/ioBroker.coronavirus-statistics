@@ -1,19 +1,19 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.4.8",
+        "version": "0.4.9",
         "news": {
-            "0.4.8": {
-                "en": "Hiding unused tables in advanced settings and bugfixes",
-                "de": "Nicht verwendete Tabellen in erweiterten Einstellungen und Bugfixes ausblenden",
-                "ru": "Скрытие неиспользуемых таблиц в расширенных настройках и исправлениях ошибок",
-                "pt": "Ocultando tabelas não utilizadas em configurações avançadas e correções",
-                "nl": "Ongebruikte tabellen verbergen in geavanceerde instellingen en bugfixes",
-                "fr": "Masquage des tables inutilisées dans les paramètres avancés et les corrections de bogues",
-                "it": "Nascondere tabelle non utilizzate in impostazioni avanzate e correzioni di bug",
-                "es": "Ocultar tablas no utilizadas en configuraciones avanzadas y correcciones de errores",
-                "pl": "Ukrywanie nieużywanych tabel w ustawieniach zaawansowanych i poprawkach błędów",
-                "zh-cn": "隐藏未使用的表的高级设置和错误修正"
+            "0.4.9": {
+                "en": "Fixed issues in country names, added counties and cities for germany",
+                "de": "Probleme in Ländernamen behoben, Landkreise und Städte für Deutschland hinzugefügt",
+                "ru": "Исправлены проблемы в названиях стран, добавлены округа и города для Германии",
+                "pt": "Corrigidos problemas nos nomes de países, municípios e cidades adicionados para a alemanha",
+                "nl": "Problemen opgelost in landnamen, toegevoegde provincies en steden voor Duitsland",
+                "fr": "Correction de problèmes dans les noms de pays, les comtés ajoutés et les villes pour l'Allemagne",
+                "it": "Risolti problemi con nomi di paesi, contee e città aggiunte per la Germania",
+                "es": "Problemas resueltos en nombres de países, condados y ciudades adicionales para Alemania",
+                "pl": "Naprawiono problemy z nazwami krajów, dodanymi powiatami i miastami dla Niemiec",
+                "zh-cn": "修复国家名称中的问题，为德国添加县和城市"
             },
             "0.4.5": {
                 "en": "Countries for Germany added",
@@ -252,6 +252,8 @@
             "GermanBluefox",
             "AlCalzone",
             "Scrounger",
+            "Kampfratte",
+            "Jey-Cee",
             "KLNV"
         ],
         "keywords": [
