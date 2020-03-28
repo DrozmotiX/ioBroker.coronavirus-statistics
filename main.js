@@ -8,8 +8,8 @@ const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
 const countryJs = require('country-list-js');
-const allCountrys = [], allGermanCountyDetails = []; // Array for all countrys to store in object
-let allGermanFederalStates = [], allGermanCounty = []; // For Germany, arrays to store federal states and countys to store in object
+const allCountrys = []; // Array for all countrys to store in object
+let allGermanyFederalStates = [], allGermanCountyDetails = [], allGermanyCounties = [], allGermanyCities = []; // For Germany, arrays to store federal states and countys to store in object
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
@@ -32,10 +32,11 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 		try {
-			this.config.countries = this.config.countries || [];
-			this.config.allGermanCounty = this.config.allGermanCounty || [];
-			this.config.allGermanFederalStates = this.config.allGermanFederalStates || [];
-			this.log.debug(`Configuration object before config load : ${JSON.stringify(this.config)}`);
+		this.config.countries = this.config.countries || [];
+		this.config.allGermanyFederalStates = this.config.allGermanyFederalStates || [];
+		this.config.allGermanyCities = this.config.allGermanyCities || [];
+		this.config.allGermanyCounties = this.config.allGermanyCounties || [];
+		this.log.debug(`Configuration object before config load : ${JSON.stringify(this.config)}`);
 
 			const loadAll = async () => {
 				// Try to call API and get global information
@@ -230,6 +231,7 @@ class Covid19 extends utils.Adapter {
 				}
 			};
 
+<<<<<<<
 			const germanyFederalStates = async () => {
 				// Try to call API and get global information
 				try {
@@ -238,14 +240,36 @@ class Covid19 extends utils.Adapter {
 					const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
 					this.log.debug(`Data from RKI Corona Bundesländer API received : ${result}`);
 					const values = JSON.parse(result);
+=======
+		const germanyBundersland = async () => {
+			// Try to call API and get global information
+			try {
+				// RKI Corona Bundesländer : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0/geoservice?geometry=-23.491%2C46.270%2C39.746%2C55.886
+				// DataSource too build query https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0?geometry=-23.491%2C46.270%2C39.746%2C55.886
+				const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
+				this.log.debug(`Data from RKI Corona Bundesländer API received : ${result}`);
+				const values = JSON.parse(result);
+>>>>>>>
 
+<<<<<<<
 					for (const feature of values.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
 						const federalStateName = feature.attributes.LAN_ew_GEN;
 						const channelName = `Germany.Federal_States.${federalStateName}`;
 						allGermanFederalStates.push(federalStateName);
+=======
+				for (const feature of values.features) {
+					this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
+					const federalStateName = feature.attributes.LAN_ew_GEN;
+					const channelName = `Germany.Bundesland.${federalStateName}`;
+					allGermanyFederalStates.push(federalStateName);
+>>>>>>>
 
+<<<<<<<
 						if (this.config.getAllGermanFederalStates || this.config.allGermanFederalStates.includes(federalStateName)) {
+=======
+					if (this.config.getAllGermanyFederalStates || this.config.allGermanyFederalStates.includes(federalStateName) ){
+>>>>>>>
 
 							// Create Channel for each Federal State		
 							await this.extendObjectAsync(channelName, {
@@ -301,14 +325,27 @@ class Covid19 extends utils.Adapter {
 						}
 					}
 
+<<<<<<<
 					allGermanFederalStates = allGermanFederalStates.sort();
 					this.log.debug(`allGermanFederalStates : ${JSON.stringify(allGermanFederalStates)}`);
+=======
+				allGermanyFederalStates = allGermanyFederalStates.sort();
+				this.log.debug(`allGermanyFederalStates : ${JSON.stringify(allGermanyFederalStates)}`);
+>>>>>>>
 
+<<<<<<<
 					await this.extendObjectAsync('countryTranslator', {
 						native: {
 							allGermanFederalStates
 						},
 					});
+=======
+				await this.extendObjectAsync('countryTranslator', {
+					native: {
+						allGermanyFederalStates
+					},
+				});
+>>>>>>>
 
 				} catch (error) {
 					this.log.error(`[germanyFederalStates] error: ${error.message}, stack: ${error.stack}`);
@@ -326,23 +363,82 @@ class Covid19 extends utils.Adapter {
 					for (const feature of values.features) {
 						if (!feature) continue;
 
+<<<<<<<
 						this.log.debug(`Getting data for Landkreise : ${JSON.stringify(feature.attributes.county)}`);
+=======
+					this.log.debug(`Getting data for Landkreise : ${JSON.stringify(feature.attributes.county)} containing ${JSON.stringify(feature.attributes)}`);
+					
+					let countyName = feature.attributes.GEN;
+					let countiesType = feature.attributes.BEZ;
+					countyName = await this.characterReplcase(countyName);
+					allGermanCountyDetails.push({[feature.attributes.county] : {GEN : feature.attributes.GEN, county : feature.attributes.county, BEZ : feature.attributes.BEZ}});
+>>>>>>>
 
+<<<<<<<
 						// let countyName = feature.attributes.county;
 						let countyName = feature.attributes.GEN;
 						allGermanCountyDetails.push({ [countyName]: { GEN: feature.attributes.GEN, county: feature.attributes.county, BEZ: feature.attributes.BEZ } });
 						countyName = countyName.replace(/\s/g, '_');
 						countyName = countyName.replace(/\./g, '');
 						allGermanCounty.push(countyName);
+=======
+					// Distinguish between Kreisfreie Stadt & Landkreis
+					if (countiesType === 'Kreisfreie Stadt'){
+						allGermanyCities.push(countyName);
+						countiesType = 'Stadt';
+					} else if (countiesType === 'Kreis'){
+						allGermanyCounties.push(countyName);
+						countiesType = 'Kreis';
+					} else if (countiesType === 'Landkreis'){
+						allGermanyCounties.push(countyName);
+						countiesType = 'Kreis';
+					} else if (countiesType === 'Stadtkreis'){
+						allGermanyCities.push(countyName);
+						countiesType = 'Stadt';
+					} else {
+						this.log.error(`Unknown ${countiesType} received containing ${JSON.stringify(feature)}`);
+					}
+	
+					// Run truth all states and write information
+					for (const attributeName of Object.keys(feature.attributes)) {
+>>>>>>>
 
+<<<<<<<
 						for (const attributeName of Object.keys(feature.attributes)) {
+=======
+						this.log.debug(`Statename will be : Germany.${countiesType}.${countyName} containing ${JSON.stringify(feature.attributes)}`);
 
+						if (attributeName !== 'county' && attributeName !== 'GEN' && attributeName !== 'BEZ' && attributeName !== 'OBJECTID') {
+							
+							switch(countiesType){
+>>>>>>>
+
+<<<<<<<
 							if (attributeName !== 'county' && attributeName !== 'GEN' && attributeName !== 'BEZ' && attributeName !== 'OBJECTID') {
+=======
+								case 'Stadt':
+									
+									if (this.config.getAllGermanyCities || this.config.allGermanyCities.includes(countyName) ){
+										this.log.debug(`Create Kreis freie Stadt  : ${countyName}`);
+>>>>>>>
 
+<<<<<<<
 								if (this.config.getAllGermanCountyStates || this.config.allGermanCounty.includes(countyName)) {
+=======
+										// Create State for each Landkreis	
+										await this.localCreateState(`Germany.${countiesType} .${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
+>>>>>>>
 
+<<<<<<<
 									this.log.debug(`Create Landkreis State : ${values}`);
+=======
+									} else {
+										this.log.debug(`Delete Landkreis State : Germany.${countiesType}.${countyName}.${attributeName}`);
+										await this.localDeleteState(`Germany.${countiesType}.${countyName}.${attributeName}`);
+									}
+>>>>>>>
 
+<<<<<<<
 									// Create State for each Landkreis	
 									await this.localCreateState(`Germany.county.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
 
@@ -350,43 +446,112 @@ class Covid19 extends utils.Adapter {
 									this.log.debug(`Delete Landkreis State : Germany.county.${countyName}.${attributeName}`);
 									await this.localDeleteState(`Germany.county.${countyName}.${attributeName}`);
 								}
+=======
+									break;
+	
+								case 'Kreis':
+									
+									if (this.config.getAllGermanyCounties || this.config.allGermanyCounties.includes(countyName) ){
+										this.log.debug(`Create Landkreis  : ${countyName}`);
+
+										// Create State for each Landkreis	
+										await this.localCreateState(`Germany.${countiesType}.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
+									
+									} else {
+										this.log.debug(`Delete Landkreis State for older versions : Germany.${countiesType}.${countyName}.${attributeName}`);
+										await this.localDeleteState(`Germany.${countiesType}.${countyName}.${attributeName}`);
+									}
+
+									break;
+
+								default:
+
+									await this.localDeleteState(`Germany.county.${countyName}.${attributeName}`);
+							
+>>>>>>>
 							}
 						}
 					}
 
+<<<<<<<
 					this.log.debug(`allGermanCountyDetails : ${JSON.stringify(allGermanCountyDetails.sort())}`);
 					allGermanCounty = allGermanCounty.sort();
 					this.log.debug(`allGermanCounty : ${JSON.stringify(allGermanCounty)}`);
+=======
+				allGermanCountyDetails = allGermanCountyDetails.sort();
+				this.log.debug(`allGermanCountyDetails : ${JSON.stringify(allGermanCountyDetails)}`);
+>>>>>>>
 
+<<<<<<<
 					await this.extendObjectAsync('countryTranslator', {
 						native: {
 							allGermanCounty
 						},
 					});
+=======
+				allGermanyCities = allGermanyCities.sort();
+				this.log.debug(`allGermanyCities : ${JSON.stringify(allGermanyCities)}`);
 
+				allGermanyCounties = allGermanyCounties.sort();
+				this.log.debug(`allGermanyCounties : ${JSON.stringify(allGermanyCounties)}`);
+
+				await this.extendObjectAsync('countryTranslator', {
+					native: {
+						allGermanyCounties
+					},
+				});
+>>>>>>>
+
+<<<<<<<
 				} catch (error) {
 					this.log.error(`[germanyCounties] error: ${error.message}, stack: ${error.stack}`);
 				}
 			};
+=======
+				await this.extendObjectAsync('countryTranslator', {
+					native: {
+						allGermanyCities
+					},
+				});
+
+			} catch (error) {
+				this.log.warn('Error getting Landkreise API response, will retry at next shedule');
+			}
+		};
+>>>>>>>
 
 			// Random number generator to avoid all ioBroker instances calling the API at the same time
 			const timer1 = (Math.random() * (10 - 1) + 1) * 1000;
 			await wait(timer1);
 			this.setState('info.connection', true, true);
 
+<<<<<<<
 			try {
 				await loadAll();	// Global Worldwide statistics
 				await loadCountries(); // Detailed Worldwide statistics by country
 				if (this.config.getGermanFederalStates === true) {
 					await germanyFederalStates(); // Detailed Federal state statistics for germany
 				}
+=======
+		try {
+			await loadAll();	// Global Worldwide statistics
+			await loadCountries(); // Detailed Worldwide statistics by country
+			if (this.config.getGermanyFederalStates === true) {
+				await germanyBundersland(); // Detailed Federal state statistics for germany
+			}
+>>>>>>>
 
+<<<<<<<
 				if (this.config.getGermanCountyStates === true) {
 					await germanyCounties(); // Detailed Federal state statistics for germany
 				}
 
 			} catch (e) {
 				this.log.error(`Unable to reach COVID-19 API : ${e}`);
+=======
+			if (this.config.getGermanyCities || this.config.getGermanyCounties) {
+				await germanyCounties(); // Detailed Federal state statistics for germany
+>>>>>>>
 			}
 
 			// Always terminate at the end
@@ -510,6 +675,12 @@ class Covid19 extends utils.Adapter {
 		} catch (error) {
 			this.log.error(`[addUserCountriesTranslator] error: ${error.message}, stack: ${error.stack}`);
 		}
+	}
+
+	async characterReplcase (string) {
+		string = string.replace(/\s/g, '_');
+		string = string.replace(/\./g, '');
+		return string;
 	}
 }
 
