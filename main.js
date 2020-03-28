@@ -32,10 +32,10 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 		try {
-			this.config.countries = this.config.countries || [];
-			this.config.allGermanyFederalStates = this.config.allGermanyFederalStates || [];
-			this.config.allGermanyCities = this.config.allGermanyCities || [];
-			this.config.allGermanyCounties = this.config.allGermanyCounties || [];
+			const selectedCountries = this.config.countries || [];
+			const selectedGermanyFederalStates = this.config.allGermanyFederalStates || [];
+			const selectedGermanyCities = this.config.allGermanyCities || [];
+			const selectedGermanyCounties = this.config.allGermanyCounties || [];
 			this.log.debug(`Configuration object before config load : ${JSON.stringify(this.config)}`);
 
 			const loadAll = async () => {
@@ -95,7 +95,7 @@ class Covid19 extends utils.Adapter {
 							for (const property of Object.keys(dataset)) {
 								// Don't create a state for the country
 								if (property === 'country') continue;
-								if (this.config.loadAllCountrys || this.config.countries.includes(rawCountry)) {
+								if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
 
 									// this.log.info(`Country add routine : ${property} for : ${country}`);
 									if (property !== 'countryInfo') {
@@ -246,7 +246,7 @@ class Covid19 extends utils.Adapter {
 						const channelName = `Germany.Bundesland.${federalStateName}`;
 						allGermanyFederalStates.push(federalStateName);
 
-						if (this.config.getAllGermanyFederalStates || this.config.allGermanyFederalStates.includes(federalStateName)) {
+						if (this.config.getAllGermanyFederalStates || selectedGermanyFederalStates.includes(federalStateName)) {
 
 							// Create Channel for each Federal State		
 							await this.extendObjectAsync(channelName, {
@@ -330,7 +330,7 @@ class Covid19 extends utils.Adapter {
 
 						let countyName = feature.attributes.GEN;
 						let countiesType = feature.attributes.BEZ;
-						countyName = await this.characterReplcase(countyName);
+						countyName = await this.characterReplace(countyName);
 						allGermanCountyDetails.push({ [feature.attributes.county]: { GEN: feature.attributes.GEN, county: feature.attributes.county, BEZ: feature.attributes.BEZ } });
 
 						// Distinguish between Kreisfreie Stadt & Landkreis
@@ -361,14 +361,14 @@ class Covid19 extends utils.Adapter {
 
 									case 'Stadt':
 
-										if (this.config.getAllGermanyCities || this.config.allGermanyCities.includes(countyName)) {
-											this.log.debug(`Create Kreis freie Stadt  : ${countyName}`);
+										if (this.config.getAllGermanyCities || selectedGermanyCities.includes(countyName)) {
+											this.log.debug(`Create city : ${countyName}`);
 
 											// Create State for each Landkreis	
-											await this.localCreateState(`Germany.${countiesType} .${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
+											await this.localCreateState(`Germany.${countiesType}.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
 
 										} else {
-											this.log.debug(`Delete Landkreis State : Germany.${countiesType}.${countyName}.${attributeName}`);
+											this.log.debug(`Delete city: Germany.${countiesType}.${countyName}.${attributeName}`);
 											await this.localDeleteState(`Germany.${countiesType}.${countyName}.${attributeName}`);
 										}
 
@@ -376,7 +376,7 @@ class Covid19 extends utils.Adapter {
 
 									case 'Kreis':
 
-										if (this.config.getAllGermanyCounties || this.config.allGermanyCounties.includes(countyName)) {
+										if (this.config.getAllGermanyCounties || selectedGermanyCounties.includes(countyName)) {
 											this.log.debug(`Create Landkreis  : ${countyName}`);
 
 											// Create State for each Landkreis	
@@ -433,11 +433,11 @@ class Covid19 extends utils.Adapter {
 
 			await loadAll();	// Global Worldwide statistics
 			await loadCountries(); // Detailed Worldwide statistics by country
-			if (this.config.getGermanyFederalStates === true) {
+			if (this.config.getGermanyFederalStates || !selectedGermanyFederalStates) {
 				await germanyBundersland(); // Detailed Federal state statistics for germany
 			}
 
-			if (this.config.getGermanyCities || this.config.getGermanyCounties) {
+			if (this.config.getGermanyCities || this.config.getGermanyCounties || !selectedGermanyCities.length || !selectedGermanyCities.length) {
 				await germanyCounties(); // Detailed city state statistics for germany
 			}
 
@@ -564,7 +564,7 @@ class Covid19 extends utils.Adapter {
 		}
 	}
 
-	async characterReplcase(string) {
+	async characterReplace(string) {
 		string = string.replace(/\s/g, '_');
 		string = string.replace(/\./g, '');
 		return string;
