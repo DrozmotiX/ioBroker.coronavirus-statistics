@@ -8,8 +8,8 @@ const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
 const countryJs = require('country-list-js');
-const allCountrys = [], allGermanCountyDetails = []; // Array for all countrys to store in object
-let allGermanFederalStates = [], allGermanCounty = []; // For Germany, arrays to store federal states and countys to store in object
+const allCountrys = []; // Array for all countrys to store in object
+let allGermanyFederalStates = [], allGermanCountyDetails = [], allGermanyCounties = [], allGermanyCities = []; // For Germany, arrays to store federal states and countys to store in object
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
@@ -32,8 +32,9 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 		this.config.countries = this.config.countries || [];
-		this.config.allGermanCounty = this.config.allGermanCounty || [];
-		this.config.allGermanFederalStates = this.config.allGermanFederalStates || [];
+		this.config.allGermanyFederalStates = this.config.allGermanyFederalStates || [];
+		this.config.allGermanyCities = this.config.allGermanyCities || [];
+		this.config.allGermanyCounties = this.config.allGermanyCounties || [];
 		this.log.debug(`Configuration object before config load : ${JSON.stringify(this.config)}`);
 
 		const loadAll = async () => {
@@ -81,7 +82,7 @@ class Covid19 extends utils.Adapter {
 							if (property === 'country') continue;
 							if (this.config.loadAllCountrys || this.config.countries.includes(country) ){
 
-								// this.log.info(`Country add routine : ${property} for : ${country}`);
+								this.log.debug(`Country add routine : ${property} for : ${country}`);
 								if (property !== 'countryInfo') {
 									await this.localCreateState(`${country}.${property}`, property, dataset[property]);
 								} else {
@@ -180,7 +181,7 @@ class Covid19 extends utils.Adapter {
 			}
 		};
 
-		const germanyFederalStates = async () => {
+		const germanyBundersland = async () => {
 			// Try to call API and get global information
 			try {
 				// RKI Corona Bundesländer : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0/geoservice?geometry=-23.491%2C46.270%2C39.746%2C55.886
@@ -192,10 +193,10 @@ class Covid19 extends utils.Adapter {
 				for (const feature of values.features) {
 					this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
 					const federalStateName = feature.attributes.LAN_ew_GEN;
-					const channelName = `Germany.Federal_States.${federalStateName}`;
-					allGermanFederalStates.push(federalStateName);
+					const channelName = `Germany.Bundesland.${federalStateName}`;
+					allGermanyFederalStates.push(federalStateName);
 
-					if (this.config.getAllGermanFederalStates || this.config.allGermanFederalStates.includes(federalStateName) ){
+					if (this.config.getAllGermanyFederalStates || this.config.allGermanyFederalStates.includes(federalStateName) ){
 
 						// Create Channel for each Federal State		
 						await this.extendObjectAsync(channelName, {
@@ -251,12 +252,12 @@ class Covid19 extends utils.Adapter {
 					}
 				}
 
-				allGermanFederalStates = allGermanFederalStates.sort();
-				this.log.debug(`allGermanFederalStates : ${JSON.stringify(allGermanFederalStates)}`);
+				allGermanyFederalStates = allGermanyFederalStates.sort();
+				this.log.debug(`allGermanyFederalStates : ${JSON.stringify(allGermanyFederalStates)}`);
 
 				await this.extendObjectAsync('countryTranslator', {
 					native: {
-						allGermanFederalStates
+						allGermanyFederalStates
 					},
 				});
 
@@ -276,41 +277,96 @@ class Covid19 extends utils.Adapter {
 				for (const feature of values.features) {
 					if (!feature) continue;
 
-					this.log.debug(`Getting data for Landkreise : ${JSON.stringify(feature.attributes.county)}`);
+					this.log.debug(`Getting data for Landkreise : ${JSON.stringify(feature.attributes.county)} containing ${JSON.stringify(feature.attributes)}`);
 					
-					// let countyName = feature.attributes.county;
 					let countyName = feature.attributes.GEN;
-					allGermanCountyDetails.push({[countyName] : {GEN : feature.attributes.GEN, county : feature.attributes.county, BEZ : feature.attributes.BEZ}});
-					countyName = countyName.replace(/\s/g, '_');
-					countyName = countyName.replace(/\./g, '');
-					allGermanCounty.push(countyName);
+					let countiesType = feature.attributes.BEZ;
+					countyName = await this.characterReplcase(countyName);
+					allGermanCountyDetails.push({[feature.attributes.county] : {GEN : feature.attributes.GEN, county : feature.attributes.county, BEZ : feature.attributes.BEZ}});
 
+					// Distinguish between Kreisfreie Stadt & Landkreis
+					if (countiesType === 'Kreisfreie Stadt'){
+						allGermanyCities.push(countyName);
+						countiesType = 'Stadt';
+					} else if (countiesType === 'Kreis'){
+						allGermanyCounties.push(countyName);
+						countiesType = 'Kreis';
+					} else if (countiesType === 'Landkreis'){
+						allGermanyCounties.push(countyName);
+						countiesType = 'Kreis';
+					} else if (countiesType === 'Stadtkreis'){
+						allGermanyCities.push(countyName);
+						countiesType = 'Stadt';
+					} else {
+						this.log.error(`Unknown ${countiesType} received containing ${JSON.stringify(feature)}`);
+					}
+	
+					// Run truth all states and write information
 					for (const attributeName of Object.keys(feature.attributes)) {
 
+						this.log.debug(`Statename will be : Germany.${countiesType}.${countyName} containing ${JSON.stringify(feature.attributes)}`);
+
 						if (attributeName !== 'county' && attributeName !== 'GEN' && attributeName !== 'BEZ' && attributeName !== 'OBJECTID') {
+							
+							switch(countiesType){
 
-							if (this.config.getAllGermanCountyStates || this.config.allGermanCounty.includes(countyName) ){
+								case 'Stadt':
+									
+									if (this.config.getAllGermanyCities || this.config.allGermanyCities.includes(countyName) ){
+										this.log.debug(`Create Kreis freie Stadt  : ${countyName}`);
 
-								this.log.debug(`Create Landkreis State : ${values}`);
+										// Create State for each Landkreis	
+										await this.localCreateState(`Germany.${countiesType} .${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
 
-								// Create State for each Landkreis	
-								await this.localCreateState(`Germany.county.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
+									} else {
+										this.log.debug(`Delete Landkreis State : Germany.${countiesType}.${countyName}.${attributeName}`);
+										await this.localDeleteState(`Germany.${countiesType}.${countyName}.${attributeName}`);
+									}
 
-							} else {
-								this.log.debug(`Delete Landkreis State : Germany.county.${countyName}.${attributeName}`);
-								await this.localDeleteState(`Germany.county.${countyName}.${attributeName}`);
+									break;
+	
+								case 'Kreis':
+									
+									if (this.config.getAllGermanyCounties || this.config.allGermanyCounties.includes(countyName) ){
+										this.log.debug(`Create Landkreis  : ${countyName}`);
+
+										// Create State for each Landkreis	
+										await this.localCreateState(`Germany.${countiesType}.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
+									
+									} else {
+										this.log.debug(`Delete Landkreis State for older versions : Germany.${countiesType}.${countyName}.${attributeName}`);
+										await this.localDeleteState(`Germany.${countiesType}.${countyName}.${attributeName}`);
+									}
+
+									break;
+
+								default:
+
+									await this.localDeleteState(`Germany.county.${countyName}.${attributeName}`);
+							
 							}
 						}
 					}
 				}
 
-				this.log.debug(`allGermanCountyDetails : ${JSON.stringify(allGermanCountyDetails.sort())}`);
-				allGermanCounty = allGermanCounty.sort();
-				this.log.debug(`allGermanCounty : ${JSON.stringify(allGermanCounty)}`);
+				allGermanCountyDetails = allGermanCountyDetails.sort();
+				this.log.debug(`allGermanCountyDetails : ${JSON.stringify(allGermanCountyDetails)}`);
+
+				allGermanyCities = allGermanyCities.sort();
+				this.log.debug(`allGermanyCities : ${JSON.stringify(allGermanyCities)}`);
+
+				allGermanyCounties = allGermanyCounties.sort();
+				this.log.debug(`allGermanyCounties : ${JSON.stringify(allGermanyCounties)}`);
 
 				await this.extendObjectAsync('countryTranslator', {
 					native: {
-						allGermanCounty
+						allGermanyCounties
+					},
+				});
+
+				await this.extendObjectAsync('countryTranslator', {
+					native: {
+						allGermanyCities
 					},
 				});
 
@@ -327,11 +383,11 @@ class Covid19 extends utils.Adapter {
 		try {
 			await loadAll();	// Global Worldwide statistics
 			await loadCountries(); // Detailed Worldwide statistics by country
-			if (this.config.getGermanFederalStates === true) {
-				await germanyFederalStates(); // Detailed Federal state statistics for germany
+			if (this.config.getGermanyFederalStates === true) {
+				await germanyBundersland(); // Detailed Federal state statistics for germany
 			}
 
-			if (this.config.getGermanCountyStates === true) {
+			if (this.config.getGermanyCities || this.config.getGermanyCounties) {
 				await germanyCounties(); // Detailed Federal state statistics for germany
 			}
 
@@ -435,6 +491,12 @@ class Covid19 extends utils.Adapter {
 				this.log.error(`Can not parse json string for user defined country translation! Check input of datapoint '.countryTranslator'. error: ${parseError.message}`);
 			}
 		}
+	}
+
+	async characterReplcase (string) {
+		string = string.replace(/\s/g, '_');
+		string = string.replace(/\./g, '');
+		return string;
 	}
 }
 

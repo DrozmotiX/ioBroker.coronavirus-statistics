@@ -286,18 +286,23 @@
     "native": {
         "deleteUnused": false,
         "getContinents": false,
-        "getGermanFederalStates": false,
-        "getGermanCountyStates": false,
-        "getAllGermanFederalStates": false,
-        "getAllGermanCountyStates": false,
+        "getGermanyFederalStates": false,
+        "getGermanyCities": false,
+        "getGermanyCounties": false,
+        "getAllGermanyFederalStates": false,
+        "getAllGermanyCities": false,
+        "getAllGermanyCounties": false,
         "loadAllCountrys": false,
+        "allGermanyFederalStates": [
+            ""
+        ],
+        "allGermanyCities": [
+            ""
+        ],
+        "allGermanyCounties": [
+            ""
+        ],
         "countries": [
-            ""
-        ],
-        "allGermanFederalStates": [
-            ""
-        ],
-        "allGermanCounty": [
             ""
         ]
     },
