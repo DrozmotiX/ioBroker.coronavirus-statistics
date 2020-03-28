@@ -117,22 +117,38 @@ class Covid19 extends utils.Adapter {
 								}
 
 								if (continent) {
-									continentsStats[continent] = continentsStats[continent] || {};
-									continentsStats[continent][property] = continentsStats[continent][property] || 0;
+									if (property !== 'countryInfo') {
+										continentsStats[continent] = continentsStats[continent] || {};
+										continentsStats[continent][property] = continentsStats[continent][property] || 0;
 
-									if (!continentsStats['America'].hasOwnProperty(property) && (continent === 'North_America' || continent === 'South_America')) {
-										continentsStats['America'][property] = 0;
-									}
+										if (!continentsStats['America'].hasOwnProperty(property) && (continent === 'North_America' || continent === 'South_America')) {
+											continentsStats['America'][property] = 0;
+										}
 
-									if (!continentsStats['World_Sum'].hasOwnProperty(property)) {
-										continentsStats['World_Sum'][property] = 0;
-									}
+										if (!continentsStats['World_Sum'].hasOwnProperty(property)) {
+											continentsStats['World_Sum'][property] = 0;
+										}
 
-									continentsStats[continent][property] = continentsStats[continent][property] + dataset[property];
-									continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] + dataset[property];
+										continentsStats[continent][property] = continentsStats[continent][property] + dataset[property];
+										continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] + dataset[property];
 
-									if (continent === 'North_America' || continent === 'South_America') {
-										continentsStats['America'][property] = continentsStats['America'][property] + dataset[property];
+										if (continent === 'North_America' || continent === 'South_America') {
+											continentsStats['America'][property] = continentsStats['America'][property] + dataset[property];
+										}
+									} else {
+										// property ist country Info -> country namen in array speichern
+										continentsStats[continent] = continentsStats[continent] || {};
+										continentsStats[continent]['countries'] = continentsStats[continent]['countries'] || [];
+
+										if (!continentsStats['America'].hasOwnProperty('countries') && (continent === 'North_America' || continent === 'South_America')) {
+											continentsStats['America']['countries'] = [];
+										}
+
+										continentsStats[continent]['countries'].push(rawCountry);
+
+										if (continent === 'North_America' || continent === 'South_America') {
+											continentsStats['America']['countries'].push(rawCountry);
+										}
 									}
 								}
 							}
@@ -176,7 +192,11 @@ class Covid19 extends utils.Adapter {
 						for (const val in continentsStats[c]) {
 							if ((continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo')
 								&& this.config.getContinents === true) {
-								await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val]);
+								if (val !== 'countries') {
+									await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val]);
+								} else {
+									await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val].join());
+								}
 							} else if ((continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo')
 								&& this.config.getContinents === false) {
 								await this.localDeleteState(`global_continents.${c}.${val}`);
