@@ -1,4 +1,4 @@
-!(logo)[admin/coronavirus-statistics.png]
+![logo](admin/coronavirus-statistics.png)
 # ioBroker.coronavirus-statistics
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.coronavirus-statistics.svg)](https://www.npmjs.com/package/iobroker.coronavirus-statistics)
