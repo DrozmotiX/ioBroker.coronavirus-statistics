@@ -136,18 +136,29 @@ class Covid19 extends utils.Adapter {
 											continentsStats['America'][property] = continentsStats['America'][property] + dataset[property];
 										}
 									} else {
-										// property ist country Info -> country namen in array speichern
+										// Liste mit Ländern & casesPerMillion berechnung über Einwohnerzahl
 										continentsStats[continent] = continentsStats[continent] || {};
-										continentsStats[continent]['countries'] = continentsStats[continent]['countries'] || [];
+										continentsStats[continent]['countries'] = continentsStats[continent]['countries'] || [];				// Liste mit Ländern
+										continentsStats[continent]['inhabitants'] = continentsStats[continent]['inhabitants'] || 0;				// Einwohner wird zum berechnen der casesPerMillion benötigt
+
+										if (!continentsStats['World_Sum'].hasOwnProperty('inhabitants')) {
+											continentsStats['World_Sum']['inhabitants'] = 0;
+										}
 
 										if (!continentsStats['America'].hasOwnProperty('countries') && (continent === 'North_America' || continent === 'South_America')) {
 											continentsStats['America']['countries'] = [];
+											continentsStats['America']['inhabitants'] = 0;
 										}
 
 										continentsStats[continent]['countries'].push(rawCountry);
 
+										continentsStats[continent]['inhabitants'] = continentsStats[continent]['inhabitants'] + (dataset['cases'] / dataset['casesPerOneMillion']);
+										continentsStats['World_Sum']['inhabitants'] = continentsStats['World_Sum']['inhabitants'] + (dataset['cases'] / dataset['casesPerOneMillion']);
+
 										if (continent === 'North_America' || continent === 'South_America') {
 											continentsStats['America']['countries'].push(rawCountry);
+
+											continentsStats['America']['inhabitants'] = continentsStats['America']['inhabitants'] + (dataset['cases'] / dataset['casesPerOneMillion']);
 										}
 									}
 								}
@@ -190,10 +201,14 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`${c}: ${JSON.stringify(continentsStats[c])}`);
 
 						for (const val in continentsStats[c]) {
-							if ((continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo')
+							if ((continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo' && val !== 'inhabitants')
 								&& this.config.getContinents === true) {
-								if (val !== 'countries') {
+								if (val !== 'countries' && val !== 'casesPerOneMillion' && val !== 'deathsPerOneMillion') {
 									await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val]);
+								} else if (val === 'casesPerOneMillion') {
+									await this.localCreateState(`global_continents.${c}.${val}`, val, (continentsStats[c]['cases'] / continentsStats[c]['inhabitants']).toFixed(2));
+								} else if (val === 'deathsPerOneMillion') {
+									await this.localCreateState(`global_continents.${c}.${val}`, val, (continentsStats[c]['deaths'] / continentsStats[c]['inhabitants']).toFixed(2));
 								} else {
 									await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val].join());
 								}
@@ -435,9 +450,9 @@ class Covid19 extends utils.Adapter {
 	}
 
 	/**
- * @param {string} country
- * @param {Object} countryInfo
- */
+	* @param {string} country
+	* @param {Object} countryInfo
+	*/
 	async getIsoCountry(country, countryInfo) {
 		try {
 			let countryObj = undefined;
