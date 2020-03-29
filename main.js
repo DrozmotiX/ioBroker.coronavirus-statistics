@@ -478,7 +478,7 @@ class Covid19 extends utils.Adapter {
 			const unit = stateAttr[name] !== undefined ? stateAttr[name].unit || '' : '';
 			this.log.debug(`Write value : ${writable}`);
 
-			await this.extendObjectAsync(state, {
+			await this.setObjectNotExistsAsync(state, {
 				type: 'state',
 				common: {
 					name: state_name,
