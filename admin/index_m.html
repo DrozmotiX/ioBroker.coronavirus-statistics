@@ -2,740 +2,761 @@
 
 <head>
 
-	<!-- Load ioBroker scripts and styles-->
-	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
-	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+    <!-- Load ioBroker scripts and styles-->
+    <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
 
-	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 
-	<script type="text/javascript" src="../../js/translate.js"></script>
-	<script type="text/javascript" src="../../lib/js/materialize.js"></script>
-	<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+    <script type="text/javascript" src="../../js/translate.js"></script>
+    <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
-	<!-- Load our own files -->
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<script type="text/javascript" src="words.js"></script>
+    <!-- Load our own files -->
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script type="text/javascript" src="words.js"></script>
 
-	<style>
-		.m .row {
-			margin-bottom: 0;
+    <style>
+        .m .row {
+            margin-bottom: 0;
+        }
+
+        .m .input-field {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+		#tab-main {
+			height: calc(100% - 120px);
+			overflow: hidden;
 		}
 
-		.m .input-field {
-			margin-top: 0;
-			margin-bottom: 0;
+		#countries {
+			height: calc(100% - 70px);
+			overflow: auto;
 		}
-	</style>
-
-	<script type="text/javascript">
-		var retryTimer = [], _onChange = null
-		var countries = null, allGermanyFederalStates = null, allGermanyCities = null, allGermanyCounties = null;
-		var loadGermanyFederalStates = null, loadGermanyCities = null, loadGermanyCounties = null;
-		var allGermanyFederalStates = null, allGermanyCities = null, allGermanyCounties = null;
-
-		function loadCountrys(settings) {
-
-			// Read all countrys from countryTranslator object
-			const result = getObject('coronavirus-statistics.0.countryTranslator', (err, state) => {
-
-				// Error handling if countrys are not known
-				if (!state.native.allCountrys) {
-
-					// console.log('Countrys not yet present, did the adapter sucessfully run for the first time ?')
-
-					// Reset timer (if running) and start new one for next polling intervall
-					if (retryTimer['loadCountrys']) {
-						clearTimeout(retryTimer['loadCountrys']);
-						retryTimer['loadCountrys'] = null;
-					}
-
-					retryTimer['loadCountrys'] = setTimeout(() => {
-						loadCountrys(settings);
-					}, 1000);
-
-
-				} else {
-					// Clear retry timer when running
-
-					if (retryTimer['loadCountrys']) {
-						clearTimeout(retryTimer['loadCountrys']);
-						retryTimer['loadCountrys'] = null;
-					}
-
-					countries = state.native.allCountrys;
-					countries = countries.sort();
-					// console.log('All countrys sortet object : ' + JSON.stringify(countries));
-
-					var $countries = $('#countries');
-					var text = '';
-					for (var i = 0; i < countries.length; i++) {
-						text += '<label class="col s4 input-field">' +
-							'<input type="checkbox" class="country" ' + (settings.countries.indexOf(countries[i]) !== -1 ? 'checked ' : '') + ' data-country="' + countries[i] + '" />' +
-							'<span class="black-text">' + _(countries[i]) + '</span>' +
-							'</label>';
-					}
-					$countries.html(text);
-				}
-
-				$('.country').on('change', function () { _onChange() });
-				// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-				if (M) M.updateTextFields();
-			});
-
-		}
-
-		// Function to load table of German Federal States
-		function loadallGermanyFederalStates(settings) {
-
-			// Read all countrys from countryTranslator object
-			const result = getObject('coronavirus-statistics.0.countryTranslator', (err, state) => {
-
-				// Error handling if countrys are not known
-				if (!state.native.allGermanyFederalStates) {
-
-					// console.log('German Federal States not yet present, did the adapter sucessfully run for the first time ?')
-
-					// Reset timer (if running) and start new one for next polling intervall
-					if (retryTimer['loadallGermanyFederalStates']) {
-						clearTimeout(retryTimer['loadallGermanyFederalStates']);
-						retryTimer['loadallGermanyFederalStates'] = null;
-					}
-
-					retryTimer['loadallGermanyFederalStates'] = setTimeout(() => {
-						loadCountrys(settings);
-					}, 1000);
-
-
-				} else {
-
-					// console.log('German Federal States present, loading table !')
-
-					// Clear retry timer when running
-					if (retryTimer['loadallGermanyFederalStates']) {
-						clearTimeout(retryTimer['loadallGermanyFederalStates']);
-						retryTimer['loadallGermanyFederalStates'] = null;
-					}
-
-					allGermanyFederalStates = state.native.allGermanyFederalStates;
-					// console.log('allGermanyFederalStates object : ' + JSON.stringify(allGermanyFederalStates));
-
-					var $allGermanyFederalStates = $('#allGermanyFederalStates');
-					var text = '';
-					for (var i = 0; i < allGermanyFederalStates.length; i++) {
-						text += '<label class="col s4 input-field">' +
-							'<input type="checkbox" class="selectedgermanyfederalstates" ' + (settings.allGermanyFederalStates.indexOf(allGermanyFederalStates[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanyfederalstates="' + allGermanyFederalStates[i] + '" />' +
-							'<span class="black-text">' + _(allGermanyFederalStates[i]) + '</span>' +
-							'</label>';
-					}
-					$allGermanyFederalStates.html(text);
-					// console.log('German Federal States table loaded!')
-				}
-
-				$('.selectedgermanyfederalstates').on('change', function () { _onChange() });
-				// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-				if (M) M.updateTextFields();
-			});
-
-		}
-
-		// Function to load all Cities of germany
-		function loadAllGermanyCities(settings) {
-
-			// Read all countrys from countryTranslator object
-			const result = getObject('coronavirus-statistics.0.countryTranslator', (err, state) => {
-
-				// Error handling if countrys are not known
-				if (!state.native.allGermanyCities) {
-
-					// console.log('Countrys not yet present, did the adapter sucessfully run for the first time ?')
-
-					// Reset timer (if running) and start new one for next polling intervall
-					if (retryTimer['loadAllGermanyCities']) {
-						clearTimeout(retryTimer['loadCountrys']);
-						retryTimer['loadAllGermanyCities'] = null;
-					}
-
-						retryTimer['loadAllGermanyCities'] = setTimeout(() => {
-							loadCountrys(settings);
-						}, 1000);
-
-					} else {
-						// Clear retry timer when running
-						if (retryTimer['loadAllGermanyCities']) {
-							clearTimeout(retryTimer['loadAllGermanyCities']);
-							retryTimer['loadAllGermanyCities'] = null;
-						}
-
-						allGermanyCities = state.native.allGermanyCities;
-						console.log('All allGermanyCities object : ' + JSON.stringify(allGermanyCities));
-
-						var $allGermanyCities = $('#allGermanyCities');
-						var text = '';
-						for (var i = 0; i < allGermanyCities.length; i++) {
-							text += '<label class="col s4 input-field">' +
-								'<input type="checkbox" class="selectedgermanycities" ' + (settings.allGermanyCities.indexOf(allGermanyCities[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanycities="' + allGermanyCities[i] + '" />' +
-								'<span class="black-text">' + _(allGermanyCities[i]) + '</span>' +
-								'</label>';
-						}
-							$allGermanyCities.html(text);
-
-					}
-
-					$('.selectedgermanycities').on('change', function () { _onChange() });
-					// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-					if (M) M.updateTextFields();
-
-			});
-		}		
-
-		// Function to load all counties of germany
-		function loadAllGermanyCounties(settings) {
-
-		// Read all countrys from countryTranslator object
-		const result = getObject('coronavirus-statistics.0.countryTranslator', (err, state) => {
-
-			// Error handling if countrys are not known
-			if (!state.native.allGermanyCounties) {
-
-				// console.log('Countrys not yet present, did the adapter sucessfully run for the first time ?')
-
-				// Reset timer (if running) and start new one for next polling intervall
-				if (retryTimer['loadAllGermanyCounties']) {
-					clearTimeout(retryTimer['loadAllGermanyCounties']);
-					retryTimer['loadAllGermanyCounties'] = null;
-				}
-
-				retryTimer['loadAllGermanyCounties'] = setTimeout(() => {
-					loadCountrys(settings);
-				}, 1000);
-
-			} else {
-				// Clear retry timer when running
-				if (retryTimer['loadAllGermanyCounties']) {
-					clearTimeout(retryTimer['loadAllGermanyCounties']);
-					retryTimer['loadAllGermanyCounties'] = null;
-				}
-
-				allGermanyCounties = state.native.allGermanyCounties;
-				// console.log('All allGermanyCounties object : ' + JSON.stringify(allGermanyCounties));
-
-				var $allGermanyCounties = $('#allGermanyCounties');
-				var text = '';
-				for (var i = 0; i < allGermanyCounties.length; i++) {
-					text += '<label class="col s4 input-field">' +
-						'<input type="checkbox" class="selectedgermanycounties" ' + (settings.allGermanyCounties.indexOf(allGermanyCounties[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanycounties="' + allGermanyCounties[i] + '" />' +
-						'<span class="black-text">' + _(allGermanyCounties[i]) + '</span>' +
-						'</label>';
-				}
-					$allGermanyCounties.html(text);
-			}
-
-			$('.selectedgermanycounties').on('change', function () { _onChange() });
-			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-			if (M) M.updateTextFields();
-
-		});
-	}
-
-		// Funtion to check if specific tables should be loaded
-		function checkTables (settings, initialize){		
-		
-			// Unhide / Hide tableFederalStates
-			if (loadGermanyFederalStates) {
-				console.log(`Show Fedral states`)
-				$('#tableFederalStates').removeClass('hide');
-				loadallGermanyFederalStates(settings)
-			} else {
-				console.log(`Hide Fedral states`)
-				$('#tableFederalStates').addClass('hide');
-			}
-
-			// Unhide / Hide tableGermanyCities
-			if (loadGermanyCities) {
-				console.log(`Show GermanyCities`)
-				$('#tableGermanyCities').removeClass('hide');
-				loadAllGermanyCities(settings);
-			} else {
-				console.log(`Hide GermanyCities`)
-				$('#tableGermanyCities').addClass('hide');
-			}
-
-			// Unhide / Hide tableGermanyCounties
-			if (loadGermanyCounties) {
-				console.log(`Show GermanyCounties`)
-				$('#tableGermanyCounties').removeClass('hide');
-				loadAllGermanyCounties(settings);
-			} else {
-				console.log(`Hide GermanyCounties`)
-				$('#tableGermanyCounties').addClass('hide');
-			}
-
-			// Unhide / Hide tableFederalStates
-			if (allGermanyFederalStates) {
-				$('#allGermanyFederalStates').addClass('hide');
-			} else {
-				$('#allGermanyFederalStates').removeClass('hide');
-			}
-
-			// Unhide / Hide tableGermanyCities
-			if (allGermanyCities) {
-				$('#allGermanyCities').addClass('hide');
-			} else {
-				$('#allGermanyCities').removeClass('hide');
-			}
-
-			// Unhide / Hide tableGermanyCounties
-			if (allGermanyCounties) {
-				$('#allGermanyCounties').addClass('hide');
-			} else {
-				$('#allGermanyCounties').removeClass('hide');
-				
-			}
-		};
-
-		// This will be called by the admin adapter when the settings page loads
-		function load(settings, onChange) {
-			if (!settings) return;
-				_onChange = onChange;
-				loadGermanyFederalStates = settings.getGermanyFederalStates || false;
-				loadGermanyCities = settings.getGermanyCities || false;
-				loadGermanyCounties = settings.getGermanyCounties || false;
-				allGermanyFederalStates = settings.getAllGermanyFederalStates || false;
-				allGermanyCities = settings.getAllGermanyCities || false;
-				allGermanyCounties = settings.getAllGermanyCounties || false;				
-
-				// // Prepase array
-				settings.countries = settings.countries || [];
-				settings.allGermanyFederalStates = settings.allGermanyFederalStates || [];
-				settings.allGermanyCities = settings.allGermanyCities || [];
-				settings.allGermanyCounties = settings.allGermanyCounties || [];
-
-			$('.value').each(function () {
-				let $key = $(this);
-				let id = $key.attr('id');
-				if ($key.attr('type') === 'checkbox') {
-					// do not call onChange direct, because onChange could expect some arguments
-					$key.prop('checked', settings[id])
-						.on('change', () => onChange());
-				} else {
-					// do not call onChange direct, because onChange could expect some arguments
-					$key.val(settings[id])
-						.on('change', () => onChange())
-						.on('keyup', () => onChange())
-				}
-			});
-
-			loadCountrys(settings);
-
-			checkTables(settings, true);
-
-			$("#getAllGermanyFederalStates").on("change", (e) =>  {
-				console.log(`Load GermanyFederalStates ${e}`);
-
-				if (e.target.checked === true) {
-					allGermanyFederalStates = true;
-					checkTables(settings, false);
-				} else {
-					allGermanyFederalStates = false;
-					checkTables(settings, false);
-				}
-			});
-
-			$("#getAllGermanyCities").on("change", (e) =>  {
-				console.log(`Load GermanyCities ${e}`);
-			
-				if (e.target.checked === true) {
-					allGermanyCities = true;
-					checkTables(settings, false);
-				} else {
-					allGermanyCities = false
-					checkTables(settings,false);
-				}
-			});
-
-			$("#getAllGermanyCounties").on("change", (e) =>  {
-				console.log(`Load GermanyCounties ${e}`);
-				if (e.target.checked === true) {
-					allGermanyCounties = true;
-					checkTables(settings);
-				} else {
-					allGermanyCounties = false
-					checkTables(settings);
-				}
-			});
-
-			$("#getGermanyFederalStates").on("change", (e) =>  {
-				console.log(`Load GermanyFederalStates ${e}`);
-
-				if (e.target.checked === true) {
-					loadGermanyFederalStates = true;
-					checkTables(settings, false);
-				} else {
-					loadGermanyFederalStates = false;
-					checkTables(settings, false);
-				}
-			});
-
-			$("#getGermanyCities").on("change", (e) =>  {
-				console.log(`Load GermanyCities ${e}`);
-			
-				if (e.target.checked === true) {
-					loadGermanyCities = true;
-					checkTables(settings, false);
-				} else {
-					loadGermanyCities = false
-					checkTables(settings,false);
-				}
-			});
-
-			$("#getGermanyCounties").on("change", (e) =>  {
-				console.log(`Load GermanyCounties ${e}`);
-				if (e.target.checked === true) {
-					loadGermanyCounties = true;
-					checkTables(settings);
-				} else {
-					loadGermanyCounties = false
-					checkTables(settings);
-				}
-			});
-
-			_onChange(false)
-
-		}
-
-		// This will be called by the admin adapter when the user presses the save button
-		function save(callback) {
-			// example: select elements with class=value and build settings object
-
-			var obj = { 
-				allGermanyFederalStates : [],
-				allGermanyCities: [],
-				allGermanyCounties: [],
-				countries: []
-
-			};
-
-			$('.country').each(function () {
-				if ($(this).prop('checked')) {
-					obj.countries.push($(this).data('country'));
-				}
-			});
-
-			$('.selectedgermanyfederalstates').each(function () {
-				if ($(this).prop('checked')) {
-					obj.allGermanyFederalStates.push($(this).data('selectedgermanyfederalstates'));
-				}
-			});
-
-			$('.selectedgermanycities').each(function () {
-				if ($(this).prop('checked')) {
-					obj.allGermanyCities.push($(this).data('selectedgermanycities'));
-				}
-			});
-
-			$('.selectedgermanycounties').each(function () {
-				if ($(this).prop('checked')) {
-					obj.allGermanyCounties.push($(this).data('selectedgermanycounties'));
-				}
-			});
-
-			$('.value').each(function () {
-				var $this = $(this);
-				var id = $this.attr('id');
-				if ($this.attr('type') === 'checkbox') {
-					obj[id] = $this.prop('checked');
-				} else {
-					var value = $this.val();
-					if (id === 'Password') {
-						value = encrypt(secret, value);
-					}
-					obj[id] = value;
-				}
-			});
-
-			callback(obj);
-		}
-	</script>
+        .bold {
+            font-weight: bold;
+            color: #2196f3;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var retryTimer = [];
+        var _onChange = null;
+        var countries = null;
+        var allGermanyFederalStates = null;
+        var allGermanyCities = null;
+        var allGermanyCounties = null;
+        var loadGermanyFederalStates = null;
+        var loadGermanyCities = null;
+        var loadGermanyCounties = null;
+        var boldCountries = ["United States", "Italy", "China", "Spain", "Germany", "France", "Russia", "Austria", "Switzerland"];
+
+        function loadCountries(settings) {
+            // Read all countries from countryTranslator object
+            const result = getObject('coronavirus-statistics.0.countryTranslator', (err, state) => {
+
+                // Error handling if countries are not known
+                if (!state.native.allCountrys) {
+
+                    // console.log('Countries not yet present, did the adapter successfully run for the first time ?')
+
+                    // Reset timer (if running) and start new one for next polling interval
+                    if (retryTimer['loadCountries']) {
+                        clearTimeout(retryTimer['loadCountries']);
+                        retryTimer['loadCountries'] = null;
+                    }
+
+                    retryTimer['loadCountries'] = setTimeout(() => {
+                        loadCountries(settings);
+                    }, 1000);
+
+
+                } else {
+                    // Clear retry timer when running
+
+                    if (retryTimer['loadCountries']) {
+                        clearTimeout(retryTimer['loadCountries']);
+                        retryTimer['loadCountries'] = null;
+                    }
+
+                    countries = state.native.allCountrys;
+                    countries = countries.sort();
+                    // console.log('All countries sorted object : ' + JSON.stringify(countries));
+
+                    var $countries = $('#countries');
+                    var text = '';
+                    for (var i = 0; i < countries.length; i++) {
+                        var bold = boldCountries.indexOf(countries[i]) !== -1;
+                        text += (bold ? '<br/>' : '') + '<label class="col s4 input-field">' +
+                            '<input type="checkbox" class="country" ' + (settings.countries.indexOf(countries[i]) !== -1 ? 'checked ' : '') + ' data-country="' + countries[i] + '" />' +
+                            '<span class="' + (bold ? 'bold' : 'black-text') + '">' +  _(countries[i]) + '</span>' +
+                            '</label>';
+                    }
+                    $countries.html(text);
+                }
+
+                $('.country').on('change', function () {
+                    _onChange()
+                });
+                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+                M && M.updateTextFields();
+            });
+        }
+
+        // Function to load table of German Federal States
+        function loadAllGermanyFederalStates(settings) {
+            // Read all countries from countryTranslator object
+            const result = getObject('coronavirus-statistics.0.countryTranslator', (err, state) => {
+
+                // Error handling if countries are not known
+                if (!state.native.allGermanyFederalStates) {
+
+                    // console.log('German Federal States not yet present, did the adapter successfully run for the first time ?')
+
+                    // Reset timer (if running) and start new one for next polling interval
+                    if (retryTimer['loadAllGermanyFederalStates']) {
+                        clearTimeout(retryTimer['loadAllGermanyFederalStates']);
+                        retryTimer['loadAllGermanyFederalStates'] = null;
+                    }
+
+                    retryTimer['loadAllGermanyFederalStates'] = setTimeout(() => {
+                        loadCountries(settings);
+                    }, 1000);
+
+
+                } else {
+
+                    // console.log('German Federal States present, loading table !')
+
+                    // Clear retry timer when running
+                    if (retryTimer['loadAllGermanyFederalStates']) {
+                        clearTimeout(retryTimer['loadAllGermanyFederalStates']);
+                        retryTimer['loadAllGermanyFederalStates'] = null;
+                    }
+
+                    allGermanyFederalStates = state.native.allGermanyFederalStates;
+                    // console.log('allGermanyFederalStates object : ' + JSON.stringify(allGermanyFederalStates));
+
+                    var $allGermanyFederalStates = $('#allGermanyFederalStates');
+                    var text = '';
+                    for (var i = 0; i < allGermanyFederalStates.length; i++) {
+                        text += '<label class="col s4 input-field">' +
+                            '<input type="checkbox" class="selectedgermanyfederalstates" ' + (settings.allGermanyFederalStates.indexOf(allGermanyFederalStates[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanyfederalstates="' + allGermanyFederalStates[i] + '" />' +
+                            '<span class="black-text">' + _(allGermanyFederalStates[i]) + '</span>' +
+                            '</label>';
+                    }
+                    $allGermanyFederalStates.html(text);
+                    // console.log('German Federal States table loaded!')
+                }
+
+                $('.selectedgermanyfederalstates').on('change', function () {
+                    _onChange()
+                });
+                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+                M && M.updateTextFields();
+            });
+
+        }
+
+        // Function to load all Cities of germany
+        function loadAllGermanyCities(settings) {
+            // Read all countries from countryTranslator object
+            getObject('coronavirus-statistics.0.countryTranslator', (err, state) => {
+
+                // Error handling if countries are not known
+                if (!state.native.allGermanyCities) {
+
+                    // console.log('Countries not yet present, did the adapter successfully run for the first time ?')
+
+                    // Reset timer (if running) and start new one for next polling interval
+                    if (retryTimer['loadAllGermanyCities']) {
+                        clearTimeout(retryTimer['loadCountries']);
+                        retryTimer['loadAllGermanyCities'] = null;
+                    }
+
+                    retryTimer['loadAllGermanyCities'] = setTimeout(() => {
+                        loadCountries(settings);
+                    }, 1000);
+
+                } else {
+                    // Clear retry timer when running
+                    if (retryTimer['loadAllGermanyCities']) {
+                        clearTimeout(retryTimer['loadAllGermanyCities']);
+                        retryTimer['loadAllGermanyCities'] = null;
+                    }
+
+                    allGermanyCities = state.native.allGermanyCities;
+                    console.log('All allGermanyCities object : ' + JSON.stringify(allGermanyCities));
+
+                    var $allGermanyCities = $('#allGermanyCities');
+                    var text = '';
+                    for (var i = 0; i < allGermanyCities.length; i++) {
+                        text += '<label class="col s4 input-field">' +
+                            '<input type="checkbox" class="selectedgermanycities" ' + (settings.allGermanyCities.indexOf(allGermanyCities[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanycities="' + allGermanyCities[i] + '" />' +
+                            '<span class="black-text">' + _(allGermanyCities[i]) + '</span>' +
+                            '</label>';
+                    }
+                    $allGermanyCities.html(text);
+                }
+
+                $('.selectedgermanycities').on('change', function () {
+                    _onChange()
+                });
+                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+                M && M.updateTextFields();
+            });
+        }
+
+        // Function to load all counties of germany
+        function loadAllGermanyCounties(settings) {
+            // Read all countries from countryTranslator object
+            getObject('coronavirus-statistics.0.countryTranslator', (err, state) => {
+
+                // Error handling if countries are not known
+                if (!state.native.allGermanyCounties) {
+
+                    // console.log('Countries not yet present, did the adapter successfully run for the first time ?')
+
+                    // Reset timer (if running) and start new one for next polling interval
+                    if (retryTimer['loadAllGermanyCounties']) {
+                        clearTimeout(retryTimer['loadAllGermanyCounties']);
+                        retryTimer['loadAllGermanyCounties'] = null;
+                    }
+
+                    retryTimer['loadAllGermanyCounties'] = setTimeout(() => {
+                        loadCountries(settings);
+                    }, 1000);
+
+                } else {
+                    // Clear retry timer when running
+                    if (retryTimer['loadAllGermanyCounties']) {
+                        clearTimeout(retryTimer['loadAllGermanyCounties']);
+                        retryTimer['loadAllGermanyCounties'] = null;
+                    }
+
+                    allGermanyCounties = state.native.allGermanyCounties;
+                    // console.log('All allGermanyCounties object : ' + JSON.stringify(allGermanyCounties));
+
+                    var $allGermanyCounties = $('#allGermanyCounties');
+                    var text = '';
+                    for (var i = 0; i < allGermanyCounties.length; i++) {
+                        text += '<label class="col s4 input-field">' +
+                            '<input type="checkbox" class="selectedgermanycounties" ' + (settings.allGermanyCounties.indexOf(allGermanyCounties[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanycounties="' + allGermanyCounties[i] + '" />' +
+                            '<span class="black-text">' + _(allGermanyCounties[i]) + '</span>' +
+                            '</label>';
+                    }
+                    $allGermanyCounties.html(text);
+                }
+
+                $('.selectedgermanycounties').on('change', function () {
+                    _onChange()
+                });
+                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+                M && M.updateTextFields();
+            });
+        }
+
+        // Function to check if specific tables should be loaded
+        function checkTables(settings, initialize) {
+            // Show / Hide tableFederalStates
+            if (loadGermanyFederalStates) {
+                console.log(`Show Federal states`);
+                $('#tableFederalStates').removeClass('hide');
+                loadAllGermanyFederalStates(settings)
+            } else {
+                console.log(`Hide Federal states`);
+                $('#tableFederalStates').addClass('hide');
+            }
+
+            // Show / Hide tableGermanyCities
+            if (loadGermanyCities) {
+                console.log(`Show GermanyCities`);
+                $('#tableGermanyCities').removeClass('hide');
+                loadAllGermanyCities(settings);
+            } else {
+                console.log(`Hide GermanyCities`);
+                $('#tableGermanyCities').addClass('hide');
+            }
+
+            // Show / Hide tableGermanyCounties
+            if (loadGermanyCounties) {
+                console.log(`Show GermanyCounties`);
+                $('#tableGermanyCounties').removeClass('hide');
+                loadAllGermanyCounties(settings);
+            } else {
+                console.log(`Hide GermanyCounties`);
+                $('#tableGermanyCounties').addClass('hide');
+            }
+
+            // Show / Hide tableFederalStates
+            if (allGermanyFederalStates) {
+                $('#allGermanyFederalStates').addClass('hide');
+            } else {
+                $('#allGermanyFederalStates').removeClass('hide');
+            }
+
+            // Show / Hide tableGermanyCities
+            if (allGermanyCities) {
+                $('#allGermanyCities').addClass('hide');
+            } else {
+                $('#allGermanyCities').removeClass('hide');
+            }
+
+            // Show / Hide tableGermanyCounties
+            if (allGermanyCounties) {
+                $('#allGermanyCounties').addClass('hide');
+            } else {
+                $('#allGermanyCounties').removeClass('hide');
+            }
+        }
+
+        // This will be called by the admin adapter when the settings page loads
+        function load(settings, onChange) {
+            if (!settings) return;
+            _onChange = onChange;
+            loadGermanyFederalStates = settings.getGermanyFederalStates || false;
+            loadGermanyCities = settings.getGermanyCities || false;
+            loadGermanyCounties = settings.getGermanyCounties || false;
+            allGermanyFederalStates = settings.getAllGermanyFederalStates || false;
+            allGermanyCities = settings.getAllGermanyCities || false;
+            allGermanyCounties = settings.getAllGermanyCounties || false;
+
+            // Preparse array
+            settings.countries = settings.countries || [];
+            settings.allGermanyFederalStates = settings.allGermanyFederalStates || [];
+            settings.allGermanyCities = settings.allGermanyCities || [];
+            settings.allGermanyCounties = settings.allGermanyCounties || [];
+
+            $('.value').each(function () {
+                let $key = $(this);
+                let id = $key.attr('id');
+                if ($key.attr('type') === 'checkbox') {
+                    // do not call onChange direct, because onChange could expect some arguments
+                    $key.prop('checked', settings[id])
+                        .on('change', () => onChange());
+                } else {
+                    // do not call onChange direct, because onChange could expect some arguments
+                    $key.val(settings[id])
+                        .on('change', () => onChange())
+                        .on('keyup', () => onChange())
+                }
+            });
+
+            loadCountries(settings);
+
+            checkTables(settings, true);
+
+            $("#getAllGermanyFederalStates").on("change", (e) => {
+                console.log(`Load GermanyFederalStates ${e}`);
+
+                if (e.target.checked === true) {
+                    allGermanyFederalStates = true;
+                    checkTables(settings, false);
+                } else {
+                    allGermanyFederalStates = false;
+                    checkTables(settings, false);
+                }
+            });
+
+            $("#getAllGermanyCities").on("change", (e) => {
+                console.log(`Load GermanyCities ${e}`);
+
+                if (e.target.checked === true) {
+                    allGermanyCities = true;
+                    checkTables(settings, false);
+                } else {
+                    allGermanyCities = false
+                    checkTables(settings, false);
+                }
+            });
+
+            $("#getAllGermanyCounties").on("change", (e) => {
+                console.log(`Load GermanyCounties ${e}`);
+                if (e.target.checked === true) {
+                    allGermanyCounties = true;
+                    checkTables(settings);
+                } else {
+                    allGermanyCounties = false
+                    checkTables(settings);
+                }
+            });
+
+            $("#getGermanyFederalStates").on("change", (e) => {
+                console.log(`Load GermanyFederalStates ${e}`);
+
+                if (e.target.checked === true) {
+                    loadGermanyFederalStates = true;
+                    checkTables(settings, false);
+                } else {
+                    loadGermanyFederalStates = false;
+                    checkTables(settings, false);
+                }
+            });
+
+            $("#getGermanyCities").on("change", (e) => {
+                console.log(`Load GermanyCities ${e}`);
+
+                if (e.target.checked === true) {
+                    loadGermanyCities = true;
+                    checkTables(settings, false);
+                } else {
+                    loadGermanyCities = false
+                    checkTables(settings, false);
+                }
+            });
+
+            $("#getGermanyCounties").on("change", (e) => {
+                console.log(`Load GermanyCounties ${e}`);
+                if (e.target.checked === true) {
+                    loadGermanyCounties = true;
+                    checkTables(settings);
+                } else {
+                    loadGermanyCounties = false
+                    checkTables(settings);
+                }
+            });
+
+            _onChange(false)
+
+        }
+
+        // This will be called by the admin adapter when the user presses the save button
+        function save(callback) {
+            // example: select elements with class=value and build settings object
+
+            var obj = {
+                allGermanyFederalStates: [],
+                allGermanyCities: [],
+                allGermanyCounties: [],
+                countries: []
+
+            };
+
+            $('.country').each(function () {
+                if ($(this).prop('checked')) {
+                    obj.countries.push($(this).data('country'));
+                }
+            });
+
+            $('.selectedgermanyfederalstates').each(function () {
+                if ($(this).prop('checked')) {
+                    obj.allGermanyFederalStates.push($(this).data('selectedgermanyfederalstates'));
+                }
+            });
+
+            $('.selectedgermanycities').each(function () {
+                if ($(this).prop('checked')) {
+                    obj.allGermanyCities.push($(this).data('selectedgermanycities'));
+                }
+            });
+
+            $('.selectedgermanycounties').each(function () {
+                if ($(this).prop('checked')) {
+                    obj.allGermanyCounties.push($(this).data('selectedgermanycounties'));
+                }
+            });
+
+            $('.value').each(function () {
+                var $this = $(this);
+                var id = $this.attr('id');
+                if ($this.attr('type') === 'checkbox') {
+                    obj[id] = $this.prop('checked');
+                } else {
+                    var value = $this.val();
+                    if (id === 'Password') {
+                        value = encrypt(secret, value);
+                    }
+                    obj[id] = value;
+                }
+            });
+
+            callback(obj);
+        }
+    </script>
 
 </head>
 
 <body>
 
-	<div class="m adapter-container">
+<div class="m adapter-container">
 
-		<div class="row">
-			<div class="col s12 m4 l2">
-				<img src="coronavirus-statistics.png" class="logo" alt="logo" />
-			</div>
-		</div>
+    <div class="row">
+        <div class="col s12 m4 l2">
+            <img src="coronavirus-statistics.png" class="logo" alt="logo"/>
+        </div>
+    </div>
 
-		<div class="row">
-			<div class="col s12">
+    <div class="row">
+        <div class="col s12">
 
-				<!-- Top menu for tabs -->
-				<div class="row">
-					<div class="col s12">
-						<ul class="tabs">
-							<li class="tab col s6"><a href="#tab-main" class="translate active">Country selector</a>
-							</li>
-							<li class="tab col s6"><a href="#tab-settings" class="translate active">Advanced settings</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- Top menu for tabs -->
+            <!-- Top menu for tabs -->
+            <div class="row">
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s6"><a href="#tab-main" class="translate active">Country selector</a>
+                        </li>
+                        <li class="tab col s6"><a href="#tab-settings" class="translate active">Advanced settings</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Top menu for tabs -->
 
-				<!-- Tab contents in a row -->
-				<div class="row">
+            <!-- Tab contents in a row -->
+            <div class="row">
 
-					<!-- Main section Country selector -->
-					<div id="tab-main" class="col s12 page">
-						<div class="section">
-							<h6 class="center translate">Please select desired countries or activate "all countries" in advanced settings</h6>
-						</div>
+                <!-- Main section Country selector -->
+                <div id="tab-main" class="col s12 page">
+                    <div class="section">
+                        <h6 class="center translate">Please select desired countries or activate "all countries" in advanced settings</h6>
+                    </div>
 
-						<!-- Create list off all countries -->
-						<div class="row" id="countries">
-							<div id="wait-bar" class="progress">
-								<div class="indeterminate"></div>
-							</div>
-							<h6 class="center translate">Countries selection not (yet) available, adapter must succesfully run 1 time to get all countries !</h6>
-						</div>
-						<!-- Create list off all countries -->
-					</div>
-					<!-- Main section Country selector -->
+                    <!-- Create list of all countries -->
+                    <div class="row" id="countries">
+                        <div class="progress">
+                            <div class="indeterminate"></div>
+                        </div>
+                        <h6 class="center translate">Countries selection not (yet) available, adapter must successfully run 1 time to get all countries!</h6>
+                    </div>
+                    <!-- Create list of all countries -->
+                </div>
+                <!-- Main section Country selector -->
 
-					<!-- Advanced settings Page -->
-					<div id="tab-settings" class="col s12 page">
+                <!-- Advanced settings Page -->
+                <div id="tab-settings" class="col s12 page">
 
-						<!-- Global settings -->
-						<div class="section">
-							<div class="divider"></div>
+                    <!-- Global settings -->
+                    <div class="section">
+                        <div class="divider"></div>
 
-							<h6 class="translate">Global settings</h6>
+                        <h6 class="translate">Global settings</h6>
 
-							<div class="row">
-								<div class="col s12">
-									<p></p>
-								</div>
-							</div>
+                        <div class="row">
+                            <div class="col s12">
+                                <p></p>
+                            </div>
+                        </div>
 
-							<!-- Button to retrieve all countrys -->
-							<div class="switch col s3">
-								<label>
-									<input type="checkbox" class="center value" id="loadAllCountrys" />
-									<span class="lever"></span>
-									<span class="translate">All Countries</span>
-								</label>
-							</div>
-							<!-- Button to retrieve all countrys -->
+                        <!-- Button to retrieve all countries -->
+                        <div class="switch col s3">
+                            <label>
+                                <input type="checkbox" class="center value" id="loadAllCountrys"/>
+                                <span class="lever"></span>
+                                <span class="translate">All Countries</span>
+                            </label>
+                        </div>
+                        <!-- Button to retrieve all countries -->
 
-							<!-- Button to retrieve continents -->
-							<div class="switch col s3">
-								<label>
-									<input type="checkbox" class="value" id="getContinents" />
-									<span class="lever"></span>
-									<span class="translate">Continents</span>
-							</div>
-							<!-- Button to retrieve Continents -->
+                        <!-- Button to retrieve continents -->
+                        <div class="switch col s3">
+                            <label>
+                                <input type="checkbox" class="value" id="getContinents"/>
+                                <span class="lever"></span>
+                                <span class="translate">Continents</span>
+                            </label>
+                        </div>
+                        <!-- Button to retrieve Continents -->
 
-							<!-- Button to handle removal of unused states -->
-							<div class="switch col s5">
-								<label>
-									<input type="checkbox" class="value" id="deleteUnused" />
-									<span class="lever"></span>
-									<span class="translate">Delete unused States</span>
-								</label>
-							</div>
-							<!-- Button to handle removal of unused states -->
-							<div class="row">
-								<div class="col s12">
-									<p></p>
-								</div>
-							</div>
-						</div>
+                        <!-- Button to handle removal of unused states -->
+                        <div class="switch col s5">
+                            <label>
+                                <input type="checkbox" class="value" id="deleteUnused"/>
+                                <span class="lever"></span>
+                                <span class="translate">Delete unused States</span>
+                            </label>
+                        </div>
+                        <!-- Button to handle removal of unused states -->
+                        <div class="row">
+                            <div class="col s12">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
 
-						<!-- Germany specific settings -->
-						<div class="section">
-							<div class="divider"></div>
-							<h6 class="translate">Germany specific settings</h6>
-							
-							<div class="row">
-								<div class="col s12">
-									<p></p>
-								</div>
-							</div>
+                    <!-- Germany specific settings -->
+                    <div class="section">
+                        <div class="divider"></div>
+                        <h6 class="translate">Germany specific settings</h6>
 
-							<!-- Button to retrieve German Federal States -->
-							<div class="switch col s3">
-								<label>
-									<input type="checkbox" class="value" id="getGermanyFederalStates" />
-									<span class="lever"></span>
-									<span class="translate">Federal states</span>
-								</label>
-							</div>
-							<!-- Button to retrieve German Federal States -->
+                        <div class="row">
+                            <div class="col s12">
+                                <p></p>
+                            </div>
+                        </div>
 
-							<!-- Button to retrieve Germany counties -->
-							<div class="switch col s3">
-								<label>
-									<input type="checkbox" class="value" id="getGermanyCounties" />
-									<span class="lever"></span>
-									<span class="translate">counties</span>
-								</label>
-							</div>
-							<!-- Button to retrieve Germany counties -->
+                        <!-- Button to retrieve German Federal States -->
+                        <div class="switch col s3">
+                            <label>
+                                <input type="checkbox" class="value" id="getGermanyFederalStates"/>
+                                <span class="lever"></span>
+                                <span class="translate">Federal states</span>
+                            </label>
+                        </div>
+                        <!-- Button to retrieve German Federal States -->
 
-							<!-- Button to retrieve Germany cities -->
-							<div class="switch col s3">
-								<label>
-									<input type="checkbox" class="value" id="getGermanyCities" />
-									<span class="lever"></span>
-									<span class="translate">Cities</span>
-								</label>
-							</div>
-							<!-- Button to retrieve Germany cities -->
+                        <!-- Button to retrieve Germany counties -->
+                        <div class="switch col s3">
+                            <label>
+                                <input type="checkbox" class="value" id="getGermanyCounties"/>
+                                <span class="lever"></span>
+                                <span class="translate">counties</span>
+                            </label>
+                        </div>
+                        <!-- Button to retrieve Germany counties -->
 
-							<div class="row">
-								<div class="col s12">
-									<p></p>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Germany Federal State selection section -->
-						<div class="section hide" id="tableFederalStates">
-							<!-- Button to retrieve all German Federal States -->
+                        <!-- Button to retrieve Germany cities -->
+                        <div class="switch col s3">
+                            <label>
+                                <input type="checkbox" class="value" id="getGermanyCities"/>
+                                <span class="lever"></span>
+                                <span class="translate">Cities</span>
+                            </label>
+                        </div>
+                        <!-- Button to retrieve Germany cities -->
 
-							<div class="col s6">
-								<span class="translate">Please select the desired federal states or activate all</span>
-							</div>
+                        <div class="row">
+                            <div class="col s12">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
 
-							<div class="switch right col s6">
+                    <!-- Germany Federal State selection section -->
+                    <div class="section hide" id="tableFederalStates">
+                        <!-- Button to retrieve all German Federal States -->
 
-								<label>
-									<span class="translate">All federal states</span>
-									<input type="checkbox" class="value" id="getAllGermanyFederalStates" />
-									<span class="lever"></span>
-								</label>
-								
-							</div>
-							<!-- Button to retrieve all German Federal States -->
+                        <div class="col s6">
+                            <span class="translate">Please select the desired federal states or activate all</span>
+                        </div>
 
-							<div class="row">
-								<div class="col s12">
-									<p></p>
-								</div>
-							</div>
+                        <div class="switch right col s6">
 
-							<!-- Create list off all German Federal States -->
-							<div class="row" id="allGermanyFederalStates">
-								<div id="wait-bar" class="progress">
-									<div class="indeterminate"></div>
-								</div>
-								<h6 class="center translate">Selection not (yet) available, adapter must succesfully run 1 time with this section enabled !</h6>
-							</div>
-							<!-- Create list off all German Federal States -->
+                            <label>
+                                <span class="translate">All federal states</span>
+                                <input type="checkbox" class="value" id="getAllGermanyFederalStates"/>
+                                <span class="lever"></span>
+                            </label>
 
-						</div>
-						<!-- Germany Federal State selection section -->
+                        </div>
+                        <!-- Button to retrieve all German Federal States -->
 
-						<!-- Germany counties selection section -->
-						<div class="section hide" id="tableGermanyCounties">						
-							
-							<div class="row">
-								<div class="col s12">
-									<p></p>
-								</div>
-							</div>
-							
-							<div class="col s6">
-								<span class="translate">Please select the desired counties or activate all</span>								
-							</div>
-							<!-- Button to retrieve all counties -->
-							<div class="switch right col s6">
+                        <div class="row">
+                            <div class="col s12">
+                                <p></p>
+                            </div>
+                        </div>
 
-								<label>
-									<span class="translate">All counties</span>
-									<input type="checkbox" class="value" id="getAllGermanyCounties" />
-									<span class="lever"></span>
-								</label>
-								
-							</div>
-							<!-- Button to retrieve all counties -->
+                        <!-- Create list off all German Federal States -->
+                        <div class="row" id="allGermanyFederalStates">
+                            <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div>
+                            <h6 class="center translate">Selection not (yet) available, adapter must successfully run 1 time with this section enabled!</h6>
+                        </div>
+                        <!-- Create list off all German Federal States -->
 
-							<div class="row">
-								<div class="col s12">
-									<p></p>
-								</div>
-							</div>
+                    </div>
+                    <!-- Germany Federal State selection section -->
 
-							<!-- Create list off all German countys -->
-							<div class="row" id="allGermanyCounties">
-								<div id="wait-bar" class="progress">
-									<div class="indeterminate"></div>
-								</div>
-								<h6 class="center translate">Selection not (yet) available, adapter must succesfully run 1 time with this section enabled !</h6>
-							</div>
-							<!-- Create list off all German countys -->
+                    <!-- Germany counties selection section -->
+                    <div class="section hide" id="tableGermanyCounties">
 
-						</div>
-						<!-- German counties selection section -->
+                        <div class="row">
+                            <div class="col s12">
+                                <p></p>
+                            </div>
+                        </div>
 
-						<!-- Germany cities selection section -->
-						<div class="section hide" id="tableGermanyCities">						
-							
-							<div class="row">
-								<div class="col s12">
-									<p></p>
-								</div>
-							</div>
-							
-							<div class="col s6">
-								<span class="translate">Please select the desired cities or activate all</span>								
-							</div>
-							<!-- Button to retrieve all German cities -->
-							<div class="switch right col s6">
+                        <div class="col s6">
+                            <span class="translate">Please select the desired counties or activate all</span>
+                        </div>
+                        <!-- Button to retrieve all countries -->
+                        <div class="switch right col s6">
 
-								<label>
-									<span class="translate">All cities</span>
-									<input type="checkbox" class="value" id="getAllGermanyCities" />
-									<span class="lever"></span>
-								</label>
-								
-							</div>
-							<!-- Button to retrieve all German cities -->
+                            <label>
+                                <span class="translate">All counties</span>
+                                <input type="checkbox" class="value" id="getAllGermanyCounties"/>
+                                <span class="lever"></span>
+                            </label>
 
-							<div class="row">
-								<div class="col s12">
-									<p></p>
-								</div>
-							</div>
+                        </div>
+                        <!-- Button to retrieve all countries -->
 
-							<!-- Create list off all German countys -->
-							<div class="row" id="allGermanyCities">
-								<div id="wait-bar" class="progress">
-									<div class="indeterminate"></div>
-								</div>
-								<h6 class="center translate">Selection not (yet) available, adapter must succesfully run 1 time with this section enabled !</h6>
-							</div>
-							<!-- Create list off all German countys -->
+                        <div class="row">
+                            <div class="col s12">
+                                <p></p>
+                            </div>
+                        </div>
 
-						</div>
-						<!-- Germany cities selection section -->
+                        <!-- Create list off all German countries -->
+                        <div class="row" id="allGermanyCounties">
+                            <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div>
+                            <h6 class="center translate">Selection not (yet) available, adapter must successfully run 1 time with this section enabled!</h6>
+                        </div>
+                        <!-- Create list off all German countries -->
 
-					</div>
-					<!-- Advanced settings Page -->
+                    </div>
+                    <!-- German counties selection section -->
 
-				</div>
-				<!-- Tab contents in a row -->
+                    <!-- Germany cities selection section -->
+                    <div class="section hide" id="tableGermanyCities">
 
-			</div>
+                        <div class="row">
+                            <div class="col s12">
+                                <p></p>
+                            </div>
+                        </div>
 
-		</div>
-	</div>
+                        <div class="col s6">
+                            <span class="translate">Please select the desired cities or activate all</span>
+                        </div>
+                        <!-- Button to retrieve all German cities -->
+                        <div class="switch right col s6">
 
-	</div>
+                            <label>
+                                <span class="translate">All cities</span>
+                                <input type="checkbox" class="value" id="getAllGermanyCities"/>
+                                <span class="lever"></span>
+                            </label>
+
+                        </div>
+                        <!-- Button to retrieve all German cities -->
+
+                        <div class="row">
+                            <div class="col s12">
+                                <p></p>
+                            </div>
+                        </div>
+
+                        <!-- Create list off all German countries -->
+                        <div class="row" id="allGermanyCities">
+                            <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div>
+                            <h6 class="center translate">Selection not (yet) available, adapter must successfully run 1 time with this section enabled!</h6>
+                        </div>
+                        <!-- Create list off all German countries -->
+
+                    </div>
+                    <!-- Germany cities selection section -->
+
+                </div>
+                <!-- Advanced settings Page -->
+
+            </div>
+            <!-- Tab contents in a row -->
+
+        </div>
+
+    </div>
+</div>
+
+</div>
 
 </body>
 
