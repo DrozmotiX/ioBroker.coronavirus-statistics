@@ -50,9 +50,9 @@
         var retryTimer = [];
         var _onChange = null;
         var countries = null;
-        var allGermanyFederalStates = null;
-        var allGermanyCities = null;
-        var allGermanyCounties = null;
+        var getAllGermanyFederalStates = null;
+        var getAllGermanyCities = null;
+        var getAllGermanyCounties = null;
         var loadGermanyFederalStates = null;
         var loadGermanyCities = null;
         var loadGermanyCounties = null;
@@ -193,7 +193,7 @@
                     }
 
                     allGermanyCities = state.native.allGermanyCities;
-                    console.log('All allGermanyCities object : ' + JSON.stringify(allGermanyCities));
+                    // console.log('All allGermanyCities object : ' + JSON.stringify(allGermanyCities));
 
                     var $allGermanyCities = $('#allGermanyCities');
                     var text = '';
@@ -274,7 +274,16 @@
                 console.log(`Hide Federal states`);
                 $('#tableFederalStates').addClass('hide');
             }
-
+            
+            // Show / Hide tableFederalStates
+            console.log(`getAllGermanyFederalStates ${getAllGermanyFederalStates}`);
+            if (getAllGermanyFederalStates) {
+                console.log(`Hide tableFederalStates`);
+                $('#allGermanyFederalStates').addClass('hide');
+            } else {
+                console.log(`Show tableFederalStates`);
+                $('#allGermanyFederalStates').removeClass('hide');
+            }
             // Show / Hide tableGermanyCities
             if (loadGermanyCities) {
                 console.log(`Show GermanyCities`);
@@ -295,24 +304,21 @@
                 $('#tableGermanyCounties').addClass('hide');
             }
 
-            // Show / Hide tableFederalStates
-            if (allGermanyFederalStates) {
-                $('#allGermanyFederalStates').addClass('hide');
-            } else {
-                $('#allGermanyFederalStates').removeClass('hide');
-            }
-
             // Show / Hide tableGermanyCities
-            if (allGermanyCities) {
+            if (getAllGermanyCities) {
+                console.log(`Hide tableGermanyCities`);
                 $('#allGermanyCities').addClass('hide');
             } else {
+                console.log(`Show tableGermanyCities`);
                 $('#allGermanyCities').removeClass('hide');
             }
 
             // Show / Hide tableGermanyCounties
-            if (allGermanyCounties) {
+            if (getAllGermanyCounties) {
+                console.log(`Hide tableGermanyCounties`);
                 $('#allGermanyCounties').addClass('hide');
             } else {
+                console.log(`Show tableGermanyCounties`);
                 $('#allGermanyCounties').removeClass('hide');
             }
         }
@@ -321,12 +327,12 @@
         function load(settings, onChange) {
             if (!settings) return;
             _onChange = onChange;
-            loadGermanyFederalStates = settings.getGermanyFederalStates || false;
-            loadGermanyCities = settings.getGermanyCities || false;
-            loadGermanyCounties = settings.getGermanyCounties || false;
-            allGermanyFederalStates = settings.getAllGermanyFederalStates || false;
-            allGermanyCities = settings.getAllGermanyCities || false;
-            allGermanyCounties = settings.getAllGermanyCounties || false;
+            if (loadGermanyFederalStates === null) loadGermanyFederalStates = settings.getGermanyFederalStates || false;
+            if (loadGermanyCities === null) loadGermanyCities = settings.getGermanyCities || false;
+            if (loadGermanyCounties === null) loadGermanyCounties = settings.getGermanyCounties || false;
+            if (getAllGermanyFederalStates === null) getAllGermanyFederalStates = settings.getAllGermanyFederalStates || false;
+            if (getAllGermanyCities === null) getAllGermanyCities = settings.getAllGermanyCities || false;
+            if (getAllGermanyCounties === null) getAllGermanyCounties = settings.getAllGermanyCounties || false;
 
             // Preparse array
             settings.countries = settings.countries || [];
@@ -357,10 +363,10 @@
                 console.log(`Load GermanyFederalStates ${e}`);
 
                 if (e.target.checked === true) {
-                    allGermanyFederalStates = true;
+                    getAllGermanyFederalStates = true;
                     checkTables(settings, false);
                 } else {
-                    allGermanyFederalStates = false;
+                    getAllGermanyFederalStates = false;
                     checkTables(settings, false);
                 }
             });
@@ -369,10 +375,10 @@
                 console.log(`Load GermanyCities ${e}`);
 
                 if (e.target.checked === true) {
-                    allGermanyCities = true;
+                    getAllGermanyCities = true;
                     checkTables(settings, false);
                 } else {
-                    allGermanyCities = false
+                    getAllGermanyCities = false
                     checkTables(settings, false);
                 }
             });
@@ -380,10 +386,10 @@
             $("#getAllGermanyCounties").on("change", (e) => {
                 console.log(`Load GermanyCounties ${e}`);
                 if (e.target.checked === true) {
-                    allGermanyCounties = true;
+                    getAllGermanyCounties = true;
                     checkTables(settings);
                 } else {
-                    allGermanyCounties = false
+                    getAllGermanyCounties = false
                     checkTables(settings);
                 }
             });
