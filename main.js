@@ -9,7 +9,9 @@ const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
 const countryJs = require('country-list-js');
 const allCountrys = []; // Array for all countrys to store in object
-let allGermanyFederalStates = [], allGermanCountyDetails = [], allGermanyCounties = [], allGermanyCities = []; // For Germany, arrays to store federal states and countys to store in object
+// For Germany, arrays to store federal states, city and  counties to store in object
+let allGermanyFederalStates = [], allGermanCountyDetails = [], allGermanyCounties = [], allGermanyCities = [];
+let allGermanyFederalStatesLoaded = null, allGermanyCountiesLoaded = null, allGermanyCitiesLoaded = null;
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
@@ -32,11 +34,24 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 		try {
+
+			// Load configuration
 			const selectedCountries = this.config.countries || [];
-			const selectedGermanyFederalStates = this.config.allGermanyFederalStates || [];
-			const selectedGermanyCities = this.config.allGermanyCities || [];
-			const selectedGermanyCounties = this.config.allGermanyCounties || [];
+			const selectedGermanyFederalStates = this.config.selectedGermanyFederalStates || [];
+			const selectedGermanyCities = this.config.selectedGermanyCities || [];
+			const selectedGermanyCounties = this.config.selectedGermanyCounties || [];
 			this.log.debug(`Configuration object before config load : ${JSON.stringify(this.config)}`);
+
+			// Determine if routin must run to get data for tables
+			const loadedArrays = await this.getObjectAsync(`${this.namespace}.countryTranslator`);
+			if (!loadedArrays) {
+				allGermanyCitiesLoaded = false
+
+			} else {
+				allGermanyCitiesLoaded = loadedArrays.native.allGermanyCities || false;
+				allGermanyCountiesLoaded = loadedArrays.native.allGermanyCounties || false;
+				allGermanyFederalStatesLoaded = loadedArrays.native.allGermanyFederalStates || false;
+			}
 
 			const loadAll = async () => {
 				// Try to call API and get global information
@@ -428,16 +443,15 @@ class Covid19 extends utils.Adapter {
 			// Random number generator to avoid all ioBroker instances calling the API at the same time
 			const timer1 = (Math.random() * (10 - 1) + 1) * 1000;
 			await wait(timer1);
-			this.setState('info.connection', true, true);
 
-
-			await loadAll();	// Global Worldwide statistics
-			await loadCountries(); // Detailed Worldwide statistics by country
-			if (this.config.getGermanyFederalStates || !selectedGermanyFederalStates) {
+			await loadAll();		// Global Worldwide statistics
+			await loadCountries(); 	// Detailed Worldwide statistics by country
+			if (this.config.getGermanyFederalStates || !allGermanyFederalStatesLoaded) {
 				await germanyBundersland(); // Detailed Federal state statistics for germany
 			}
 
-			if (this.config.getGermanyCities || this.config.getGermanyCounties || !selectedGermanyCities.length || !selectedGermanyCities.length) {
+			// Get data for cities and counties of Germany, ensur tables always have values to load
+			if (this.config.getGermanyCities || this.config.getGermanyCounties || !allGermanyCitiesLoaded || !allGermanyCitiesLoaded) {
 				await germanyCounties(); // Detailed city state statistics for germany
 			}
 

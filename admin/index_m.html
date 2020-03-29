@@ -177,7 +177,7 @@
 
                     // Reset timer (if running) and start new one for next polling interval
                     if (retryTimer['loadAllGermanyCities']) {
-                        clearTimeout(retryTimer['loadCountries']);
+                        clearTimeout(retryTimer['loadAllGermanyCities']);
                         retryTimer['loadAllGermanyCities'] = null;
                     }
 
@@ -432,9 +432,9 @@
             // example: select elements with class=value and build settings object
 
             var obj = {
-                allGermanyFederalStates: [],
-                allGermanyCities: [],
-                allGermanyCounties: [],
+                selectedGermanyFederalStates: [],
+                selectedGermanyCities: [],
+                selectedGermanyCounties: [],
                 countries: []
 
             };
@@ -447,19 +447,19 @@
 
             $('.selectedgermanyfederalstates').each(function () {
                 if ($(this).prop('checked')) {
-                    obj.allGermanyFederalStates.push($(this).data('selectedgermanyfederalstates'));
+                    obj.selectedGermanyFederalStates.push($(this).data('selectedgermanyfederalstates'));
                 }
             });
 
             $('.selectedgermanycities').each(function () {
                 if ($(this).prop('checked')) {
-                    obj.allGermanyCities.push($(this).data('selectedgermanycities'));
+                    obj.selectedGermanyCities.push($(this).data('selectedgermanycities'));
                 }
             });
 
             $('.selectedgermanycounties').each(function () {
                 if ($(this).prop('checked')) {
-                    obj.allGermanyCounties.push($(this).data('selectedgermanycounties'));
+                    obj.selectedGermanyCounties.push($(this).data('selectedgermanycounties'));
                 }
             });
 

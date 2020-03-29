@@ -295,13 +295,13 @@
         "getAllGermanyCities": false,
         "getAllGermanyCounties": false,
         "loadAllCountrys": false,
-        "allGermanyFederalStates": [
+        "selectedGermanyFederalStates": [
             ""
         ],
-        "allGermanyCities": [
+        "selectedGermanyCities": [
             ""
         ],
-        "allGermanyCounties": [
+        "selectedGermanyCounties": [
             ""
         ],
         "countries": [
