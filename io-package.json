@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.4.9",
+        "version": "0.5.0",
         "news": {
+            "0.5.0": {
+                "en": "For Germany : federal states, counties and cities added",
+                "de": "Für Deutschland: Bundesländer, Landkreise und Städte hinzugefügt",
+                "ru": "Для Германии: добавлены федеральные земли, округа и города",
+                "pt": "Para a Alemanha: estados federais, condados e cidades adicionados",
+                "nl": "Voor Duitsland: federale staten, provincies en steden toegevoegd",
+                "fr": "Pour l'Allemagne: États fédéraux, comtés et villes ajoutés",
+                "it": "Per la Germania: aggiunti stati federali, contee e città",
+                "es": "Para Alemania: se agregaron estados federales, condados y ciudades",
+                "pl": "Do Niemiec: dodano kraje związkowe, powiaty i miasta",
+                "zh-cn": "对于德国：添加了联邦州，县和城市"
+            },
             "0.4.9": {
                 "en": "Fixed issues in country names, added counties and cities for germany",
                 "de": "Probleme in Ländernamen behoben, Landkreise und Städte für Deutschland hinzugefügt",
