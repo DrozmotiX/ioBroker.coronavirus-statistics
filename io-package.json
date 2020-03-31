@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.5.0",
+        "version": "0.5.1",
         "news": {
+            "0.5.1": {
+                "en": "BugFix : State attribute definition missing for + affectedCountries",
+                "de": "BugFix : State attribute definition missing for + affectedCountries",
+                "ru": "BugFix : State attribute definition missing for + affectedCountries",
+                "pt": "BugFix : State attribute definition missing for + affectedCountries",
+                "nl": "BugFix : State attribute definition missing for + affectedCountries",
+                "fr": "BugFix : State attribute definition missing for + affectedCountries",
+                "it": "BugFix : State attribute definition missing for + affectedCountries",
+                "es": "BugFix : State attribute definition missing for + affectedCountries",
+                "pl": "BugFix : State attribute definition missing for + affectedCountries",
+                "zh-cn": "BugFix : State attribute definition missing for + affectedCountries"
+            },
             "0.5.0": {
                 "en": "For Germany : federal states, counties and cities added",
                 "de": "Für Deutschland: Bundesländer, Landkreise und Städte hinzugefügt",

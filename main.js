@@ -490,6 +490,14 @@ class Covid19 extends utils.Adapter {
 				native: {},
 			});
 
+			// Ensure name changes are propagated
+			await this.extendObjectAsync(state, {
+				type: 'state',
+				common: {
+					name: state_name,
+				},
+			});
+
 			// Only set value if input != null
 			if (value !== null) {
 				await this.setState(state, { val: value, ack: true });

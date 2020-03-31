@@ -87,6 +87,10 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
+### 0.5.1 (2020-03-31) BugFix : State attribute definition missing for + affectedCountries
+* (DutchmanNL) BugFix : State attribute definition missing for + affectedCountries
+* (DutchmanNL) BugFix : Ensure name changes are propagated
+
 ### 0.5.0 (2020-03-31) For Germany : federal states, counties and cities added
 * (DutchmanNL) Update production release from 0.4.0 to 0.5.0
 * (DutchmanNL) BugFix : Do not write objects unneeded
