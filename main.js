@@ -451,7 +451,7 @@ class Covid19 extends utils.Adapter {
 			}
 
 			// Get data for cities and counties of Germany, ensur tables always have values to load
-			if (this.config.getGermanyCities || this.config.getGermanyCounties || !allGermanyCitiesLoaded || !allGermanyCitiesLoaded) {
+			if (this.config.getGermanyCities || this.config.getGermanyCounties || !allGermanyCitiesLoaded || !allGermanyCountiesLoaded) {
 				await germanyCounties(); // Detailed city state statistics for germany
 			}
 

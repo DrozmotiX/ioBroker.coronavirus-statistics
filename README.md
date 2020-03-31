@@ -86,7 +86,11 @@ The JSON string then looks like this, for example:
 As first value the name from the warning message must be taken from the log. The name of the country from the [List with country names](https://github.com/i-rocky/country-list-js/blob/master/data/names.json) is then assigned to this.
 
 ## Changelog
-	
+
+### 0.5.0 (2020-03-31) For Germany : federal states, counties and cities added
+* (DutchmanNL) Update production release from 0.4.0 to 0.5.0
+* (DutchmanNL) BugFix : Do not write objects unneded
+
 ### 0.4.9 Fixed issues in country names, added counties and cities for germany
 * (DutchmanNL  & AlCalzone) Code optimations 
 * (DutchmanNL) Cities for germany added
