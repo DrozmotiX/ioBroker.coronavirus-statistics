@@ -145,11 +145,27 @@ class Covid19 extends utils.Adapter {
 											continentsStats['World_Sum'][property] = 0;
 										}
 
-										continentsStats[continent][property] = continentsStats[continent][property] + dataset[property];
-										continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] + dataset[property];
+										if (property !== 'updated') {
+											continentsStats[continent][property] = continentsStats[continent][property] + dataset[property];
+											continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] + dataset[property];
+										} else {
+											// Zeitstempel 'updated' aktualisieren -> neusten Wert der Länder nehmen
+											if (dataset[property] > continentsStats[continent][property]) {
+												continentsStats[continent][property] = dataset[property];
+												continentsStats['World_Sum'][property] = dataset[property]
+											}
+										}
+
 
 										if (continent === 'North_America' || continent === 'South_America') {
-											continentsStats['America'][property] = continentsStats['America'][property] + dataset[property];
+											if (property !== 'updated') {
+												continentsStats['America'][property] = continentsStats['America'][property] + dataset[property];
+											} else {
+												// Zeitstempel 'updated' aktualisieren -> neusten Wert der Länder nehmen
+												if (dataset[property] > continentsStats['America'][property]) {
+													continentsStats['America'][property] = dataset[property];
+												}
+											}
 										}
 									} else {
 										// Liste mit Ländern & casesPerMillion berechnung über Einwohnerzahl
