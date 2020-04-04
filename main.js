@@ -201,7 +201,7 @@ class Covid19 extends utils.Adapter {
 					// Write Top 5
 					this.log.debug(`Top 5 Countries : ${JSON.stringify(values.slice(0, 5))}`);
 					for (let position = 1; position <= 5; position++) {
-						const dataset = values[position - 1]; // start at 0
+						const dataset = values[position - 0]; // start at 1
 						let country = dataset.country;
 
 						const channelName = `country_Top_5.${position}`;
