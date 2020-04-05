@@ -148,7 +148,7 @@
                     var text = '';
                     for (var i = 0; i < allGermanyFederalStates.length; i++) {
                         text += '<label class="col s4 input-field">' +
-                            '<input type="checkbox" class="selectedgermanyfederalstates" ' + (settings.allGermanyFederalStates.indexOf(allGermanyFederalStates[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanyfederalstates="' + allGermanyFederalStates[i] + '" />' +
+                            '<input type="checkbox" class="selectedgermanyfederalstates" ' + (settings.selectedGermanyFederalStates.indexOf(allGermanyFederalStates[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanyfederalstates="' + allGermanyFederalStates[i] + '" />' +
                             '<span class="black-text">' + _(allGermanyFederalStates[i]) + '</span>' +
                             '</label>';
                     }
@@ -199,7 +199,7 @@
                     var text = '';
                     for (var i = 0; i < allGermanyCities.length; i++) {
                         text += '<label class="col s4 input-field">' +
-                            '<input type="checkbox" class="selectedgermanycities" ' + (settings.allGermanyCities.indexOf(allGermanyCities[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanycities="' + allGermanyCities[i] + '" />' +
+                            '<input type="checkbox" class="selectedgermanycities" ' + (settings.selectedGermanyCities.indexOf(allGermanyCities[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanycities="' + allGermanyCities[i] + '" />' +
                             '<span class="black-text">' + _(allGermanyCities[i]) + '</span>' +
                             '</label>';
                     }
@@ -248,7 +248,7 @@
                     var text = '';
                     for (var i = 0; i < allGermanyCounties.length; i++) {
                         text += '<label class="col s4 input-field">' +
-                            '<input type="checkbox" class="selectedgermanycounties" ' + (settings.allGermanyCounties.indexOf(allGermanyCounties[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanycounties="' + allGermanyCounties[i] + '" />' +
+                            '<input type="checkbox" class="selectedgermanycounties" ' + (settings.selectedGermanyCounties.indexOf(allGermanyCounties[i]) !== -1 ? 'checked ' : '') + ' data-selectedgermanycounties="' + allGermanyCounties[i] + '" />' +
                             '<span class="black-text">' + _(allGermanyCounties[i]) + '</span>' +
                             '</label>';
                     }
