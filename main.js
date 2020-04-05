@@ -60,9 +60,7 @@ class Covid19 extends utils.Adapter {
 					this.log.debug(`Data from COVID-19 API received : ${result}`);
 					const values = JSON.parse(result);
 					for (const i of Object.keys(values)) {
-						if (i !== 'tests' && i !== 'testsPerOneMillion')
-
-							await this.localCreateState(`global_totals.${i}`, i, values[i]);
+						await this.localCreateState(`global_totals.${i}`, i, values[i]);
 					}
 				} catch (error) {
 					this.log.error(`[loadAll] error: ${error.message}, stack: ${error.stack}`);
@@ -113,8 +111,6 @@ class Covid19 extends utils.Adapter {
 								// Don't create a state for the country
 								if (property === 'country') continue;
 								if (property === 'countryInfo') await this.localDeleteState(`${country}.${property}`);
-								if (property === 'tests') {await this.localDeleteState(`${country}.${property}`); continue;}
-								if (property === 'testsPerOneMillion') {await this.localDeleteState(`${country}.${property}`); continue;}
 								if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
 
 									this.log.debug(`Country add routine : ${property} for : ${country}`);
@@ -225,9 +221,7 @@ class Covid19 extends utils.Adapter {
 						country = country.replace(/\./g, '');
 						this.log.debug(`Country loop rank : ${position} ${JSON.stringify(country)}`);
 						for (const property of Object.keys(dataset)) {
-							if (property !== 'countryInfo'
-								&& property !== 'tests'
-								&& property !== 'testsPerOneMillion') {
+							if (property !== 'countryInfo') {
 								await this.localCreateState(`${channelName}.${property}`, property, dataset[property]);
 							} else {
 								// Only take the flag from country info
@@ -245,8 +239,6 @@ class Covid19 extends utils.Adapter {
 							if ((continentsStats[c].hasOwnProperty(val)
 								&& val !== 'countryInfo'
 								&& val !== 'inhabitants'
-								&& val !== 'tests'
-								&& val !== 'testsPerOneMillion'
 								&& this.config.getContinents === true)) {
 								if (val !== 'countries' && val !== 'casesPerOneMillion' && val !== 'deathsPerOneMillion') {
 									await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val]);

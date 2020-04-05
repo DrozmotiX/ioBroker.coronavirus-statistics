@@ -37,6 +37,8 @@ The following information is available :
 | recovered | Amount of totally known recovered cases |
 | todayCases | New Cases by Today |
 | todayDeaths | Amount of totally known people died today |
+| test | Total number of covid-19 tests taken globally |
+| tests per one  million counties | Total number of covid-19 tests taken globally per one  million |
 
 Please be aware this adapter uses as much as possible up-to-date information but there can be an delay of several hours depending on the country's report.  
 German Federal States : https://npgeo-corona-npgeo-de.hub.arcgis.com/  s
@@ -87,13 +89,16 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
-### 0.5.3 (2020-04-05) Bugfixes, see changelog for details
+
+### 0.5.4 (2020-04-05) Bugfixes, see changelog for details
 * (DutchmanNL) Bugfix : Remove test-states
 * (DutchmanNL) Bugfix : Selected items not shown in tables
 * (DutchmanNL) Bugfix : Remove incorrect countryInfo state
 * (Scrounger)  Bugfix : Timestamp for continents calculation
 * (Scrounger)  Bugfix : Replace " , " in country name causing errors
 * (DutchmanNL) Bugfix : Saint Pierre Miquelon (iso2: null, iso3: null) not found in lib!
+* (DutchmanNL) Implemented Total number of covid-19 tests taken globally.  
+ It reflects the Total Tests column in the table at https://www.worldometers.info/coronavirus/.
 
 ### 0.5.1 (2020-03-31) BugFix : State attribute definition missing for + affectedCountries
 * (DutchmanNL) BugFix : State attribute definition missing for + affectedCountries
