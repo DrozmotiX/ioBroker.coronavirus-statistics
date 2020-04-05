@@ -112,8 +112,8 @@ class Covid19 extends utils.Adapter {
 							for (const property of Object.keys(dataset)) {
 								// Don't create a state for the country
 								if (property === 'country') continue;
-								if (property === 'tests') continue;
-								if (property === 'testsPerOneMillion') continue;
+								if (property === 'tests') {await this.localDeleteState(`${country}.${property}`); continue;}
+								if (property === 'testsPerOneMillion') {await this.localDeleteState(`${country}.${property}`); continue;}
 								if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
 
 									this.log.debug(`Country add routine : ${property} for : ${country}`);
@@ -129,6 +129,7 @@ class Covid19 extends utils.Adapter {
 									this.log.debug(`Country delete routine : ${property} for : ${country}`);
 									if (property !== 'countryInfo') {
 										await this.localDeleteState(`${country}.${property}`);
+										await this.localDeleteState(`${country}.flag`);
 									} else {
 										// Only take the flag from country info
 										await this.localDeleteState(`${country}.flag`);
