@@ -1,6 +1,6 @@
 {
   "name": "iobroker.coronavirus-statistics",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Adapter to show Global Corona Virus information and current reports",
   "author": {
     "name": "DutchmanNL",
@@ -35,7 +35,7 @@
     "@types/proxyquire": "^1.3.28",
     "@types/request-promise-native": "^1.0.17",
     "@types/sinon": "^7.5.2",
-    "@types/sinon-chai": "^3.2.3",
+    "@types/sinon-chai": "^3.2.4",
     "axios": "^0.19.2",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",

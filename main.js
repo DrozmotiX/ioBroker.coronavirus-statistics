@@ -112,6 +112,7 @@ class Covid19 extends utils.Adapter {
 							for (const property of Object.keys(dataset)) {
 								// Don't create a state for the country
 								if (property === 'country') continue;
+								if (property === 'countryInfo') await this.localDeleteState(`${country}.${property}`);
 								if (property === 'tests') {await this.localDeleteState(`${country}.${property}`); continue;}
 								if (property === 'testsPerOneMillion') {await this.localDeleteState(`${country}.${property}`); continue;}
 								if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
