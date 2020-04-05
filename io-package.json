@@ -15,18 +15,6 @@
                 "pl": "Poprawki błędów, patrz dziennik zmian, aby uzyskać szczegółowe informacje",
                 "zh-cn": "错误修正，请参阅更改日志以获取详细信息"
             },
-            "0.5.1": {
-                "en": "BugFix : State attribute definition missing for + affectedCountries",
-                "de": "BugFix : State attribute definition missing for + affectedCountries",
-                "ru": "BugFix : State attribute definition missing for + affectedCountries",
-                "pt": "BugFix : State attribute definition missing for + affectedCountries",
-                "nl": "BugFix : State attribute definition missing for + affectedCountries",
-                "fr": "BugFix : State attribute definition missing for + affectedCountries",
-                "it": "BugFix : State attribute definition missing for + affectedCountries",
-                "es": "BugFix : State attribute definition missing for + affectedCountries",
-                "pl": "BugFix : State attribute definition missing for + affectedCountries",
-                "zh-cn": "BugFix : State attribute definition missing for + affectedCountries"
-            },
             "0.5.0": {
                 "en": "For Germany : federal states, counties and cities added",
                 "de": "Für Deutschland: Bundesländer, Landkreise und Städte hinzugefügt",
@@ -63,18 +51,6 @@
                 "pl": "Dodano kraje dla Niemiec",
                 "zh-cn": "德国国家已添加"
             },
-            "0.4.1": {
-                "en": "Federal States for Germany implemented",
-                "de": "Bundesländer für Deutschland umgesetzt",
-                "ru": "Федеральные штаты для Германии выполнены",
-                "pt": "Estados federais da Alemanha implementados",
-                "nl": "Bondsstaten voor Duitsland geïmplementeerd",
-                "fr": "Mise en œuvre des États fédéraux pour l'Allemagne",
-                "it": "Stati federali per la Germania attuati",
-                "es": "Estados federales para Alemania implementados",
-                "pl": "Wdrożone kraje związkowe dla Niemiec",
-                "zh-cn": "实施德国联邦制"
-            },
             "0.4.0": {
                 "en": "German (and some other) translations corrected",
                 "de": "Deutsche (und einige andere) Übersetzungen korrigiert",
@@ -86,18 +62,6 @@
                 "es": "Traducciones al alemán (y algunas otras) corregidas",
                 "pl": "Poprawione tłumaczenia na niemiecki (i niektóre inne)",
                 "zh-cn": "更正了德语（和其他一些）的翻译"
-            },
-            "0.3.5": {
-                "en": "Data-points added for Top 5 of countries with most cases",
-                "de": "Datenpunkte für Top 5 der Länder mit den meisten Fällen hinzugefügt",
-                "ru": "Добавлены точки данных для Топ-5 стран с большинством случаев",
-                "pt": "Dados adicionados aos 5 principais países com a maioria dos casos",
-                "nl": "Gegevenspunten toegevoegd voor Top 5 van landen met de meeste gevallen",
-                "fr": "Points de données ajoutés pour le top 5 des pays avec la plupart des cas",
-                "it": "Aggiunti punti dati per la Top 5 dei paesi con la maggior parte dei casi",
-                "es": "Se agregaron puntos de datos para los 5 principales países con la mayoría de los casos",
-                "pl": "Dodano punkty danych dla 5 najlepszych krajów z większością przypadków",
-                "zh-cn": "在大多数情况下为前5个国家/地区添加了数据点"
             },
             "0.3.4": {
                 "en": "Added button to read \"All Countrys\"",
