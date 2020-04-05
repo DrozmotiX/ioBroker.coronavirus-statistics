@@ -45,7 +45,7 @@ class Covid19 extends utils.Adapter {
 			// Determine if routin must run to get data for tables
 			const loadedArrays = await this.getObjectAsync(`${this.namespace}.countryTranslator`);
 			if (!loadedArrays) {
-				allGermanyCitiesLoaded = false
+				allGermanyCitiesLoaded = false;
 
 			} else {
 				allGermanyCitiesLoaded = loadedArrays.native.allGermanyCities || false;
@@ -60,7 +60,9 @@ class Covid19 extends utils.Adapter {
 					this.log.debug(`Data from COVID-19 API received : ${result}`);
 					const values = JSON.parse(result);
 					for (const i of Object.keys(values)) {
-						await this.localCreateState(`global_totals.${i}`, i, values[i]);
+						if (i !== 'tests' && i !== 'testsPerOneMillion')
+
+							await this.localCreateState(`global_totals.${i}`, i, values[i]);
 					}
 				} catch (error) {
 					this.log.error(`[loadAll] error: ${error.message}, stack: ${error.stack}`);
@@ -110,9 +112,11 @@ class Covid19 extends utils.Adapter {
 							for (const property of Object.keys(dataset)) {
 								// Don't create a state for the country
 								if (property === 'country') continue;
+								if (property === 'tests') continue;
+								if (property === 'testsPerOneMillion') continue;
 								if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
 
-									// this.log.info(`Country add routine : ${property} for : ${country}`);
+									this.log.debug(`Country add routine : ${property} for : ${country}`);
 									if (property !== 'countryInfo') {
 										await this.localCreateState(`${country}.${property}`, property, dataset[property]);
 									} else {
@@ -133,7 +137,8 @@ class Covid19 extends utils.Adapter {
 								}
 
 								if (continent) {
-									if (property !== 'countryInfo') {
+									if (property !== 'countryInfo'
+									) {
 										continentsStats[continent] = continentsStats[continent] || {};
 										continentsStats[continent][property] = continentsStats[continent][property] || 0;
 
@@ -152,7 +157,7 @@ class Covid19 extends utils.Adapter {
 											// Zeitstempel 'updated' aktualisieren -> neusten Wert der Länder nehmen
 											if (dataset[property] > continentsStats[continent][property]) {
 												continentsStats[continent][property] = dataset[property];
-												continentsStats['World_Sum'][property] = dataset[property]
+												continentsStats['World_Sum'][property] = dataset[property];
 											}
 										}
 
@@ -218,7 +223,9 @@ class Covid19 extends utils.Adapter {
 						country = country.replace(/\./g, '');
 						this.log.debug(`Country loop rank : ${position} ${JSON.stringify(country)}`);
 						for (const property of Object.keys(dataset)) {
-							if (property !== 'countryInfo') {
+							if (property !== 'countryInfo'
+								&& property !== 'tests'
+								&& property !== 'testsPerOneMillion') {
 								await this.localCreateState(`${channelName}.${property}`, property, dataset[property]);
 							} else {
 								// Only take the flag from country info
@@ -233,8 +240,12 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`${c}: ${JSON.stringify(continentsStats[c])}`);
 
 						for (const val in continentsStats[c]) {
-							if ((continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo' && val !== 'inhabitants')
-								&& this.config.getContinents === true) {
+							if ((continentsStats[c].hasOwnProperty(val)
+								&& val !== 'countryInfo'
+								&& val !== 'inhabitants'
+								&& val !== 'tests'
+								&& val !== 'testsPerOneMillion'
+								&& this.config.getContinents === true)) {
 								if (val !== 'countries' && val !== 'casesPerOneMillion' && val !== 'deathsPerOneMillion') {
 									await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val]);
 								} else if (val === 'casesPerOneMillion') {
