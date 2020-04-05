@@ -104,7 +104,7 @@ class Covid19 extends utils.Adapter {
 							}
 
 							allCountrys.push(rawCountry);
-							const country = rawCountry.replace(/\s/g, '_').replace(/\./g, '');
+							const country = rawCountry.replace(/\s/g, '_').replace(/\./g, '').replace(',', '');
 
 							this.log.debug(`api name: ${dataset.country}, converted name: ${rawCountry}, dp name: ${country}, continent: ${continent}`);
 
