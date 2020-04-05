@@ -2,9 +2,13 @@
 name: Bug report
 about: Something is not working as it should
 title: ''
-labels: ''
-assignees: ''
+labels: 'bug'
+assignees: 'DutchmanNL'
 ---
+
+**!!! Before you start !!!**  
+1. Verify if there is not already an issue requesting the same
+2. Is this realy a bug of current code or an  enhancement request ?
 
 **Describe the bug**  
 A clear and concise description of what the bug is.
