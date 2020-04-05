@@ -87,6 +87,11 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
+### 0.5.2 (2020-04-05) Bugfixes, see changelog for details
+* (DutchmanNL) Bugfix : Saint Pierre Miquelon (iso2: null, iso3: null) not found in lib!
+* (DutchmanNL) Bugfix : Selected items not shown in tables
+* (Scrounger)  Bugfix : Timestamp for continents calculation
+
 ### 0.5.1 (2020-03-31) BugFix : State attribute definition missing for + affectedCountries
 * (DutchmanNL) BugFix : State attribute definition missing for + affectedCountries
 * (DutchmanNL) BugFix : Ensure name changes are propagated
