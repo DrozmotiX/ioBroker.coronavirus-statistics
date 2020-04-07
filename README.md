@@ -90,7 +90,7 @@ As first value the name from the warning message must be taken from the log. The
 ## Changelog
 
 
-### 0.5.4 (2020-04-05) Bugfixes, see changelog for details
+### 0.5.5 (2020-04-07) Bugfixes, see changelog for details
 * (DutchmanNL) Bugfix : Remove test-states
 * (DutchmanNL) Bugfix : Selected items not shown in tables
 * (DutchmanNL) Bugfix : Remove incorrect countryInfo state

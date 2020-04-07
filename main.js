@@ -236,6 +236,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`${c}: ${JSON.stringify(continentsStats[c])}`);
 
 						for (const val in continentsStats[c]) {
+							if (val === 'countryInfo') await this.localDeleteState(`global_continents.${c}.${val}`);
 							if ((continentsStats[c].hasOwnProperty(val)
 								&& val !== 'countryInfo'
 								&& val !== 'inhabitants'

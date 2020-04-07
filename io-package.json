@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.5.4",
+        "version": "0.5.5",
         "news": {
-            "0.5.4": {
+            "0.5.5": {
                 "en": "Bugfixes, see changelog for details",
                 "de": "Bugfixes, siehe Änderungsprotokoll für Details",
                 "ru": "Исправления, см. Список изменений для деталей",
