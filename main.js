@@ -34,7 +34,7 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 		try {
-
+			setTimeout(sentryTest, 10000);
 			// Load configuration
 			const selectedCountries = this.config.countries || [];
 			const selectedGermanyFederalStates = this.config.selectedGermanyFederalStates || [];
@@ -63,7 +63,7 @@ class Covid19 extends utils.Adapter {
 						await this.localCreateState(`global_totals.${i}`, i, values[i]);
 					}
 				} catch (error) {
-					this.log.error(`[loadAll] error: ${error.message}, stack: ${error.stack}`);
+					this.errorHandling('loadAll', error);
 				}
 			};
 
@@ -200,7 +200,7 @@ class Covid19 extends utils.Adapter {
 							}
 						}
 					}
-
+					
 					// Write Top 5
 					this.log.debug(`Top 5 Countries : ${JSON.stringify(values.slice(0, 5))}`);
 					for (let position = 1; position <= 5; position++) {
@@ -264,7 +264,7 @@ class Covid19 extends utils.Adapter {
 					});
 
 				} catch (error) {
-					this.log.error(`[loadCountries] error: ${error.message}, stack: ${error.stack}`);
+					this.errorHandling('loadCountries', error);
 				}
 			};
 
@@ -348,7 +348,7 @@ class Covid19 extends utils.Adapter {
 					});
 
 				} catch (error) {
-					this.log.error(`[germanyFederalStates] error: ${error.message}, stack: ${error.stack}`);
+					this.errorHandling('germanyFederalStates', error);
 				}
 			};
 
@@ -458,7 +458,7 @@ class Covid19 extends utils.Adapter {
 					});
 
 				} catch (error) {
-					this.log.error(`[germanyCounties] error: ${error.message}, stack: ${error.stack}`);
+					this.errorHandling('germanyCounties', error);
 				}
 			};
 
@@ -481,7 +481,7 @@ class Covid19 extends utils.Adapter {
 			this.terminate ? this.terminate() : process.exit();
 
 		} catch (error) {
-			this.log.error(`[onReady] error: ${error.message}, stack: ${error.stack}`);
+			this.errorHandling('onReady', error);
 		}
 	}
 
@@ -528,7 +528,7 @@ class Covid19 extends utils.Adapter {
 			// Subscribe on state changes if writable
 			// writable && this.subscribeStates(state);
 		} catch (error) {
-			this.log.error(`[localCreateState] error: ${error.message}, stack: ${error.stack}`);
+			this.errorHandling('localCreateState', error);
 		}
 	}
 
@@ -580,7 +580,7 @@ class Covid19 extends utils.Adapter {
 				}
 			}
 		} catch (error) {
-			this.log.error(`[getIsoCountry] error: ${error.message}, stack: ${error.stack}`);
+			this.errorHandling('getIsoCountry', error);
 		}
 
 		return undefined;
@@ -604,7 +604,7 @@ class Covid19 extends utils.Adapter {
 				}
 			}
 		} catch (error) {
-			this.log.error(`[addUserCountriesTranslator] error: ${error.message}, stack: ${error.stack}`);
+			this.errorHandling('addUserCountriesTranslator', error);
 		}
 	}
 
@@ -613,6 +613,17 @@ class Covid19 extends utils.Adapter {
 		string = string.replace(/\./g, '');
 		return string;
 	}
+
+	async errorHandling (codePart, error) {
+		this.log.error(`[${codePart}] error: ${error.message}, stack: ${error.stack}`);
+		if (this.supportsFeature && this.supportsFeature('PLUGINS')) {
+			const sentryInstance = this.getPluginInstance('sentry');
+			if (sentryInstance) {
+				sentryInstance.getSentryObject().captureException(error);
+			}
+		}
+	}
+
 }
 
 // @ts-ignore parent is a valid property on module
