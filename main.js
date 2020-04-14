@@ -34,7 +34,6 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 		try {
-			setTimeout(sentryTest, 10000);
 			// Load configuration
 			const selectedCountries = this.config.countries || [];
 			const selectedGermanyFederalStates = this.config.selectedGermanyFederalStates || [];
