@@ -89,6 +89,8 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
+### 0.5.6 (2020-04-17) Bugfix : API changed
+* (Kampfratte) Bugfix : API changed
 
 ### 0.5.5 (2020-04-07) Bugfixes, see changelog for details
 * (DutchmanNL) Bugfix : Remove test-states

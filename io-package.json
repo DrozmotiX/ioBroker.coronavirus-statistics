@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.5.5",
+        "version": "0.5.6",
         "news": {
+            "0.5.6": {
+                "en": "Bugfix : API changed",
+                "de": "Bugfix: API geändert",
+                "ru": "Исправлено: API изменен",
+                "pt": "Correção de bug: API alterada",
+                "nl": "Bugfix: API gewijzigd",
+                "fr": "Correction de bug: l'API a changé",
+                "it": "Bugfix: API modificata",
+                "es": "Bugfix: API cambiado",
+                "pl": "Bugfix: API zmienione",
+                "zh-cn": "错误修正：API已更改"
+            },
             "0.5.5": {
                 "en": "Bugfixes, see changelog for details",
                 "de": "Bugfixes, siehe Änderungsprotokoll für Details",
@@ -136,10 +148,10 @@
         "dataSource": "poll",
         "materialize": true,
         "plugins": {
-			"sentry": {
-				"dsn": "https://4740f955d1a94387b33a8ce20af08c62@sentry.iobroker.net/30"
-			}
-		},
+            "sentry": {
+                "dsn": "https://4740f955d1a94387b33a8ce20af08c62@sentry.iobroker.net/30"
+            }
+        },
         "dependencies": [
             {
                 "js-controller": ">=1.4.2"
