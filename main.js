@@ -55,7 +55,7 @@ class Covid19 extends utils.Adapter {
 			const loadAll = async () => {
 				// Try to call API and get global information
 				try {
-					const result = await request('https://corona.lmao.ninja/all');
+					const result = await request('https://corona.lmao.ninja/v2/all');
 					this.log.debug(`Data from COVID-19 API received : ${result}`);
 					const values = JSON.parse(result);
 					for (const i of Object.keys(values)) {
@@ -72,7 +72,7 @@ class Covid19 extends utils.Adapter {
 					continentsStats['America'] = {};
 					continentsStats['World_Sum'] = {};
 
-					const result = await request('https://corona.lmao.ninja/countries?sort=cases');
+					const result = await request('https://corona.lmao.ninja/v2/countries?sort=cases');
 					this.log.debug(`Data from COVID-19 API received : ${result}`);
 					this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					const values = JSON.parse(result);
