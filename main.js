@@ -9,6 +9,7 @@ const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
 const countryJs = require('country-list-js');
 const allCountrys = []; // Array for all countrys to store in object
+const warnMessages = {}; 
 // For Germany, arrays to store federal states, city and  counties to store in object
 let allGermanyFederalStates = [], allGermanCountyDetails = [], allGermanyCounties = [], allGermanyCities = [];
 let allGermanyFederalStatesLoaded = null, allGermanyCountiesLoaded = null, allGermanyCitiesLoaded = null;
@@ -490,7 +491,11 @@ class Covid19 extends utils.Adapter {
 		try {
 			// Try to get details from state lib, if not use defaults. throw warning if states is not known in attribute list
 			if (stateAttr[name] === undefined) {
-				this.log.warn(`State attribute definition missing for + ${name}`);
+				const warnMessage = `State attribute definition missing for + ${name}`;
+				if (warnMessages[name] !== warnMessage) {
+					warnMessages[name] = warnMessage;
+					this.log.warn(`State attribute definition missing for + ${name}`);
+				}
 			}
 			const writable = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
 			const state_name = stateAttr[name] !== undefined ? stateAttr[name].name || name : name;
