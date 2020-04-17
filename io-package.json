@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.5.6",
+        "version": "0.5.7",
         "news": {
+            "0.5.7": {
+                "en": "Continent state attribute information added and warn messages reduced",
+                "de": "Kontinentstatusattributinformationen hinzugefügt und Warnmeldungen reduziert",
+                "ru": "Добавлена ​​информация об атрибутах состояния континента и уменьшено количество предупреждений",
+                "pt": "Informações sobre atributos do estado do continente adicionadas e mensagens de aviso reduzidas",
+                "nl": "Attribuutinformatie over continentstatus toegevoegd en waarschuwingsberichten verminderd",
+                "fr": "Ajout d'informations sur l'attribut d'état du continent et réduction des messages d'avertissement",
+                "it": "Aggiunte informazioni sugli attributi dello stato del continente e messaggi di avviso ridotti",
+                "es": "Se agregó información de atributo de estado continente y se redujeron los mensajes de advertencia",
+                "pl": "Dodano informacje o atrybutach stanu kontynentu i zredukowano komunikaty ostrzegawcze",
+                "zh-cn": "添加了大陆状态属性信息并减少了警告消息"
+            },
             "0.5.6": {
                 "en": "Bugfix : API changed",
                 "de": "Bugfix: API geändert",

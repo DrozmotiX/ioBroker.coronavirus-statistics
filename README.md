@@ -89,6 +89,10 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
+### 0.5.7 (2020-04-17) Continent state attribute information added and warn messages reduced
+* (DutchmanNL) Bugfix : Add continent state attribute definition
+* (DutchmanNL) Bugfix : Reduce warn messages if error occurs to 1 per message
+
 ### 0.5.6 (2020-04-17) Bugfix : API changed
 * (Kampfratte) Bugfix : API changed
 
