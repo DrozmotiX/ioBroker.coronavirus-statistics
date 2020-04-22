@@ -3,7 +3,7 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
-const request = require('request-promise-native');
+const { default: axios } = require('axios');
 const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
 const { wait } = require('./lib/tools');
@@ -55,28 +55,39 @@ class Covid19 extends utils.Adapter {
 
 			const loadAll = async () => {
 				// Try to call API and get global information
+				let apiResult = null;
 				try {
-					const result = await request('https://corona.lmao.ninja/v2/all');
-					this.log.debug(`Data from COVID-19 API received : ${result}`);
-					const values = JSON.parse(result);
-					for (const i of Object.keys(values)) {
-						await this.localCreateState(`global_totals.${i}`, i, values[i]);
-					}
+					// Try to reach API and receive data
+					apiResult = await axios.get('https://corona.lmao.ninja/v2/all');
 				} catch (error) {
-					this.errorHandling('loadAll', error);
+					this.log.warn(`[loadAll] Unable to contact COVID-19 API : ${error.response.status} | ${error.response.statusText}`);
+					return;
+				}
+				this.log.debug(`Data from COVID-19 API received : ${apiResult.data}`);
+				const values = apiResult.data;
+				for (const i of Object.keys(values)) {
+					await this.localCreateState(`global_totals.${i}`, i, values[i]);
 				}
 			};
 
 			const loadCountries = async () => {
 				try {
+					let apiResult = null;
 					const continentsStats = {};
 					continentsStats['America'] = {};
 					continentsStats['World_Sum'] = {};
 
-					const result = await request('https://corona.lmao.ninja/v2/countries?sort=cases');
-					this.log.debug(`Data from COVID-19 API received : ${result}`);
-					this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
-					const values = JSON.parse(result);
+					// Try to call API and get country information
+					try {
+						apiResult = await axios.get('https://corona.lmao.ninja/v2/countries?sort=cases');
+						this.log.debug(`Data from COVID-19 API received : ${apiResult.data}`);
+						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
+					} catch (error) {
+						this.log.warn(`[loadCountries] Unable to contact COVID-19 API : ${error.apiResult.status} | ${error.apiResult.statusText}`);
+						return;
+					}
+
+					const values = apiResult.data;
 
 					// add user defined country translation to countryTranslator
 					await this.addUserCountriesTranslator();
@@ -273,9 +284,20 @@ class Covid19 extends utils.Adapter {
 				try {
 					// RKI Corona Bundesländer : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0/geoservice?geometry=-23.491%2C46.270%2C39.746%2C55.886
 					// DataSource too build query https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0?geometry=-23.491%2C46.270%2C39.746%2C55.886
-					const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
-					this.log.debug(`Data from RKI Corona Bundesländer API received : ${result}`);
-					const values = JSON.parse(result);
+					// const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
+
+					// Try to call API and get germanyBundersland
+					let apiResult = null;
+					try {
+						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
+						this.log.debug(`Data from RKI Corona Bundesländer API received : ${apiResult.data}`);
+						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
+					} catch (error) {
+						this.log.warn(`[germanyBundersland] Unable to contact RKI Corona Bundesländer API : ${error.result.status} | ${error.result.statusText}`);
+						return;
+					}
+
+					const values = apiResult.data;
 
 					for (const feature of values.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
@@ -356,9 +378,19 @@ class Covid19 extends utils.Adapter {
 				// Try to call API and get global information
 				try {
 					// RKI Corona Landkreise : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0/geoservice?selectedAttribute=BSG
-					const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county&returnGeometry=false&outSR=4326&f=json');
-					this.log.debug(`Data from RKI Corona Landkreise API received : ${result}`);
-					const values = JSON.parse(result);
+					
+					// Try to call API and get germanyBundersland
+					let apiResult = null;
+					try {
+						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county&returnGeometry=false&outSR=4326&f=json');
+						this.log.debug(`Data from RKI Corona Landkreise API received : ${apiResult.data}`);
+						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
+					} catch (error) {
+						this.log.warn(`[germanyBundersland] Unable to contact RKI Corona Bundesländer API : ${error.result.status} | ${error.result.statusText}`);
+						return;
+					}
+
+					const values = apiResult.data;
 
 					for (const feature of values.features) {
 						if (!feature) continue;

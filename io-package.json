@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.5.7",
+        "version": "0.5.8",
         "news": {
+            "0.5.8": {
+                "en":"Proper error handling of failing API calls (if api not reachable)"
+            },
             "0.5.7": {
                 "en": "Continent state attribute information added and warn messages reduced",
                 "de": "Kontinentstatusattributinformationen hinzugefügt und Warnmeldungen reduziert",
