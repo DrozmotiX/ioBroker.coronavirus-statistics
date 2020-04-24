@@ -4,7 +4,16 @@
         "version": "0.5.8",
         "news": {
             "0.5.8": {
-                "en":"Proper error handling of failing API calls (if api not reachable)"
+                "en": "Proper error handling of failing API calls (if api not reachable)",
+                "de": "Ordnungsgemäße Fehlerbehandlung bei fehlgeschlagenen API-Aufrufen (falls die API nicht erreichbar ist)",
+                "ru": "Правильная обработка ошибок при неудачных вызовах API (если API недоступен)",
+                "pt": "Tratamento adequado de erros de chamadas de API com falha (se a API não estiver acessível)",
+                "nl": "Juiste foutafhandeling van falende API-aanroepen (als API niet bereikbaar is)",
+                "fr": "Traitement correct des erreurs des appels d'API défaillants (si l'API n'est pas accessible)",
+                "it": "Gestione corretta degli errori delle chiamate API non riuscite (se API non raggiungibile)",
+                "es": "Manejo adecuado de errores de llamadas API fallidas (si no se puede acceder a la API)",
+                "pl": "Prawidłowa obsługa błędów nieudanych wywołań interfejsu API (jeśli interfejs API nie jest osiągalny)",
+                "zh-cn": "正确处理失败的API调用的错误（如果无法访问api）"
             },
             "0.5.7": {
                 "en": "Continent state attribute information added and warn messages reduced",

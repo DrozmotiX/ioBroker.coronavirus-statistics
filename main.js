@@ -60,7 +60,7 @@ class Covid19 extends utils.Adapter {
 					// Try to reach API and receive data
 					apiResult = await axios.get('https://corona.lmao.ninja/v2/all');
 				} catch (error) {
-					this.log.warn(`[loadAll] Unable to contact COVID-19 API : ${error.response.status} | ${error.response.statusText}`);
+					this.log.warn(`[loadAll] Unable to contact COVID-19 API : ${error}`);
 					return;
 				}
 				this.log.debug(`Data from COVID-19 API received : ${apiResult.data}`);
@@ -83,7 +83,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`Data from COVID-19 API received : ${apiResult.data}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
-						this.log.warn(`[loadCountries] Unable to contact COVID-19 API : ${error.apiResult.status} | ${error.apiResult.statusText}`);
+						this.log.warn(`[loadCountries] Unable to contact COVID-19 API : ${error}`);
 						return;
 					}
 
@@ -293,7 +293,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`Data from RKI Corona Bundesländer API received : ${apiResult.data}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
-						this.log.warn(`[germanyBundersland] Unable to contact RKI Corona Bundesländer API : ${error.result.status} | ${error.result.statusText}`);
+						this.log.warn(`[germanyBundersland] Unable to contact RKI Corona Bundesländer API : ${error}`);
 						return;
 					}
 
@@ -386,7 +386,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`Data from RKI Corona Landkreise API received : ${apiResult.data}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
-						this.log.warn(`[germanyBundersland] Unable to contact RKI Corona Bundesländer API : ${error.result.status} | ${error.result.statusText}`);
+						this.log.warn(`[germanyBundersland] Unable to contact RKI Corona Bundesländer API : ${error}`);
 						return;
 					}
 

@@ -89,7 +89,7 @@ As first value the name from the warning message must be taken from the log. The
 
 ## Changelog
 
-### 0.5.8 Proper error handling of failing API calls (if api not reachable)
+### __WORK IN PROGRESS__
 * (DutchmanNL) Replaced module request with axios
 * (DutchmanNL) Bugfix : Proper error handling of failing API calls (if api not reachable)
 
