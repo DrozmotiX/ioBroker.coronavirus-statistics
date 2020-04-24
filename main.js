@@ -514,6 +514,9 @@ class Covid19 extends utils.Adapter {
 
 		} catch (error) {
 			this.errorHandling('onReady', error);
+			
+			// Ensure termination at error
+			this.terminate ? this.terminate() : process.exit();
 		}
 	}
 

@@ -1,19 +1,19 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.5.8",
+        "version": "0.5.9",
         "news": {
-            "0.5.8": {
-                "en": "Proper error handling of failing API calls (if api not reachable)",
-                "de": "Ordnungsgemäße Fehlerbehandlung bei fehlgeschlagenen API-Aufrufen (falls die API nicht erreichbar ist)",
-                "ru": "Правильная обработка ошибок при неудачных вызовах API (если API недоступен)",
-                "pt": "Tratamento adequado de erros de chamadas de API com falha (se a API não estiver acessível)",
-                "nl": "Juiste foutafhandeling van falende API-aanroepen (als API niet bereikbaar is)",
-                "fr": "Traitement correct des erreurs des appels d'API défaillants (si l'API n'est pas accessible)",
-                "it": "Gestione corretta degli errori delle chiamate API non riuscite (se API non raggiungibile)",
-                "es": "Manejo adecuado de errores de llamadas API fallidas (si no se puede acceder a la API)",
-                "pl": "Prawidłowa obsługa błędów nieudanych wywołań interfejsu API (jeśli interfejs API nie jest osiągalny)",
-                "zh-cn": "正确处理失败的API调用的错误（如果无法访问api）"
+            "0.5.9": {
+                "en": "* (DutchmanNL) Replaced module request with axios\n* (DutchmanNL) Bugfix : Proper error handling of failing API calls (if api not reachable)",
+                "de": "* (DutchmanNL) Modulanforderung durch Axios ersetzt\n* (DutchmanNL) Bugfix: Richtige Fehlerbehandlung bei fehlgeschlagenen API-Aufrufen (falls die API nicht erreichbar ist)",
+                "ru": "* (DutchmanNL) Заменен запрос модуля на axios\n* (DutchmanNL) Исправление: правильная обработка ошибок при сбое вызовов API (если API недоступен)",
+                "pt": "* (DutchmanNL) Pedido de módulo substituído por axios\n* (DutchmanNL) Correção de erros: tratamento adequado de erros de chamadas de API com falha (se a API não estiver acessível)",
+                "nl": "* (DutchmanNL) Module-aanvraag vervangen door axios\n* (DutchmanNL) Bugfix: Juiste foutafhandeling van falende API-aanroepen (als API niet bereikbaar is)",
+                "fr": "* (DutchmanNL) Demande de module remplacée par axios\n* (DutchmanNL) Bugfix: Traitement correct des erreurs des appels d'API défaillants (si l'API n'est pas accessible)",
+                "it": "* (DutchmanNL) Sostituita la richiesta del modulo con assi\n* (DutchmanNL) Bugfix: corretta gestione degli errori delle chiamate API non riuscite (se api non raggiungibile)",
+                "es": "* (DutchmanNL) Solicitud de módulo reemplazado por axios\n* (DutchmanNL) Corrección de errores: manejo adecuado de errores de llamadas API fallidas (si la API no es accesible)",
+                "pl": "* (DutchmanNL) Zamieniono żądanie modułu na axios\n* Poprawka (DutchmanNL): Prawidłowa obsługa błędów nieudanych wywołań API (jeśli nie można osiągnąć interfejsu API)",
+                "zh-cn": "*（DutchmanNL）用axios替换了模块请求\n*（DutchmanNL）错误修正：正确处理失败的API调用（如果无法访问api）"
             },
             "0.5.7": {
                 "en": "Continent state attribute information added and warn messages reduced",
