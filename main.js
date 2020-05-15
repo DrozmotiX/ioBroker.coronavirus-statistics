@@ -214,7 +214,7 @@ class Covid19 extends utils.Adapter {
 					
 					// Write Top 5
 					this.log.debug(`Top 5 Countries : ${JSON.stringify(values.slice(0, 5))}`);
-					for (let position = 1; position <= 5; position++) {
+					for (let position = 1; position <= 10; position++) {
 						const dataset = values[position - 1]; // start at 0
 						let country = dataset.country;
 
@@ -415,6 +415,9 @@ class Covid19 extends utils.Adapter {
 						} else if (countiesType === 'Stadtkreis') {
 							allGermanyCities.push(countyName);
 							countiesType = 'Stadt';
+						} else if (countiesType === 'Bezirk') {
+							allGermanyCities.push(countyName);
+							countiesType = 'Bezirk';
 						} else {
 							this.log.error(`Unknown ${countiesType} received containing ${JSON.stringify(feature)}`);
 						}
