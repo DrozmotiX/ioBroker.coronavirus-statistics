@@ -19,7 +19,7 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.coronavirus-statistics"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.3.1",
+    "@iobroker/adapter-core": "^2.4.0",
     "axios": "^0.19.2",
     "country-list-js": "^3.1.7"
   },
