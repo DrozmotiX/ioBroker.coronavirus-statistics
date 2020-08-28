@@ -415,6 +415,9 @@ class Covid19 extends utils.Adapter {
 						} else if (countiesType === 'Stadtkreis') {
 							allGermanyCities.push(countyName);
 							countiesType = 'Stadt';
+						} else if (countiesType === 'Bezirk') {
+							allGermanyCities.push(countyName);
+							countiesType = 'Stadt';
 						} else {
 							this.log.error(`Unknown ${countiesType} received containing ${JSON.stringify(feature)}`);
 						}
