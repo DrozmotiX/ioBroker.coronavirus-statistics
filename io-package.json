@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.5.9",
+        "version": "0.6.0",
         "news": {
+            "0.6.0": {
+                "en": "Replaced module request with axios\nBugfix : Proper error handling of failing API calls (if api not reachable)\nBugfix : API-Abfrage geändert",
+                "de": "Modulanforderung durch Axios ersetzt\nBugfix: Richtige Fehlerbehandlung bei fehlgeschlagenen API-Aufrufen (wenn die API nicht erreichbar ist)\nBugfix: API-Wahlrecht geändert",
+                "ru": "Заменен запрос модуля на axios\nИсправление: правильная обработка ошибок при неудачных вызовах API (если api недоступен)\nИсправление: API-Abfrage geändert",
+                "pt": "Pedido de módulo substituído por axios\nCorreção de bug: tratamento adequado de erros de chamadas de API com falha (se a API não estiver acessível)\nCorreção de bug: API-Abfrage geändert",
+                "nl": "Moduleverzoek vervangen door axios\nBugfix: Juiste foutafhandeling van falende API-aanroepen (als api niet bereikbaar is)\nBugfix: API-Abfrage geändert",
+                "fr": "Demande de module remplacée par axios\nCorrectif: gestion correcte des erreurs des appels d'API échoués (si l'API n'est pas accessible)\nCorrectif: API-Abfrage geändert",
+                "it": "Richiesta modulo sostituito con axios\nBugfix: corretta gestione degli errori delle chiamate API non riuscite (se api non è raggiungibile)\nErrore corretto: API-Abfrage geändert",
+                "es": "Solicitud de módulo reemplazado con axios\nCorrección de errores: manejo adecuado de errores de llamadas API fallidas (si no se puede acceder a la API)\nCorrección de error: API-Abfrage geändert",
+                "pl": "Zamieniono żądanie modułu na axios\nPoprawka: Prawidłowa obsługa błędów nieudanych wywołań API (jeśli API nie jest osiągalne)\nPoprawka: API-Abfrage geändert",
+                "zh-cn": "用axios替换了模块请求\n错误修正：正确的错误处理失败的API调用（如果无法访问api）\n错误修正：API-Abfragegeändert"
+            },
             "0.5.9": {
                 "en": "* (DutchmanNL) Replaced module request with axios\n* (DutchmanNL) Bugfix : Proper error handling of failing API calls (if api not reachable)",
                 "de": "* (DutchmanNL) Modulanforderung durch Axios ersetzt\n* (DutchmanNL) Bugfix: Richtige Fehlerbehandlung bei fehlgeschlagenen API-Aufrufen (falls die API nicht erreichbar ist)",
