@@ -3,13 +3,13 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
-const { default: axios } = require('axios');
+const {default: axios} = require('axios');
 const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
-const { wait } = require('./lib/tools');
+const {wait} = require('./lib/tools');
 const countryJs = require('country-list-js');
 const allCountrys = []; // Array for all countrys to store in object
-const warnMessages = {}; 
+const warnMessages = {};
 // For Germany, arrays to store federal states, city and  counties to store in object
 let allGermanyFederalStates = [], allGermanCountyDetails = [], allGermanyCounties = [], allGermanyCities = [];
 let allGermanyFederalStatesLoaded = null, allGermanyCountiesLoaded = null, allGermanyCitiesLoaded = null;
@@ -211,7 +211,7 @@ class Covid19 extends utils.Adapter {
 							}
 						}
 					}
-					
+
 					// Write Top 5
 					this.log.debug(`Top 5 Countries : ${JSON.stringify(values.slice(0, 5))}`);
 					for (let position = 1; position <= 5; position++) {
@@ -378,7 +378,7 @@ class Covid19 extends utils.Adapter {
 				// Try to call API and get global information
 				try {
 					// RKI Corona Landkreise : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0/geoservice?selectedAttribute=BSG
-					
+
 					// Try to call API and get germanyBundersland
 					let apiResult = null;
 					try {
@@ -400,7 +400,13 @@ class Covid19 extends utils.Adapter {
 						let countyName = feature.attributes.GEN;
 						let countiesType = feature.attributes.BEZ;
 						countyName = await this.characterReplace(countyName);
-						allGermanCountyDetails.push({ [feature.attributes.county]: { GEN: feature.attributes.GEN, county: feature.attributes.county, BEZ: feature.attributes.BEZ } });
+						allGermanCountyDetails.push({
+							[feature.attributes.county]: {
+								GEN: feature.attributes.GEN,
+								county: feature.attributes.county,
+								BEZ: feature.attributes.BEZ
+							}
+						});
 
 						// Distinguish between Kreisfreie Stadt & Landkreis
 						if (countiesType === 'Kreisfreie Stadt') {
@@ -517,7 +523,7 @@ class Covid19 extends utils.Adapter {
 
 		} catch (error) {
 			this.errorHandling('onReady', error);
-			
+
 			// Ensure termination at error
 			this.terminate ? this.terminate() : process.exit();
 		}
@@ -564,7 +570,7 @@ class Covid19 extends utils.Adapter {
 
 			// Only set value if input != null
 			if (value !== null) {
-				await this.setState(state, { val: value, ack: true });
+				await this.setState(state, {val: value, ack: true});
 			}
 
 			// Subscribe on state changes if writable
@@ -588,9 +594,9 @@ class Covid19 extends utils.Adapter {
 	}
 
 	/**
-	* @param {string} country
-	* @param {Object} countryInfo
-	*/
+	 * @param {string} country
+	 * @param {Object} countryInfo
+	 */
 	async getIsoCountry(country, countryInfo) {
 		try {
 			let countryObj = undefined;
@@ -656,7 +662,7 @@ class Covid19 extends utils.Adapter {
 		return string;
 	}
 
-	async errorHandling (codePart, error) {
+	async errorHandling(codePart, error) {
 		this.log.error(`[${codePart}] error: ${error.message}, stack: ${error.stack}`);
 		if (this.supportsFeature && this.supportsFeature('PLUGINS')) {
 			const sentryInstance = this.getPluginInstance('sentry');
