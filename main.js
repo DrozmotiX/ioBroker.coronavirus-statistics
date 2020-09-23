@@ -382,7 +382,7 @@ class Covid19 extends utils.Adapter {
 					// Try to call API and get germanyBundersland
 					let apiResult = null;
 					try {
-						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county&returnGeometry=false&outSR=4326&f=json');
+						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases7_per_100k,cases_per_population,BL,county&returnGeometry=false&outSR=4326&f=json');
 						this.log.debug(`Data from RKI Corona Landkreise API received : ${apiResult.data}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
