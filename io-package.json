@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.6.0",
+        "version": "0.6.1",
         "news": {
+            "0.6.1": {
+                "en": "Added cases per 100k during the last 7 days for Germany",
+                "de": "In den letzten 7 Tagen wurden für Deutschland Fälle pro 100.000 hinzugefügt",
+                "ru": "Добавлены случаи на 100 тысяч за последние 7 дней для Германии",
+                "pt": "Adicionados casos por 100k durante os últimos 7 dias para a Alemanha",
+                "nl": "Toegevoegde gevallen per 100.000 gedurende de afgelopen 7 dagen voor Duitsland",
+                "fr": "Ajout de cas par 100 000 au cours des 7 derniers jours pour l'Allemagne",
+                "it": "Aggiunti casi per 100.000 negli ultimi 7 giorni per la Germania",
+                "es": "Casos agregados por cada 100k durante los últimos 7 días para Alemania",
+                "pl": "Dodano przypadki na 100 000 w ciągu ostatnich 7 dni dla Niemiec",
+                "zh-cn": "最近7天内德国每10万新增案件"
+            },
             "0.6.0": {
                 "en": "Replaced module request with axios\nBugfix : Proper error handling of failing API calls (if api not reachable)\nBugfix : API-Abfrage geändert",
                 "de": "Modulanforderung durch Axios ersetzt\nBugfix: Richtige Fehlerbehandlung bei fehlgeschlagenen API-Aufrufen (wenn die API nicht erreichbar ist)\nBugfix: API-Wahlrecht geändert",
