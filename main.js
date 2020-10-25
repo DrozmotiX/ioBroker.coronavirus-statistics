@@ -319,16 +319,24 @@ class Covid19 extends utils.Adapter {
 							for (const attributeName of Object.keys(feature.attributes)) {
 
 								switch (attributeName) {
-									case 'Aktualisierung': 	//  Last refresh date
+									case 'Aktualisierung': 		//  Last refresh date
 										await this.localCreateState(`${channelName}.updated`, 'updated', feature.attributes[attributeName]);
 										break;
 
-									case 'Death':		// Current reportet deaths
+									case 'Death':				// Current reported deaths
 										await this.localCreateState(`${channelName}.deaths`, 'deaths', feature.attributes[attributeName]);
 										break;
 
-									case 'Fallzahl':		// Current reportet cases
+									case 'Fallzahl':			// Current reported cases
 										await this.localCreateState(`${channelName}.cases`, 'cases', feature.attributes[attributeName]);
+										break;
+
+									case 'faelle_100000_EW':	// reported cases per 100k
+										await this.localCreateState(`${channelName}.cases_per_100k`, 'cases_per_100k', feature.attributes[attributeName]);
+										break;
+
+									case 'cases7_bl_per_100k':	// reported cases per 100k during the last 7 days
+										await this.localCreateState(`${channelName}.cases7_per_100k`, 'cases7_per_100k', feature.attributes[attributeName]);
 										break;
 
 									default:
@@ -351,6 +359,14 @@ class Covid19 extends utils.Adapter {
 
 									case 'Fallzahl':		// Current reportet cases
 										await this.localDeleteState(`${channelName}.cases`);
+										break;
+
+									case 'faelle_100000_EW':	// reported cases per 100k
+										await this.localDeleteState(`${channelName}.cases_per_100k`);
+										break;
+
+									case 'cases7_bl_per_100k':	// reported cases per 100k during the last 7 days
+										await this.localDeleteState(`${channelName}.cases7_per_100k`);
 										break;
 
 									default:
