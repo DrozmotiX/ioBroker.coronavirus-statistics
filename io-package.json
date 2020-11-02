@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.6.1",
+        "version": "0.6.2",
         "news": {
+            "0.6.2": {
+                "en": "* \nadd \"Cases per 100k\" in total & during the last 7 days for Germany's Bundesländer",
+                "de": "* \nFügen Sie \"Fälle pro 100.000\" insgesamt und in den letzten 7 Tagen für die deutschen Bundesländer hinzu",
+                "ru": "* \nдобавить \"Случаев на 100 тыс.\" всего и за последние 7 дней для Бундеслендер Германии",
+                "pt": "* \nadicione \"Casos por 100k\" no total e durante os últimos 7 dias para Bundesländer da Alemanha",
+                "nl": "* \nvoeg \"Cases per 100k\" toe in totaal & gedurende de afgelopen 7 dagen voor de Duitse Bundesländer",
+                "fr": "* \najoutez \"Cas par 100 000\" au total et au cours des 7 derniers jours pour le Bundesländer allemand",
+                "it": "* \naggiungi \"Casi per 100.000\" in totale e negli ultimi 7 giorni per i Bundesländer tedeschi",
+                "es": "* \nagregue \"Casos por 100k\" en total y durante los últimos 7 días para los Bundesländer de Alemania",
+                "pl": "* \ndodać „Przypadki na 100 000” łącznie iw ciągu ostatnich 7 dni dla niemieckich landów",
+                "zh-cn": "* \n在过去7天里为德国的Bundesländer添加“每10万个案例数”"
+            },
             "0.6.1": {
                 "en": "Added cases per 100k during the last 7 days for Germany",
                 "de": "In den letzten 7 Tagen wurden für Deutschland Fälle pro 100.000 hinzugefügt",
