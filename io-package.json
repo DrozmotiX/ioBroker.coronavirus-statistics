@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.6.2",
+        "version": "0.6.3",
         "news": {
+            "0.6.3": {
+                "en": "Bugfix : Error warnings to wrong type in states\nBugfix : Error values.features is not iterable solved",
+                "de": "Bugfix: Fehlerwarnungen bei falschem Typ in Zuständen\nBugfix: Fehler values.features ist nicht iterabel gelöst",
+                "ru": "Исправление: предупреждения об ошибках неправильного типа в состояниях\nИсправление: значения ошибок. Функции не повторяются.",
+                "pt": "Correção de bug: avisos de erro para o tipo errado nos estados\nCorreção de bug: Error values.features is not iterable solved",
+                "nl": "Bugfix: Foutwaarschuwingen voor verkeerd type in staten\nBugfix: foutwaarden. Functies is niet itereerbaar opgelost",
+                "fr": "Correction de bogue: avertissements d'erreur de type incorrect dans les états\nCorrection de bug: les valeurs d'erreur. Les fonctionnalités ne sont pas itérables résolues",
+                "it": "Bugfix: avvisi di errore per il tipo sbagliato negli stati\nBugfix: Error values.features non è iterabile risolto",
+                "es": "Corrección de errores: advertencias de error al tipo incorrecto en los estados\nCorrección de error: valores de error. Las características no se resuelven iterablemente",
+                "pl": "Poprawka: ostrzeżenia o błędach dotyczące nieprawidłowego typu w stanach\nPoprawka: Wartości błędów. Cechy nie są rozwiązane iterowalnie",
+                "zh-cn": "错误修正：错误警告错误的状态类型\n错误修正：错误values.features无法迭代解决"
+            },
             "0.6.2": {
                 "en": "* \nadd \"Cases per 100k\" in total & during the last 7 days for Germany's Bundesländer",
                 "de": "* \nFügen Sie \"Fälle pro 100.000\" insgesamt und in den letzten 7 Tagen für die deutschen Bundesländer hinzu",
