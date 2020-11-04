@@ -307,7 +307,7 @@ class Covid19 extends utils.Adapter {
 
 						if (this.config.getAllGermanyFederalStates || selectedGermanyFederalStates.includes(federalStateName)) {
 
-							// Create Channel for each Federal State		
+							// Create Channel for each Federal State
 							await this.extendObjectAsync(channelName, {
 								type: 'channel',
 								common: {
@@ -458,7 +458,7 @@ class Covid19 extends utils.Adapter {
 										if (this.config.getAllGermanyCities || selectedGermanyCities.includes(countyName)) {
 											this.log.debug(`Create city : ${countyName}`);
 
-											// Create State for each Landkreis	
+											// Create State for each Landkreis
 											await this.localCreateState(`Germany.${countiesType}.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
 
 										} else {
@@ -473,7 +473,7 @@ class Covid19 extends utils.Adapter {
 										if (this.config.getAllGermanyCounties || selectedGermanyCounties.includes(countyName)) {
 											this.log.debug(`Create Landkreis  : ${countyName}`);
 
-											// Create State for each Landkreis	
+											// Create State for each Landkreis
 											await this.localCreateState(`Germany.${countiesType}.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
 
 										} else {
@@ -571,6 +571,7 @@ class Covid19 extends utils.Adapter {
 					role: role,
 					type: type,
 					unit: unit,
+					read: true,
 					write: writable
 				},
 				native: {},
