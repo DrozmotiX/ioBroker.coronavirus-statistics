@@ -298,6 +298,11 @@ class Covid19 extends utils.Adapter {
 					}
 
 					const values = apiResult.data;
+					// Cancel operation in case wrong information is received
+					if (typeof values !== 'object') {
+						this.log.warn(`Incorrect data received from API RKI Corona Bundesländer, values not updated`)
+						return;
+					}
 
 					for (const feature of values.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
@@ -407,6 +412,11 @@ class Covid19 extends utils.Adapter {
 					}
 
 					const values = apiResult.data;
+					// Cancel operation in case wrong information is received
+					if (typeof values !== 'object') {
+						this.log.warn(`Incorrect data received from API RKI Corona Bundesländer, values not updated`)
+						return;
+					}
 
 					for (const feature of values.features) {
 						if (!feature) continue;
