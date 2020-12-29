@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.6.3",
+        "version": "0.6.4",
         "news": {
+            "0.6.4": {
+                "en": "change API from V2 to V3\nAdd Last_Updated for city's/counties",
+                "de": "Ändern Sie die API von V2 in V3\nFügen Sie Last_Updated für Städte / Landkreise hinzu",
+                "ru": "изменить API с V2 на V3\nДобавить Last_Updated для города / округа",
+                "pt": "alterar API de V2 para V3\nAdicionar Last_Updated para cidade / condados",
+                "nl": "verander API van V2 naar V3\nVoeg Last_Updated toe voor steden / provincies",
+                "fr": "changer l'API de V2 à V3\nAjouter Last_Updated pour la ville / les comtés",
+                "it": "cambia API da V2 a V3\nAggiungi Last_Updated per città / contee",
+                "es": "cambiar API de V2 a V3\nAgregar Last_Updated para ciudades / condados",
+                "pl": "zmień API z V2 na V3\nDodaj Last_Updated dla miasta / hrabstw",
+                "zh-cn": "将API从V2更改为V3\n为城市/县添加Last_Updated"
+            },
             "0.6.3": {
                 "en": "Bugfix : Error warnings to wrong type in states\nBugfix : Error values.features is not iterable solved",
                 "de": "Bugfix: Fehlerwarnungen bei falschem Typ in Zuständen\nBugfix: Fehler values.features ist nicht iterabel gelöst",
