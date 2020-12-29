@@ -94,6 +94,10 @@ As first value the name from the warning message must be taken from the log. The
 	* (DutchmanNL) xxxx
 -->
 
+### __WORK IN PROGRESS__
+* (DutchmanNL) change API from V2 to V3
+* (DutchmanNL) Add Last_Updated for city's/counties
+
 ### 0.6.3 (2020-11-04)
 * (DutchmanNL) Bugfix : Error warnings to wrong type in states
 * (DutchmanNL) Bugfix : Error values.features is not iterable solved
