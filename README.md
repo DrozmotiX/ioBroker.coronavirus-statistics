@@ -94,7 +94,7 @@ As first value the name from the warning message must be taken from the log. The
 	* (DutchmanNL) xxxx
 -->
 
-### __WORK IN PROGRESS__
+### 0.6.4 (2020-12-29)
 * (DutchmanNL) change API from V2 to V3
 * (DutchmanNL) Add Last_Updated for city's/counties
 
