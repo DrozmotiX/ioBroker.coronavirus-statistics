@@ -7,6 +7,7 @@
 ![Number of Installations (latest)](http://iobroker.live/badges/coronavirus-statistics-installed.svg)
 ![Number of Installations (stable)](http://iobroker.live/badges/coronavirus-statistics-stable.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.coronavirus-statistics/badge.svg)](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.coronavirus-statistics)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fiobroker-community-adapters%2FioBroker.coronavirus-statistics.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fiobroker-community-adapters%2FioBroker.coronavirus-statistics?ref=badge_shield)
 
 [![NPM](https://nodei.co/npm/iobroker.coronavirus-statistics.png?downloads=true)](https://nodei.co/npm/ioBroker.coronavirus-statistics/)
 
@@ -243,3 +244,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fiobroker-community-adapters%2FioBroker.coronavirus-statistics.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fiobroker-community-adapters%2FioBroker.coronavirus-statistics?ref=badge_large)
