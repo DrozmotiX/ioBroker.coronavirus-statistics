@@ -448,12 +448,12 @@ class Covid19 extends utils.Adapter {
 							native: {},
 						});
 
-						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiImpfungenKumulativTotal`, 'Impfungen Kumulativ', germanyVaccinationDataTotals.rkiImpfungenKumulativ);
-						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiDifferenzVortagTotal`, 'Differenz zum Vortag', germanyVaccinationDataTotals.rkiDifferenzVortag);
-						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiIndikationAlterTotal`, 'Indikation nach Alter', germanyVaccinationDataTotals.rkiIndikationAlter);
-						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiIndikationBerufTotal`, 'Berufliche Indikation', germanyVaccinationDataTotals.rkiIndikationBeruf);
-						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiIndikationMedizinischTotal`, 'Medizinische Indikation', germanyVaccinationDataTotals.rkiIndikationMedizinisch);
-						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiImpfungePflegeheimTotal`, 'Pflegeheim-bewohnerIn', germanyVaccinationDataTotals.rkiImpfungePflegeheim);
+						await this.localCreateState(`Germany._Impfungen.rkiImpfungenKumulativTotal`, 'Impfungen Kumulativ', germanyVaccinationDataTotals.rkiImpfungenKumulativ);
+						await this.localCreateState(`Germany._Impfungen.rkiDifferenzVortagTotal`, 'Differenz zum Vortag', germanyVaccinationDataTotals.rkiDifferenzVortag);
+						await this.localCreateState(`Germany._Impfungen.rkiIndikationAlterTotal`, 'Indikation nach Alter', germanyVaccinationDataTotals.rkiIndikationAlter);
+						await this.localCreateState(`Germany._Impfungen.rkiIndikationBerufTotal`, 'Berufliche Indikation', germanyVaccinationDataTotals.rkiIndikationBeruf);
+						await this.localCreateState(`Germany._Impfungen.rkiIndikationMedizinischTotal`, 'Medizinische Indikation', germanyVaccinationDataTotals.rkiIndikationMedizinisch);
+						await this.localCreateState(`Germany._Impfungen.rkiImpfungePflegeheimTotal`, 'Pflegeheim-bewohnerIn', germanyVaccinationDataTotals.rkiImpfungePflegeheim);
 					}
 
 					allGermanyFederalStates = allGermanyFederalStates.sort();
@@ -794,17 +794,21 @@ class Covid19 extends utils.Adapter {
 		// Get Vaccination dat
 		const germanyVacInfos = await getInfos();
 		if (germanyVacInfos){
-			await this.getExcelFile(germanyVacInfos.urlExcel, germanyVacInfos.Version);
-			const path = Path.resolve(`/opt/iobroker/iobroker-data/files`, '', `Impfquotenmonitoring.xlsx`);
-			const WorkBook = Excel.readFile(path, {sheetStubs: true});
-			const WorkSheet = WorkBook.Sheets[WorkBook.SheetNames[1]];
-			// const now = dateFormat(new Date(),'hh:mm');
-			const data = Excel.utils.sheet_to_json(WorkSheet, {/*raw: true,dateNF: "DD-MMM-YYYY",header:0,*/defval: 0});
+			try {
+				await this.getExcelFile(germanyVacInfos.urlExcel, germanyVacInfos.Version);
+				const path = Path.resolve(`/opt/iobroker/iobroker-data/files`, '', `Impfquotenmonitoring.xlsx`);
+				const WorkBook = Excel.readFile(path, {sheetStubs: true});
+				const WorkSheet = WorkBook.Sheets[WorkBook.SheetNames[1]];
+				// const now = dateFormat(new Date(),'hh:mm');
+				const data = Excel.utils.sheet_to_json(WorkSheet, {/*raw: true,dateNF: "DD-MMM-YYYY",header:0,*/defval: 0});
 
-			// Build Proper array to handle data
-			germanyVacInfoData = [];
-			for (const vacData in data) {
-				germanyVacInfoData[data[vacData].Bundesland] = data[vacData];
+				// Build Proper array to handle data
+				germanyVacInfoData = [];
+				for (const vacData in data) {
+					germanyVacInfoData[data[vacData].Bundesland] = data[vacData];
+				}
+			} catch (e) {
+				this.log.error(`Cannot write vaccination data file ${e}`);
 			}
 		}
 
