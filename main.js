@@ -4,6 +4,11 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 const {default: axios} = require('axios');
+const cheerio = require('cheerio');
+const dateFormat = require('dateformat');
+const Excel = require('xlsx');
+const fs = require('fs');
+const Path = require('path');
 const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js');
 const {wait} = require('./lib/tools');
@@ -42,7 +47,7 @@ class Covid19 extends utils.Adapter {
 			const selectedGermanyCounties = this.config.selectedGermanyCounties || [];
 			this.log.debug(`Configuration object before config load : ${JSON.stringify(this.config)}`);
 
-			// Determine if routin must run to get data for tables
+			// Determine if routine must run to get data for tables
 			const loadedArrays = await this.getObjectAsync(`${this.namespace}.countryTranslator`);
 			if (!loadedArrays) {
 				allGermanyCitiesLoaded = false;
@@ -300,15 +305,36 @@ class Covid19 extends utils.Adapter {
 					const values = apiResult.data;
 					// Cancel operation in case wrong information is received
 					if (typeof values !== 'object') {
-						this.log.warn(`Incorrect data received from API RKI Corona Bundesländer, values not updated`)
+						this.log.warn(`Incorrect data received from API RKI Corona Bundesländer, values not updated`);
 						return;
 					}
+					const germanyVaccinationData = await this.getGermanyVaccinationData();
+
+					// Basic array to store totals
+					const germanyVaccinationDataTotals =  {
+						rkiImpfungenKumulativ: 0,
+						rkiDifferenzVortag: 0,
+						rkiIndikationAlter: 0,
+						rkiIndikationBeruf: 0,
+						rkiIndikationMedizinisch: 0,
+						rkiImpfungePflegeheim: 0,
+					};
 
 					for (const feature of values.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
 						const federalStateName = feature.attributes.LAN_ew_GEN;
 						const channelName = `Germany.Bundesland.${federalStateName}`;
 						allGermanyFederalStates.push(federalStateName);
+
+						// Calculate totals
+						if (germanyVaccinationData) {
+							germanyVaccinationDataTotals.rkiImpfungenKumulativ = germanyVaccinationDataTotals.rkiImpfungenKumulativ + germanyVaccinationData[federalStateName]['Impfungen kumulativ'];
+							germanyVaccinationDataTotals.rkiDifferenzVortag = germanyVaccinationDataTotals.rkiDifferenzVortag + germanyVaccinationData[federalStateName]['Differenz zum Vortag'];
+							germanyVaccinationDataTotals.rkiIndikationAlter = germanyVaccinationDataTotals.rkiIndikationAlter + germanyVaccinationData[federalStateName]['Indikation nach Alter*'];
+							germanyVaccinationDataTotals.rkiIndikationBeruf = germanyVaccinationDataTotals.rkiIndikationBeruf + germanyVaccinationData[federalStateName]['Berufliche Indikation*'];
+							germanyVaccinationDataTotals.rkiIndikationMedizinisch = germanyVaccinationDataTotals.rkiIndikationMedizinisch + germanyVaccinationData[federalStateName]['Medizinische Indikation*'];
+							germanyVaccinationDataTotals.rkiImpfungePflegeheim = germanyVaccinationDataTotals.rkiImpfungePflegeheim + germanyVaccinationData[federalStateName]['Pflegeheim-bewohnerIn*'];
+						}
 
 						if (this.config.getAllGermanyFederalStates || selectedGermanyFederalStates.includes(federalStateName)) {
 
@@ -320,6 +346,27 @@ class Covid19 extends utils.Adapter {
 								},
 								native: {},
 							});
+
+							// Get Vaccination Data
+							if (germanyVaccinationData){
+
+								if (germanyVaccinationData[federalStateName]){
+									await this.extendObjectAsync(`${channelName}._Impfungen`, {
+										type: 'channel',
+										common: {
+											name: `Impfungen data by RKI`,
+										},
+										native: {},
+									});
+									await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenKumulativ`, 'Impfungen Kumulativ', germanyVaccinationData[federalStateName]['Impfungen kumulativ']);
+									await this.localCreateState(`${channelName}._Impfungen.rkiDifferenzVortag`, 'Differenz zum Vortag', germanyVaccinationData[federalStateName]['Differenz zum Vortag']);
+									await this.localCreateState(`${channelName}._Impfungen.rkiIndikationAlter`, 'Indikation nach Alter', germanyVaccinationData[federalStateName]['Indikation nach Alter*']);
+									await this.localCreateState(`${channelName}._Impfungen.rkiIndikationBeruf`, 'Berufliche Indikation', germanyVaccinationData[federalStateName]['Berufliche Indikation*']);
+									await this.localCreateState(`${channelName}._Impfungen.rkiIndikationMedizinisch`, 'Medizinische Indikation', germanyVaccinationData[federalStateName]['Medizinische Indikation*']);
+									await this.localCreateState(`${channelName}._Impfungen.rkiImpfungePflegeheim`, 'Pflegeheim-bewohnerIn', germanyVaccinationData[federalStateName]['Pflegeheim-bewohnerIn*']);
+								}
+							}
+
 
 							for (const attributeName of Object.keys(feature.attributes)) {
 
@@ -353,6 +400,14 @@ class Covid19 extends utils.Adapter {
 
 							for (const attributeName of Object.keys(feature.attributes)) {
 
+								// Delete vaccination states
+								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenKumulativ`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiDifferenzVortag`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiIndikationAlter`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiIndikationBeruf`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiIndikationMedizinisch`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungePflegeheim`);
+
 								switch (attributeName) {
 									case 'Aktualisierung': 	//  Last refresh date
 										await this.localDeleteState(`${channelName}.updated`);
@@ -381,6 +436,26 @@ class Covid19 extends utils.Adapter {
 							}
 						}
 					}
+
+					// write totals
+					if (germanyVaccinationData){
+						// Create Channel for each Federal State
+						await this.extendObjectAsync(`Germany.Bundesland._Impfungen`, {
+							type: 'channel',
+							common: {
+								name: `Impfungen gesammt data by RKI`,
+							},
+							native: {},
+						});
+
+						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiImpfungenKumulativTotal`, 'Impfungen Kumulativ', germanyVaccinationDataTotals.rkiImpfungenKumulativ);
+						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiDifferenzVortagTotal`, 'Differenz zum Vortag', germanyVaccinationDataTotals.rkiDifferenzVortag);
+						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiIndikationAlterTotal`, 'Indikation nach Alter', germanyVaccinationDataTotals.rkiIndikationAlter);
+						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiIndikationBerufTotal`, 'Berufliche Indikation', germanyVaccinationDataTotals.rkiIndikationBeruf);
+						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiIndikationMedizinischTotal`, 'Medizinische Indikation', germanyVaccinationDataTotals.rkiIndikationMedizinisch);
+						await this.localCreateState(`Germany.Bundesland._Impfungen.rkiImpfungePflegeheimTotal`, 'Pflegeheim-bewohnerIn', germanyVaccinationDataTotals.rkiImpfungePflegeheim);
+					}
+
 					allGermanyFederalStates = allGermanyFederalStates.sort();
 					this.log.debug(`allGermanyFederalStates : ${JSON.stringify(allGermanyFederalStates)}`);
 
@@ -414,7 +489,7 @@ class Covid19 extends utils.Adapter {
 					const values = apiResult.data;
 					// Cancel operation in case wrong information is received
 					if (typeof values !== 'object') {
-						this.log.warn(`Incorrect data received from API RKI Corona Bundesländer, values not updated`)
+						this.log.warn(`Incorrect data received from API RKI Corona Bundesländer, values not updated`);
 						return;
 					}
 
@@ -689,7 +764,76 @@ class Covid19 extends utils.Adapter {
 		return string;
 	}
 
-	async errorHandling(codePart, error) {
+	async getGermanyVaccinationData(){
+
+		let germanyVacInfoData = null;
+
+		//Get vaccination details for germany
+		async function getInfos() {
+			let Infos = {};
+			const urlImpf = 'https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Impfquoten-Tab.html';
+			const html = cheerio.load((await axios.get(urlImpf)).data);
+			const urlExcel = 'https://www.rki.de' + html('ul.links').children('li').children('a').attr('href');
+
+			const dat = /stand\s(\d+).(\d+).(\d+)/.exec(html('div.box').text());
+			const zeit = /stand\s(\d+.\d+.\d+),\s(\d+:\d+)/.exec(html('div.box').text())[2];
+			const Stand = new Date(dat[3] + '-' + ('0'+dat[2]).slice(-2) + '-' + ('0'+dat[1]).slice(-2) + 'T' + zeit);
+			const tmpDat = new Date(dat[3] + '-' + ('0'+dat[2]).slice(-2) + '-' + ('0'+dat[1]).slice(-2) + 'T' + zeit);
+			const Version = dateFormat(Stand,'YYYY-MM-DD').replace(/-/g,'');
+			const datumSheet = dateFormat(tmpDat.setDate(Stand.getDate()-1),'DD.MM.YY');
+			Infos = {
+				urlExcel,
+				datumSheet,
+				Stand,
+				Version
+			};
+			// if(dbg) log(JSON.stringify(Infos,null,4));
+			return Infos;
+		}
+
+		// Get Vaccination dat
+		const germanyVacInfos = await getInfos();
+		if (germanyVacInfos){
+			await this.getExcelFile(germanyVacInfos.urlExcel, germanyVacInfos.Version);
+			const path = Path.resolve(`/opt/iobroker/iobroker-data/files`, '', `Impfquotenmonitoring.xlsx`);
+			const WorkBook = Excel.readFile(path, {sheetStubs: true});
+			const WorkSheet = WorkBook.Sheets[WorkBook.SheetNames[1]];
+			// const now = dateFormat(new Date(),'hh:mm');
+			const data = Excel.utils.sheet_to_json(WorkSheet, {/*raw: true,dateNF: "DD-MMM-YYYY",header:0,*/defval: 0});
+
+			// Build Proper array to handle data
+			germanyVacInfoData = [];
+			for (const vacData in data) {
+				germanyVacInfoData[data[vacData].Bundesland] = data[vacData];
+			}
+		}
+
+		return germanyVacInfoData;
+	}
+
+	// download and save excel file
+	async getExcelFile (url, Version) {
+		try {
+			const path = Path.resolve(`/opt/iobroker/iobroker-data/files`, '', `Impfquotenmonitoring.xlsx`);
+			const writer = fs.createWriteStream(path);
+
+			const response = await axios({
+				url: url,
+				method: 'GET',
+				responseType: 'stream'
+			});
+			response.data.pipe(writer);
+
+			return new Promise((resolve, reject) => {
+				writer.on('finish', resolve);
+				writer.on('error', reject);
+			});
+		} catch (e) {
+			this.log.error(`Cannot write vaccination data file ${e}`);
+		}
+
+	}
+	errorHandling(codePart, error) {
 		this.log.error(`[${codePart}] error: ${error.message}, stack: ${error.stack}`);
 		if (this.supportsFeature && this.supportsFeature('PLUGINS')) {
 			const sentryInstance = this.getPluginInstance('sentry');
