@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.6.4",
+        "version": "0.6.5",
         "news": {
+            "0.6.5": {
+                "en": "* implement Vaccination data for Germany, thank you @winnyschuster for\n[RKI-Impfquotenmonitoring Deutschland](https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
+                "de": "* Impfdaten für Deutschland implementieren, danke @winnyschuster für\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
+                "ru": "* внедрить данные о вакцинации для Германии, спасибо @winnyschuster за\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
+                "pt": "* implementar dados de vacinação para a Alemanha, obrigado @winnyschuster por\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
+                "nl": "* Implementeer vaccinatiegegevens voor Duitsland, bedankt @winnyschuster voor\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
+                "fr": "* mettre en œuvre les données de vaccination pour l'Allemagne, merci @winnyschuster pour\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
+                "it": "* implementare i dati sulle vaccinazioni per la Germania, grazie @winnyschuster per\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
+                "es": "* implementar datos de vacunación para Alemania, gracias @winnyschuster por\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
+                "pl": "* wprowadź dane dotyczące szczepień w Niemczech, dziękuję @winnyschuster za\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
+                "zh-cn": "*实施德国的疫苗接种数据，谢谢@winnyschuster\n[RKI-Impfquotenmonitoring德国]（https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3）"
+            },
             "0.6.4": {
                 "en": "change API from V2 to V3\nAdd Last_Updated for city's/counties",
                 "de": "Ändern Sie die API von V2 in V3\nFügen Sie Last_Updated für Städte / Landkreise hinzu",
@@ -206,7 +218,8 @@
             "Scrounger",
             "Kampfratte",
             "Jey-Cee",
-            "KLNV"
+            "KLNV",
+            "winnyschuster"
         ],
         "keywords": [
             "virus",
