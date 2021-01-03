@@ -9,8 +9,9 @@ const dateFormat = require('dateformat');
 const Excel = require('xlsx');
 const fs = require('fs');
 const Path = require('path');
+const path = Path.resolve(Path.join(__dirname, '..', '..', 'iobroker-data', 'files', `Impfquotenmonitoring.xlsx`)); // Path to vaccination data file directory
 const adapterName = require('./package.json').name.split('.').pop();
-const stateAttr = require('./lib/stateAttr.js');
+const stateAttr = require('./lib/stateAttr.js'); // State attribute definitions
 const {wait} = require('./lib/tools');
 const countryJs = require('country-list-js');
 const allCountrys = []; // Array for all countrys to store in object
@@ -440,7 +441,7 @@ class Covid19 extends utils.Adapter {
 					// write totals
 					if (germanyVaccinationData){
 						// Create Channel for each Federal State
-						await this.extendObjectAsync(`Germany.Bundesland._Impfungen`, {
+						await this.extendObjectAsync(`Germany._Impfungen`, {
 							type: 'channel',
 							common: {
 								name: `Impfungen gesammt data by RKI`,
@@ -796,7 +797,6 @@ class Covid19 extends utils.Adapter {
 		if (germanyVacInfos){
 			try {
 				await this.getExcelFile(germanyVacInfos.urlExcel, germanyVacInfos.Version);
-				const path = Path.resolve(`/opt/iobroker/iobroker-data/files`, '', `Impfquotenmonitoring.xlsx`);
 				const WorkBook = Excel.readFile(path, {sheetStubs: true});
 				const WorkSheet = WorkBook.Sheets[WorkBook.SheetNames[1]];
 				// const now = dateFormat(new Date(),'hh:mm');
@@ -818,9 +818,7 @@ class Covid19 extends utils.Adapter {
 	// download and save excel file
 	async getExcelFile (url, Version) {
 		try {
-			const path = Path.resolve(`/opt/iobroker/iobroker-data/files`, '', `Impfquotenmonitoring.xlsx`);
 			const writer = fs.createWriteStream(path);
-
 			const response = await axios({
 				url: url,
 				method: 'GET',
