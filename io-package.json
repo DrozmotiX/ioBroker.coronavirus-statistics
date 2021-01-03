@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.6.5",
+        "version": "0.6.6",
         "news": {
+            "0.6.6": {
+                "en": "Bugfix : Wrong channel creation of _Impfungen\nBugfixWindows :Error: ENOENT: no such file or directory, open 'C:\\opt\\iobroker\\iobroker-data\\files\\Impfquotenmonitoring.xlsx'",
+                "de": "Bugfix: Falsche Kanalerstellung von _Impfungen\nBugfixWindows: Fehler: ENOENT: Keine solche Datei oder kein solches Verzeichnis. Öffnen Sie 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'.",
+                "ru": "Исправление: неправильное создание канала _Impfungen\nBugfixWindows: Ошибка: ENOENT: нет такого файла или каталога, откройте C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx '",
+                "pt": "Correção: criação de canal incorreto de _Impfungen\nBugfixWindows: Erro: ENOENT: nenhum arquivo ou diretório, abra 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
+                "nl": "Bugfix: verkeerde kanaalaanmaak van _Impfungen\nBugfixWindows: Error: ENOENT: geen bestand of directory, open 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
+                "fr": "Correctif: mauvaise création de canal de _Impfungen\nBugfixWindows: Erreur: ENOENT: aucun fichier ou répertoire de ce type, ouvrez 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
+                "it": "Bugfix: errata creazione del canale di _Impfungen\nBugfixWindows: Errore: ENOENT: nessun file o directory di questo tipo, apri \"C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx\"",
+                "es": "Corrección de error: creación de canal incorrecta de _Impfungen\nBugfixWindows: Error: ENOENT: no existe tal archivo o directorio, abra 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
+                "pl": "Poprawka: nieprawidłowe tworzenie kanału _Impfungen\nBugfixWindows: Błąd: ENOENT: brak takiego pliku lub katalogu, otwórz 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
+                "zh-cn": "错误修正：_Impfungen的频道创建错误\nBugfixWindows：错误：ENOENT：没有这样的文件或目录，打开'C：\\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'"
+            },
             "0.6.5": {
                 "en": "* implement Vaccination data for Germany, thank you @winnyschuster for\n[RKI-Impfquotenmonitoring Deutschland](https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
                 "de": "* Impfdaten für Deutschland implementieren, danke @winnyschuster für\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
