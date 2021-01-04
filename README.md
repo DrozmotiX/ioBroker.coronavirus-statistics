@@ -93,7 +93,7 @@ As first value the name from the warning message must be taken from the log. The
 	* (DutchmanNL) xxxx
 -->
 
-### __WORK IN PROGRESS__ Improve handling of vaccination data for germany
+### 0.6.7 (2021-01-04) Improve handling of vaccination data for germany
 * (DutchmanNL) Added Impfungen pro 1.000 Einwohner
 * (DutchmanNL) Bugfix : Proper error handling if excel data cannot be retrieved
 

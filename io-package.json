@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.6.6",
+        "version": "0.6.7",
         "news": {
+            "0.6.7": {
+                "en": "Added Impfungen pro 1.000 Einwohner\nBugfix : Proper error handling if excel data cannot be retrieved",
+                "de": "Impfungen pro 1.000 Einwohner hinzugefügt\nBugfix: Richtige Fehlerbehandlung, wenn Excel-Daten nicht abgerufen werden können",
+                "ru": "Добавлен Impfungen pro 1.000 Einwohner.\nИсправление: правильная обработка ошибок, если данные Excel не могут быть получены.",
+                "pt": "Adicionado Impfungen pro 1.000 Einwohner\nCorreção: tratamento adequado de erros se os dados do Excel não puderem ser recuperados",
+                "nl": "Impfungen pro 1.000 Einwohner toegevoegd\nBugfix: juiste foutafhandeling als Excel-gegevens niet kunnen worden opgehaald",
+                "fr": "Ajout de Impfungen pro 1.000 Einwohner\nCorrection de bug: gestion correcte des erreurs si les données Excel ne peuvent pas être récupérées",
+                "it": "Aggiunto Impfungen pro 1.000 Einwohner\nBugfix: corretta gestione degli errori se i dati di Excel non possono essere recuperati",
+                "es": "Se agregó Impfungen pro 1.000 Einwohner\nCorrección de errores: manejo adecuado de errores si no se pueden recuperar los datos de Excel",
+                "pl": "Dodano Impfungen pro 1.000 Einwohner\nPoprawka: Właściwa obsługa błędów, jeśli nie można pobrać danych programu Excel",
+                "zh-cn": "添加了Impfungen pro 1.000 Einwohner\n错误修正：正确的错误处理，如果无法检索Excel数据"
+            },
             "0.6.6": {
                 "en": "Bugfix : Wrong channel creation of _Impfungen\nBugfixWindows :Error: ENOENT: no such file or directory, open 'C:\\opt\\iobroker\\iobroker-data\\files\\Impfquotenmonitoring.xlsx'",
                 "de": "Bugfix: Falsche Kanalerstellung von _Impfungen\nBugfixWindows: Fehler: ENOENT: Keine solche Datei oder kein solches Verzeichnis. Öffnen Sie 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'.",
