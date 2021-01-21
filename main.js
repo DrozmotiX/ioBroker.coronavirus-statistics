@@ -657,7 +657,17 @@ class Covid19 extends utils.Adapter {
 
 			// Only set value if input != null
 			if (value !== null) {
-				await this.setState(state, {val: value, ack: true});
+				if (this.config.round === true) {
+					if (typeof value == 'number') {
+						await this.setState(state, {val: Math.round(value * 100) / 100, ack: true});
+					}
+					else {
+						await this.setState(state, {val: value, ack: true});
+					}	
+				}
+				else {
+					await this.setState(state, {val: value, ack: true});
+				}
 			}
 
 			// Subscribe on state changes if writable
