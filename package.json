@@ -23,7 +23,7 @@
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.5",
     "country-list-js": "^3.1.7",
-    "dateformat": "^4.4.1",
+    "dateformat": "^4.4.2",
     "xlsx": "^0.16.9"
   },
   "devDependencies": {
