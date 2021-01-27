@@ -636,13 +636,13 @@ class Covid19 extends utils.Adapter {
 			}
 
 			// Always terminate at the end
-			this.terminate ? this.terminate() : process.exit();
+			this.terminate ? this.terminate('All data handled, adapter stopped until next scheduled moment') : process.exit();
 
 		} catch (error) {
 			this.errorHandling('onReady', error);
 
 			// Ensure termination at error
-			this.terminate ? this.terminate() : process.exit();
+			this.terminate ? this.terminate('Adapter cosed unexpectedly, not all data processed') : process.exit();
 		}
 	}
 
