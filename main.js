@@ -366,7 +366,7 @@ class Covid19 extends utils.Adapter {
 										await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenGesamtModerna`, 'Gesamtzahl kumulatiev Moderna', germanyVaccinationData[federalStateName]['_1']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenGesamtAstraZeneca`, 'Gesamtzahl kumulatiev AstraZeneca', germanyVaccinationData[federalStateName]['_2']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiDifferenzVortag`, 'Differenz zum Vortag', germanyVaccinationData[federalStateName]['_3']);
-										await this.localCreateState(`${channelName}._Impfungen.rkiImpfQuote`, 'Impf-quote', germanyVaccinationData[federalStateName]['_4']);
+										await this.localCreateState(`${channelName}._Impfungen.rkiImpfQuote`, 'Impf-quote', germanyVaccinationData[federalStateName]['_5']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitImpfungenKumulativ`, 'Zweit Impfungen kumulativ', germanyVaccinationData[federalStateName]['Zweitimpfung']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitImpfungenDifferenzVortag`, 'Zweit Impfungen Differenz zum Vortag', germanyVaccinationData[federalStateName]['_5']);
 									}
