@@ -410,6 +410,7 @@ class Covid19 extends utils.Adapter {
 								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenGesamtVerabreicht`);
 								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenGesamtBioNTech`);
 								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenGesamtModerna`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenGesamtAstraZeneca`);
 								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfQuote`);
 								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitImpfungenKumulativ`);
 								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitImpfungenDifferenzVortag`);
