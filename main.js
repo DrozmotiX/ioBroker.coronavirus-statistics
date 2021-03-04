@@ -364,8 +364,7 @@ class Covid19 extends utils.Adapter {
 										await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfstoffdosen', germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfstoffdosen']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenBioNTech`, 'Erstimpfungen Biontech', germanyVaccinationData[federalStateName]['']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenModerna`, 'Erstimpfungen Moderna', germanyVaccinationData[federalStateName]['_1']);
-										//await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenGesamtModerna`, 'Gesamtzahl kumulatiev Moderna', germanyVaccinationData[federalStateName]['_1']);
-										//await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenGesamtAstraZeneca`, 'Gesamtzahl kumulatiev AstraZeneca', germanyVaccinationData[federalStateName]['_2']);
+										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenAstraZeneca`, 'Erstimpfungen AstraZeneca', germanyVaccinationData[federalStateName]['_2']);
 										//await this.localCreateState(`${channelName}._Impfungen.rkiDifferenzVortag`, 'Differenz zum Vortag', germanyVaccinationData[federalStateName]['_3']);
 										//await this.localCreateState(`${channelName}._Impfungen.rkiImpfQuote`, 'Impf-quote', germanyVaccinationData[federalStateName]['_4']);
 										//await this.localCreateState(`${channelName}._Impfungen.rkiZweitImpfungenKumulativ`, 'Zweit Impfungen kumulativ', germanyVaccinationData[federalStateName]['Zweitimpfung']);
