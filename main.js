@@ -461,9 +461,9 @@ class Covid19 extends utils.Adapter {
 						await this.localCreateState(`Germany._Impfungen.rkiImpfungenKumulativTotal`, 'Impfungen Kumulativ', germanyVaccinationData['Gesamt']['Erstimpfung']);
 						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfstoffdosen', germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfstoffdosen']);
 						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtBioNTech`, 'Gesamtzahl kumulatiev BioNTech', germanyVaccinationData['Gesamt']['']);
-						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtModerna`, 'Gesamtzahl kumulatiev Moderna', germanyVaccinationData['Gesamt']['_1']);
-						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtAstraZeneca`, 'Gesamtzahl kumulatiev AstraZeneca', germanyVaccinationData['Gesamt']['_2']);
-						await this.localCreateState(`Germany._Impfungen.rkiDifferenzVortag`, 'Differenz zum Vortag', germanyVaccinationData['Gesamt']['_3']);
+						//await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtModerna`, 'Gesamtzahl kumulatiev Moderna', germanyVaccinationData['Gesamt']['_1']);
+						//await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtAstraZeneca`, 'Gesamtzahl kumulatiev AstraZeneca', germanyVaccinationData['Gesamt']['_2']);
+						//await this.localCreateState(`Germany._Impfungen.rkiDifferenzVortag`, 'Differenz zum Vortag', germanyVaccinationData['Gesamt']['_3']);
 																
 						// Delete unused states of previous excel data
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenProTausend`);
