@@ -357,7 +357,12 @@ class Covid19 extends utils.Adapter {
 									    	&& germanyVaccinationData[federalStateName]['_3'] !== null
 										&& germanyVaccinationData[federalStateName]['_4'] !== null
 										&& germanyVaccinationData[federalStateName]['Zweitimpfung'] !== null
-										&& germanyVaccinationData[federalStateName]['_5'] !== null){
+										&& germanyVaccinationData[federalStateName]['_5'] !== null)
+										&& germanyVaccinationData[federalStateName]['_6'] !== null)
+										//&& germanyVaccinationData[federalStateName]['??'] !== null) Platzhalter AstraZeneca Zweitimpfung
+										&& germanyVaccinationData[federalStateName]['_7'] !== null)
+										&& germanyVaccinationData[federalStateName]['_8'] !== null)
+									{
 
 										// Handle vaccination data based new Excel layout
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData[federalStateName]['Erstimpfung']);
@@ -370,7 +375,7 @@ class Covid19 extends utils.Adapter {
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData[federalStateName]['Zweitimpfung']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenBioNTech`, 'Zweitimpfungen Biontech', germanyVaccinationData[federalStateName]['_5']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenModerna`, 'Zweitimpfungen Moderna', germanyVaccinationData[federalStateName]['_6']);
-										//await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenAstraZeneca`, 'Zweitimpfungen AstraZeneca', germanyVaccinationData[federalStateName]['_2']);
+										//await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenAstraZeneca`, 'Zweitimpfungen AstraZeneca', germanyVaccinationData[federalStateName]['??']); Platzhalter AstraZeneca Zweitimpfung
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenDifferenzVortag`, 'Zweitimpfungen Differenz zum Vortag', germanyVaccinationData[federalStateName]['_7']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', germanyVaccinationData[federalStateName]['_8']);
 										
@@ -412,16 +417,20 @@ class Covid19 extends utils.Adapter {
 							for (const attributeName of Object.keys(feature.attributes)) {
 
 								// Delete vaccination states
-								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenKumulativ`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenKumulativ`);
 								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenGesamtVerabreicht`);
-								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenGesamtBioNTech`);
-								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenGesamtModerna`);
-								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenGesamtAstraZeneca`);
-								await this.localDeleteState(`${channelName}._Impfungen.rkiImpfQuote`);
-								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitImpfungenKumulativ`);
-								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitImpfungenDifferenzVortag`);
-								await this.localDeleteState(`${channelName}._Impfungen.rkiDifferenzVortag`);
-
+								await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenBioNTech`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenModerna`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenAstraZeneca`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenDifferenzVortag`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenImpfquote`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenBioNTech`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenModerna`);
+								//await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenAstraZeneca`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenDifferenzVortag`);
+								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenImpfquote`);
+								
 								switch (attributeName) {
 									case 'Aktualisierung': 	//  Last refresh date
 										await this.localDeleteState(`${channelName}.updated`);
