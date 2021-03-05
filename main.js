@@ -358,9 +358,9 @@ class Covid19 extends utils.Adapter {
 										&& germanyVaccinationData[federalStateName]['_4'] !== null
 										&& germanyVaccinationData[federalStateName]['Zweitimpfung'] !== null
 										&& germanyVaccinationData[federalStateName]['_5'] !== null)
-										&& germanyVaccinationData[federalStateName]['_6'] !== null)
-										&& germanyVaccinationData[federalStateName]['_7'] !== null)
-										&& germanyVaccinationData[federalStateName]['_8'] !== null)
+										//&& germanyVaccinationData[federalStateName]['_6'] !== null)
+										//&& germanyVaccinationData[federalStateName]['_7'] !== null)
+										//&& germanyVaccinationData[federalStateName]['_8'] !== null)
 									{
 
 										// Handle vaccination data based new Excel layout
