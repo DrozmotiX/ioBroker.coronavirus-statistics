@@ -359,7 +359,6 @@ class Covid19 extends utils.Adapter {
 										&& germanyVaccinationData[federalStateName]['Zweitimpfung'] !== null
 										&& germanyVaccinationData[federalStateName]['_5'] !== null)
 										&& germanyVaccinationData[federalStateName]['_6'] !== null)
-										//&& germanyVaccinationData[federalStateName]['??'] !== null) Platzhalter AstraZeneca Zweitimpfung
 										&& germanyVaccinationData[federalStateName]['_7'] !== null)
 										&& germanyVaccinationData[federalStateName]['_8'] !== null)
 									{
