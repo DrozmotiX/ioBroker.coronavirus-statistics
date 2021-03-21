@@ -6,7 +6,7 @@
     "name": "DutchmanNL",
     "email": "rdrozda86@gmail.com"
   },
-  "homepage": "https://github.com/iobroker-community-adapters/ioBroker.coronavirus-statistics",
+  "homepage": "https://github.com/DrozmotiX/ioBroker.coronavirus-statistics",
   "license": "MIT",
   "keywords": [
     "virus",
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/iobroker-community-adapters/ioBroker.coronavirus-statistics"
+    "url": "https://github.com/DrozmotiX/ioBroker.coronavirus-statistics"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.4.0",
@@ -59,7 +59,7 @@
     "release": "release-script"
   },
   "bugs": {
-    "url": "https://github.com/iobroker-community-adapters/ioBroker.coronavirus-statistics/issues"
+    "url": "https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues"
   },
   "readmeFilename": "README.md"
 }
