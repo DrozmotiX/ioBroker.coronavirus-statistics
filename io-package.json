@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.6.8",
+        "version": "0.6.9-2",
         "news": {
             "0.6.8": {
                 "en": "Bugfix : Gernmany vaccinaation data, source changed code updated\nRemoved states (not available anymore by RKI)\nImpfungen pro 1.000 Einwohner\nIndikation nach Alter \nBerufliche Indikation\nMedizinische Indikation\nPflegeheim-bewohnerIn\nNew states (provided by RKI)\nDifferenz zum Vortag \nGesamtzahl bisher verabreichter Impfstoffdosen\nGesamtzahl kumulatiev BioNTech\nGesamtzahl kumulatiev Moderna\nImpf-quote\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
