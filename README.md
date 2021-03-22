@@ -95,9 +95,12 @@ As first value the name from the warning message must be taken from the log. The
 	* (DutchmanNL) xxxx
 -->
 
+### 0.6.9 (2021-03-22)
+* (lembnau) Adapter issues with vaccination data from Germany solved
+
 ### 0.6.8 (2021-01-27)
-* (DutchmanNL) Bugfix : Gernmany vaccinaation data, source changed code updated
-* (DutchmanNL) Removed states (not available anymore by RKI)
+* (DutchmanNL) Bugfix : Germany vaccination data, source changed code updated
+* (DutchmanNL) Removed states (not provided any more by RKI)
   * Impfungen pro 1.000 Einwohner
   * Indikation nach Alter 
   * Berufliche Indikation
@@ -106,8 +109,8 @@ As first value the name from the warning message must be taken from the log. The
 * (DutchmanNL) New states (provided by RKI)
   * Differenz zum Vortag 
   * Gesamtzahl bisher verabreichter Impfstoffdosen
-  * Gesamtzahl kumulatiev BioNTech
-  * Gesamtzahl kumulatiev Moderna
+  * Gesamtzahl kumulativ BioNTech
+  * Gesamtzahl kumulativ Moderna
   * Impf-quote
   * Zweit Impfungen kumulativ
   * Zweit Impfungen Differenz zum Vortag
