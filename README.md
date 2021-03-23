@@ -95,7 +95,7 @@ As first value, the name from the warning message must be taken from the log. Th
 	* (DutchmanNL) 
 -->
 
-### __WORK IN PROGRESS__
+### 0.7.0-1 (2021-03-23)
 * (DutchmanNL) round Impfquote to 2 digits
 * (lembnau) Vaccination data for AstraZeneca Germany added
 
