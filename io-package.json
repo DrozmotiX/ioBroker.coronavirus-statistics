@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.6.9",
+        "version": "0.7.0-0",
         "news": {
             "0.6.9": {
                 "en": "Adapter issues with vaccination data from Germany solved",

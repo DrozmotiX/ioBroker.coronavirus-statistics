@@ -354,13 +354,13 @@ class Covid19 extends utils.Adapter {
 										&& germanyVaccinationData[federalStateName][''] !== null
 										&& germanyVaccinationData[federalStateName]['_1'] !== null
 										&& germanyVaccinationData[federalStateName]['_2'] !== null
-									    	&& germanyVaccinationData[federalStateName]['_3'] !== null
+										&& germanyVaccinationData[federalStateName]['_3'] !== null
 										&& germanyVaccinationData[federalStateName]['_4'] !== null
 										&& germanyVaccinationData[federalStateName]['Zweitimpfung'] !== null
 										&& germanyVaccinationData[federalStateName]['_5'] !== null)
-										//&& germanyVaccinationData[federalStateName]['_6'] !== null)
-										//&& germanyVaccinationData[federalStateName]['_7'] !== null)
-										//&& germanyVaccinationData[federalStateName]['_8'] !== null)
+									//&& germanyVaccinationData[federalStateName]['_6'] !== null)
+									//&& germanyVaccinationData[federalStateName]['_7'] !== null)
+									//&& germanyVaccinationData[federalStateName]['_8'] !== null)
 									{
 
 										// Handle vaccination data based new Excel layout
@@ -370,15 +370,15 @@ class Covid19 extends utils.Adapter {
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenModerna`, 'Erstimpfungen Moderna', germanyVaccinationData[federalStateName]['_1']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenAstraZeneca`, 'Erstimpfungen AstraZeneca', germanyVaccinationData[federalStateName]['_2']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenDifferenzVortag`, 'Erstimpfungen Differenz zum Vortag', germanyVaccinationData[federalStateName]['_3']);
-										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', germanyVaccinationData[federalStateName]['_4']);
+										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName]['_4']));
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData[federalStateName]['Zweitimpfung']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenBioNTech`, 'Zweitimpfungen Biontech', germanyVaccinationData[federalStateName]['_5']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenModerna`, 'Zweitimpfungen Moderna', germanyVaccinationData[federalStateName]['_6']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenAstraZeneca`, 'Zweitimpfungen AstraZeneca', germanyVaccinationData[federalStateName]['_7']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenDifferenzVortag`, 'Zweitimpfungen Differenz zum Vortag', germanyVaccinationData[federalStateName]['_8']);
-										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', germanyVaccinationData[federalStateName]['_9']);
-										
-										
+										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName]['_9']));
+
+
 									}
 								}
 							}
@@ -429,7 +429,7 @@ class Covid19 extends utils.Adapter {
 								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenAstraZeneca`);
 								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenDifferenzVortag`);
 								await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenImpfquote`);
-								
+
 								switch (attributeName) {
 									case 'Aktualisierung': 	//  Last refresh date
 										await this.localDeleteState(`${channelName}.updated`);
@@ -469,7 +469,7 @@ class Covid19 extends utils.Adapter {
 							},
 							native: {},
 						});
-																
+
 						// Handle vaccination data based new Excel layout
 						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Erstimpfung']);
 						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfstoffdosen', germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfstoffdosen']);
@@ -477,14 +477,14 @@ class Covid19 extends utils.Adapter {
 						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenModerna`, 'Erstimpfungen Moderna', germanyVaccinationData['Gesamt']['_1']);
 						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenAstraZeneca`, 'Erstimpfungen AstraZeneca', germanyVaccinationData['Gesamt']['_2']);
 						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenDifferenzVortag`, 'Erstimpfungen Differenz zum Vortag', germanyVaccinationData['Gesamt']['_3']);
-						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', germanyVaccinationData['Gesamt']['_4']);
+						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['_4']));
 						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Zweitimpfung']);
 						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenBioNTech`, 'Zweitimpfungen Biontech', germanyVaccinationData['Gesamt']['_5']);
 						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenModerna`, 'Zweitimpfungen Moderna', germanyVaccinationData['Gesamt']['_6']);
 						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenAstraZeneca`, 'Zweitimpfungen AstraZeneca', germanyVaccinationData['Gesamt']['_7']);
 						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenDifferenzVortag`, 'Zweitimpfungen Differenz zum Vortag', germanyVaccinationData['Gesamt']['_8']);
-						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', germanyVaccinationData['Gesamt']['_9']);
-						
+						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['_9']));
+
 						// Delete unused states of previous excel data
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenProTausend`);
 						await this.localDeleteState(`Germany._Impfungen.rkiDifferenzVortag`);
@@ -851,6 +851,58 @@ class Covid19 extends utils.Adapter {
 		}
 
 	}
+
+	/**
+	 * Analysis modify element in stateAttr.js and executes command
+	 * @param {string} method defines the method to be executed (e.g. round())
+	 * @param {string | number | boolean} value value to be executed
+	 */
+	modify(method, value) {
+		this.log.debug(`Function modify with method "${method}" and value "${value}"`);
+		let result = null;
+		try {
+			if (method.match(/^custom:/gi) != null) {                               //check if starts with "custom:"
+				value = eval(method.replace(/^custom:/gi, ''));                     //get value without "custom:"
+			} else if (method.match(/^multiply\(/gi) != null) {                     //check if starts with "multiply("
+				const inBracket = parseFloat(method.match(/(?<=\()(.*?)(?=\))/g));    //get value in brackets
+				value = value * inBracket;
+			} else if (method.match(/^divide\(/gi) != null) {                       //check if starts with "divide("
+				const inBracket = parseFloat(method.match(/(?<=\()(.*?)(?=\))/g));    //get value in brackets
+				value = value / inBracket;
+			} else if (method.match(/^round\(/gi) != null) {                        //check if starts with "round("
+				const inBracket = parseInt(method.match(/(?<=\()(.*?)(?=\))/g));      //get value in brackets
+				value = Math.round(value * Math.pow(10, inBracket)) / Math.pow(10, inBracket);
+			} else if (method.match(/^add\(/gi) != null) {                          //check if starts with "add("
+				const inBracket = parseFloat(method.match(/(?<=\()(.*?)(?=\))/g));    //get value in brackets
+				value = parseFloat(value) + inBracket;
+			} else if (method.match(/^substract\(/gi) != null) {                    //check if starts with "substract("
+				const inBracket = parseFloat(method.match(/(?<=\()(.*?)(?=\))/g));    //get value in brackets
+				value = parseFloat(value) - inBracket;
+			}
+			else {
+				const methodUC = method.toUpperCase();
+				switch (methodUC) {
+					case 'UPPERCASE':
+						if (typeof value == 'string') result = value.toUpperCase();
+						break;
+					case 'LOWERCASE':
+						if (typeof value == 'string') result = value.toLowerCase();
+						break;
+					case 'UCFIRST':
+						if (typeof value == 'string') result = value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
+						break;
+					default:
+						result = value;
+				}
+			}
+			if (!result) return value;
+			return result;
+		} catch (e) {
+			this.sendSentry(`[modify] ${e}`);
+			return value;
+		}
+	}
+
 	errorHandling(codePart, error) {
 		this.log.error(`[${codePart}] error: ${error.message}, stack: ${error.stack}`);
 		if (this.supportsFeature && this.supportsFeature('PLUGINS')) {
