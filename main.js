@@ -460,12 +460,12 @@ class Covid19 extends utils.Adapter {
 					}
 
 					// write totals
-					if (germanyVaccinationData){
+					if (germanyVaccinationData && germanyVaccinationData['Gesamt']){
 						// Create Channel for each Federal State
 						await this.extendObjectAsync(`Germany._Impfungen`, {
 							type: 'channel',
 							common: {
-								name: `Impfungen gesammt data by RKI`,
+								name: `Impfungen gesamt data by RKI`,
 							},
 							native: {},
 						});
@@ -492,6 +492,7 @@ class Covid19 extends utils.Adapter {
 						await this.localDeleteState(`Germany._Impfungen.rkiIndikationBeruf`);
 						await this.localDeleteState(`Germany._Impfungen.rkiIndikationMedizinisch`);
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungePflegeheim`);
+						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenPflegeheim`);
 
 					}
 
