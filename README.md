@@ -95,8 +95,9 @@ As first value, the name from the warning message must be taken from the log. Th
 	* (DutchmanNL) 
 -->
 
-### 0.7.0-1 (2021-03-23)
+### 0.7.0-2 (2021-03-26)
 * (DutchmanNL) round Impfquote to 2 digits
+* (DutchmanNL) solve last_update is invalid warn message
 * (lembnau) Vaccination data for AstraZeneca Germany added
 
 ### 0.6.9 (2021-03-22)

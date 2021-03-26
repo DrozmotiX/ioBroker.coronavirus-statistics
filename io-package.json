@@ -1,19 +1,19 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.7.0-1",
+        "version": "0.7.0-2",
         "news": {
-            "0.7.0-1": {
-                "en": "round Impfquote to 2 digits\nVaccination data for AstraZeneca Germany added",
-                "de": "runden Impfquote auf 2 Ziffern\nImpfdaten für AstraZeneca Deutschland hinzugefügt",
-                "ru": "округлить Impfquote до 2 цифр\nДобавлены данные о вакцинации AstraZeneca Germany.",
-                "pt": "arredondar Impfquote para 2 dígitos\nDados de vacinação para AstraZeneca Germany adicionados",
-                "nl": "rond Impfquote af op 2 cijfers\nVaccinatiegegevens voor AstraZeneca Duitsland toegevoegd",
-                "fr": "arrondir Impfquote à 2 chiffres\nAjout des données de vaccination pour AstraZeneca Allemagne",
-                "it": "virgolette intorno a 2 cifre\nAggiunti i dati sulla vaccinazione per AstraZeneca Germania",
-                "es": "redondear Impfquote a 2 dígitos\nSe agregaron datos de vacunación para AstraZeneca Alemania",
-                "pl": "zaokrąglić Impfquote do 2 cyfr\nDodano dane szczepień dla AstraZeneca Germany",
-                "zh-cn": "将Impfquote舍入为2位数\n添加了阿斯利康德国的疫苗接种数据"
+            "0.7.0-2": {
+                "en": "round Impfquote to 2 digits\nsolve last_update is invalid warn message\nVaccination data for AstraZeneca Germany added",
+                "de": "runden Impfquote auf 2 Ziffern\nLöse last_update ist eine ungültige Warnmeldung\nImpfdaten für AstraZeneca Deutschland hinzugefügt",
+                "ru": "округлить Impfquote до 2 цифр\nрешить last_update недопустимое предупреждающее сообщение\nДобавлены данные о вакцинации AstraZeneca Germany.",
+                "pt": "arredondar Impfquote para 2 dígitos\nresolver last_update é uma mensagem de aviso inválida\nDados de vacinação para AstraZeneca Germany adicionados",
+                "nl": "rond Impfquote af op 2 cijfers\noplossen last_update is ongeldig waarschuwingsbericht\nVaccinatiegegevens voor AstraZeneca Duitsland toegevoegd",
+                "fr": "arrondir Impfquote à 2 chiffres\nrésoudre last_update est un message d'avertissement non valide\nAjout des données de vaccination pour AstraZeneca Allemagne",
+                "it": "virgolette intorno a 2 cifre\nrisolvere last_update non è un messaggio di avviso non valido\nAggiunti i dati sulla vaccinazione per AstraZeneca Germania",
+                "es": "redondear Impfquote a 2 dígitos\nresolver last_update es un mensaje de advertencia inválido\nSe agregaron datos de vacunación para AstraZeneca Alemania",
+                "pl": "zaokrąglić Impfquote do 2 cyfr\nrozwiązać last_update jest nieprawidłowym ostrzeżeniem\nDodano dane szczepień dla AstraZeneca Germany",
+                "zh-cn": "将Impfquote舍入为2位数\n解决last_update无效的警告消息\n添加了阿斯利康德国的疫苗接种数据"
             },
             "0.6.9": {
                 "en": "Adapter issues with vaccination data from Germany solved",
