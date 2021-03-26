@@ -95,12 +95,14 @@ As first value, the name from the warning message must be taken from the log. Th
 	* (DutchmanNL) 
 -->
 
-### 0.7.0-2 (2021-03-26)
+### 0.7.0-3 (2021-03-26)
 * (DutchmanNL) round Impfquote to 2 digits
-* (DutchmanNL) solve last_update is invalid warn message
 * (lembnau) Vaccination data for AstraZeneca Germany added
+* (DutchmanNL) Bugfix : Solve last_update is invalid warn message
+* (DutchmanNL) Bugfix : Solve cannot read property 'Erstimpfung' of undefined
 
 ### 0.6.9 (2021-03-22)
+
 * (lembnau) Adapter issues with vaccination data from Germany solved
 
 ### 0.6.8 (2021-01-27)

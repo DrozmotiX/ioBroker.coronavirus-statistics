@@ -1,19 +1,19 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.7.0-2",
+        "version": "0.7.0-3",
         "news": {
-            "0.7.0-2": {
-                "en": "round Impfquote to 2 digits\nsolve last_update is invalid warn message\nVaccination data for AstraZeneca Germany added",
-                "de": "runden Impfquote auf 2 Ziffern\nLöse last_update ist eine ungültige Warnmeldung\nImpfdaten für AstraZeneca Deutschland hinzugefügt",
-                "ru": "округлить Impfquote до 2 цифр\nрешить last_update недопустимое предупреждающее сообщение\nДобавлены данные о вакцинации AstraZeneca Germany.",
-                "pt": "arredondar Impfquote para 2 dígitos\nresolver last_update é uma mensagem de aviso inválida\nDados de vacinação para AstraZeneca Germany adicionados",
-                "nl": "rond Impfquote af op 2 cijfers\noplossen last_update is ongeldig waarschuwingsbericht\nVaccinatiegegevens voor AstraZeneca Duitsland toegevoegd",
-                "fr": "arrondir Impfquote à 2 chiffres\nrésoudre last_update est un message d'avertissement non valide\nAjout des données de vaccination pour AstraZeneca Allemagne",
-                "it": "virgolette intorno a 2 cifre\nrisolvere last_update non è un messaggio di avviso non valido\nAggiunti i dati sulla vaccinazione per AstraZeneca Germania",
-                "es": "redondear Impfquote a 2 dígitos\nresolver last_update es un mensaje de advertencia inválido\nSe agregaron datos de vacunación para AstraZeneca Alemania",
-                "pl": "zaokrąglić Impfquote do 2 cyfr\nrozwiązać last_update jest nieprawidłowym ostrzeżeniem\nDodano dane szczepień dla AstraZeneca Germany",
-                "zh-cn": "将Impfquote舍入为2位数\n解决last_update无效的警告消息\n添加了阿斯利康德国的疫苗接种数据"
+            "0.7.0-3": {
+                "en": "round Impfquote to 2 digits\nVaccination data for AstraZeneca Germany added\nBugfix : Solve last_update is invalid warn message\nBugfix : Solve cannot read property 'Erstimpfung' of undefined",
+                "de": "runden Impfquote auf 2 Ziffern\nImpfdaten für AstraZeneca Deutschland hinzugefügt\nBugfix: Löse last_update ist eine ungültige Warnmeldung\nBugfix: Solve kann die Eigenschaft 'Erstimpfung' von undefined nicht lesen",
+                "ru": "округлить Impfquote до 2 цифр\nДобавлены данные о вакцинации AstraZeneca Germany.\nИсправление: Решить last_update - недопустимое предупреждающее сообщение\nИсправление: Solve не может прочитать свойство Erstimpfung неопределенного значения.",
+                "pt": "arredondar Impfquote para 2 dígitos\nDados de vacinação para AstraZeneca Germany adicionados\nCorreção de bug: Resolver last_update é mensagem de aviso inválida\nCorreção de bug: Solve não pode ler a propriedade 'Erstimpfung' de indefinido",
+                "nl": "rond Impfquote af op 2 cijfers\nVaccinatiegegevens voor AstraZeneca Duitsland toegevoegd\nBugfix: Los last_update op is ongeldig waarschuwingsbericht\nBugfix: Solve kan eigenschap 'Erstimpfung' van ongedefinieerd niet lezen",
+                "fr": "arrondir Impfquote à 2 chiffres\nAjout des données de vaccination pour AstraZeneca Allemagne\nCorrectif: la résolution de la dernière mise à jour est un message d'avertissement non valide\nCorrectif: la résolution ne peut pas lire la propriété 'Erstimpfung' de undefined",
+                "it": "virgolette intorno a 2 cifre\nAggiunti i dati sulla vaccinazione per AstraZeneca Germania\nBugfix: Risolvi last_update non è un messaggio di avviso non valido\nBugfix: Solve non può leggere la proprietà 'Erstimpfung' di undefined",
+                "es": "redondear Impfquote a 2 dígitos\nSe agregaron datos de vacunación para AstraZeneca Alemania\nCorrección de error: Resolver last_update es un mensaje de advertencia no válido\nCorrección de error: Solve no puede leer la propiedad 'Erstimpfung' de undefined",
+                "pl": "zaokrąglić Impfquote do 2 cyfr\nDodano dane szczepień dla AstraZeneca Germany\nPoprawka: Rozwiązanie last_update jest nieprawidłowym komunikatem ostrzegawczym\nPoprawka: Solve nie może odczytać właściwości „Erstimpfung” o wartości undefined",
+                "zh-cn": "将Impfquote舍入为2位数\n添加了阿斯利康德国的疫苗接种数据\n错误修正：解决了last_update是无效的警告消息\n错误修正：解决无法读取未定义的属性“ Erstimpfung”"
             },
             "0.6.9": {
                 "en": "Adapter issues with vaccination data from Germany solved",
