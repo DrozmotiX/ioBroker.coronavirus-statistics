@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.7.0-3",
+        "version": "0.7.0-4",
         "news": {
-            "0.7.0-3": {
+            "0.7.0-4": {
                 "en": "round Impfquote to 2 digits\nVaccination data for AstraZeneca Germany added\nBugfix : Solve last_update is invalid warn message\nBugfix : Solve cannot read property 'Erstimpfung' of undefined",
                 "de": "runden Impfquote auf 2 Ziffern\nImpfdaten für AstraZeneca Deutschland hinzugefügt\nBugfix: Löse last_update ist eine ungültige Warnmeldung\nBugfix: Solve kann die Eigenschaft 'Erstimpfung' von undefined nicht lesen",
                 "ru": "округлить Impfquote до 2 цифр\nДобавлены данные о вакцинации AstraZeneca Germany.\nИсправление: Решить last_update - недопустимое предупреждающее сообщение\nИсправление: Solve не может прочитать свойство Erstimpfung неопределенного значения.",
