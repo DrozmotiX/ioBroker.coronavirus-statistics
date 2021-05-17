@@ -24,7 +24,7 @@
     "cheerio": "^1.0.0-rc.5",
     "country-list-js": "^3.1.7",
     "dateformat": "^4.5.0",
-    "xlsx": "^0.16.9"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^1.8.3",
