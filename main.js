@@ -469,7 +469,7 @@ class Covid19 extends utils.Adapter {
 
 					// write totals
 					if (germanVaccinationDataFromJsonSource) {
-						// Create Channel for each Federal State
+						// Create Channel for German vaccinations
 						await this.extendObjectAsync(`Germany._Impfungen`, {
 							type: 'channel',
 							common: {
@@ -478,7 +478,7 @@ class Covid19 extends utils.Adapter {
 							native: {},
 						});
 
-						// Handle vaccination data based new Excel layout
+						// Handle vaccination data based new source
 						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanVaccinationDataFromJsonSource.people_vaccinated);
 						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanVaccinationDataFromJsonSource.people_fully_vaccinated);
 						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanVaccinationDataFromJsonSource.total_vaccinations);
