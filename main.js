@@ -310,6 +310,7 @@ class Covid19 extends utils.Adapter {
 						return;
 					}
 					const germanyVaccinationData = await this.getGermanyVaccinationData();
+					const germanVaccinationDataFromJsonSource = await this.getGermanyVaccinationDataFromOurWorldInData();
 
 					for (const feature of values.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
@@ -467,53 +468,32 @@ class Covid19 extends utils.Adapter {
 					}
 
 					// write totals
-					if (germanyVaccinationData && germanyVaccinationData['Gesamt']){
+					if (germanVaccinationDataFromJsonSource) {
 						// Create Channel for each Federal State
 						await this.extendObjectAsync(`Germany._Impfungen`, {
 							type: 'channel',
 							common: {
-								name: `Impfungen gesamt data by RKI`,
+								name: `Impfungen gesamt data by RKI`
 							},
-							native: {},
+							native: {}
 						});
 
+						// Handle vaccination data based new Excel layout
+						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanVaccinationDataFromJsonSource.people_vaccinated);
+						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanVaccinationDataFromJsonSource.people_fully_vaccinated);
+						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanVaccinationDataFromJsonSource.total_vaccinations);
+						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', germanVaccinationDataFromJsonSource.people_vaccinated_per_hundred);
+						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', germanVaccinationDataFromJsonSource.people_fully_vaccinated_per_hundred);
 
-						// Only handle vaccination data if array contains values
-						if (germanyVaccinationData['Gesamt']['Erstimpfung'] !== null
-							&& germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfstoffdosen'] !== null
-							&& germanyVaccinationData['Gesamt'][''] !== null
-							&& germanyVaccinationData['Gesamt']['_1'] !== null
-							&& germanyVaccinationData['Gesamt']['_2'] !== null
-							&& germanyVaccinationData['Gesamt']['_3'] !== null
-							&& germanyVaccinationData['Gesamt']['_4'] !== null
-							&& germanyVaccinationData['Gesamt']['Zweitimpfung'] !== null
-							&& germanyVaccinationData['Gesamt']['_5'] !== null
-							&& germanyVaccinationData['Gesamt']['_6'] !== null
-							&& germanyVaccinationData['Gesamt']['_7'] !== null
-							&& germanyVaccinationData['Gesamt']['_8'] !== null
-							&& germanyVaccinationData['Gesamt']['_9'] !== null) {
-
-
-							// Handle vaccination data based new Excel layout
-							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Erstimpfung']);
-							await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl vollständig geimpft']);
-							await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfstoffdosen']);
-							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['_4']));
-							await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['_9']));
-
-							// Delete unused states from previous RKI version
-							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenBioNTech`);
-							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenModerna`);
-							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenAstraZeneca`);
-							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenDifferenzVortag`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenBioNTech`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenModerna`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenAstraZeneca`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenDifferenzVortag`);
-
-						} else {
-							this.log.warn(`Cannot handle vaccination data for Germany fromm RKI, if this erros continues please report a bug to the developen!`);
-						}
+						// Delete unused states from previous RKI version
+						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenBioNTech`);
+						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenModerna`);
+						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenAstraZeneca`);
+						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenDifferenzVortag`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenBioNTech`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenModerna`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenAstraZeneca`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenDifferenzVortag`);
 
 						// Delete unused states of previous excel data
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenProTausend`);
@@ -524,6 +504,8 @@ class Covid19 extends utils.Adapter {
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungePflegeheim`);
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenPflegeheim`);
 
+					} else {
+						this.log.warn(`Cannot handle vaccination data for Germany fromm RKI, if this erros continues please report a bug to the developen!`);
 					}
 
 					allGermanyFederalStates = allGermanyFederalStates.sort();
@@ -859,6 +841,21 @@ class Covid19 extends utils.Adapter {
 
 
 		return germanyVacInfoData;
+	}
+
+	async getGermanyVaccinationDataFromOurWorldInData() {
+		return axios.get('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
+			.then(response => response.data)
+			// filter german only
+			.then(data => data.filter(item => item.country === 'Germany')[0])
+			// just the data
+			.then(germanData => germanData.data)
+			// just the latest day
+			.then(germanVaccinationData => germanVaccinationData[germanVaccinationData.length - 1])
+			.catch(e => {
+				this.log.error(`Cannot get vaccination data for germany from our world in data ${e}`);
+				return null;
+			});
 	}
 
 	// download and save excel file
