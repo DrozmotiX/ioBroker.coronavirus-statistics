@@ -473,9 +473,9 @@ class Covid19 extends utils.Adapter {
 						await this.extendObjectAsync(`Germany._Impfungen`, {
 							type: 'channel',
 							common: {
-								name: `Impfungen gesamt data by RKI`
+								name: `Impfungen gesamt data by RKI`,
 							},
-							native: {}
+							native: {},
 						});
 
 						// Handle vaccination data based new Excel layout
