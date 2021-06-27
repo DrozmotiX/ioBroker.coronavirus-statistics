@@ -285,14 +285,14 @@ class Covid19 extends utils.Adapter {
 				}
 			};
 
-			const germanyBundersland = async () => {
+			const germanyBundesland = async () => {
 				// Try to call API and get global information
 				try {
 					// RKI Corona Bundesländer : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0/geoservice?geometry=-23.491%2C46.270%2C39.746%2C55.886
 					// DataSource too build query https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0?geometry=-23.491%2C46.270%2C39.746%2C55.886
 					// const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
 
-					// Try to call API and get germanyBundersland
+					// Try to call API and get germanyBundesland
 					let apiResult = null;
 					try {
 						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
@@ -545,7 +545,7 @@ class Covid19 extends utils.Adapter {
 				try {
 					// RKI Corona Landkreise : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0/geoservice?selectedAttribute=BSG
 
-					// Try to call API and get germanyBundersland
+					// Try to call API and get germanyBundesland
 					let apiResult = null;
 					try {
 						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases7_per_100k,cases_per_population,BL,county,last_update&returnGeometry=false&outSR=4326&f=json');
@@ -681,7 +681,7 @@ class Covid19 extends utils.Adapter {
 			await loadAll();		// Global Worldwide statistics
 			await loadCountries(); 	// Detailed Worldwide statistics by country
 			if (this.config.getGermanyFederalStates || !allGermanyFederalStatesLoaded) {
-				await germanyBundersland(); // Detailed Federal state statistics for germany
+				await germanyBundesland(); // Detailed Federal state statistics for germany
 			}
 
 			// Get data for cities and counties of Germany, ensur tables always have values to load
