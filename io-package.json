@@ -1,8 +1,13 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.7.0-5",
+        "version": "0.7.1",
         "news": {
+            "0.7.1": {
+                "en": "new german vaccination source",
+                "de": "Neue Quelle für deutsche Impfdaten",
+                // TODO translate to other languages
+            },
             "0.7.0-5": {
                 "en": "Bugfix: State attribute definition missing for + undefined\nBugfix: Vaccination data for Germany, several states missing in new API and will not be updated anymore !\nBugfix: State value to set for \"xxx.BL\" has to be type \"number\" but received type \"string\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)\nBugfix: State value to set for \"xxx.Tests*\" has to be type \"string\" but received type \"number\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)",
                 "de": "Bugfix: Statusattributdefinition fehlt für + undefined\nBugfix: Impfdaten für Deutschland, mehrere Bundesländer fehlen in neuer API und werden nicht mehr aktualisiert !\nBugfix: Statuswert für \"xxx.BL\" muss vom Typ \"Nummer\" sein, aber vom Typ \"String\" empfangen, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: Statuswert für \"xxx.Tests*\" muss vom Typ \"string\" sein, aber vom Typ \"number\" erhalten, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)",
