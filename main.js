@@ -479,27 +479,18 @@ class Covid19 extends utils.Adapter {
 
 
 						// Only handle vaccination data if array contains values
-						if (germanyVaccinationData['Gesamt']['Erstimpfung'] !== null
-							&& germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfstoffdosen'] !== null
-							&& germanyVaccinationData['Gesamt'][''] !== null
-							&& germanyVaccinationData['Gesamt']['_1'] !== null
-							&& germanyVaccinationData['Gesamt']['_2'] !== null
-							&& germanyVaccinationData['Gesamt']['_3'] !== null
-							&& germanyVaccinationData['Gesamt']['_4'] !== null
-							&& germanyVaccinationData['Gesamt']['Zweitimpfung'] !== null
-							&& germanyVaccinationData['Gesamt']['_5'] !== null
-							&& germanyVaccinationData['Gesamt']['_6'] !== null
-							&& germanyVaccinationData['Gesamt']['_7'] !== null
-							&& germanyVaccinationData['Gesamt']['_8'] !== null
-							&& germanyVaccinationData['Gesamt']['_9'] !== null) {
-
+						if (germanyVaccinationData['Gesamt']['Gesamtzahl mindestens einmal geimpft ']
+							&& germanyVaccinationData['Gesamt']['Gesamtzahl vollständig geimpft']
+							&& germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfungen']
+							&& germanyVaccinationData['Gesamt']['Impfquote mindestens einmal geimpft *']
+							&& germanyVaccinationData['Gesamt']['Impfquote vollständig geimpft *']) {
 
 							// Handle vaccination data based new Excel layout
-							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Erstimpfung']);
+							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl mindestens einmal geimpft ']);
 							await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl vollständig geimpft']);
-							await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfstoffdosen']);
-							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['_4']));
-							await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['_9']));
+							await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfungen']);
+							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['Impfquote mindestens einmal geimpft *']));
+							await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['Impfquote vollständig geimpft *']));
 
 							// Delete unused states from previous RKI version
 							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenBioNTech`);
