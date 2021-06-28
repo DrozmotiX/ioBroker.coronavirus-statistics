@@ -6,7 +6,14 @@
             "0.7.1": {
                 "en": "new german vaccination source",
                 "de": "Neue Quelle für deutsche Impfdaten",
-                // TODO translate to other languages
+                "ru": "TODO",
+                "pt": "TODO",
+                "nl": "TODO",
+                "fr": "TODO",
+                "it": "TODO",
+                "es": "TODO",
+                "pl": "TODO",
+                "zh-cn": "TODO"
             },
             "0.7.0-6": {
                 "en": "Adapter issues with vaccination data from Germany solved",
