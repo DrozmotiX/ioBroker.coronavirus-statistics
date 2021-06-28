@@ -4,8 +4,6 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 const {default: axios} = require('axios');
-const cheerio = require('cheerio');
-const dateFormat = require('dateformat');
 const Excel = require('xlsx');
 const fs = require('fs');
 const Path = require('path');
@@ -349,19 +347,11 @@ class Covid19 extends utils.Adapter {
 									});
 
 									// Only handle vaccination data if array contains values
-									if (germanyVaccinationData[federalStateName]['Erstimpfung'] !== null
-										&& germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfstoffdosen'] !== null
-										&& germanyVaccinationData[federalStateName][''] !== null
-										&& germanyVaccinationData[federalStateName]['_1'] !== null
-										&& germanyVaccinationData[federalStateName]['_2'] !== null
-										&& germanyVaccinationData[federalStateName]['_3'] !== null
-										&& germanyVaccinationData[federalStateName]['_4'] !== null
-										&& germanyVaccinationData[federalStateName]['Zweitimpfung'] !== null
-										&& germanyVaccinationData[federalStateName]['_5'] !== null
-										&& germanyVaccinationData[federalStateName]['_6'] !== null
-										&& germanyVaccinationData[federalStateName]['_7'] !== null
-										&& germanyVaccinationData[federalStateName]['_8'] !== null
-										&& germanyVaccinationData[federalStateName]['_9'] !== null)
+									if (germanyVaccinationData[federalStateName]['Gesamtzahl mindestens einmal geimpft ']
+										&& germanyVaccinationData[federalStateName]['Gesamtzahl vollständig geimpft']
+										&& germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfungen']
+										&& germanyVaccinationData[federalStateName]['Impfquote mindestens einmal geimpft *']
+										&& germanyVaccinationData[federalStateName]['Impfquote vollständig geimpft *'])
 									{
 
 										// Handle vaccination data based new Excel layout
@@ -921,7 +911,7 @@ class Covid19 extends utils.Adapter {
 			if (!result) return value;
 			return result;
 		} catch (e) {
-			this.sendSentry(`[modify] ${e}`);
+			this.errorHandling(`[modify]`, `${e}`);
 			return value;
 		}
 	}
