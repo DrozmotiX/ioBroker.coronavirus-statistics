@@ -310,7 +310,7 @@ class Covid19 extends utils.Adapter {
 						return;
 					}
 					const germanyVaccinationData = await this.getGermanyVaccinationData();
-					const germanVaccinationDataFromJsonSource = await this.getGermanyVaccinationDataFromOurWorldInData();
+					const germanyVaccinationJsonData = await this.getGermanyVaccinationDataFromOurWorldInDataAsJson();
 
 					for (const feature of values.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
@@ -468,7 +468,12 @@ class Covid19 extends utils.Adapter {
 					}
 
 					// write totals
-					if (germanVaccinationDataFromJsonSource) {
+					if (germanyVaccinationJsonData
+						&& germanyVaccinationJsonData.people_vaccinated
+						&& germanyVaccinationJsonData.people_fully_vaccinated
+						&& germanyVaccinationJsonData.total_vaccinations
+						&& germanyVaccinationJsonData.people_vaccinated_per_hundred
+						&& germanyVaccinationJsonData.people_fully_vaccinated_per_hundred) {
 						// Create Channel for German vaccinations
 						await this.extendObjectAsync(`Germany._Impfungen`, {
 							type: 'channel',
@@ -479,11 +484,11 @@ class Covid19 extends utils.Adapter {
 						});
 
 						// Handle vaccination data based new source
-						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanVaccinationDataFromJsonSource.people_vaccinated);
-						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanVaccinationDataFromJsonSource.people_fully_vaccinated);
-						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanVaccinationDataFromJsonSource.total_vaccinations);
-						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', germanVaccinationDataFromJsonSource.people_vaccinated_per_hundred);
-						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', germanVaccinationDataFromJsonSource.people_fully_vaccinated_per_hundred);
+						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationJsonData.people_vaccinated);
+						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationJsonData.people_fully_vaccinated);
+						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationJsonData.total_vaccinations);
+						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', germanyVaccinationJsonData.people_vaccinated_per_hundred);
+						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', germanyVaccinationJsonData.people_fully_vaccinated_per_hundred);
 
 						// Delete unused states from previous RKI version
 						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenBioNTech`);
@@ -843,7 +848,13 @@ class Covid19 extends utils.Adapter {
 		return germanyVacInfoData;
 	}
 
-	async getGermanyVaccinationDataFromOurWorldInData() {
+	/**
+	 * calls our world in data api to get the vaccination data for germany
+	 * could be extended for every other country
+	 *
+	 * @returns {Promise<T>} latest day of vaccination data for germany
+	 */
+	async getGermanyVaccinationDataFromOurWorldInDataAsJson() {
 		return axios.get('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
 			.then(response => response.data)
 			// filter german only
