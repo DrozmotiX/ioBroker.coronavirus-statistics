@@ -8,6 +8,18 @@
                 "de": "Neue Quelle für deutsche Impfdaten",
                 // TODO translate to other languages
             },
+            "0.7.0-6": {
+                "en": "Adapter issues with vaccination data from Germany solved",
+                "de": "Adapterprobleme mit Impfdaten aus Deutschland gelöst",
+                "ru": "Решены проблемы адаптера с данными о вакцинации из Германии",
+                "pt": "Problemas de adaptador com dados de vacinação da Alemanha resolvidos",
+                "nl": "Adapterproblemen met vaccinatiegegevens uit Duitsland opgelost",
+                "fr": "Problèmes d'adaptateur avec les données de vaccination d'Allemagne résolus",
+                "it": "Risolti i problemi dell'adattatore con i dati sulle vaccinazioni dalla Germania",
+                "es": "Problemas del adaptador con los datos de vacunación de Alemania resueltos",
+                "pl": "Rozwiązano problemy z adapterem z danymi szczepień z Niemiec",
+                "zh-cn": "来自德国的疫苗接种数据出现适配器问题"
+            },
             "0.7.0-5": {
                 "en": "Bugfix: State attribute definition missing for + undefined\nBugfix: Vaccination data for Germany, several states missing in new API and will not be updated anymore !\nBugfix: State value to set for \"xxx.BL\" has to be type \"number\" but received type \"string\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)\nBugfix: State value to set for \"xxx.Tests*\" has to be type \"string\" but received type \"number\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)",
                 "de": "Bugfix: Statusattributdefinition fehlt für + undefined\nBugfix: Impfdaten für Deutschland, mehrere Bundesländer fehlen in neuer API und werden nicht mehr aktualisiert !\nBugfix: Statuswert für \"xxx.BL\" muss vom Typ \"Nummer\" sein, aber vom Typ \"String\" empfangen, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: Statuswert für \"xxx.Tests*\" muss vom Typ \"string\" sein, aber vom Typ \"number\" erhalten, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)",
