@@ -375,7 +375,7 @@ class Covid19 extends utils.Adapter {
 
 
 									} else {
-										this.log.warn(`Cannot handle vaccination data for Germany fromm RKI, if this erros continues please report a bug to the developen!`);
+										this.log.warn(`Cannot handle vaccination data of Germany for ${federalStateName} from RKI, if this errors continues please report a bug to the developed! Bundesland : ${JSON.stringify(germanyVaccinationData[federalStateName])}`);
 									}
 								}
 							}
@@ -493,7 +493,7 @@ class Covid19 extends utils.Adapter {
 							await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenDifferenzVortag`);
 
 						} else {
-							this.log.warn(`Cannot handle vaccination data for Germany fromm RKI, if this erros continues please report a bug to the developen!`);
+							this.log.warn(`Cannot handle vaccination data of Germany for Totals from RKI, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(germanyVaccinationData['Gesamt'])}`);
 						}
 
 						// Delete unused states of previous excel data
