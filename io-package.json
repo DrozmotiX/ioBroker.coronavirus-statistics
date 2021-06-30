@@ -6,14 +6,14 @@
             "0.7.2": {
                 "en": "new german vaccination source",
                 "de": "Neue Quelle für deutsche Impfdaten",
-                "ru": "TODO",
-                "pt": "TODO",
-                "nl": "TODO",
-                "fr": "TODO",
-                "it": "TODO",
-                "es": "TODO",
-                "pl": "TODO",
-                "zh-cn": "TODO"
+                "ru": "новый немецкий источник вакцинации",
+                "pt": "nova fonte de vacinação alemã",
+                "nl": "nieuwe Duitse vaccinatiebron",
+                "fr": "nouvelle source de vaccination allemande",
+                "it": "nuova fonte di vaccinazione tedesca",
+                "es": "nueva fuente de vacunación alemana",
+                "pl": "nowe niemieckie źródło szczepień",
+                "zh-cn": "新的德國疫苗來源"
             },
             "0.7.1": {
                 "en": "Bugfix: Vaccination data for Germany",
@@ -242,18 +242,6 @@
                 "es": "Corrección de errores, vea el registro de cambios para más detalles",
                 "pl": "Poprawki błędów, patrz dziennik zmian, aby uzyskać szczegółowe informacje",
                 "zh-cn": "错误修正，请参阅更改日志以获取详细信息"
-            },
-            "0.5.0": {
-                "en": "For Germany : federal states, counties and cities added",
-                "de": "Für Deutschland: Bundesländer, Landkreise und Städte hinzugefügt",
-                "ru": "Для Германии: добавлены федеральные земли, округа и города",
-                "pt": "Para a Alemanha: estados federais, condados e cidades adicionados",
-                "nl": "Voor Duitsland: federale staten, provincies en steden toegevoegd",
-                "fr": "Pour l'Allemagne: États fédéraux, comtés et villes ajoutés",
-                "it": "Per la Germania: aggiunti stati federali, contee e città",
-                "es": "Para Alemania: se agregaron estados federales, condados y ciudades",
-                "pl": "Do Niemiec: dodano kraje związkowe, powiaty i miasta",
-                "zh-cn": "对于德国：添加了联邦州，县和城市"
             }
         },
         "title": "COVID-19 live information",
