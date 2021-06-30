@@ -283,14 +283,14 @@ class Covid19 extends utils.Adapter {
 				}
 			};
 
-			const germanyBundersland = async () => {
+			const germanyBundesland = async () => {
 				// Try to call API and get global information
 				try {
 					// RKI Corona Bundesländer : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0/geoservice?geometry=-23.491%2C46.270%2C39.746%2C55.886
 					// DataSource too build query https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/ef4b445a53c1406892257fe63129a8ea_0?geometry=-23.491%2C46.270%2C39.746%2C55.886
 					// const result = await request('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
 
-					// Try to call API and get germanyBundersland
+					// Try to call API and get germanyBundesland
 					let apiResult = null;
 					try {
 						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
@@ -308,6 +308,7 @@ class Covid19 extends utils.Adapter {
 						return;
 					}
 					const germanyVaccinationData = await this.getGermanyVaccinationData();
+					const germanyVaccinationJsonData = await this.getGermanyVaccinationDataFromOurWorldInDataAsJson();
 
 					for (const feature of values.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
@@ -457,8 +458,13 @@ class Covid19 extends utils.Adapter {
 					}
 
 					// write totals
-					if (germanyVaccinationData && germanyVaccinationData['Gesamt']){
-						// Create Channel for each Federal State
+					if (germanyVaccinationJsonData
+						&& germanyVaccinationJsonData.people_vaccinated
+						&& germanyVaccinationJsonData.people_fully_vaccinated
+						&& germanyVaccinationJsonData.total_vaccinations
+						&& germanyVaccinationJsonData.people_vaccinated_per_hundred
+						&& germanyVaccinationJsonData.people_fully_vaccinated_per_hundred) {
+						// Create Channel for German vaccinations
 						await this.extendObjectAsync(`Germany._Impfungen`, {
 							type: 'channel',
 							common: {
@@ -466,7 +472,6 @@ class Covid19 extends utils.Adapter {
 							},
 							native: {},
 						});
-
 
 						// Only handle vaccination data if array contains values
 						if (germanyVaccinationData['Gesamt']['Gesamtzahl  mindestens einmal geimpft ']
@@ -511,6 +516,8 @@ class Covid19 extends utils.Adapter {
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungePflegeheim`);
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenPflegeheim`);
 
+					} else {
+						this.log.warn(`Cannot handle vaccination data of Germany for Totals from RKI, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(germanyVaccinationData)}`);
 					}
 
 					allGermanyFederalStates = allGermanyFederalStates.sort();
@@ -532,7 +539,7 @@ class Covid19 extends utils.Adapter {
 				try {
 					// RKI Corona Landkreise : https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0/geoservice?selectedAttribute=BSG
 
-					// Try to call API and get germanyBundersland
+					// Try to call API and get germanyBundesland
 					let apiResult = null;
 					try {
 						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=1%3D1&outFields=OBJECTID,GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases7_per_100k,cases_per_population,BL,county,last_update&returnGeometry=false&outSR=4326&f=json');
@@ -668,7 +675,7 @@ class Covid19 extends utils.Adapter {
 			await loadAll();		// Global Worldwide statistics
 			await loadCountries(); 	// Detailed Worldwide statistics by country
 			if (this.config.getGermanyFederalStates || !allGermanyFederalStatesLoaded) {
-				await germanyBundersland(); // Detailed Federal state statistics for germany
+				await germanyBundesland(); // Detailed Federal state statistics for germany
 			}
 
 			// Get data for cities and counties of Germany, ensur tables always have values to load
@@ -846,6 +853,27 @@ class Covid19 extends utils.Adapter {
 
 
 		return germanyVacInfoData;
+	}
+
+	/**
+	 * calls our world in data api to get the vaccination data for germany
+	 * could be extended for every other country
+	 *
+	 * @returns {Promise<T>} latest day of vaccination data for germany
+	 */
+	async getGermanyVaccinationDataFromOurWorldInDataAsJson() {
+		return axios.get('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
+			.then(response => response.data)
+			// filter german only
+			.then(data => data.filter(item => item.country === 'Germany')[0])
+			// just the data
+			.then(germanData => germanData.data)
+			// just the latest day
+			.then(germanVaccinationData => germanVaccinationData[germanVaccinationData.length - 1])
+			.catch(e => {
+				this.log.error(`Cannot get vaccination data for germany from our world in data ${e}`);
+				return null;
+			});
 	}
 
 	// download and save excel file
