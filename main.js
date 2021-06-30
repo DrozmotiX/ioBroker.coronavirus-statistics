@@ -137,7 +137,7 @@ class Covid19 extends utils.Adapter {
 										await this.localCreateState(`${country}.flag`, 'flag', dataset[property].flag);
 									}
 
-									await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByCountry(rawCountry));
+									await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(isoCountry.code.iso3));
 
 								} else {
 
@@ -459,7 +459,7 @@ class Covid19 extends utils.Adapter {
 						}
 					}
 
-					await this.writeVaccinationDataForCountry('Germany', await this.getVaccinationDataByCountry('germany'));
+					await this.writeVaccinationDataForCountry('Germany', await this.getVaccinationDataByIsoCode('DEU'));
 					await this.cleanUpOldData();
 
 					allGermanyFederalStates = allGermanyFederalStates.sort();
@@ -821,15 +821,15 @@ class Covid19 extends utils.Adapter {
 	}
 
 	/**
-	 * filters the vaccination data by given country
+	 * filters the vaccination data by given isoCode
 	 *
-	 * @param country
+	 * @param isoCode
 	 * @returns {Promise<*>} latest day of vaccination data for germany
 	 */
-	async getVaccinationDataByCountry(country) {
+	async getVaccinationDataByIsoCode(isoCode) {
 		return vaccinationData
 			// filter german only
-			.then(data => data.filter(item => item.country.toLocaleLowerCase().includes(country.toLowerCase()))[0])
+			.then(data => data.filter(item => item.iso_code.toLocaleLowerCase().includes(isoCode.toLowerCase()))[0])
 			.then(data => {
 				if (!data || data.length === 0) throw new Error();
 				return data;
@@ -840,7 +840,7 @@ class Covid19 extends utils.Adapter {
 				return countryData.data;
 			})
 			.catch(e => {
-				this.log.debug(`Cannot get vaccination data for ${country} from our world in data ${e}`);
+				this.log.debug(`Cannot get vaccination data for ${isoCode} from our world in data ${e}`);
 				return null;
 			});
 	}
