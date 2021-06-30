@@ -347,7 +347,7 @@ class Covid19 extends utils.Adapter {
 									});
 
 									// Only handle vaccination data if array contains values
-									if (germanyVaccinationData[federalStateName]['Gesamtzahl mindestens einmal geimpft ']
+									if (germanyVaccinationData[federalStateName]['Gesamtzahl  mindestens einmal geimpft ']
 										&& germanyVaccinationData[federalStateName]['Gesamtzahl vollständig geimpft']
 										&& germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfungen']
 										&& germanyVaccinationData[federalStateName]['Impfquote mindestens einmal geimpft *']
@@ -357,7 +357,7 @@ class Covid19 extends utils.Adapter {
 										// Handle vaccination data based new Excel layout
 										await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfungen']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData[federalStateName]['Gesamtzahl  mindestens einmal geimpft ']);
-										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl vollständig geimpft']);
+										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData[federalStateName]['Gesamtzahl vollständig geimpft']);
 
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName]['Impfquote mindestens einmal geimpft *']));
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName]['Impfquote vollständig geimpft *']));
@@ -469,14 +469,14 @@ class Covid19 extends utils.Adapter {
 
 
 						// Only handle vaccination data if array contains values
-						if (germanyVaccinationData['Gesamt']['Gesamtzahl mindestens einmal geimpft ']
+						if (germanyVaccinationData['Gesamt']['Gesamtzahl  mindestens einmal geimpft ']
 							&& germanyVaccinationData['Gesamt']['Gesamtzahl vollständig geimpft']
 							&& germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfungen']
 							&& germanyVaccinationData['Gesamt']['Impfquote mindestens einmal geimpft *']
 							&& germanyVaccinationData['Gesamt']['Impfquote vollständig geimpft *']) {
 
 							// Handle vaccination data based new Excel layout
-							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl mindestens einmal geimpft ']);
+							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl  mindestens einmal geimpft ']);
 							await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl vollständig geimpft']);
 							await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfungen']);
 							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['Impfquote mindestens einmal geimpft *']));
