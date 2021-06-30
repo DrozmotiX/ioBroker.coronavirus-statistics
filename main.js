@@ -845,7 +845,7 @@ class Covid19 extends utils.Adapter {
 	 * @returns {Promise<void>}
 	 */
 	async writeVaccinationDataForCountry(country, data) {
-		const folderName = country === 'Germany' ? '_Impfungen' : 'Vaccination';
+		const folderName = country === 'Germany' ? '_Impfungen' : 'vaccination';
 
 		if (data
 			&& data.people_vaccinated
