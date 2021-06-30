@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.7.1",
+        "version": "0.7.2",
         "news": {
-            "0.7.1": {
+            "0.7.2": {
                 "en": "new german vaccination source",
                 "de": "Neue Quelle für deutsche Impfdaten",
                 "ru": "TODO",
@@ -14,6 +14,30 @@
                 "es": "TODO",
                 "pl": "TODO",
                 "zh-cn": "TODO"
+            },
+            "0.7.1": {
+                "en": "Bugfix: Vaccination data for Germany",
+                "de": "Bugfix: Impfdaten für Deutschland",
+                "ru": "Исправление: данные о вакцинации для Германии",
+                "pt": "Correção de bug: dados de vacinação para a Alemanha",
+                "nl": "Bugfix: Vaccinatiegegevens voor Duitsland",
+                "fr": "Correction d'un bug : données de vaccination pour l'Allemagne",
+                "it": "Bugfix: dati sulla vaccinazione per la Germania",
+                "es": "Corrección de error: datos de vacunación para Alemania",
+                "pl": "Bugfix: Dane o szczepieniach dla Niemiec",
+                "zh-cn": "错误修正：德国的疫苗接种数据"
+            },
+            "0.7.0": {
+                "en": "round Impfquote to 2 digits\nBugfix: Solved last_update is invalid warn message\nBugfix: State attribute definition missing for + undefined\nBugfix: Solved cannot read property 'Erstimpfung' of undefined\nBugfix: State value to set for \"xxx.BL\" has to be type \"number\" but received type \"string\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)\nBugfix: State value to set for \"xxx.Tests*\" has to be type \"string\" but received type \"number\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)\n(DutchmanNL/jlssmt) Bugfix: Vaccination data for Germany, several states missing in new API and will not be updated anymore !",
+                "de": "Impfquote auf 2 Stellen runden\nBugfix: Gelöst last_update ist ungültige Warnmeldung\nBugfix: Statusattributdefinition fehlt für + undefined\nBugfix: Gelöst kann Eigenschaft 'Erstimpfung' von undefined nicht lesen read\nBugfix: Statuswert für \"xxx.BL\" muss vom Typ \"Nummer\" sein, aber vom Typ \"String\" empfangen, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: Statuswert für \"xxx.Tests*\" muss vom Typ \"string\" sein, aber vom Typ \"number\" erhalten, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) Bugfix: Impfdaten für Deutschland, mehrere Bundesländer fehlen in neuer API und werden nicht mehr aktualisiert !",
+                "ru": "округлить Impfquote до 2 цифр\nИсправление: решено, что last_update - недопустимое предупреждающее сообщение.\nИсправление: определение атрибута состояния отсутствует для + undefined\nИсправление: решено, не удается прочитать свойство Erstimpfung неопределенного значения.\nИсправление: значение состояния, устанавливаемое для «xxx.BL», должно быть типа «число», но полученный тип «строка» решает [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nИсправление: значение состояния, устанавливаемое для «xxx.Tests *», должно иметь тип «строка», но полученный тип «число» решает [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)\n(DutchmanNL / jlssmt) Исправление: данные о вакцинации для Германии, несколько состояний отсутствуют в новом API и больше не будут обновляться!",
+                "pt": "arredondar Impfquote para 2 dígitos\nCorreção de bug: last_update resolvido é uma mensagem de aviso inválida\nCorreção: definição de atributo de estado ausente para + indefinido\nCorreção de bug: resolvido, não é possível ler a propriedade 'Erstimpfung' de indefinido\nCorreção de bug: o valor do estado a ser definido para \"xxx.BL\" deve ser do tipo \"número\", mas recebido do tipo \"string\", resolve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorreção de bug: o valor do estado definido para \"xxx.Tests *\" deve ser do tipo \"string\", mas recebido do tipo \"número\", resolve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)\n(DutchmanNL / jlssmt) Correção de bug: Dados de vacinação para a Alemanha, vários estados ausentes na nova API e não serão mais atualizados!",
+                "nl": "rond Impfquote af op 2 cijfers\nBugfix: Opgelost last_update is ongeldig waarschuwingsbericht\nBugfix: Status attribuutdefinitie ontbreekt voor + undefined\nBugfix: Opgelost kan eigenschap 'Erstimpfung' van undefined read niet lezen\nBugfix: Statuswaarde die moet worden ingesteld voor \"xxx.BL\" moet van het type \"nummer\" zijn, maar het type \"string\" ontvangen, lost [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ op) 237)\nBugfix: Statuswaarde die moet worden ingesteld voor \"xxx.Tests*\" moet van het type \"string\" zijn, maar het type \"nummer\" ontvangen, lost [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues) op /237)\n(DutchmanNL/jlssmt) Bugfix: Vaccinatiegegevens voor Duitsland, verschillende staten ontbreken in nieuwe API en worden niet meer bijgewerkt!",
+                "fr": "arrondir Impfquote à 2 chiffres\nCorrection de bug : La dernière mise à jour résolue est un message d'avertissement invalide\nCorrection de bug : définition d'attribut d'état manquante pour + non défini\nCorrection de bug : résolu, impossible de lire la propriété 'Erstimpfung' d'undefined\nCorrectif : La valeur d'état à définir pour \"xxx.BL\" doit être de type \"numéro\" mais le type reçu \"chaîne\", résout [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorrection de bug : la valeur d'état à définir pour \"xxx.Tests*\" doit être de type \"string\" mais reçu le type \"number\", résout [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) Correction de bug : Données de vaccination pour l'Allemagne, plusieurs états manquants dans la nouvelle API et ne seront plus mis à jour !",
+                "it": "Round Impfquote a 2 cifre\nBugfix: risolto last_update è un messaggio di avviso non valido\nBugfix: definizione dell'attributo di stato mancante per + non definito\nBugfix: risolto non è possibile leggere la proprietà 'Erstimpfung' di undefined\nBugfix: il valore di stato da impostare per \"xxx.BL\" deve essere di tipo \"number\" ma ricevuto di tipo \"string\", risolve [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: il valore di stato da impostare per \"xxx.Tests*\" deve essere di tipo \"string\" ma ricevuto di tipo \"number\", risolve [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) Bugfix: Dati di vaccinazione per la Germania, diversi stati mancanti nella nuova API e non verranno più aggiornati!",
+                "es": "redondear Impfquote a 2 dígitos\nCorrección de error: last_update resuelto es un mensaje de advertencia no válido\nCorrección de error: falta la definición de atributo de estado para + indefinido\nCorrección de error: resuelto no se puede leer la propiedad 'Erstimpfung' de undefined\nCorrección de error: el valor de estado para establecer para \"xxx.BL\" debe ser el tipo \"número\" pero se recibió el tipo \"cadena\", resuelve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorrección de error: el valor de estado para establecer para \"xxx.Tests *\" tiene que ser de tipo \"cadena\" pero se recibió el tipo \"número\", resuelve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)\n(DutchmanNL / jlssmt) Corrección de error: datos de vacunación para Alemania, faltan varios estados en la nueva API y ya no se actualizarán.",
+                "pl": "okrągły Impfquote do 2 cyfr\nBugfix: Rozwiązany last_update jest nieprawidłowy komunikat ostrzegawczy\nBugfix: Brak definicji atrybutu stanu dla + undefined\nBugfix: Rozwiązany nie można odczytać właściwości „Erstimpfung” undefined\nBugfix: Wartość stanu do ustawienia dla \"xxx.BL\" musi być typu \"number\", ale otrzymany typ \"string\", rozwiązuje [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: Wartość stanu do ustawienia dla \"xxx.Tests*\" musi być typu \"string\", ale otrzymany typ \"number\", rozwiązuje [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) Bugfix: Dane dotyczące szczepień dla Niemiec, kilka stanów brakuje w nowym API i nie będą już aktualizowane!",
+                "zh-cn": "将 Impfquote 舍入为 2 位数\n修正：解决 last_update 无效警告信息\n错误修正：+ undefined 缺少状态属性定义\n修正：解决了无法读取未定义的属性 'Erstimpfung'\n修正：为“xxx.BL”设置的状态值必须是“数字”类型但接收类型是“字符串”，解决了[#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\n修正：为“xxx.Tests*”设置的状态值必须是“字符串”类型，但接收类型是“数字”，解决了[#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) 修正：德国的疫苗接种数据，新 API 中缺少几个州，将不再更新！"
             },
             "0.7.0-6": {
                 "en": "Adapter issues with vaccination data from Germany solved",
@@ -230,42 +254,6 @@
                 "es": "Para Alemania: se agregaron estados federales, condados y ciudades",
                 "pl": "Do Niemiec: dodano kraje związkowe, powiaty i miasta",
                 "zh-cn": "对于德国：添加了联邦州，县和城市"
-            },
-            "0.4.9": {
-                "en": "Fixed issues in country names, added counties and cities for germany",
-                "de": "Probleme in Ländernamen behoben, Landkreise und Städte für Deutschland hinzugefügt",
-                "ru": "Исправлены проблемы в названиях стран, добавлены округа и города для Германии",
-                "pt": "Corrigidos problemas nos nomes de países, municípios e cidades adicionados para a alemanha",
-                "nl": "Problemen opgelost in landnamen, toegevoegde provincies en steden voor Duitsland",
-                "fr": "Correction de problèmes dans les noms de pays, les comtés ajoutés et les villes pour l'Allemagne",
-                "it": "Risolti problemi con nomi di paesi, contee e città aggiunte per la Germania",
-                "es": "Problemas resueltos en nombres de países, condados y ciudades adicionales para Alemania",
-                "pl": "Naprawiono problemy z nazwami krajów, dodanymi powiatami i miastami dla Niemiec",
-                "zh-cn": "修复国家名称中的问题，为德国添加县和城市"
-            },
-            "0.4.5": {
-                "en": "Countries for Germany added",
-                "de": "Länder für Deutschland hinzugefügt",
-                "ru": "Добавлены страны для Германии",
-                "pt": "Países da Alemanha adicionados",
-                "nl": "Landen voor Duitsland toegevoegd",
-                "fr": "Pays pour l'Allemagne ajoutés",
-                "it": "Aggiunti paesi per la Germania",
-                "es": "Países para Alemania añadidos",
-                "pl": "Dodano kraje dla Niemiec",
-                "zh-cn": "德国国家已添加"
-            },
-            "0.4.0": {
-                "en": "German (and some other) translations corrected",
-                "de": "Deutsche (und einige andere) Übersetzungen korrigiert",
-                "ru": "Исправлены немецкие (и некоторые другие) переводы",
-                "pt": "Traduções em alemão (e algumas outras) corrigidas",
-                "nl": "Duitse (en enkele andere) vertalingen gecorrigeerd",
-                "fr": "Traductions allemandes (et quelques autres) corrigées",
-                "it": "Le traduzioni in tedesco (e alcune altre) sono state corrette",
-                "es": "Traducciones al alemán (y algunas otras) corregidas",
-                "pl": "Poprawione tłumaczenia na niemiecki (i niektóre inne)",
-                "zh-cn": "更正了德语（和其他一些）的翻译"
             }
         },
         "title": "COVID-19 live information",

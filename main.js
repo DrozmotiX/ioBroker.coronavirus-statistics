@@ -4,8 +4,6 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 const {default: axios} = require('axios');
-const cheerio = require('cheerio');
-const dateFormat = require('dateformat');
 const Excel = require('xlsx');
 const fs = require('fs');
 const Path = require('path');
@@ -350,25 +348,17 @@ class Covid19 extends utils.Adapter {
 									});
 
 									// Only handle vaccination data if array contains values
-									if (germanyVaccinationData[federalStateName]['Erstimpfung'] !== null
-										&& germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfstoffdosen'] !== null
-										&& germanyVaccinationData[federalStateName][''] !== null
-										&& germanyVaccinationData[federalStateName]['_1'] !== null
-										&& germanyVaccinationData[federalStateName]['_2'] !== null
-										&& germanyVaccinationData[federalStateName]['_3'] !== null
-										&& germanyVaccinationData[federalStateName]['_4'] !== null
-										&& germanyVaccinationData[federalStateName]['Zweitimpfung'] !== null
-										&& germanyVaccinationData[federalStateName]['_5'] !== null
-										&& germanyVaccinationData[federalStateName]['_6'] !== null
-										&& germanyVaccinationData[federalStateName]['_7'] !== null
-										&& germanyVaccinationData[federalStateName]['_8'] !== null
-										&& germanyVaccinationData[federalStateName]['_9'] !== null)
+									if (germanyVaccinationData[federalStateName]['Gesamtzahl  mindestens einmal geimpft ']
+										&& germanyVaccinationData[federalStateName]['Gesamtzahl vollständig geimpft']
+										&& germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfungen']
+										&& germanyVaccinationData[federalStateName]['Impfquote mindestens einmal geimpft *']
+										&& germanyVaccinationData[federalStateName]['Impfquote vollständig geimpft *'])
 									{
 
 										// Handle vaccination data based new Excel layout
 										await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfungen']);
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData[federalStateName]['Gesamtzahl  mindestens einmal geimpft ']);
-										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl vollständig geimpft']);
+										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData[federalStateName]['Gesamtzahl vollständig geimpft']);
 
 										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName]['Impfquote mindestens einmal geimpft *']));
 										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName]['Impfquote vollständig geimpft *']));
@@ -386,7 +376,7 @@ class Covid19 extends utils.Adapter {
 
 
 									} else {
-										this.log.warn(`Cannot handle vaccination data for Germany fromm RKI, if this erros continues please report a bug to the developen!`);
+										this.log.warn(`Cannot handle vaccination data of Germany for ${federalStateName} from RKI, if this errors continues please report a bug to the developed! Bundesland : ${JSON.stringify(germanyVaccinationData[federalStateName])}`);
 									}
 								}
 							}
@@ -510,7 +500,7 @@ class Covid19 extends utils.Adapter {
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenPflegeheim`);
 
 					} else {
-						this.log.warn(`Cannot handle vaccination data for Germany fromm RKI, if this erros continues please report a bug to the developen!`);
+						this.log.warn(`Cannot handle vaccination data of Germany for Totals from RKI, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(germanyVaccinationData)}`);
 					}
 
 					allGermanyFederalStates = allGermanyFederalStates.sort();
@@ -938,7 +928,7 @@ class Covid19 extends utils.Adapter {
 			if (!result) return value;
 			return result;
 		} catch (e) {
-			this.sendSentry(`[modify] ${e}`);
+			this.errorHandling(`[modify]`, `${e}`);
 			return value;
 		}
 	}
