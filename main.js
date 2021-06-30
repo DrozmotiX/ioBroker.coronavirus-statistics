@@ -483,7 +483,13 @@ class Covid19 extends utils.Adapter {
 							await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['Impfquote vollständig geimpft *']));
 
 							// Delete unused states from previous RKI version
-							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenBioNTech`);
+							await this.localDeleteState(`Germany._Impfungen.rkiImpfquote`);
+							await this.localDeleteState(`Germany._Impfungen.rkiImpfungenKumulativTotal`);
+							await this.localDeleteState(`Germany._Impfungen.rkiZweitImpfungenDifferenzVortag`);
+							await this.localDeleteState(`Germany._Impfungen.rkiZweitImpfungenKumulativ`);
+							await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtModerna`);
+							await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtAstraZeneca`);
+							await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtBioNTech`);
 							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenModerna`);
 							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenAstraZeneca`);
 							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenDifferenzVortag`);
