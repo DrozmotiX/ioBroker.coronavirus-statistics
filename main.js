@@ -806,6 +806,13 @@ class Covid19 extends utils.Adapter {
 	async refreshVaccinationData() {
 		return axios.get('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
 			.then(response => response.data)
+			// reduce data to latest day of all countries
+			.then(data => {
+				for (const country of data) {
+					country.data = country.data[country.data.length - 1];
+				}
+				return data;
+			})
 			.catch(e => {
 				this.log.error(`Cannot get vaccination data for germany from our world in data ${e}`);
 				return null;
@@ -824,8 +831,6 @@ class Covid19 extends utils.Adapter {
 			.then(data => data.filter(item => item.country.toLocaleLowerCase().includes(country.toLowerCase()))[0])
 			// just the data
 			.then(countryData => countryData.data)
-			// just the latest day
-			.then(countryVaccinationData => countryVaccinationData[countryVaccinationData.length - 1])
 			.catch(e => {
 				this.log.error(`Cannot get vaccination data for germany from our world in data ${e}`);
 				return null;
