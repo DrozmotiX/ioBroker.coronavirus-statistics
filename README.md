@@ -95,6 +95,9 @@ As first value, the name from the warning message must be taken from the log. Th
 	* (DutchmanNL) 
 -->
 
+### 0.7.1 (2021-06-30)
+* (DutchmanNL) Bugfix: Vaccination data for Germany
+
 ### 0.7.0 (2021-06-28)
 * (DutchmanNL) round Impfquote to 2 digits
 * (DutchmanNL) Bugfix: Solved last_update is invalid warn message
