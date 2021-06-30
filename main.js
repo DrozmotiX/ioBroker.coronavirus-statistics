@@ -840,7 +840,7 @@ class Covid19 extends utils.Adapter {
 				return countryData.data;
 			})
 			.catch(e => {
-				this.log.debug(`Cannot get vaccination data for ${isoCode} from our world in data ${e}`);
+				this.log.error(`Cannot get vaccination data for ${isoCode} from our world in data ${e}`);
 				return null;
 			});
 	}
@@ -853,8 +853,6 @@ class Covid19 extends utils.Adapter {
 	 * @returns {Promise<void>}
 	 */
 	async writeVaccinationDataForCountry(country, data) {
-		const folderName = country === 'Germany' ? '_Impfungen' : 'Vaccination';
-
 		if (data
 			&& data.people_vaccinated
 			&& data.people_fully_vaccinated
@@ -862,11 +860,11 @@ class Covid19 extends utils.Adapter {
 			&& data.people_vaccinated_per_hundred
 			&& data.people_fully_vaccinated_per_hundred) {
 
-			await this.localCreateState(`${country}.${folderName}.people_vaccinated`, 'Erstimpfungen Kumulativ', data.people_vaccinated);
-			await this.localCreateState(`${country}.${folderName}.people_fully_vaccinated`, 'Zweitimpfungen Kumulativ', data.people_fully_vaccinated);
-			await this.localCreateState(`${country}.${folderName}.total_vaccinations`, 'Gesamtzahl bisher verabreichter Impfungen', data.total_vaccinations);
-			await this.localCreateState(`${country}.${folderName}.people_vaccinated_per_hundred`, 'Erstimpfungen Impfquote', data.people_vaccinated_per_hundred);
-			await this.localCreateState(`${country}.${folderName}.people_fully_vaccinated_per_hundred`, 'Zweitimpfungen Impfquote', data.people_fully_vaccinated_per_hundred);
+			await this.localCreateState(`${country}.Vaccination.people_vaccinated`, 'Erstimpfungen Kumulativ', data.people_vaccinated);
+			await this.localCreateState(`${country}.Vaccination.people_fully_vaccinated`, 'Zweitimpfungen Kumulativ', data.people_fully_vaccinated);
+			await this.localCreateState(`${country}.Vaccination.total_vaccinations`, 'Gesamtzahl bisher verabreichter Impfungen', data.total_vaccinations);
+			await this.localCreateState(`${country}.Vaccination.people_vaccinated_per_hundred`, 'Erstimpfungen Impfquote', data.people_vaccinated_per_hundred);
+			await this.localCreateState(`${country}.Vaccination.people_fully_vaccinated_per_hundred`, 'Zweitimpfungen Impfquote', data.people_fully_vaccinated_per_hundred);
 
 		} else {
 			this.log.warn(`Cannot handle vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
