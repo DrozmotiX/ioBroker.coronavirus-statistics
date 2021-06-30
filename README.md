@@ -95,6 +95,9 @@ As first value, the name from the warning message must be taken from the log. Th
 	* (DutchmanNL) 
 -->
 
+### 0.7.2 (2021-06-30)
+* (jlssmt) New vaccination data source for German (our world in data)
+
 ### 0.7.1 (2021-06-30)
 * (DutchmanNL) Bugfix: Vaccination data for Germany
 
