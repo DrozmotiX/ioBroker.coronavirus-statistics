@@ -137,7 +137,7 @@ class Covid19 extends utils.Adapter {
 										await this.localCreateState(`${country}.flag`, 'flag', dataset[property].flag);
 									}
 
-									await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByCountry(country));
+									await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByCountry(rawCountry));
 
 								} else {
 
@@ -807,14 +807,15 @@ class Covid19 extends utils.Adapter {
 		return axios.get('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
 			.then(response => response.data)
 			// reduce data to latest day of all countries
-			.then(data => {
-				for (const country of data) {
+			.then(jsonData => {
+				if (!jsonData || jsonData.length === 0) throw new Error();
+				for (const country of jsonData) {
 					country.data = country.data[country.data.length - 1];
 				}
-				return data;
+				return jsonData;
 			})
 			.catch(e => {
-				this.log.error(`Cannot get vaccination data for germany from our world in data ${e}`);
+				this.log.error(`Cannot get vaccination data from our world in data ${e}`);
 				return null;
 			});
 	}
@@ -829,10 +830,17 @@ class Covid19 extends utils.Adapter {
 		return vaccinationData
 			// filter german only
 			.then(data => data.filter(item => item.country.toLocaleLowerCase().includes(country.toLowerCase()))[0])
+			.then(data => {
+				if (!data || data.length === 0) throw new Error();
+				return data;
+			})
 			// just the data
-			.then(countryData => countryData.data)
+			.then(countryData => {
+				if (!countryData || countryData.length === 0) throw new Error();
+				return countryData.data;
+			})
 			.catch(e => {
-				this.log.error(`Cannot get vaccination data for germany from our world in data ${e}`);
+				this.log.debug(`Cannot get vaccination data for ${country} from our world in data ${e}`);
 				return null;
 			});
 	}
@@ -845,7 +853,7 @@ class Covid19 extends utils.Adapter {
 	 * @returns {Promise<void>}
 	 */
 	async writeVaccinationDataForCountry(country, data) {
-		const folderName = country === 'Germany' ? '_Impfungen' : 'vaccination';
+		const folderName = country === 'Germany' ? '_Impfungen' : 'Vaccination';
 
 		if (data
 			&& data.people_vaccinated
@@ -861,7 +869,7 @@ class Covid19 extends utils.Adapter {
 			await this.localCreateState(`${country}.${folderName}.people_fully_vaccinated_per_hundred`, 'Zweitimpfungen Impfquote', data.people_fully_vaccinated_per_hundred);
 
 		} else {
-			this.log.warn(`Cannot handle vaccination data of Germany for Totals from RKI, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
+			this.log.warn(`Cannot handle vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
 		}
 	}
 
