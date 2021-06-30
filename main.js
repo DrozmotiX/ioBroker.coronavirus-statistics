@@ -473,7 +473,7 @@ class Covid19 extends utils.Adapter {
 							native: {},
 						});
 
-						// Handle vaccination data based new Excel layout
+						// Handle vaccination data based new json source
 						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationJsonData.people_vaccinated);
 						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationJsonData.people_fully_vaccinated);
 						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationJsonData.total_vaccinations);
