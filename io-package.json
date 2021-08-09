@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.7.2",
+        "version": "0.7.2-1",
         "news": {
             "0.7.2": {
                 "en": "new german vaccination source",

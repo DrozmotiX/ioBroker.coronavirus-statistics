@@ -473,39 +473,29 @@ class Covid19 extends utils.Adapter {
 							native: {},
 						});
 
-						// Only handle vaccination data if array contains values
-						if (germanyVaccinationData['Gesamt']['Gesamtzahl  mindestens einmal geimpft ']
-							&& germanyVaccinationData['Gesamt']['Gesamtzahl vollständig geimpft']
-							&& germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfungen']
-							&& germanyVaccinationData['Gesamt']['Impfquote mindestens einmal geimpft *']
-							&& germanyVaccinationData['Gesamt']['Impfquote vollständig geimpft *']) {
+						// Handle vaccination data based new json source
+						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationJsonData.people_vaccinated);
+						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationJsonData.people_fully_vaccinated);
+						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationJsonData.total_vaccinations);
+						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', germanyVaccinationJsonData.people_vaccinated_per_hundred);
+						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', germanyVaccinationJsonData.people_fully_vaccinated_per_hundred);
 
-							// Handle vaccination data based new Excel layout
-							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl  mindestens einmal geimpft ']);
-							await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData['Gesamt']['Gesamtzahl vollständig geimpft']);
-							await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationData['Gesamt']['Gesamtzahl bisher verabreichter Impfungen']);
-							await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['Impfquote mindestens einmal geimpft *']));
-							await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData['Gesamt']['Impfquote vollständig geimpft *']));
-
-							// Delete unused states from previous RKI version
-							await this.localDeleteState(`Germany._Impfungen.rkiImpfquote`);
-							await this.localDeleteState(`Germany._Impfungen.rkiImpfungenKumulativTotal`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitImpfungenDifferenzVortag`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitImpfungenKumulativ`);
-							await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtModerna`);
-							await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtAstraZeneca`);
-							await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtBioNTech`);
-							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenModerna`);
-							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenAstraZeneca`);
-							await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenDifferenzVortag`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenBioNTech`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenModerna`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenAstraZeneca`);
-							await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenDifferenzVortag`);
-
-						} else {
-							this.log.warn(`Cannot handle vaccination data of Germany for Totals from RKI, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(germanyVaccinationData['Gesamt'])}`);
-						}
+						// Delete unused states from previous RKI version
+						await this.localDeleteState(`Germany._Impfungen.rkiImpfquote`);
+						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenKumulativTotal`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitImpfungenDifferenzVortag`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitImpfungenKumulativ`);
+						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtModerna`);
+						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtAstraZeneca`);
+						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtBioNTech`);
+						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenBioNTech`);
+						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenModerna`);
+						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenAstraZeneca`);
+						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenDifferenzVortag`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenBioNTech`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenModerna`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenAstraZeneca`);
+						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenDifferenzVortag`);
 
 						// Delete unused states of previous excel data
 						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenProTausend`);
