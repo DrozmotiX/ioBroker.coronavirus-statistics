@@ -1,9 +1,10 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.0",
+        "version": "0.8.0-0",
+
         "news": {
-            "0.7.2": {
+            "0.8.0-0": {
                 "en": "new german vaccination source",
                 "de": "Neue Quelle für deutsche Impfdaten",
                 "ru": "новый немецкий источник вакцинации",
