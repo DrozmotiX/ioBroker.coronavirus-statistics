@@ -17,6 +17,7 @@ const warnMessages = {};
 // For Germany, arrays to store federal states, city and  counties to store in object
 let allGermanyFederalStates = [], allGermanCountyDetails = [], allGermanyCounties = [], allGermanyCities = [];
 let allGermanyFederalStatesLoaded = null, allGermanyCountiesLoaded = null, allGermanyCitiesLoaded = null;
+let vaccinationData;
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
@@ -135,6 +136,8 @@ class Covid19 extends utils.Adapter {
 										// Only take the flag from country info
 										await this.localCreateState(`${country}.flag`, 'flag', dataset[property].flag);
 									}
+
+									await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(isoCountry.code.iso3));
 
 								} else {
 
@@ -308,7 +311,6 @@ class Covid19 extends utils.Adapter {
 						return;
 					}
 					const germanyVaccinationData = await this.getGermanyVaccinationData();
-					const germanyVaccinationJsonData = await this.getGermanyVaccinationDataFromOurWorldInDataAsJson();
 
 					for (const feature of values.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
@@ -457,58 +459,8 @@ class Covid19 extends utils.Adapter {
 						}
 					}
 
-					// write totals
-					if (germanyVaccinationJsonData
-						&& germanyVaccinationJsonData.people_vaccinated
-						&& germanyVaccinationJsonData.people_fully_vaccinated
-						&& germanyVaccinationJsonData.total_vaccinations
-						&& germanyVaccinationJsonData.people_vaccinated_per_hundred
-						&& germanyVaccinationJsonData.people_fully_vaccinated_per_hundred) {
-						// Create Channel for German vaccinations
-						await this.extendObjectAsync(`Germany._Impfungen`, {
-							type: 'channel',
-							common: {
-								name: `Impfungen gesamt data by RKI`,
-							},
-							native: {},
-						});
-
-						// Handle vaccination data based new json source
-						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationJsonData.people_vaccinated);
-						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationJsonData.people_fully_vaccinated);
-						await this.localCreateState(`Germany._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationJsonData.total_vaccinations);
-						await this.localCreateState(`Germany._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', germanyVaccinationJsonData.people_vaccinated_per_hundred);
-						await this.localCreateState(`Germany._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', germanyVaccinationJsonData.people_fully_vaccinated_per_hundred);
-
-						// Delete unused states from previous RKI version
-						await this.localDeleteState(`Germany._Impfungen.rkiImpfquote`);
-						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenKumulativTotal`);
-						await this.localDeleteState(`Germany._Impfungen.rkiZweitImpfungenDifferenzVortag`);
-						await this.localDeleteState(`Germany._Impfungen.rkiZweitImpfungenKumulativ`);
-						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtModerna`);
-						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtAstraZeneca`);
-						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenGesamtBioNTech`);
-						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenBioNTech`);
-						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenModerna`);
-						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenAstraZeneca`);
-						await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenDifferenzVortag`);
-						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenBioNTech`);
-						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenModerna`);
-						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenAstraZeneca`);
-						await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenDifferenzVortag`);
-
-						// Delete unused states of previous excel data
-						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenProTausend`);
-						await this.localDeleteState(`Germany._Impfungen.rkiDifferenzVortag`);
-						await this.localDeleteState(`Germany._Impfungen.rkiIndikationAlter`);
-						await this.localDeleteState(`Germany._Impfungen.rkiIndikationBeruf`);
-						await this.localDeleteState(`Germany._Impfungen.rkiIndikationMedizinisch`);
-						await this.localDeleteState(`Germany._Impfungen.rkiImpfungePflegeheim`);
-						await this.localDeleteState(`Germany._Impfungen.rkiImpfungenPflegeheim`);
-
-					} else {
-						this.log.warn(`Cannot handle vaccination data of Germany for Totals from RKI, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(germanyVaccinationData)}`);
-					}
+					await this.writeVaccinationDataForCountry('Germany', await this.getVaccinationDataByIsoCode('DEU'));
+					await this.cleanUpOldData();
 
 					allGermanyFederalStates = allGermanyFederalStates.sort();
 					this.log.debug(`allGermanyFederalStates : ${JSON.stringify(allGermanyFederalStates)}`);
@@ -662,6 +614,7 @@ class Covid19 extends utils.Adapter {
 			const timer1 = (Math.random() * (10 - 1) + 1) * 1000;
 			await wait(timer1);
 
+			vaccinationData = this.refreshVaccinationData();	// load all vaccination data
 			await loadAll();		// Global Worldwide statistics
 			await loadCountries(); 	// Detailed Worldwide statistics by country
 			if (this.config.getGermanyFederalStates || !allGermanyFederalStatesLoaded) {
@@ -846,24 +799,76 @@ class Covid19 extends utils.Adapter {
 	}
 
 	/**
-	 * calls our world in data api to get the vaccination data for germany
-	 * could be extended for every other country
+	 * calls our world in data api to get the vaccination data
 	 *
-	 * @returns {Promise<T>} latest day of vaccination data for germany
+	 * @returns {Promise<AxiosResponse<any>>} whole vaccination data object
 	 */
-	async getGermanyVaccinationDataFromOurWorldInDataAsJson() {
+	async refreshVaccinationData() {
 		return axios.get('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
 			.then(response => response.data)
-			// filter german only
-			.then(data => data.filter(item => item.country === 'Germany')[0])
-			// just the data
-			.then(germanData => germanData.data)
-			// just the latest day
-			.then(germanVaccinationData => germanVaccinationData[germanVaccinationData.length - 1])
+			// reduce data to latest day of all countries
+			.then(jsonData => {
+				if (!jsonData || jsonData.length === 0) throw new Error();
+				for (const country of jsonData) {
+					country.data = country.data[country.data.length - 1];
+				}
+				return jsonData;
+			})
 			.catch(e => {
-				this.log.error(`Cannot get vaccination data for germany from our world in data ${e}`);
+				this.log.error(`Cannot get vaccination data from our world in data ${e}`);
 				return null;
 			});
+	}
+
+	/**
+	 * filters the vaccination data by given isoCode
+	 *
+	 * @param isoCode
+	 * @returns {Promise<*>} latest day of vaccination data for germany
+	 */
+	async getVaccinationDataByIsoCode(isoCode) {
+		return vaccinationData
+			// filter german only
+			.then(data => data.filter(item => item.iso_code.toLocaleLowerCase().includes(isoCode.toLowerCase()))[0])
+			.then(data => {
+				if (!data || data.length === 0) throw new Error();
+				return data;
+			})
+			// just the data
+			.then(countryData => {
+				if (!countryData || countryData.length === 0) throw new Error();
+				return countryData.data;
+			})
+			.catch(e => {
+				this.log.error(`Cannot get vaccination data for ${isoCode} from our world in data ${e}`);
+				return null;
+			});
+	}
+
+	/**
+	 * writes vaccination data to folder of country
+	 *
+	 * @param country
+	 * @param data
+	 * @returns {Promise<void>}
+	 */
+	async writeVaccinationDataForCountry(country, data) {
+		if (data
+			&& data.people_vaccinated
+			&& data.people_fully_vaccinated
+			&& data.total_vaccinations
+			&& data.people_vaccinated_per_hundred
+			&& data.people_fully_vaccinated_per_hundred) {
+
+			await this.localCreateState(`${country}.Vaccination.people_vaccinated`, 'Erstimpfungen Kumulativ', data.people_vaccinated);
+			await this.localCreateState(`${country}.Vaccination.people_fully_vaccinated`, 'Zweitimpfungen Kumulativ', data.people_fully_vaccinated);
+			await this.localCreateState(`${country}.Vaccination.total_vaccinations`, 'Gesamtzahl bisher verabreichter Impfungen', data.total_vaccinations);
+			await this.localCreateState(`${country}.Vaccination.people_vaccinated_per_hundred`, 'Erstimpfungen Impfquote', data.people_vaccinated_per_hundred);
+			await this.localCreateState(`${country}.Vaccination.people_fully_vaccinated_per_hundred`, 'Zweitimpfungen Impfquote', data.people_fully_vaccinated_per_hundred);
+
+		} else {
+			this.log.warn(`Cannot handle vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
+		}
 	}
 
 	// download and save excel file
@@ -887,6 +892,27 @@ class Covid19 extends utils.Adapter {
 			this.log.error(`Cannot write vaccination data file ${e}`);
 		}
 
+	}
+
+	async cleanUpOldData() {
+		// Delete unused states from previous RKI version
+		await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenBioNTech`);
+		await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenModerna`);
+		await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenAstraZeneca`);
+		await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenDifferenzVortag`);
+		await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenBioNTech`);
+		await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenModerna`);
+		await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenAstraZeneca`);
+		await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenDifferenzVortag`);
+
+		// Delete unused states of previous excel data
+		await this.localDeleteState(`Germany._Impfungen.rkiImpfungenProTausend`);
+		await this.localDeleteState(`Germany._Impfungen.rkiDifferenzVortag`);
+		await this.localDeleteState(`Germany._Impfungen.rkiIndikationAlter`);
+		await this.localDeleteState(`Germany._Impfungen.rkiIndikationBeruf`);
+		await this.localDeleteState(`Germany._Impfungen.rkiIndikationMedizinisch`);
+		await this.localDeleteState(`Germany._Impfungen.rkiImpfungePflegeheim`);
+		await this.localDeleteState(`Germany._Impfungen.rkiImpfungenPflegeheim`);
 	}
 
 	/**
