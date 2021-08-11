@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.0-1",
+        "version": "0.8.0-2",
         "news": {
+            "0.8.0-2": {
+                "en": "Added vaccination data for all countries\nadded definitions for vaccination states\nChangeover to validated API for German vaccination data of Bundesländer\nAdded vaccination data for all countries",
+                "de": "Impfdaten für alle Länder hinzugefügt\nDefinitionen für Impfstaaten hinzugefügt\nUmstellung auf validierte API für deutsche Impfdaten der Bundesländer\nImpfdaten für alle Länder hinzugefügt",
+                "ru": "Добавлены данные о вакцинации для всех стран.\nдобавлены определения состояний вакцинации\nПереход на проверенный API для данных о вакцинации в Германии в Bundesländer\nДобавлены данные о вакцинации для всех стран.",
+                "pt": "Adicionados dados de vacinação para todos os países\nadicionadas definições para os estados de vacinação\nMudança para API validada para dados de vacinação alemães de Bundesländer\nAdicionados dados de vacinação para todos os países",
+                "nl": "Vaccinatiegegevens toegevoegd voor alle landen\ntoegevoegde definities voor vaccinatiestaten\nOvergang naar gevalideerde API voor Duitse vaccinatiegegevens van Bundesländer\nVaccinatiegegevens toegevoegd voor alle landen",
+                "fr": "Ajout de données de vaccination pour tous les pays\najout de définitions pour les états de vaccination\nPassage à l'API validée pour les données de vaccination allemandes des Bundesländer\nAjout de données de vaccination pour tous les pays",
+                "it": "Aggiunti dati sulla vaccinazione per tutti i paesi\nAggiunte definizioni per gli stati di vaccinazione\nPassaggio all'API convalidata per i dati di vaccinazione tedeschi dei Bundesländer\nAggiunti dati sulla vaccinazione per tutti i paesi",
+                "es": "Se agregaron datos de vacunación para todos los países.\ndefiniciones añadidas para los estados de vacunación\nCambio a API validada para los datos de vacunación alemanes de los Bundesländer\nSe agregaron datos de vacunación para todos los países.",
+                "pl": "Dodano dane dotyczące szczepień dla wszystkich krajów\ndodano definicje stanów szczepień\nPrzejście na zwalidowane API dla niemieckich danych szczepień Bundesländer\nDodano dane dotyczące szczepień dla wszystkich krajów",
+                "zh-cn": "添加了所有国家的疫苗接种数据\n添加了疫苗接种状态的定义\n转换为经验证的联邦德国疫苗接种数据 API\n添加了所有国家的疫苗接种数据"
+            },
             "0.8.0-1": {
                 "en": "Changeover to validated API for German vaccination data of Bundesländer",
                 "de": "Umstellung auf validierte API für deutsche Impfdaten der Bundesländer",
@@ -230,18 +242,6 @@
                 "es": "Se agregó información de atributo de estado continente y se redujeron los mensajes de advertencia",
                 "pl": "Dodano informacje o atrybutach stanu kontynentu i zredukowano komunikaty ostrzegawcze",
                 "zh-cn": "添加了大陆状态属性信息并减少了警告消息"
-            },
-            "0.5.6": {
-                "en": "Bugfix : API changed",
-                "de": "Bugfix: API geändert",
-                "ru": "Исправлено: API изменен",
-                "pt": "Correção de bug: API alterada",
-                "nl": "Bugfix: API gewijzigd",
-                "fr": "Correction de bug: l'API a changé",
-                "it": "Bugfix: API modificata",
-                "es": "Bugfix: API cambiado",
-                "pl": "Bugfix: API zmienione",
-                "zh-cn": "错误修正：API已更改"
             }
         },
         "title": "COVID-19 live information",

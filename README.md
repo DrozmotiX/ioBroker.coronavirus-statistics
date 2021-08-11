@@ -96,12 +96,9 @@ As first value, the name from the warning message must be taken from the log. Th
 -->
 
 ### 0.8.0-2 (2021-08-11)
-* (jlssmt) fixed vaccination bug for specific countries in 0.8.0-0
-
-### 0.8.0-1 (2021-08-11)
+* (jlssmt) Added vaccination data for all countries
+* (DutchmanNL) added definitions for vaccination states
 * (DutchmanNL) Changeover to validated API for German vaccination data of Bundesländer
-
-### 0.8.0-0 (2021-06-30)
 * (jlssmt) Added vaccination data for all countries
 
 ### 0.7.2 (2021-06-30)
