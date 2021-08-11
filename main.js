@@ -468,7 +468,7 @@ class Covid19 extends utils.Adapter {
 					}
 
 					await this.writeVaccinationDataForCountry('Germany', await this.getVaccinationDataByIsoCode('DEU'));
-					await this.cleanUpOldData();
+					await this.localDeleteState(`Germany._Impfungen`);
 
 					allGermanyFederalStates = allGermanyFederalStates.sort();
 					this.log.debug(`allGermanyFederalStates : ${JSON.stringify(allGermanyFederalStates)}`);
@@ -843,27 +843,6 @@ class Covid19 extends utils.Adapter {
 		} else {
 			this.log.warn(`Cannot handle vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
 		}
-	}
-
-	async cleanUpOldData() {
-		// Delete unused states from previous RKI version
-		await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenBioNTech`);
-		await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenModerna`);
-		await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenAstraZeneca`);
-		await this.localDeleteState(`Germany._Impfungen.rkiErstimpfungenDifferenzVortag`);
-		await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenBioNTech`);
-		await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenModerna`);
-		await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenAstraZeneca`);
-		await this.localDeleteState(`Germany._Impfungen.rkiZweitimpfungenDifferenzVortag`);
-
-		// Delete unused states of previous excel data
-		await this.localDeleteState(`Germany._Impfungen.rkiImpfungenProTausend`);
-		await this.localDeleteState(`Germany._Impfungen.rkiDifferenzVortag`);
-		await this.localDeleteState(`Germany._Impfungen.rkiIndikationAlter`);
-		await this.localDeleteState(`Germany._Impfungen.rkiIndikationBeruf`);
-		await this.localDeleteState(`Germany._Impfungen.rkiIndikationMedizinisch`);
-		await this.localDeleteState(`Germany._Impfungen.rkiImpfungePflegeheim`);
-		await this.localDeleteState(`Germany._Impfungen.rkiImpfungenPflegeheim`);
 	}
 
 	/**
