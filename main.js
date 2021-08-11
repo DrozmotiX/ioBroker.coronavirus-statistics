@@ -835,19 +835,10 @@ class Covid19 extends utils.Adapter {
 	 * @returns {Promise<void>}
 	 */
 	async writeVaccinationDataForCountry(country, data) {
-		if (data
-			&& data.people_vaccinated
-			&& data.people_fully_vaccinated
-			&& data.total_vaccinations
-			&& data.people_vaccinated_per_hundred
-			&& data.people_fully_vaccinated_per_hundred) {
-
-			await this.localCreateState(`${country}.Vaccination.people_vaccinated`, 'Erstimpfungen Kumulativ', data.people_vaccinated);
-			await this.localCreateState(`${country}.Vaccination.people_fully_vaccinated`, 'Zweitimpfungen Kumulativ', data.people_fully_vaccinated);
-			await this.localCreateState(`${country}.Vaccination.total_vaccinations`, 'Gesamtzahl bisher verabreichter Impfungen', data.total_vaccinations);
-			await this.localCreateState(`${country}.Vaccination.people_vaccinated_per_hundred`, 'Erstimpfungen Impfquote', data.people_vaccinated_per_hundred);
-			await this.localCreateState(`${country}.Vaccination.people_fully_vaccinated_per_hundred`, 'Zweitimpfungen Impfquote', data.people_fully_vaccinated_per_hundred);
-
+		if (data) {
+			for (const key of Object.keys(data)) {
+				await this.localCreateState(`${country}.Vaccination.${key}`, key, data[key]);
+			}
 		} else {
 			this.log.warn(`Cannot handle vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
 		}
