@@ -95,6 +95,9 @@ As first value, the name from the warning message must be taken from the log. Th
 	* (DutchmanNL) 
 -->
 
+### 0.8.0-2 (2021-08-11)
+* (jlssmt) fixed vaccination bug for specific countries in 0.8.0-0
+
 ### 0.8.0-1 (2021-08-11)
 * (DutchmanNL) Changeover to validated API for German vaccination data of Bundesländer
 
