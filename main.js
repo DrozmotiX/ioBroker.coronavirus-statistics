@@ -4,10 +4,6 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 const {default: axios} = require('axios');
-const Excel = require('xlsx');
-const fs = require('fs');
-const Path = require('path');
-const path = Path.resolve(Path.join(__dirname, '..', '..', 'iobroker-data', 'files', `Impfquotenmonitoring.xlsx`)); // Path to vaccination data file directory
 const adapterName = require('./package.json').name.split('.').pop();
 const stateAttr = require('./lib/stateAttr.js'); // State attribute definitions
 const {wait} = require('./lib/tools');
@@ -300,17 +296,43 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`Data from RKI Corona Bundesländer API received : ${apiResult.data}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
-						this.log.warn(`[germanyBundersland] Unable to contact RKI Corona Bundesländer API : ${error}`);
+						this.log.warn(`[germanyBundersland] Unable to contact Corona Bundesländer API : ${error}`);
 						return;
 					}
 
 					const values = apiResult.data;
 					// Cancel operation in case wrong information is received
 					if (typeof values !== 'object') {
-						this.log.warn(`Incorrect data received from API RKI Corona Bundesländer, values not updated`);
+						this.log.warn(`Incorrect data received from API Corona Bundesländer, values not updated`);
 						return;
 					}
-					const germanyVaccinationData = await this.getGermanyVaccinationData();
+
+					// Get Vaccination Data from api.corona-zahlen.org/
+					let vaccDataGermany = null;
+					try {
+						vaccDataGermany = await axios.get('https://api.corona-zahlen.org/vaccinations');
+						this.log.debug(`Data from api.corona-zahlen.org received : ${vaccDataGermany.data}`);
+						vaccDataGermany = vaccDataGermany.data;
+					} catch (error) {
+						this.log.warn(`[germanyBundersland] Unable to contact api.corona-zahlen.org : ${error}`);
+
+					}
+
+					const germanyVaccinationData = {};
+					// Structure API result to workable format
+
+					if (vaccDataGermany != null) {
+						for (const vaccStates in vaccDataGermany.data.states) {
+							console.log(vaccDataGermany.data.states[vaccStates].name);
+							germanyVaccinationData[vaccDataGermany.data.states[vaccStates].name] = {
+								'allVacc': vaccDataGermany.data.states[vaccStates].administeredVaccinations,
+								'firstVacc': vaccDataGermany.data.states[vaccStates].vaccinated,
+								'secondVacc': vaccDataGermany.data.states[vaccStates].secondVaccination.vaccinated,
+								'firstVaccQuote': vaccDataGermany.data.states[vaccStates].quote * 100,
+								'secondVaccQuote': vaccDataGermany.data.states[vaccStates].secondVaccination.quote * 100,
+							};
+						}
+					}
 
 					for (const feature of values.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
@@ -318,6 +340,7 @@ class Covid19 extends utils.Adapter {
 						const channelName = `Germany.Bundesland.${federalStateName}`;
 						allGermanyFederalStates.push(federalStateName);
 
+						//ToDo: clean
 						// Delete unused states of previous excel data
 						await this.localDeleteState(`${channelName}._Impfungen.rkiImpfungenProTausend`);
 						await this.localDeleteState(`${channelName}._Impfungen.rkiDifferenzVortag`);
@@ -337,10 +360,8 @@ class Covid19 extends utils.Adapter {
 								native: {},
 							});
 
-							// Get Vaccination Data
-							if (germanyVaccinationData){
-
-								if (germanyVaccinationData[federalStateName]){
+							if (vaccDataGermany != null) {
+								if (germanyVaccinationData[federalStateName]) {
 									await this.extendObjectAsync(`${channelName}._Impfungen`, {
 										type: 'channel',
 										common: {
@@ -349,37 +370,24 @@ class Covid19 extends utils.Adapter {
 										native: {},
 									});
 
-									// Only handle vaccination data if array contains values
-									if (germanyVaccinationData[federalStateName]['Gesamtzahl  mindestens einmal geimpft ']
-										&& germanyVaccinationData[federalStateName]['Gesamtzahl vollständig geimpft']
-										&& germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfungen']
-										&& germanyVaccinationData[federalStateName]['Impfquote mindestens einmal geimpft *']
-										&& germanyVaccinationData[federalStateName]['Impfquote vollständig geimpft *'])
-									{
+									// Handle vaccination data based new Excel layout
+									await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationData[federalStateName].allVacc);
+									await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData[federalStateName].firstVacc);
+									await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData[federalStateName].secondVacc);
+									await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName].firstVaccQuote));
+									await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName].secondVaccQuote));
 
-										// Handle vaccination data based new Excel layout
-										await this.localCreateState(`${channelName}._Impfungen.rkiImpfungenGesamtVerabreicht`, 'Gesamtzahl bisher verabreichter Impfungen', germanyVaccinationData[federalStateName]['Gesamtzahl bisher verabreichter Impfungen']);
-										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenKumulativ`, 'Erstimpfungen Kumulativ', germanyVaccinationData[federalStateName]['Gesamtzahl  mindestens einmal geimpft ']);
-										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`, 'Zweitimpfungen Kumulativ', germanyVaccinationData[federalStateName]['Gesamtzahl vollständig geimpft']);
+									// Delete unused states from previous RKI version
+									await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenBioNTech`);
+									await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenModerna`);
+									await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenAstraZeneca`);
+									await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenDifferenzVortag`);
+									await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`);
+									await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenBioNTech`);
+									await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenModerna`);
+									await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenAstraZeneca`);
+									await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenDifferenzVortag`);
 
-										await this.localCreateState(`${channelName}._Impfungen.rkiErstimpfungenImpfquote`, 'Erstimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName]['Impfquote mindestens einmal geimpft *']));
-										await this.localCreateState(`${channelName}._Impfungen.rkiZweitimpfungenImpfquote`, 'Zweitimpfungen Impfquote', await this.modify(`round(2)`, germanyVaccinationData[federalStateName]['Impfquote vollständig geimpft *']));
-
-										// Delete unused states from previous RKI version
-										await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenBioNTech`);
-										await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenModerna`);
-										await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenAstraZeneca`);
-										await this.localDeleteState(`${channelName}._Impfungen.rkiErstimpfungenDifferenzVortag`);
-										await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenKumulativ`);
-										await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenBioNTech`);
-										await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenModerna`);
-										await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenAstraZeneca`);
-										await this.localDeleteState(`${channelName}._Impfungen.rkiZweitimpfungenDifferenzVortag`);
-
-
-									} else {
-										this.log.warn(`Cannot handle vaccination data of Germany for ${federalStateName} from RKI, if this errors continues please report a bug to the developed! Bundesland : ${JSON.stringify(germanyVaccinationData[federalStateName])}`);
-									}
 								}
 							}
 
@@ -772,36 +780,10 @@ class Covid19 extends utils.Adapter {
 		return string;
 	}
 
-	async getGermanyVaccinationData(){
-
-		let germanyVacInfoData = null;
-
-		//Get vaccination details for germany
-
-		try {
-			await this.getExcelFile('https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Daten/Impfquotenmonitoring.xlsx?__blob=publicationFile');
-			const WorkBook = Excel.readFile(path, {sheetStubs: true});
-			const WorkSheet = WorkBook.Sheets[WorkBook.SheetNames[1]];
-			// const now = dateFormat(new Date(),'hh:mm');
-			const data = Excel.utils.sheet_to_json(WorkSheet, {/*raw: true,dateNF: "DD-MMM-YYYY",header:0,*/defval: 0});
-
-			// Build Proper array to handle data
-			germanyVacInfoData = [];
-			for (const vacData in data) {
-				germanyVacInfoData[data[vacData]._1] = data[vacData];
-			}
-		} catch (e) {
-			this.log.error(`Cannot get Vaccination data for germany ${e}`);
-		}
-
-
-		return germanyVacInfoData;
-	}
-
 	/**
 	 * calls our world in data api to get the vaccination data
 	 *
-	 * @returns {Promise<AxiosResponse<any>>} whole vaccination data object
+	 * @returns whole vaccination data object
 	 */
 	async refreshVaccinationData() {
 		return axios.get('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
@@ -869,29 +851,6 @@ class Covid19 extends utils.Adapter {
 		} else {
 			this.log.warn(`Cannot handle vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
 		}
-	}
-
-	// download and save excel file
-	async getExcelFile (url) {
-		//ToDo Change path configuration to native instance dir function
-		// const instanceDataDir = utils.getAbsoluteInstanceDataDir(this);
-		try {
-			const writer = fs.createWriteStream(path);
-			const response = await axios({
-				url: url,
-				method: 'GET',
-				responseType: 'stream'
-			});
-			response.data.pipe(writer);
-
-			return new Promise((resolve, reject) => {
-				writer.on('finish', resolve);
-				writer.on('error', reject);
-			});
-		} catch (e) {
-			this.log.error(`Cannot write vaccination data file ${e}`);
-		}
-
 	}
 
 	async cleanUpOldData() {
