@@ -1,9 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.0-0",
-
+        "version": "0.8.0-1",
         "news": {
+            "0.8.0-1": {
+                "en": "Changeover to validated API for German vaccination data of Bundesländer",
+                "de": "Umstellung auf validierte API für deutsche Impfdaten der Bundesländer",
+                "ru": "Переход на проверенный API для данных о вакцинации в Германии в Bundesländer",
+                "pt": "Mudança para API validada para dados de vacinação alemães de Bundesländer",
+                "nl": "Overgang naar gevalideerde API voor Duitse vaccinatiegegevens van Bundesländer",
+                "fr": "Passage à l'API validée pour les données de vaccination allemandes des Bundesländer",
+                "it": "Passaggio all'API convalidata per i dati di vaccinazione tedeschi dei Bundesländer",
+                "es": "Cambio a API validada para los datos de vacunación alemanes de los Bundesländer",
+                "pl": "Przejście na zwalidowane API dla niemieckich danych szczepień Bundesländer",
+                "zh-cn": "转换为经验证的联邦德国疫苗接种数据 API"
+            },
             "0.8.0-0": {
                 "en": "new german vaccination source",
                 "de": "Neue Quelle für deutsche Impfdaten",
@@ -231,18 +242,6 @@
                 "es": "Bugfix: API cambiado",
                 "pl": "Bugfix: API zmienione",
                 "zh-cn": "错误修正：API已更改"
-            },
-            "0.5.5": {
-                "en": "Bugfixes, see changelog for details",
-                "de": "Bugfixes, siehe Änderungsprotokoll für Details",
-                "ru": "Исправления, см. Список изменений для деталей",
-                "pt": "Correções, veja changelog para detalhes",
-                "nl": "Bugfixes, zie changelog voor details",
-                "fr": "Corrections de bugs, voir le changelog pour plus de détails",
-                "it": "Bugfixes, consultare il log delle modifiche per i dettagli",
-                "es": "Corrección de errores, vea el registro de cambios para más detalles",
-                "pl": "Poprawki błędów, patrz dziennik zmian, aby uzyskać szczegółowe informacje",
-                "zh-cn": "错误修正，请参阅更改日志以获取详细信息"
             }
         },
         "title": "COVID-19 live information",

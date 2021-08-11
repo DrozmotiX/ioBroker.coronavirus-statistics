@@ -95,13 +95,14 @@ As first value, the name from the warning message must be taken from the log. Th
 	* (DutchmanNL) 
 -->
 
+### 0.8.0-1 (2021-08-11)
+* (DutchmanNL) Changeover to validated API for German vaccination data of Bundesländer
 
 ### 0.8.0-0 (2021-06-30)
 * (jlssmt) Added vaccination data for all countries
 
 ### 0.7.2 (2021-06-30)
 * (jlssmt) New vaccination data source for German (our world in data)
-
 
 ### 0.7.1 (2021-06-30)
 * (DutchmanNL) Bugfix: Vaccination data for Germany
