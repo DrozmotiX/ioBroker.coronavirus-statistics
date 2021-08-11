@@ -836,6 +836,7 @@ class Covid19 extends utils.Adapter {
 	 */
 	async writeVaccinationDataForCountry(country, data) {
 		if (data) {
+			await this.localDeleteState(`${country}.Vaccination`);
 			for (const key of Object.keys(data)) {
 				await this.localCreateState(`${country}.Vaccination.${key}`, key, data[key]);
 			}
