@@ -472,7 +472,13 @@ class Covid19 extends utils.Adapter {
 						}
 					}
 
-					await this.writeVaccinationDataForCountry('Germany', await this.getVaccinationDataByIsoCode('DEU'));
+					try {
+						await this.writeVaccinationDataForCountry('Germany', await this.getVaccinationDataByIsoCode('DEU'));
+
+					} catch (e) {
+						this.log.debug(`Cannot get vaccination data for Germany from our world in data ${e}`);
+					}
+
 					await this.localDeleteState(`Germany._Impfungen`);
 
 					allGermanyFederalStates = allGermanyFederalStates.sort();
@@ -827,7 +833,7 @@ class Covid19 extends utils.Adapter {
 				return countryData.data;
 			})
 			.catch(e => {
-				this.log.error(`Cannot get vaccination data for ${isoCode} from our world in data ${e}`);
+				this.log.debug(`Cannot get vaccination data for ${isoCode} from our world in data ${e}`);
 				return null;
 			});
 	}
@@ -846,7 +852,7 @@ class Covid19 extends utils.Adapter {
 				await this.localCreateState(`${country}.Vaccination.${key}`, key, data[key]);
 			}
 		} else {
-			this.log.warn(`Cannot handle vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
+			this.log.debug(`Cannot handle vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
 		}
 	}
 
