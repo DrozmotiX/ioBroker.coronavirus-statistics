@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.0-3",
+        "version": "0.8.0",
         "news": {
+            "0.8.0": {
+                "en": "Added vaccination data for all countries\nadded definitions for vaccination states\nFolder structure optimized with devices and channels\nCode improvement to handle state deletion more efficient\nChangeover to validated API for German vaccination data of Bundesländer\nEnsure (country) folder(s) including all states are removed if not selected",
+                "de": "Impfdaten für alle Länder hinzugefügt\nDefinitionen für Impfstaaten hinzugefügt\nOrdnerstruktur optimiert mit Geräten und Kanälen\nCodeverbesserung, um das Löschen des Status effizienter zu handhaben\nUmstellung auf validierte API für deutsche Impfdaten der Bundesländer\nStellen Sie sicher, dass (Land-)Ordner einschließlich aller Bundesstaaten entfernt werden, wenn sie nicht ausgewählt sind",
+                "ru": "Добавлены данные о вакцинации для всех стран.\nдобавлены определения состояний вакцинации\nСтруктура папок оптимизирована для устройств и каналов\nУлучшение кода для более эффективной обработки удаления состояния\nПереход на проверенный API для данных о вакцинации в Германии в Bundesländer\nУбедитесь, что папки (страны), включая все состояния, удалены, если не выбраны",
+                "pt": "Adicionados dados de vacinação para todos os países\nadicionadas definições para os estados de vacinação\nEstrutura de pasta otimizada com dispositivos e canais\nMelhoria de código para lidar com a exclusão de estado de forma mais eficiente\nMudança para API validada para dados de vacinação alemães de Bundesländer\nCertifique-se de que as pastas (países), incluindo todos os estados, sejam removidas se não forem selecionadas",
+                "nl": "Vaccinatiegegevens toegevoegd voor alle landen\ntoegevoegde definities voor vaccinatiestaten\nMapstructuur geoptimaliseerd met apparaten en kanalen\nCodeverbetering om het verwijderen van de status efficiënter te verwerken\nOvergang naar gevalideerde API voor Duitse vaccinatiegegevens van Bundesländer\nZorg ervoor dat (land)map(pen) inclusief alle staten worden verwijderd indien niet geselecteerd",
+                "fr": "Ajout de données de vaccination pour tous les pays\najout de définitions pour les états de vaccination\nStructure de dossier optimisée avec les appareils et les canaux\nAmélioration du code pour gérer la suppression d'état plus efficacement\nPassage à l'API validée pour les données de vaccination allemandes des Bundesländer\nAssurez-vous que le(s) dossier(s) (pays), y compris tous les états, sont supprimés s'ils ne sont pas sélectionnés",
+                "it": "Aggiunti dati sulla vaccinazione per tutti i paesi\nAggiunte definizioni per gli stati di vaccinazione\nStruttura delle cartelle ottimizzata con dispositivi e canali\nMiglioramento del codice per gestire in modo più efficiente l'eliminazione dello stato\nPassaggio all'API convalidata per i dati di vaccinazione tedeschi dei Bundesländer\nAssicurati che le cartelle (paese) inclusi tutti gli stati vengano rimosse se non selezionate",
+                "es": "Se agregaron datos de vacunación para todos los países.\ndefiniciones añadidas para los estados de vacunación\nEstructura de carpetas optimizada con dispositivos y canales.\nMejora del código para manejar la eliminación de estados de manera más eficiente\nCambio a API validada para los datos de vacunación alemanes de los Bundesländer\nAsegúrese de que la (s) carpeta (s) de (país), incluidos todos los estados, se eliminen si no se seleccionan",
+                "pl": "Dodano dane dotyczące szczepień dla wszystkich krajów\ndodano definicje stanów szczepień\nStruktura folderów zoptymalizowana pod kątem urządzeń i kanałów\nUlepszenie kodu w celu wydajniejszej obsługi usuwania stanu\nPrzejście na zwalidowane API dla niemieckich danych szczepień Bundesländer\nUpewnij się, że foldery (kraje) zawierające wszystkie stany zostały usunięte, jeśli nie zostały wybrane",
+                "zh-cn": "添加了所有国家的疫苗接种数据\n添加了疫苗接种状态的定义\n使用设备和频道优化的文件夹结构\n代码改进以更有效地处理状态删除\n转换为经验证的联邦德国疫苗接种数据 API\n如果未选择，确保（国家）文件夹（包括所有州）被删除"
+            },
             "0.8.0-3": {
                 "en": "Folder structure optimized with devices and channels\nCode improvement to handle state deletion more efficient\nBugfix : Do not create vaccination states if country is not selected\nEnsure (country) folder including all states is removed if country not selected",
                 "de": "Ordnerstruktur optimiert mit Geräten und Kanälen\nCodeverbesserung, um das Löschen des Status effizienter zu handhaben\nBugfix : Impfstatus nicht erstellen, wenn Land nicht ausgewählt ist\nStellen Sie sicher, dass der Ordner (Land) einschließlich aller Bundesstaaten entfernt wird, wenn kein Land ausgewählt ist",
@@ -230,18 +242,6 @@
                 "es": "Solicitud de módulo reemplazado con axios\nCorrección de errores: manejo adecuado de errores de llamadas API fallidas (si no se puede acceder a la API)\nCorrección de error: API-Abfrage geändert",
                 "pl": "Zamieniono żądanie modułu na axios\nPoprawka: Prawidłowa obsługa błędów nieudanych wywołań API (jeśli API nie jest osiągalne)\nPoprawka: API-Abfrage geändert",
                 "zh-cn": "用axios替换了模块请求\n错误修正：正确的错误处理失败的API调用（如果无法访问api）\n错误修正：API-Abfragegeändert"
-            },
-            "0.5.9": {
-                "en": "* (DutchmanNL) Replaced module request with axios\n* (DutchmanNL) Bugfix : Proper error handling of failing API calls (if api not reachable)",
-                "de": "* (DutchmanNL) Modulanforderung durch Axios ersetzt\n* (DutchmanNL) Bugfix: Richtige Fehlerbehandlung bei fehlgeschlagenen API-Aufrufen (falls die API nicht erreichbar ist)",
-                "ru": "* (DutchmanNL) Заменен запрос модуля на axios\n* (DutchmanNL) Исправление: правильная обработка ошибок при сбое вызовов API (если API недоступен)",
-                "pt": "* (DutchmanNL) Pedido de módulo substituído por axios\n* (DutchmanNL) Correção de erros: tratamento adequado de erros de chamadas de API com falha (se a API não estiver acessível)",
-                "nl": "* (DutchmanNL) Module-aanvraag vervangen door axios\n* (DutchmanNL) Bugfix: Juiste foutafhandeling van falende API-aanroepen (als API niet bereikbaar is)",
-                "fr": "* (DutchmanNL) Demande de module remplacée par axios\n* (DutchmanNL) Bugfix: Traitement correct des erreurs des appels d'API défaillants (si l'API n'est pas accessible)",
-                "it": "* (DutchmanNL) Sostituita la richiesta del modulo con assi\n* (DutchmanNL) Bugfix: corretta gestione degli errori delle chiamate API non riuscite (se api non raggiungibile)",
-                "es": "* (DutchmanNL) Solicitud de módulo reemplazado por axios\n* (DutchmanNL) Corrección de errores: manejo adecuado de errores de llamadas API fallidas (si la API no es accesible)",
-                "pl": "* (DutchmanNL) Zamieniono żądanie modułu na axios\n* Poprawka (DutchmanNL): Prawidłowa obsługa błędów nieudanych wywołań API (jeśli nie można osiągnąć interfejsu API)",
-                "zh-cn": "*（DutchmanNL）用axios替换了模块请求\n*（DutchmanNL）错误修正：正确处理失败的API调用（如果无法访问api）"
             }
         },
         "title": "COVID-19 live information",

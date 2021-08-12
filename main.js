@@ -308,7 +308,7 @@ class Covid19 extends utils.Adapter {
 					} else {
 						await this.localDeleteState('global_continents');
 					}
-					
+
 					for (const c in continentsStats) {
 						this.log.debug(`${c}: ${JSON.stringify(continentsStats[c])}`);
 
