@@ -152,6 +152,9 @@ class Covid19 extends utils.Adapter {
 
 							} else {
 							}
+								// Delete country
+								this.deleteDevice(country);
+							}
 
 							// Write states for all country's in API
 							for (const property of Object.keys(dataset)) {
@@ -168,17 +171,6 @@ class Covid19 extends utils.Adapter {
 										await this.localCreateState(`${country}.flag`, 'flag', dataset[property].flag);
 									}
 
-								} else {
-
-									this.log.debug(`Country delete routine : ${property} for : ${country}`);
-									if (property !== 'countryInfo') {
-										await this.localDeleteState(`${country}.${property}`);
-										await this.localDeleteState(`${country}.flag`);
-									} else {
-										// Only take the flag from country info
-										await this.localDeleteState(`${country}.flag`);
-										await this.localDeleteState(`${country}.${property}`); // Temporary needed for installations < 0.4.0 to cleanup states
-									}
 								}
 
 								if (continent) {
@@ -875,7 +867,6 @@ class Covid19 extends utils.Adapter {
 	 */
 	async writeVaccinationDataForCountry(country, data) {
 		if (data) {
-			await this.localDeleteState(`${country}.Vaccination`);
 			for (const key of Object.keys(data)) {
 				await this.localCreateState(`${country}.Vaccination.${key}`, key, data[key]);
 			}
