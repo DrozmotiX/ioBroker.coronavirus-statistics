@@ -118,6 +118,8 @@ class Covid19 extends utils.Adapter {
 
 							this.log.debug(`api name: ${dataset.country}, converted name: ${rawCountry}, dp name: ${country}, continent: ${continent}`);
 
+							// Only write values if country is selected
+							if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
 							try {
 								await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(isoCountry.code.iso3));
 
@@ -125,7 +127,10 @@ class Covid19 extends utils.Adapter {
 								this.log.debug(`Cannot get vaccination data for ${country} from our world in data ${e}`);
 							}
 
-							// Write states for all countrys in API
+							} else {
+							}
+
+							// Write states for all country's in API
 							for (const property of Object.keys(dataset)) {
 								// Don't create a state for the country
 								if (property === 'country') continue;
