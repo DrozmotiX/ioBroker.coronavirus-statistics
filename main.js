@@ -143,15 +143,27 @@ class Covid19 extends utils.Adapter {
 							// Only write values if country is selected
 							if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
 								await createFolderStructure();
-							try {
-								await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(isoCountry.code.iso3));
+								try {
 
-							} catch (e) {
-								this.log.debug(`Cannot get vaccination data for ${country} from our world in data ${e}`);
-							}
+									this.log.debug(`Writing vaccination data for new ${country}`);
+									await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(isoCountry.code.iso3));
+
+								} catch (e) {
+									this.log.debug(`Cannot get vaccination data for ${country} from our world in data ${e}`);
+								}
 
 							} else {
-							}
+							// Check if states for vaccination exist (cleanup buggy version), if yes create device structure
+								try {
+									if (this.config.deleteUnused === true) {
+										const obj = await this.getObjectAsync(`${country}.Vaccination.date`);
+										if (obj) {
+											await createFolderStructure();
+										}
+									}
+								} catch (error) {
+									// do nothing
+								}
 								// Delete country
 								this.deleteDevice(country);
 							}
