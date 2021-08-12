@@ -118,8 +118,31 @@ class Covid19 extends utils.Adapter {
 
 							this.log.debug(`api name: ${dataset.country}, converted name: ${rawCountry}, dp name: ${country}, continent: ${continent}`);
 
+							const createFolderStructure = async () => {
+
+								// Create country folder
+								await this.extendObjectAsync(country, {
+									type: 'device',
+									common: {
+										name: country
+									},
+									native: {},
+								});
+
+								// Create Vaccination Channel
+								await this.setObjectNotExistsAsync(`${country}.Vaccination`, {
+									type: 'channel',
+									common: {
+										name: 'Vaccination Data',
+									},
+									native: {},
+								});
+
+							};
+
 							// Only write values if country is selected
 							if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
+								await createFolderStructure();
 							try {
 								await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(isoCountry.code.iso3));
 
