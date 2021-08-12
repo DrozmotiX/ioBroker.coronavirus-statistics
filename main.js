@@ -66,6 +66,13 @@ class Covid19 extends utils.Adapter {
 				}
 				this.log.debug(`Data from COVID-19 API received : ${apiResult.data}`);
 				const values = apiResult.data;
+				await this.extendObjectAsync(`global_totals`, {
+					type: 'device',
+					common: {
+						name: 'Total values of all countries togehter',
+					},
+					native: {},
+				});
 				for (const i of Object.keys(values)) {
 					await this.localCreateState(`global_totals.${i}`, i, values[i]);
 				}
@@ -130,7 +137,7 @@ class Covid19 extends utils.Adapter {
 								});
 
 								// Create Vaccination Channel
-								await this.setObjectNotExistsAsync(`${country}.Vaccination`, {
+								await this.extendObjectAsync(`${country}.Vaccination`, {
 									type: 'channel',
 									common: {
 										name: 'Vaccination Data',
@@ -165,7 +172,7 @@ class Covid19 extends utils.Adapter {
 									// do nothing
 								}
 								// Delete country
-								this.deleteDevice(country);
+								await this.localDeleteState(country);
 							}
 
 							// Write states for all country's in API
@@ -252,6 +259,14 @@ class Covid19 extends utils.Adapter {
 						}
 					}
 
+					await this.extendObjectAsync(`country_Top_5`, {
+						type: 'device',
+						common: {
+							name: 'country Top 5',
+						},
+						native: {},
+					});
+
 					// Write Top 5
 					this.log.debug(`Top 5 Countries : ${JSON.stringify(values.slice(0, 5))}`);
 					for (let position = 1; position <= 5; position++) {
@@ -281,8 +296,19 @@ class Covid19 extends utils.Adapter {
 						}
 					}
 
-					// Write continent information
-
+					if (this.config.getContinents){
+						// Write continent information
+						await this.extendObjectAsync(`global_continents`, {
+							type: 'device',
+							common: {
+								name: 'Global totals for each continent',
+							},
+							native: {},
+						});
+					} else {
+						await this.localDeleteState('global_continents');
+					}
+					
 					for (const c in continentsStats) {
 						this.log.debug(`${c}: ${JSON.stringify(continentsStats[c])}`);
 
@@ -586,6 +612,42 @@ class Covid19 extends utils.Adapter {
 							this.log.error(`Unknown ${countiesType} received containing ${JSON.stringify(feature)}`);
 						}
 
+						const folderStructure = async () => {
+							await this.extendObjectAsync(`Germany.${countiesType}`, {
+								type: 'channel',
+								common: {
+									name: countiesType,
+								},
+								native: {},
+							});
+							// await this.createChannelAsync(`Germany`, countiesType);
+							// Create Vaccination Channel
+							await this.extendObjectAsync(`Germany.${countiesType}.${countyName}`, {
+								type: 'channel',
+								common: {
+									name: countyName,
+								},
+								native: {},
+							});
+						};
+
+						// Create proper folder structure
+						if (  countiesType == 'Kreis'
+							&& (this.config.getAllGermanyCounties || selectedGermanyCounties.includes(countyName)))	 {
+							await folderStructure();
+
+						} else {
+							await this.localDeleteState(`Germany.${countiesType}.${countyName}`);
+						}
+
+						if( countiesType == 'Stadt'
+							&& (this.config.getAllGermanyCities || selectedGermanyCities.includes(countyName))){
+							await folderStructure();
+
+						} else {
+							await this.localDeleteState(`Germany.${countiesType}.${countyName}`);
+						}
+
 						// Run truth all states and write information
 						for (const attributeName of Object.keys(feature.attributes)) {
 
@@ -599,13 +661,8 @@ class Covid19 extends utils.Adapter {
 
 										if (this.config.getAllGermanyCities || selectedGermanyCities.includes(countyName)) {
 											this.log.debug(`Create city : ${countyName}`);
-
 											// Create State for each Landkreis
 											await this.localCreateState(`Germany.${countiesType}.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
-
-										} else {
-											this.log.debug(`Delete city: Germany.${countiesType}.${countyName}.${attributeName}`);
-											await this.localDeleteState(`Germany.${countiesType}.${countyName}.${attributeName}`);
 										}
 
 										break;
@@ -614,13 +671,8 @@ class Covid19 extends utils.Adapter {
 
 										if (this.config.getAllGermanyCounties || selectedGermanyCounties.includes(countyName)) {
 											this.log.debug(`Create Landkreis  : ${countyName}`);
-
 											// Create State for each Landkreis
 											await this.localCreateState(`Germany.${countiesType}.${countyName}.${attributeName}`, attributeName, feature.attributes[attributeName]);
-
-										} else {
-											this.log.debug(`Delete Landkreis State for older versions : Germany.${countiesType}.${countyName}.${attributeName}`);
-											await this.localDeleteState(`Germany.${countiesType}.${countyName}.${attributeName}`);
 										}
 
 										break;
@@ -668,13 +720,32 @@ class Covid19 extends utils.Adapter {
 			vaccinationData = this.refreshVaccinationData();	// load all vaccination data
 			await loadAll();		// Global Worldwide statistics
 			await loadCountries(); 	// Detailed Worldwide statistics by country
+
 			if (this.config.getGermanyFederalStates || !allGermanyFederalStatesLoaded) {
+				await this.extendObjectAsync(`Germany.Bundesland`, {
+					type: 'channel',
+					common: {
+						name: 'Bundesland',
+					},
+					native: {},
+				});
 				await germanyBundesland(); // Detailed Federal state statistics for germany
+			} else {
+				await this.localDeleteState(`Germany.Bundesland`);
 			}
 
-			// Get data for cities and counties of Germany, ensur tables always have values to load
+			// Get data for cities and counties of Germany, ensure tables always have values to load
 			if (this.config.getGermanyCities || this.config.getGermanyCounties || !allGermanyCitiesLoaded || !allGermanyCountiesLoaded) {
 				await germanyCounties(); // Detailed city state statistics for germany
+			}
+
+			// Delete potential unused data for germany
+			if (!this.config.getGermanyCities){
+				await this.localDeleteState(`Germany.Stadt`);
+			}
+
+			if (!this.config.getGermanyCounties){
+				await this.localDeleteState(`Germany.Kreis`);
 			}
 
 			// Always terminate at the end
@@ -746,7 +817,7 @@ class Covid19 extends utils.Adapter {
 			if (this.config.deleteUnused === true) {
 				const obj = await this.getObjectAsync(state);
 				if (obj) {
-					await this.delObjectAsync(state);
+					await this.delObjectAsync(state, {recursive:true});
 				}
 			}
 		} catch (error) {
