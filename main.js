@@ -119,8 +119,9 @@ class Covid19 extends utils.Adapter {
 							this.log.debug(`api name: ${dataset.country}, converted name: ${rawCountry}, dp name: ${country}, continent: ${continent}`);
 
 							try {
-								await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(isoCountry.code.iso3));
-
+								if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
+									await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(isoCountry.code.iso3));
+								}
 							} catch (e) {
 								this.log.debug(`Cannot get vaccination data for ${country} from our world in data ${e}`);
 							}
