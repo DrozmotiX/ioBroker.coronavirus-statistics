@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.0-2",
+        "version": "0.8.0-3",
         "news": {
+            "0.8.0-3": {
+                "en": "Folder structure optimized with devices and channels\nCode improvement to handle state deletion more efficient\nBugfix : Do not create vaccination states if country is not selected\nEnsure (country) folder including all states is removed if country not selected",
+                "de": "Ordnerstruktur optimiert mit Geräten und Kanälen\nCodeverbesserung, um das Löschen des Status effizienter zu handhaben\nBugfix : Impfstatus nicht erstellen, wenn Land nicht ausgewählt ist\nStellen Sie sicher, dass der Ordner (Land) einschließlich aller Bundesstaaten entfernt wird, wenn kein Land ausgewählt ist",
+                "ru": "Структура папок оптимизирована для устройств и каналов\nУлучшение кода для более эффективной обработки удаления состояния\nИсправление: не создавать состояния вакцинации, если страна не выбрана.\nУбедитесь, что папка (страна), включающая все штаты, удалена, если страна не выбрана",
+                "pt": "Estrutura de pasta otimizada com dispositivos e canais\nMelhoria de código para lidar com a exclusão de estado de forma mais eficiente\nCorreção: não crie estados de vacinação se o país não for selecionado\nCertifique-se de que a pasta (país) incluindo todos os estados seja removida se o país não for selecionado",
+                "nl": "Mapstructuur geoptimaliseerd met apparaten en kanalen\nCodeverbetering om het verwijderen van de status efficiënter te verwerken\nBugfix: maak geen vaccinatiestaten aan als het land niet is geselecteerd\nZorg ervoor dat de (land)map inclusief alle staten is verwijderd als het land niet is geselecteerd",
+                "fr": "Structure de dossier optimisée avec les appareils et les canaux\nAmélioration du code pour gérer la suppression d'état plus efficacement\nCorrectif : Ne pas créer d'états de vaccination si le pays n'est pas sélectionné\nAssurez-vous que le dossier (pays) comprenant tous les états est supprimé si le pays n'est pas sélectionné",
+                "it": "Struttura delle cartelle ottimizzata con dispositivi e canali\nMiglioramento del codice per gestire in modo più efficiente l'eliminazione dello stato\nBugfix: non creare stati di vaccinazione se il paese non è selezionato\nAssicurati che la cartella (paese) che includa tutti gli stati sia rimossa se il paese non è selezionato",
+                "es": "Estructura de carpetas optimizada con dispositivos y canales.\nMejora del código para manejar la eliminación de estados de manera más eficiente\nCorrección de error: no cree estados de vacunación si el país no está seleccionado\nAsegúrese de que se elimine la carpeta (país) que incluye todos los estados si no se selecciona el país",
+                "pl": "Struktura folderów zoptymalizowana pod kątem urządzeń i kanałów\nUlepszenie kodu w celu wydajniejszej obsługi usuwania stanu\nBugfix: Nie twórz stanów szczepień, jeśli kraj nie jest wybrany\nUpewnij się, że folder (kraj) zawierający wszystkie stany został usunięty, jeśli kraj nie został wybrany",
+                "zh-cn": "使用设备和频道优化的文件夹结构\n代码改进以更有效地处理状态删除\n错误修正：如果未选择国家，则不创建疫苗接种状态\n如果未选择国家/地区，请确保删除包含所有国家/地区的（国家/地区）文件夹"
+            },
             "0.8.0-2": {
                 "en": "Added vaccination data for all countries\nadded definitions for vaccination states\nChangeover to validated API for German vaccination data of Bundesländer\nAdded vaccination data for all countries",
                 "de": "Impfdaten für alle Länder hinzugefügt\nDefinitionen für Impfstaaten hinzugefügt\nUmstellung auf validierte API für deutsche Impfdaten der Bundesländer\nImpfdaten für alle Länder hinzugefügt",
@@ -230,18 +242,6 @@
                 "es": "* (DutchmanNL) Solicitud de módulo reemplazado por axios\n* (DutchmanNL) Corrección de errores: manejo adecuado de errores de llamadas API fallidas (si la API no es accesible)",
                 "pl": "* (DutchmanNL) Zamieniono żądanie modułu na axios\n* Poprawka (DutchmanNL): Prawidłowa obsługa błędów nieudanych wywołań API (jeśli nie można osiągnąć interfejsu API)",
                 "zh-cn": "*（DutchmanNL）用axios替换了模块请求\n*（DutchmanNL）错误修正：正确处理失败的API调用（如果无法访问api）"
-            },
-            "0.5.7": {
-                "en": "Continent state attribute information added and warn messages reduced",
-                "de": "Kontinentstatusattributinformationen hinzugefügt und Warnmeldungen reduziert",
-                "ru": "Добавлена ​​информация об атрибутах состояния континента и уменьшено количество предупреждений",
-                "pt": "Informações sobre atributos do estado do continente adicionadas e mensagens de aviso reduzidas",
-                "nl": "Attribuutinformatie over continentstatus toegevoegd en waarschuwingsberichten verminderd",
-                "fr": "Ajout d'informations sur l'attribut d'état du continent et réduction des messages d'avertissement",
-                "it": "Aggiunte informazioni sugli attributi dello stato del continente e messaggi di avviso ridotti",
-                "es": "Se agregó información de atributo de estado continente y se redujeron los mensajes de advertencia",
-                "pl": "Dodano informacje o atrybutach stanu kontynentu i zredukowano komunikaty ostrzegawcze",
-                "zh-cn": "添加了大陆状态属性信息并减少了警告消息"
             }
         },
         "title": "COVID-19 live information",
