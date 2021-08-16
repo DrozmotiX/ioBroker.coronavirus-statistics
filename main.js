@@ -791,12 +791,13 @@ class Covid19 extends utils.Adapter {
 				native: {},
 			});
 
-			// Ensure name changes are propagated
+			// Ensure attribute changes are propagated
 			await this.extendObjectAsync(state, {
 				type: 'state',
 				common: {
 					name: state_name,
-					type: type, // Also update types t solve log error's and  attribute changes
+					type: type,
+					unit: unit,
 				},
 			});
 

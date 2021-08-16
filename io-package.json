@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.0",
+        "version": "0.8.1",
         "news": {
+            "0.8.1": {
+                "en": "added definitions for total_boosters",
+                "de": "Definitionen für total_boosters hinzugefügt",
+                "ru": "добавлены определения для total_boosters",
+                "pt": "adicionadas definições para total_boosters",
+                "nl": "toegevoegde definities voor total_boosters",
+                "fr": "définitions ajoutées pour total_boosters",
+                "it": "Aggiunte definizioni per total_boosters",
+                "es": "definiciones agregadas para total_boosters",
+                "pl": "dodano definicje dla total_boosters",
+                "zh-cn": "为 total_boosters 添加了定义"
+            },
             "0.8.0": {
                 "en": "Added vaccination data for all countries\nadded definitions for vaccination states\nFolder structure optimized with devices and channels\nCode improvement to handle state deletion more efficient\nChangeover to validated API for German vaccination data of Bundesländer\nEnsure (country) folder(s) including all states are removed if not selected",
                 "de": "Impfdaten für alle Länder hinzugefügt\nDefinitionen für Impfstaaten hinzugefügt\nOrdnerstruktur optimiert mit Geräten und Kanälen\nCodeverbesserung, um das Löschen des Status effizienter zu handhaben\nUmstellung auf validierte API für deutsche Impfdaten der Bundesländer\nStellen Sie sicher, dass (Land-)Ordner einschließlich aller Bundesstaaten entfernt werden, wenn sie nicht ausgewählt sind",
@@ -14,54 +26,6 @@
                 "es": "Se agregaron datos de vacunación para todos los países.\ndefiniciones añadidas para los estados de vacunación\nEstructura de carpetas optimizada con dispositivos y canales.\nMejora del código para manejar la eliminación de estados de manera más eficiente\nCambio a API validada para los datos de vacunación alemanes de los Bundesländer\nAsegúrese de que la (s) carpeta (s) de (país), incluidos todos los estados, se eliminen si no se seleccionan",
                 "pl": "Dodano dane dotyczące szczepień dla wszystkich krajów\ndodano definicje stanów szczepień\nStruktura folderów zoptymalizowana pod kątem urządzeń i kanałów\nUlepszenie kodu w celu wydajniejszej obsługi usuwania stanu\nPrzejście na zwalidowane API dla niemieckich danych szczepień Bundesländer\nUpewnij się, że foldery (kraje) zawierające wszystkie stany zostały usunięte, jeśli nie zostały wybrane",
                 "zh-cn": "添加了所有国家的疫苗接种数据\n添加了疫苗接种状态的定义\n使用设备和频道优化的文件夹结构\n代码改进以更有效地处理状态删除\n转换为经验证的联邦德国疫苗接种数据 API\n如果未选择，确保（国家）文件夹（包括所有州）被删除"
-            },
-            "0.8.0-3": {
-                "en": "Folder structure optimized with devices and channels\nCode improvement to handle state deletion more efficient\nBugfix : Do not create vaccination states if country is not selected\nEnsure (country) folder including all states is removed if country not selected",
-                "de": "Ordnerstruktur optimiert mit Geräten und Kanälen\nCodeverbesserung, um das Löschen des Status effizienter zu handhaben\nBugfix : Impfstatus nicht erstellen, wenn Land nicht ausgewählt ist\nStellen Sie sicher, dass der Ordner (Land) einschließlich aller Bundesstaaten entfernt wird, wenn kein Land ausgewählt ist",
-                "ru": "Структура папок оптимизирована для устройств и каналов\nУлучшение кода для более эффективной обработки удаления состояния\nИсправление: не создавать состояния вакцинации, если страна не выбрана.\nУбедитесь, что папка (страна), включающая все штаты, удалена, если страна не выбрана",
-                "pt": "Estrutura de pasta otimizada com dispositivos e canais\nMelhoria de código para lidar com a exclusão de estado de forma mais eficiente\nCorreção: não crie estados de vacinação se o país não for selecionado\nCertifique-se de que a pasta (país) incluindo todos os estados seja removida se o país não for selecionado",
-                "nl": "Mapstructuur geoptimaliseerd met apparaten en kanalen\nCodeverbetering om het verwijderen van de status efficiënter te verwerken\nBugfix: maak geen vaccinatiestaten aan als het land niet is geselecteerd\nZorg ervoor dat de (land)map inclusief alle staten is verwijderd als het land niet is geselecteerd",
-                "fr": "Structure de dossier optimisée avec les appareils et les canaux\nAmélioration du code pour gérer la suppression d'état plus efficacement\nCorrectif : Ne pas créer d'états de vaccination si le pays n'est pas sélectionné\nAssurez-vous que le dossier (pays) comprenant tous les états est supprimé si le pays n'est pas sélectionné",
-                "it": "Struttura delle cartelle ottimizzata con dispositivi e canali\nMiglioramento del codice per gestire in modo più efficiente l'eliminazione dello stato\nBugfix: non creare stati di vaccinazione se il paese non è selezionato\nAssicurati che la cartella (paese) che includa tutti gli stati sia rimossa se il paese non è selezionato",
-                "es": "Estructura de carpetas optimizada con dispositivos y canales.\nMejora del código para manejar la eliminación de estados de manera más eficiente\nCorrección de error: no cree estados de vacunación si el país no está seleccionado\nAsegúrese de que se elimine la carpeta (país) que incluye todos los estados si no se selecciona el país",
-                "pl": "Struktura folderów zoptymalizowana pod kątem urządzeń i kanałów\nUlepszenie kodu w celu wydajniejszej obsługi usuwania stanu\nBugfix: Nie twórz stanów szczepień, jeśli kraj nie jest wybrany\nUpewnij się, że folder (kraj) zawierający wszystkie stany został usunięty, jeśli kraj nie został wybrany",
-                "zh-cn": "使用设备和频道优化的文件夹结构\n代码改进以更有效地处理状态删除\n错误修正：如果未选择国家，则不创建疫苗接种状态\n如果未选择国家/地区，请确保删除包含所有国家/地区的（国家/地区）文件夹"
-            },
-            "0.8.0-2": {
-                "en": "Added vaccination data for all countries\nadded definitions for vaccination states\nChangeover to validated API for German vaccination data of Bundesländer\nAdded vaccination data for all countries",
-                "de": "Impfdaten für alle Länder hinzugefügt\nDefinitionen für Impfstaaten hinzugefügt\nUmstellung auf validierte API für deutsche Impfdaten der Bundesländer\nImpfdaten für alle Länder hinzugefügt",
-                "ru": "Добавлены данные о вакцинации для всех стран.\nдобавлены определения состояний вакцинации\nПереход на проверенный API для данных о вакцинации в Германии в Bundesländer\nДобавлены данные о вакцинации для всех стран.",
-                "pt": "Adicionados dados de vacinação para todos os países\nadicionadas definições para os estados de vacinação\nMudança para API validada para dados de vacinação alemães de Bundesländer\nAdicionados dados de vacinação para todos os países",
-                "nl": "Vaccinatiegegevens toegevoegd voor alle landen\ntoegevoegde definities voor vaccinatiestaten\nOvergang naar gevalideerde API voor Duitse vaccinatiegegevens van Bundesländer\nVaccinatiegegevens toegevoegd voor alle landen",
-                "fr": "Ajout de données de vaccination pour tous les pays\najout de définitions pour les états de vaccination\nPassage à l'API validée pour les données de vaccination allemandes des Bundesländer\nAjout de données de vaccination pour tous les pays",
-                "it": "Aggiunti dati sulla vaccinazione per tutti i paesi\nAggiunte definizioni per gli stati di vaccinazione\nPassaggio all'API convalidata per i dati di vaccinazione tedeschi dei Bundesländer\nAggiunti dati sulla vaccinazione per tutti i paesi",
-                "es": "Se agregaron datos de vacunación para todos los países.\ndefiniciones añadidas para los estados de vacunación\nCambio a API validada para los datos de vacunación alemanes de los Bundesländer\nSe agregaron datos de vacunación para todos los países.",
-                "pl": "Dodano dane dotyczące szczepień dla wszystkich krajów\ndodano definicje stanów szczepień\nPrzejście na zwalidowane API dla niemieckich danych szczepień Bundesländer\nDodano dane dotyczące szczepień dla wszystkich krajów",
-                "zh-cn": "添加了所有国家的疫苗接种数据\n添加了疫苗接种状态的定义\n转换为经验证的联邦德国疫苗接种数据 API\n添加了所有国家的疫苗接种数据"
-            },
-            "0.8.0-1": {
-                "en": "Changeover to validated API for German vaccination data of Bundesländer",
-                "de": "Umstellung auf validierte API für deutsche Impfdaten der Bundesländer",
-                "ru": "Переход на проверенный API для данных о вакцинации в Германии в Bundesländer",
-                "pt": "Mudança para API validada para dados de vacinação alemães de Bundesländer",
-                "nl": "Overgang naar gevalideerde API voor Duitse vaccinatiegegevens van Bundesländer",
-                "fr": "Passage à l'API validée pour les données de vaccination allemandes des Bundesländer",
-                "it": "Passaggio all'API convalidata per i dati di vaccinazione tedeschi dei Bundesländer",
-                "es": "Cambio a API validada para los datos de vacunación alemanes de los Bundesländer",
-                "pl": "Przejście na zwalidowane API dla niemieckich danych szczepień Bundesländer",
-                "zh-cn": "转换为经验证的联邦德国疫苗接种数据 API"
-            },
-            "0.8.0-0": {
-                "en": "new german vaccination source",
-                "de": "Neue Quelle für deutsche Impfdaten",
-                "ru": "новый немецкий источник вакцинации",
-                "pt": "nova fonte de vacinação alemã",
-                "nl": "nieuwe Duitse vaccinatiebron",
-                "fr": "nouvelle source de vaccination allemande",
-                "it": "nuova fonte di vaccinazione tedesca",
-                "es": "nueva fuente de vacunación alemana",
-                "pl": "nowe niemieckie źródło szczepień",
-                "zh-cn": "新的德國疫苗來源"
             },
             "0.7.1": {
                 "en": "Bugfix: Vaccination data for Germany",
@@ -86,42 +50,6 @@
                 "es": "redondear Impfquote a 2 dígitos\nCorrección de error: last_update resuelto es un mensaje de advertencia no válido\nCorrección de error: falta la definición de atributo de estado para + indefinido\nCorrección de error: resuelto no se puede leer la propiedad 'Erstimpfung' de undefined\nCorrección de error: el valor de estado para establecer para \"xxx.BL\" debe ser el tipo \"número\" pero se recibió el tipo \"cadena\", resuelve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorrección de error: el valor de estado para establecer para \"xxx.Tests *\" tiene que ser de tipo \"cadena\" pero se recibió el tipo \"número\", resuelve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)\n(DutchmanNL / jlssmt) Corrección de error: datos de vacunación para Alemania, faltan varios estados en la nueva API y ya no se actualizarán.",
                 "pl": "okrągły Impfquote do 2 cyfr\nBugfix: Rozwiązany last_update jest nieprawidłowy komunikat ostrzegawczy\nBugfix: Brak definicji atrybutu stanu dla + undefined\nBugfix: Rozwiązany nie można odczytać właściwości „Erstimpfung” undefined\nBugfix: Wartość stanu do ustawienia dla \"xxx.BL\" musi być typu \"number\", ale otrzymany typ \"string\", rozwiązuje [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: Wartość stanu do ustawienia dla \"xxx.Tests*\" musi być typu \"string\", ale otrzymany typ \"number\", rozwiązuje [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) Bugfix: Dane dotyczące szczepień dla Niemiec, kilka stanów brakuje w nowym API i nie będą już aktualizowane!",
                 "zh-cn": "将 Impfquote 舍入为 2 位数\n修正：解决 last_update 无效警告信息\n错误修正：+ undefined 缺少状态属性定义\n修正：解决了无法读取未定义的属性 'Erstimpfung'\n修正：为“xxx.BL”设置的状态值必须是“数字”类型但接收类型是“字符串”，解决了[#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\n修正：为“xxx.Tests*”设置的状态值必须是“字符串”类型，但接收类型是“数字”，解决了[#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) 修正：德国的疫苗接种数据，新 API 中缺少几个州，将不再更新！"
-            },
-            "0.7.0-6": {
-                "en": "Adapter issues with vaccination data from Germany solved",
-                "de": "Adapterprobleme mit Impfdaten aus Deutschland gelöst",
-                "ru": "Решены проблемы адаптера с данными о вакцинации из Германии",
-                "pt": "Problemas de adaptador com dados de vacinação da Alemanha resolvidos",
-                "nl": "Adapterproblemen met vaccinatiegegevens uit Duitsland opgelost",
-                "fr": "Problèmes d'adaptateur avec les données de vaccination d'Allemagne résolus",
-                "it": "Risolti i problemi dell'adattatore con i dati sulle vaccinazioni dalla Germania",
-                "es": "Problemas del adaptador con los datos de vacunación de Alemania resueltos",
-                "pl": "Rozwiązano problemy z adapterem z danymi szczepień z Niemiec",
-                "zh-cn": "来自德国的疫苗接种数据出现适配器问题"
-            },
-            "0.7.0-5": {
-                "en": "Bugfix: State attribute definition missing for + undefined\nBugfix: Vaccination data for Germany, several states missing in new API and will not be updated anymore !\nBugfix: State value to set for \"xxx.BL\" has to be type \"number\" but received type \"string\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)\nBugfix: State value to set for \"xxx.Tests*\" has to be type \"string\" but received type \"number\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)",
-                "de": "Bugfix: Statusattributdefinition fehlt für + undefined\nBugfix: Impfdaten für Deutschland, mehrere Bundesländer fehlen in neuer API und werden nicht mehr aktualisiert !\nBugfix: Statuswert für \"xxx.BL\" muss vom Typ \"Nummer\" sein, aber vom Typ \"String\" empfangen, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: Statuswert für \"xxx.Tests*\" muss vom Typ \"string\" sein, aber vom Typ \"number\" erhalten, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)",
-                "ru": "Исправление: определение атрибута состояния отсутствует для + undefined\nИсправление: данные о вакцинации для Германии, несколько штатов отсутствуют в новом API и больше не будут обновляться!\nИсправление: значение состояния, устанавливаемое для «xxx.BL», должно быть типа «число», но полученный тип «строка» решает [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nИсправление: значение состояния, устанавливаемое для «xxx.Tests *», должно иметь тип «строка», но полученный тип «число» решает [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)",
-                "pt": "Correção: definição de atributo de estado ausente para + indefinido\nCorreção de bug: Dados de vacinação para a Alemanha, vários estados ausentes na nova API e não serão mais atualizados!\nCorreção de bug: o valor do estado a ser definido para \"xxx.BL\" deve ser do tipo \"número\", mas recebido do tipo \"string\", resolve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorreção de bug: o valor do estado definido para \"xxx.Tests *\" deve ser do tipo \"string\", mas recebido do tipo \"número\", resolve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)",
-                "nl": "Bugfix: Status attribuutdefinitie ontbreekt voor + undefined\nBugfix: Vaccinatiegegevens voor Duitsland, verschillende staten ontbreken in nieuwe API en worden niet meer bijgewerkt!\nBugfix: Statuswaarde die moet worden ingesteld voor \"xxx.BL\" moet van het type \"nummer\" zijn, maar het type \"string\" ontvangen, lost [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ op) 237)\nBugfix: Statuswaarde die moet worden ingesteld voor \"xxx.Tests*\" moet van het type \"string\" zijn, maar het type \"nummer\" ontvangen, lost [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues op) /237)",
-                "fr": "Correction de bug : définition d'attribut d'état manquante pour + non défini\nCorrection de bug : Données de vaccination pour l'Allemagne, plusieurs états manquants dans la nouvelle API et ne seront plus mis à jour !\nCorrectif : La valeur d'état à définir pour \"xxx.BL\" doit être de type \"numéro\" mais le type reçu \"chaîne\", résout [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorrection de bug : la valeur d'état à définir pour \"xxx.Tests*\" doit être de type \"string\" mais reçu le type \"number\", résout [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)",
-                "it": "Bugfix: definizione dell'attributo di stato mancante per + non definito\nBugfix: dati di vaccinazione per la Germania, diversi stati mancanti nella nuova API e non verranno più aggiornati!\nBugfix: il valore di stato da impostare per \"xxx.BL\" deve essere di tipo \"number\" ma ricevuto di tipo \"string\", risolve [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: il valore di stato da impostare per \"xxx.Tests*\" deve essere di tipo \"string\" ma ricevuto di tipo \"number\", risolve [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)",
-                "es": "Corrección de error: falta la definición de atributo de estado para + indefinido\nCorrección de error: datos de vacunación para Alemania, faltan varios estados en la nueva API y ya no se actualizarán.\nCorrección de error: el valor de estado para establecer para \"xxx.BL\" debe ser el tipo \"número\" pero se recibió el tipo \"cadena\", resuelve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorrección de error: el valor de estado para establecer para \"xxx.Tests *\" debe ser de tipo \"cadena\" pero se recibió el tipo \"número\", resuelve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)",
-                "pl": "Bugfix: Brak definicji atrybutu stanu dla + undefined\nBugfix: Dane o szczepieniach dla Niemiec, kilka stanów brakuje w nowym API i nie będą już aktualizowane!\nBugfix: Wartość stanu do ustawienia dla \"xxx.BL\" musi być typu \"number\", ale otrzymany typ \"string\", rozwiązuje [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: Wartość stanu do ustawienia dla \"xxx.Tests*\" musi być typu \"string\", ale otrzymany typ \"number\", rozwiązuje [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)",
-                "zh-cn": "错误修正：+ undefined 缺少状态属性定义\n错误修正：德国的疫苗接种数据，新 API 中缺少几个州，将不再更新！\n修正：为“xxx.BL”设置的状态值必须是“数字”类型但接收类型是“字符串”，解决了[#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\n修正：为“xxx.Tests*”设置的状态值必须是“字符串”类型，但接收类型是“数字”，解决[#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)"
-            },
-            "0.7.0-4": {
-                "en": "round Impfquote to 2 digits\nVaccination data for AstraZeneca Germany added\nBugfix : Solve last_update is invalid warn message\nBugfix : Solve cannot read property 'Erstimpfung' of undefined",
-                "de": "runden Impfquote auf 2 Ziffern\nImpfdaten für AstraZeneca Deutschland hinzugefügt\nBugfix: Löse last_update ist eine ungültige Warnmeldung\nBugfix: Solve kann die Eigenschaft 'Erstimpfung' von undefined nicht lesen",
-                "ru": "округлить Impfquote до 2 цифр\nДобавлены данные о вакцинации AstraZeneca Germany.\nИсправление: Решить last_update - недопустимое предупреждающее сообщение\nИсправление: Solve не может прочитать свойство Erstimpfung неопределенного значения.",
-                "pt": "arredondar Impfquote para 2 dígitos\nDados de vacinação para AstraZeneca Germany adicionados\nCorreção de bug: Resolver last_update é mensagem de aviso inválida\nCorreção de bug: Solve não pode ler a propriedade 'Erstimpfung' de indefinido",
-                "nl": "rond Impfquote af op 2 cijfers\nVaccinatiegegevens voor AstraZeneca Duitsland toegevoegd\nBugfix: Los last_update op is ongeldig waarschuwingsbericht\nBugfix: Solve kan eigenschap 'Erstimpfung' van ongedefinieerd niet lezen",
-                "fr": "arrondir Impfquote à 2 chiffres\nAjout des données de vaccination pour AstraZeneca Allemagne\nCorrectif: la résolution de la dernière mise à jour est un message d'avertissement non valide\nCorrectif: la résolution ne peut pas lire la propriété 'Erstimpfung' de undefined",
-                "it": "virgolette intorno a 2 cifre\nAggiunti i dati sulla vaccinazione per AstraZeneca Germania\nBugfix: Risolvi last_update non è un messaggio di avviso non valido\nBugfix: Solve non può leggere la proprietà 'Erstimpfung' di undefined",
-                "es": "redondear Impfquote a 2 dígitos\nSe agregaron datos de vacunación para AstraZeneca Alemania\nCorrección de error: Resolver last_update es un mensaje de advertencia no válido\nCorrección de error: Solve no puede leer la propiedad 'Erstimpfung' de undefined",
-                "pl": "zaokrąglić Impfquote do 2 cyfr\nDodano dane szczepień dla AstraZeneca Germany\nPoprawka: Rozwiązanie last_update jest nieprawidłowym komunikatem ostrzegawczym\nPoprawka: Solve nie może odczytać właściwości „Erstimpfung” o wartości undefined",
-                "zh-cn": "将Impfquote舍入为2位数\n添加了阿斯利康德国的疫苗接种数据\n错误修正：解决了last_update是无效的警告消息\n错误修正：解决无法读取未定义的属性“ Erstimpfung”"
             },
             "0.6.9": {
                 "en": "Adapter issues with vaccination data from Germany solved",
