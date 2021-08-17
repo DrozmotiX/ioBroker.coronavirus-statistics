@@ -95,6 +95,9 @@ As first value, the name from the warning message must be taken from the log. Th
 	* (DutchmanNL) 
 -->
 
+### 0.8.2 (2021-08-17)
+* (DutchmanNL & jlssmt) Small code improvements to prepare stable release 
+
 ### 0.8.1 (2021-08-16)
 * (DutchmanNL) added definitions for total_boosters
 

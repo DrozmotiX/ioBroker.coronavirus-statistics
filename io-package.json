@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.1",
+        "version": "0.8.2",
         "news": {
+            "0.8.2": {
+                "en": "Small code improvements to prepare stable release",
+                "de": "Kleine Codeverbesserungen zur Vorbereitung einer stabilen Version",
+                "ru": "Небольшие улучшения кода для подготовки стабильного выпуска",
+                "pt": "Pequenas melhorias no código para preparar uma versão estável",
+                "nl": "Kleine codeverbeteringen om een stabiele release voor te bereiden",
+                "fr": "Petites améliorations du code pour préparer une version stable",
+                "it": "Piccoli miglioramenti al codice per preparare il rilascio stabile",
+                "es": "Pequeñas mejoras de código para preparar una versión estable",
+                "pl": "Małe ulepszenia kodu w celu przygotowania stabilnego wydania",
+                "zh-cn": "小代码改进以准备稳定版本"
+            },
             "0.8.1": {
                 "en": "added definitions for total_boosters",
                 "de": "Definitionen für total_boosters hinzugefügt",
