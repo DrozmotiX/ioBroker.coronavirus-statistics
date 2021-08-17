@@ -26,7 +26,7 @@ class Covid19 extends utils.Adapter {
 		// @ts-ignore
 		super({
 			...options,
-			name: adapterName,
+			name: adapterName || 'coronavirus-statistics',
 		});
 		this.on('ready', this.onReady.bind(this));
 	}
@@ -193,8 +193,7 @@ class Covid19 extends utils.Adapter {
 								}
 
 								if (continent) {
-									if (property !== 'countryInfo'
-									) {
+									if (property !== 'countryInfo') {
 										continentsStats[continent] = continentsStats[continent] || {};
 										continentsStats[continent][property] = continentsStats[continent][property] || 0;
 
@@ -206,7 +205,11 @@ class Covid19 extends utils.Adapter {
 											continentsStats['World_Sum'][property] = 0;
 										}
 
-										if (property !== 'updated') {
+										if (property === 'continent') {
+											continentsStats[continent][property] = dataset[property];
+										}
+
+										if (property !== 'updated' && property !== 'continent') {
 											continentsStats[continent][property] = continentsStats[continent][property] + dataset[property];
 											continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] + dataset[property];
 										} else {
