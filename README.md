@@ -8,9 +8,9 @@
 ![Number of Installations (stable)](http://iobroker.live/badges/coronavirus-statistics-stable.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/DrozmotiX/ioBroker.coronavirus-statistics/badge.svg)](https://snyk.io/test/github/DrozmotiX/ioBroker.coronavirus-statistics)
 
-[![NPM](https://nodei.co/npm/iobroker.coronavirus-statistics.png?downloads=true)](https://nodei.co/npm/ioBroker.coronavirus-statistics/)
+[![NPM](https://nodei.co/npm/iobroker.coronavirus-statistics.png?downloads=true)](https://nodei.co/npm/iobroker.coronavirus-statistics/)
 
-![Test and Release](https://github.com/c/ioBroker.coronavirus-statistics/workflows/Test%20and%20Release/badge.svg)
+![Test and Release](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/workflows/Test%20and%20Release/badge.svg)
 [![Dependency Status](https://img.shields.io/david/DrozmotiX/ioBroker.coronavirus-statistics.svg)](https://david-dm.org/DrozmotiX/ioBroker.coronavirus-statistics)
 ## Coronavirus Live Statistics adapter for ioBroker
 
