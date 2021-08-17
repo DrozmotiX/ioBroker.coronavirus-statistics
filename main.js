@@ -17,7 +17,7 @@ let vaccinationData;
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
-const { allSpaces, allPointAndCommas, modifyFloatRegex} = require('./lib/regex');
+const {allSpaces, allPointAndCommas, modifyFloatRegex} = require('./lib/regex');
 
 class Covid19 extends utils.Adapter {
 	/**
@@ -343,17 +343,17 @@ class Covid19 extends utils.Adapter {
 					// Try to call API and get germanyBundesland
 					let apiResult = null;
 					try {
-						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
-						this.log.debug(`Data from RKI Corona Bundesländer API received : ${apiResult.data}`);
+						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json')
+							.then(response => response.data);
+						this.log.debug(`Data from RKI Corona Bundesländer API received : ${JSON.stringify(apiResult)}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
 						this.log.warn(`[germanyBundersland] Unable to contact Corona Bundesländer API : ${error}`);
 						return;
 					}
 
-					const values = apiResult.data;
 					// Cancel operation in case wrong information is received
-					if (typeof values !== 'object') {
+					if (typeof apiResult !== 'object') {
 						this.log.warn(`Incorrect data received from API Corona Bundesländer, values not updated`);
 						return;
 					}
@@ -385,7 +385,7 @@ class Covid19 extends utils.Adapter {
 						}
 					}
 
-					for (const feature of values.features) {
+					for (const feature of apiResult.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
 						const federalStateName = feature.attributes.LAN_ew_GEN;
 						const channelName = `Germany.Bundesland.${federalStateName}`;
