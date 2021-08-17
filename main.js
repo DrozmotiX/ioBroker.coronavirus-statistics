@@ -17,6 +17,7 @@ let vaccinationData;
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
+const {allSpaces, allPointAndCommas, modifyFloatRegex} = require('./lib/regex');
 
 class Covid19 extends utils.Adapter {
 	/**
@@ -87,26 +88,22 @@ class Covid19 extends utils.Adapter {
 
 					// Try to call API and get country information
 					try {
-						apiResult = await axios.get('https://corona.lmao.ninja/v3/covid-19/countries?sort=cases');
-						this.log.debug(`Data from COVID-19 API received : ${apiResult.data}`);
+						apiResult = await axios.get('https://corona.lmao.ninja/v3/covid-19/countries?sort=cases')
+							.then(response => response.data);
+						this.log.debug(`Data from COVID-19 API received : ${JSON.stringify(apiResult)}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
 						this.log.warn(`[loadCountries] Unable to contact COVID-19 API : ${error}`);
 						return;
 					}
 
-					const values = apiResult.data;
-
-					// add user defined country translation to countryTranslator
-					await this.addUserCountriesTranslator();
-
 					// Write all country states depending on filter
-					for (const dataset of values) {
-						if (dataset.country) {
-							let rawCountry = dataset.country;
+					for (const countryData of apiResult) {
+						if (countryData.country) {
+							let rawCountry = countryData.country;
 							let continent = undefined;
 
-							const isoCountry = await this.getIsoCountry(dataset.country, dataset['countryInfo']);
+							const isoCountry = await this.getIsoCountry(countryData.country, countryData['countryInfo']);
 
 							if (isoCountry) {
 								if (isoCountry.name) {
@@ -116,40 +113,18 @@ class Covid19 extends utils.Adapter {
 
 								if (isoCountry.continent) {
 									// Continent übergeben
-									continent = isoCountry.continent.replace(/\s/g, '_');
+									continent = this.characterReplace(isoCountry.continent);
 								}
 							}
 
 							allCountrys.push(rawCountry);
-							const country = rawCountry.replace(/\s/g, '_').replace(/\./g, '').replace(',', '');
+							const country = this.characterReplace(rawCountry);
 
-							this.log.debug(`api name: ${dataset.country}, converted name: ${rawCountry}, dp name: ${country}, continent: ${continent}`);
-
-							const createFolderStructure = async () => {
-
-								// Create country folder
-								await this.extendObjectAsync(country, {
-									type: 'device',
-									common: {
-										name: country
-									},
-									native: {},
-								});
-
-								// Create Vaccination Channel
-								await this.extendObjectAsync(`${country}.Vaccination`, {
-									type: 'channel',
-									common: {
-										name: 'Vaccination Data',
-									},
-									native: {},
-								});
-
-							};
+							this.log.debug(`api name: ${countryData.country}, converted name: ${rawCountry}, dp name: ${country}, continent: ${continent}`);
 
 							// Only write values if country is selected
 							if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
-								await createFolderStructure();
+								await this.createFolderStructure(country);
 								try {
 
 									this.log.debug(`Writing vaccination data for new ${country}`);
@@ -160,12 +135,12 @@ class Covid19 extends utils.Adapter {
 								}
 
 							} else {
-							// Check if states for vaccination exist (cleanup buggy version), if yes create device structure
+								// Check if states for vaccination exist (cleanup buggy version), if yes create device structure
 								try {
 									if (this.config.deleteUnused === true) {
 										const obj = await this.getObjectAsync(`${country}.Vaccination.date`);
 										if (obj) {
-											await createFolderStructure();
+											await this.createFolderStructure(country);
 										}
 									}
 								} catch (error) {
@@ -176,7 +151,7 @@ class Covid19 extends utils.Adapter {
 							}
 
 							// Write states for all country's in API
-							for (const property of Object.keys(dataset)) {
+							for (const property of Object.keys(countryData)) {
 								// Don't create a state for the country
 								if (property === 'country') continue;
 								if (property === 'countryInfo') await this.localDeleteState(`${country}.${property}`);
@@ -184,10 +159,10 @@ class Covid19 extends utils.Adapter {
 
 									this.log.debug(`Country add routine : ${property} for : ${country}`);
 									if (property !== 'countryInfo') {
-										await this.localCreateState(`${country}.${property}`, property, dataset[property]);
+										await this.localCreateState(`${country}.${property}`, property, countryData[property]);
 									} else {
 										// Only take the flag from country info
-										await this.localCreateState(`${country}.flag`, 'flag', dataset[property].flag);
+										await this.localCreateState(`${country}.flag`, 'flag', countryData[property].flag);
 									}
 
 								}
@@ -206,28 +181,28 @@ class Covid19 extends utils.Adapter {
 										}
 
 										if (property === 'continent') {
-											continentsStats[continent][property] = dataset[property];
+											continentsStats[continent][property] = countryData[property];
 										}
 
 										if (property !== 'updated' && property !== 'continent') {
-											continentsStats[continent][property] = continentsStats[continent][property] + dataset[property];
-											continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] + dataset[property];
+											continentsStats[continent][property] = continentsStats[continent][property] + countryData[property];
+											continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] + countryData[property];
 										} else {
 											// Zeitstempel 'updated' aktualisieren -> neusten Wert der Länder nehmen
-											if (dataset[property] > continentsStats[continent][property]) {
-												continentsStats[continent][property] = dataset[property];
-												continentsStats['World_Sum'][property] = dataset[property];
+											if (countryData[property] > continentsStats[continent][property]) {
+												continentsStats[continent][property] = countryData[property];
+												continentsStats['World_Sum'][property] = countryData[property];
 											}
 										}
 
 
 										if (continent === 'North_America' || continent === 'South_America') {
 											if (property !== 'updated') {
-												continentsStats['America'][property] = continentsStats['America'][property] + dataset[property];
+												continentsStats['America'][property] = continentsStats['America'][property] + countryData[property];
 											} else {
 												// Zeitstempel 'updated' aktualisieren -> neusten Wert der Länder nehmen
-												if (dataset[property] > continentsStats['America'][property]) {
-													continentsStats['America'][property] = dataset[property];
+												if (countryData[property] > continentsStats['America'][property]) {
+													continentsStats['America'][property] = countryData[property];
 												}
 											}
 										}
@@ -248,13 +223,13 @@ class Covid19 extends utils.Adapter {
 
 										continentsStats[continent]['countries'].push(rawCountry);
 
-										continentsStats[continent]['inhabitants'] = continentsStats[continent]['inhabitants'] + (dataset['cases'] / dataset['casesPerOneMillion']);
-										continentsStats['World_Sum']['inhabitants'] = continentsStats['World_Sum']['inhabitants'] + (dataset['cases'] / dataset['casesPerOneMillion']);
+										continentsStats[continent]['inhabitants'] = continentsStats[continent]['inhabitants'] + (countryData['cases'] / countryData['casesPerOneMillion']);
+										continentsStats['World_Sum']['inhabitants'] = continentsStats['World_Sum']['inhabitants'] + (countryData['cases'] / countryData['casesPerOneMillion']);
 
 										if (continent === 'North_America' || continent === 'South_America') {
 											continentsStats['America']['countries'].push(rawCountry);
 
-											continentsStats['America']['inhabitants'] = continentsStats['America']['inhabitants'] + (dataset['cases'] / dataset['casesPerOneMillion']);
+											continentsStats['America']['inhabitants'] = continentsStats['America']['inhabitants'] + (countryData['cases'] / countryData['casesPerOneMillion']);
 										}
 									}
 								}
@@ -271,9 +246,9 @@ class Covid19 extends utils.Adapter {
 					});
 
 					// Write Top 5
-					this.log.debug(`Top 5 Countries : ${JSON.stringify(values.slice(0, 5))}`);
+					this.log.debug(`Top 5 Countries : ${JSON.stringify(apiResult.slice(0, 5))}`);
 					for (let position = 1; position <= 5; position++) {
-						const dataset = values[position - 1]; // start at 0
+						const dataset = apiResult[position - 1]; // start at 0
 						let country = dataset.country;
 
 						const channelName = `country_Top_5.${position}`;
@@ -286,8 +261,7 @@ class Covid19 extends utils.Adapter {
 							native: {},
 						});
 
-						country = country.replace(/\s/g, '_');
-						country = country.replace(/\./g, '');
+						country = this.characterReplace(country);
 						this.log.debug(`Country loop rank : ${position} ${JSON.stringify(country)}`);
 						for (const property of Object.keys(dataset)) {
 							if (property !== 'countryInfo') {
@@ -299,7 +273,7 @@ class Covid19 extends utils.Adapter {
 						}
 					}
 
-					if (this.config.getContinents){
+					if (this.config.getContinents) {
 						// Write continent information
 						await this.extendObjectAsync(`global_continents`, {
 							type: 'device',
@@ -312,34 +286,45 @@ class Covid19 extends utils.Adapter {
 						await this.localDeleteState('global_continents');
 					}
 
-					for (const c in continentsStats) {
-						this.log.debug(`${c}: ${JSON.stringify(continentsStats[c])}`);
+					for (const continentsStatsKey in continentsStats) {
+						this.log.debug(`${continentsStatsKey}: ${JSON.stringify(continentsStats[continentsStatsKey])}`);
 
-						for (const val in continentsStats[c]) {
-							if (val === 'countryInfo') await this.localDeleteState(`global_continents.${c}.${val}`);
-							if ((continentsStats[c].hasOwnProperty(val)
+						await this.setObjectNotExistsAsync(`global_continents.${continentsStatsKey}`, {
+							type: 'channel',
+							common: {
+								name: continentsStatsKey,
+							},
+							native: {},
+						});
+
+						for (const val in continentsStats[continentsStatsKey]) {
+							if (val === 'countryInfo') await this.localDeleteState(`global_continents.${continentsStatsKey}.${val}`);
+							if ((continentsStats[continentsStatsKey].hasOwnProperty(val)
 								&& val !== 'countryInfo'
 								&& val !== 'inhabitants'
 								&& this.config.getContinents === true)) {
 								if (val !== 'countries' && val !== 'casesPerOneMillion' && val !== 'deathsPerOneMillion') {
-									await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val]);
+									await this.localCreateState(`global_continents.${continentsStatsKey}.${val}`, val, continentsStats[continentsStatsKey][val]);
 								} else if (val === 'casesPerOneMillion') {
-									await this.localCreateState(`global_continents.${c}.${val}`, val, (continentsStats[c]['cases'] / continentsStats[c]['inhabitants']).toFixed(2));
+									await this.localCreateState(`global_continents.${continentsStatsKey}.${val}`, val, (continentsStats[continentsStatsKey]['cases'] / continentsStats[continentsStatsKey]['inhabitants']).toFixed(2));
 								} else if (val === 'deathsPerOneMillion') {
-									await this.localCreateState(`global_continents.${c}.${val}`, val, (continentsStats[c]['deaths'] / continentsStats[c]['inhabitants']).toFixed(2));
+									await this.localCreateState(`global_continents.${continentsStatsKey}.${val}`, val, (continentsStats[continentsStatsKey]['deaths'] / continentsStats[continentsStatsKey]['inhabitants']).toFixed(2));
 								} else {
-									await this.localCreateState(`global_continents.${c}.${val}`, val, continentsStats[c][val].join());
+									await this.localCreateState(`global_continents.${continentsStatsKey}.${val}`, val, continentsStats[continentsStatsKey][val].join());
 								}
-							} else if ((continentsStats[c].hasOwnProperty(val) && val !== 'countryInfo')
+							} else if ((continentsStats[continentsStatsKey].hasOwnProperty(val) && val !== 'countryInfo')
 								&& this.config.getContinents === false) {
-								await this.localDeleteState(`global_continents.${c}.${val}`);
+								await this.localDeleteState(`global_continents.${continentsStatsKey}.${val}`);
 							}
 						}
 					}
 
+					// add user defined country translation to countryTranslator
+					await this.addUserCountriesTranslator();
+
 					await this.extendObjectAsync('countryTranslator', {
 						native: {
-							allCountrys
+							allCountrys,
 						},
 					});
 
@@ -358,17 +343,17 @@ class Covid19 extends utils.Adapter {
 					// Try to call API and get germanyBundesland
 					let apiResult = null;
 					try {
-						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json');
-						this.log.debug(`Data from RKI Corona Bundesländer API received : ${apiResult.data}`);
+						apiResult = await axios.get('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=4326&f=json')
+							.then(response => response.data);
+						this.log.debug(`Data from RKI Corona Bundesländer API received : ${JSON.stringify(apiResult)}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
-						this.log.warn(`[germanyBundersland] Unable to contact Corona Bundesländer API : ${error}`);
+						this.log.warn(`[germanyBundesland] Unable to contact Corona Bundesländer API : ${error}`);
 						return;
 					}
 
-					const values = apiResult.data;
 					// Cancel operation in case wrong information is received
-					if (typeof values !== 'object') {
+					if (typeof apiResult !== 'object') {
 						this.log.warn(`Incorrect data received from API Corona Bundesländer, values not updated`);
 						return;
 					}
@@ -380,7 +365,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`Data from api.corona-zahlen.org received : ${vaccDataGermany.data}`);
 						vaccDataGermany = vaccDataGermany.data;
 					} catch (error) {
-						this.log.warn(`[germanyBundersland] Unable to contact api.corona-zahlen.org : ${error}`);
+						this.log.warn(`[germanyBundesland] Unable to contact api.corona-zahlen.org : ${error}`);
 
 					}
 
@@ -400,7 +385,7 @@ class Covid19 extends utils.Adapter {
 						}
 					}
 
-					for (const feature of values.features) {
+					for (const feature of apiResult.features) {
 						this.log.debug(`Getting data for Federal State : ${JSON.stringify(feature.attributes.LAN_ew_GEN)}`);
 						const federalStateName = feature.attributes.LAN_ew_GEN;
 						const channelName = `Germany.Bundesland.${federalStateName}`;
@@ -547,7 +532,7 @@ class Covid19 extends utils.Adapter {
 
 					await this.extendObjectAsync('countryTranslator', {
 						native: {
-							allGermanyFederalStates
+							allGermanyFederalStates,
 						},
 					});
 
@@ -568,7 +553,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`Data from RKI Corona Landkreise API received : ${apiResult.data}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
-						this.log.warn(`[germanyBundersland] Unable to contact RKI Corona Bundesländer API : ${error}`);
+						this.log.warn(`[germanyBundesland] Unable to contact RKI Corona Bundesländer API : ${error}`);
 						return;
 					}
 
@@ -586,13 +571,13 @@ class Covid19 extends utils.Adapter {
 
 						let countyName = feature.attributes.GEN;
 						let countiesType = feature.attributes.BEZ;
-						countyName = await this.characterReplace(countyName);
+						countyName = this.characterReplace(countyName);
 						allGermanCountyDetails.push({
 							[feature.attributes.county]: {
 								GEN: feature.attributes.GEN,
 								county: feature.attributes.county,
-								BEZ: feature.attributes.BEZ
-							}
+								BEZ: feature.attributes.BEZ,
+							},
 						});
 
 						// Distinguish between Kreisfreie Stadt & Landkreis
@@ -635,16 +620,16 @@ class Covid19 extends utils.Adapter {
 						};
 
 						// Create proper folder structure
-						if (  countiesType == 'Kreis'
-							&& (this.config.getAllGermanyCounties || selectedGermanyCounties.includes(countyName)))	 {
+						if (countiesType == 'Kreis'
+							&& (this.config.getAllGermanyCounties || selectedGermanyCounties.includes(countyName))) {
 							await folderStructure();
 
 						} else {
 							await this.localDeleteState(`Germany.${countiesType}.${countyName}`);
 						}
 
-						if( countiesType == 'Stadt'
-							&& (this.config.getAllGermanyCities || selectedGermanyCities.includes(countyName))){
+						if (countiesType == 'Stadt'
+							&& (this.config.getAllGermanyCities || selectedGermanyCities.includes(countyName))) {
 							await folderStructure();
 
 						} else {
@@ -701,13 +686,13 @@ class Covid19 extends utils.Adapter {
 
 					await this.extendObjectAsync('countryTranslator', {
 						native: {
-							allGermanyCounties
+							allGermanyCounties,
 						},
 					});
 
 					await this.extendObjectAsync('countryTranslator', {
 						native: {
-							allGermanyCities
+							allGermanyCities,
 						},
 					});
 
@@ -743,11 +728,11 @@ class Covid19 extends utils.Adapter {
 			}
 
 			// Delete potential unused data for germany
-			if (!this.config.getGermanyCities){
+			if (!this.config.getGermanyCities) {
 				await this.localDeleteState(`Germany.Stadt`);
 			}
 
-			if (!this.config.getGermanyCounties){
+			if (!this.config.getGermanyCounties) {
 				await this.localDeleteState(`Germany.Kreis`);
 			}
 
@@ -789,7 +774,7 @@ class Covid19 extends utils.Adapter {
 					type: type,
 					unit: unit,
 					read: true,
-					write: writable
+					write: writable,
 				},
 				native: {},
 			});
@@ -821,7 +806,7 @@ class Covid19 extends utils.Adapter {
 			if (this.config.deleteUnused === true) {
 				const obj = await this.getObjectAsync(state);
 				if (obj) {
-					await this.delObjectAsync(state, {recursive:true});
+					await this.delObjectAsync(state, {recursive: true});
 				}
 			}
 		} catch (error) {
@@ -892,10 +877,9 @@ class Covid19 extends utils.Adapter {
 		}
 	}
 
-	async characterReplace(string) {
-		string = string.replace(/\s/g, '_');
-		string = string.replace(/\./g, '');
-		return string;
+	characterReplace(inputString) {
+		if (!inputString) return;
+		return inputString.replace(allSpaces, '_').replace(allPointAndCommas, '');
 	}
 
 	/**
@@ -962,6 +946,28 @@ class Covid19 extends utils.Adapter {
 		}
 	}
 
+	async createFolderStructure(country) {
+
+		// Create country folder
+		await this.extendObjectAsync(country, {
+			type: 'device',
+			common: {
+				name: country,
+			},
+			native: {},
+		});
+
+		// Create Vaccination Channel
+		await this.extendObjectAsync(`${country}.Vaccination`, {
+			type: 'channel',
+			common: {
+				name: 'Vaccination Data',
+			},
+			native: {},
+		});
+
+	}
+
 	/**
 	 * Analysis modify element in stateAttr.js and executes command
 	 * @param {string} method defines the method to be executed (e.g. round())
@@ -974,22 +980,21 @@ class Covid19 extends utils.Adapter {
 			if (method.match(/^custom:/gi) != null) {                               //check if starts with "custom:"
 				value = eval(method.replace(/^custom:/gi, ''));                     //get value without "custom:"
 			} else if (method.match(/^multiply\(/gi) != null) {                     //check if starts with "multiply("
-				const inBracket = parseFloat(method.match(/(?<=\()(.*?)(?=\))/g));    //get value in brackets
+				const inBracket = parseFloat(method.match(modifyFloatRegex));    //get value in brackets
 				value = value * inBracket;
 			} else if (method.match(/^divide\(/gi) != null) {                       //check if starts with "divide("
-				const inBracket = parseFloat(method.match(/(?<=\()(.*?)(?=\))/g));    //get value in brackets
+				const inBracket = parseFloat(method.match(modifyFloatRegex));    //get value in brackets
 				value = value / inBracket;
 			} else if (method.match(/^round\(/gi) != null) {                        //check if starts with "round("
-				const inBracket = parseInt(method.match(/(?<=\()(.*?)(?=\))/g));      //get value in brackets
+				const inBracket = parseInt(method.match(modifyFloatRegex));      //get value in brackets
 				value = Math.round(value * Math.pow(10, inBracket)) / Math.pow(10, inBracket);
 			} else if (method.match(/^add\(/gi) != null) {                          //check if starts with "add("
-				const inBracket = parseFloat(method.match(/(?<=\()(.*?)(?=\))/g));    //get value in brackets
+				const inBracket = parseFloat(method.match(modifyFloatRegex));    //get value in brackets
 				value = parseFloat(value) + inBracket;
 			} else if (method.match(/^substract\(/gi) != null) {                    //check if starts with "substract("
-				const inBracket = parseFloat(method.match(/(?<=\()(.*?)(?=\))/g));    //get value in brackets
+				const inBracket = parseFloat(method.match(modifyFloatRegex));    //get value in brackets
 				value = parseFloat(value) - inBracket;
-			}
-			else {
+			} else {
 				const methodUC = method.toUpperCase();
 				switch (methodUC) {
 					case 'UPPERCASE':
