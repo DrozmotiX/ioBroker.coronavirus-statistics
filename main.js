@@ -762,7 +762,7 @@ class Covid19 extends utils.Adapter {
 			const writable = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
 			const state_name = stateAttr[name] !== undefined ? stateAttr[name].name || name : name;
 			const role = stateAttr[name] !== undefined ? stateAttr[name].role || 'state' : 'state';
-			const type = stateAttr[name] !== undefined ? stateAttr[name].type || typeof (value) : typeof (value);
+			const type = typeof (value);
 			const unit = stateAttr[name] !== undefined ? stateAttr[name].unit || '' : '';
 			this.log.debug(`Write value : ${writable}`);
 
