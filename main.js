@@ -348,7 +348,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`Data from RKI Corona Bundesländer API received : ${JSON.stringify(apiResult)}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
-						this.log.warn(`[germanyBundersland] Unable to contact Corona Bundesländer API : ${error}`);
+						this.log.warn(`[germanyBundesland] Unable to contact Corona Bundesländer API : ${error}`);
 						return;
 					}
 
@@ -365,7 +365,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`Data from api.corona-zahlen.org received : ${vaccDataGermany.data}`);
 						vaccDataGermany = vaccDataGermany.data;
 					} catch (error) {
-						this.log.warn(`[germanyBundersland] Unable to contact api.corona-zahlen.org : ${error}`);
+						this.log.warn(`[germanyBundesland] Unable to contact api.corona-zahlen.org : ${error}`);
 
 					}
 
@@ -553,7 +553,7 @@ class Covid19 extends utils.Adapter {
 						this.log.debug(`Data from RKI Corona Landkreise API received : ${apiResult.data}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
 					} catch (error) {
-						this.log.warn(`[germanyBundersland] Unable to contact RKI Corona Bundesländer API : ${error}`);
+						this.log.warn(`[germanyBundesland] Unable to contact RKI Corona Bundesländer API : ${error}`);
 						return;
 					}
 
