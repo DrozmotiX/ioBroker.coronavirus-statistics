@@ -113,12 +113,12 @@ class Covid19 extends utils.Adapter {
 
 								if (isoCountry.continent) {
 									// Continent übergeben
-									continent = isoCountry.continent.replace(/\s/g, '_');
+									continent = this.characterReplace(isoCountry.continent);
 								}
 							}
 
 							allCountrys.push(rawCountry);
-							const country = rawCountry.replace(allSpaces, '_').replace(allPointAndCommas, '');
+							const country = this.characterReplace(rawCountry);
 
 							this.log.debug(`api name: ${countryData.country}, converted name: ${rawCountry}, dp name: ${country}, continent: ${continent}`);
 
@@ -261,8 +261,7 @@ class Covid19 extends utils.Adapter {
 							native: {},
 						});
 
-						country = country.replace(/\s/g, '_');
-						country = country.replace(/\./g, '');
+						country = this.characterReplace(country);
 						this.log.debug(`Country loop rank : ${position} ${JSON.stringify(country)}`);
 						for (const property of Object.keys(dataset)) {
 							if (property !== 'countryInfo') {
@@ -572,7 +571,7 @@ class Covid19 extends utils.Adapter {
 
 						let countyName = feature.attributes.GEN;
 						let countiesType = feature.attributes.BEZ;
-						countyName = await this.characterReplace(countyName);
+						countyName = this.characterReplace(countyName);
 						allGermanCountyDetails.push({
 							[feature.attributes.county]: {
 								GEN: feature.attributes.GEN,
@@ -878,9 +877,9 @@ class Covid19 extends utils.Adapter {
 		}
 	}
 
-	async characterReplace(string) {
-		string = string.replace(/\s/g, '_');
-		string = string.replace(/\./g, '');
+	characterReplace(string) {
+		string = string.replace(allSpaces, '_');
+		string = string.replace(allPointAndCommas, '');
 		return string;
 	}
 
