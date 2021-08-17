@@ -877,10 +877,9 @@ class Covid19 extends utils.Adapter {
 		}
 	}
 
-	characterReplace(string) {
-		string = string.replace(allSpaces, '_');
-		string = string.replace(allPointAndCommas, '');
-		return string;
+	characterReplace(inputString) {
+		if (!inputString) return;
+		return inputString.replace(allSpaces, '_').replace(allPointAndCommas, '');
 	}
 
 	/**
