@@ -106,7 +106,7 @@ class Covid19 extends utils.Adapter {
 
 						const countryObject = this.getCountryObject(countryData.country, countryData['countryInfo']);
 
-						// if set use iso country name
+						// if set use iso country values
 						if (countryObject) {
 							if (countryObject.name) {
 								countryName = countryObject.name;
