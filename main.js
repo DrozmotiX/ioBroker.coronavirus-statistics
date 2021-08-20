@@ -594,7 +594,7 @@ class Covid19 extends utils.Adapter {
 							&& (this.config.getAllGermanyCounties || selectedGermanyCounties.includes(countyName))) {
 							await folderStructure();
 
-						} else {
+						} else if (countiesType == 'Kreis') {
 							await this.localDeleteState(`Germany.${countiesType}.${countyName}`);
 						}
 
@@ -602,7 +602,7 @@ class Covid19 extends utils.Adapter {
 							&& (this.config.getAllGermanyCities || selectedGermanyCities.includes(countyName))) {
 							await folderStructure();
 
-						} else {
+						} else if (countiesType == 'Stadt') {
 							await this.localDeleteState(`Germany.${countiesType}.${countyName}`);
 						}
 
