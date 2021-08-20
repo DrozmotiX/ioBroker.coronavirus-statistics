@@ -17,7 +17,7 @@ let vaccinationData;
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
-const {allSpaces, allPointAndCommas, modifyFloatRegex} = require('./lib/regex');
+const {allSpaces, allPointAndCommas, modifyFloatRegex, americaRegex} = require('./lib/regex');
 
 class Covid19 extends utils.Adapter {
 	/**
@@ -99,140 +99,110 @@ class Covid19 extends utils.Adapter {
 
 					// Write all country states depending on filter
 					for (const countryData of apiResult) {
-						if (countryData.country) {
-							let rawCountry = countryData.country;
-							let continent = undefined;
+						if (!countryData.country) continue;
 
-							const isoCountry = await this.getIsoCountry(countryData.country, countryData['countryInfo']);
+						let countryName = countryData.country;
+						let continentName = this.characterReplace(countryData.continent);
 
-							if (isoCountry) {
-								if (isoCountry.name) {
-									// Iso Country Name nehmen, sofern vorhanden
-									rawCountry = isoCountry.name;
-								}
+						const countryObject = this.getCountryObject(countryData.country, countryData['countryInfo']);
 
-								if (isoCountry.continent) {
-									// Continent übergeben
-									continent = this.characterReplace(isoCountry.continent);
-								}
+						// if set use iso country values
+						if (countryObject) {
+							if (countryObject.name) {
+								countryName = countryObject.name;
 							}
+							if (countryObject.continent) {
+								continentName = this.characterReplace(countryObject.continent);
+							}
+						}
 
-							allCountrys.push(rawCountry);
-							const country = this.characterReplace(rawCountry);
 
-							this.log.debug(`api name: ${countryData.country}, converted name: ${rawCountry}, dp name: ${country}, continent: ${continent}`);
+						allCountrys.push(countryName);
+						const country = this.characterReplace(countryName);
 
-							// Only write values if country is selected
-							if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
+						this.log.debug(`api name: ${countryData.country}, converted name: ${countryName}, dp name: ${country}, continent: ${continentName}`);
+
+						const countryIsChecked = this.config.loadAllCountrys || selectedCountries.includes(countryName);
+
+						// Only write values if country is selected
+						if (countryIsChecked) {
+							try {
 								await this.createFolderStructure(country);
-								try {
+								await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(countryObject.code.iso3));
+							} catch (error) {
+								this.log.debug(`Cannot write vaccination data for ${country}: ${error}`);
+							}
+						} else {
+							if (this.config.deleteUnused === true) {
+								await this.localDeleteState(country)
+									.catch(() => void 0); // ignore error
+							}
+						}
 
-									this.log.debug(`Writing vaccination data for new ${country}`);
-									await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(isoCountry.code.iso3));
+						await this.localDeleteState(`${country}.countryInfo`);
 
-								} catch (e) {
-									this.log.debug(`Cannot get vaccination data for ${country} from our world in data ${e}`);
+						if (!continentName) continue;
+
+						continentsStats[continentName] = continentsStats[continentName] || {};
+						continentsStats[continentName]['countries'] = continentsStats[continentName]['countries'] || []; // collect all countries of continent
+						continentsStats[continentName]['inhabitants'] = continentsStats[continentName]['inhabitants'] || 0; // inhabitants to calculate relative values
+						continentsStats['America']['countries'] = continentsStats['America']['countries'] || [];
+						continentsStats['America']['inhabitants'] = continentsStats['America']['inhabitants'] || 0;
+						continentsStats['World_Sum']['inhabitants'] = continentsStats['World_Sum']['inhabitants'] || 0;
+
+						continentsStats[continentName]['countries'].push(countryName);
+						continentsStats[continentName]['inhabitants'] = continentsStats[continentName]['inhabitants'] + (countryData['cases'] / countryData['casesPerOneMillion']);
+						continentsStats['World_Sum']['inhabitants'] = continentsStats['World_Sum']['inhabitants'] + (countryData['cases'] / countryData['casesPerOneMillion']);
+
+						if (continentName && continentName.match(americaRegex)) {
+							continentsStats['America']['countries'].push(countryName);
+							continentsStats['America']['inhabitants'] = continentsStats['America']['inhabitants'] + (countryData['cases'] / countryData['casesPerOneMillion']);
+						}
+
+						// Write states for all country's in API
+						for (const property of Object.keys(countryData)) {
+							// Don't create a state for the country
+							if (property === 'country') continue;
+
+							if (countryIsChecked) {
+								if (property !== 'countryInfo') {
+									await this.localCreateState(`${country}.${property}`, property, countryData[property]);
+									this.log.debug(`${country} written`);
+								} else {
+									// Only take the flag from country info
+									await this.localCreateState(`${country}.flag`, 'flag', countryData[property].flag);
 								}
-
-							} else {
-								// Check if states for vaccination exist (cleanup buggy version), if yes create device structure
-								try {
-									if (this.config.deleteUnused === true) {
-										const obj = await this.getObjectAsync(`${country}.Vaccination.date`);
-										if (obj) {
-											await this.createFolderStructure(country);
-										}
-									}
-								} catch (error) {
-									// do nothing
-								}
-								// Delete country
-								await this.localDeleteState(country);
 							}
 
-							// Write states for all country's in API
-							for (const property of Object.keys(countryData)) {
-								// Don't create a state for the country
-								if (property === 'country') continue;
-								if (property === 'countryInfo') await this.localDeleteState(`${country}.${property}`);
-								if (this.config.loadAllCountrys || selectedCountries.includes(rawCountry)) {
+							if (property === 'countryInfo') continue;
+							continentsStats[continentName][property] = continentsStats[continentName][property] || 0;
+							continentsStats['America'][property] = continentsStats['America'][property] || 0;
+							continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] || 0;
 
-									this.log.debug(`Country add routine : ${property} for : ${country}`);
-									if (property !== 'countryInfo') {
-										await this.localCreateState(`${country}.${property}`, property, countryData[property]);
-									} else {
-										// Only take the flag from country info
-										await this.localCreateState(`${country}.flag`, 'flag', countryData[property].flag);
+							switch (property) {
+								case 'continent':
+									continentsStats[continentName][property] = countryData[property];
+									break;
+
+								case 'updated':
+									// for continents: updated is newest of all included countries
+									if (countryData[property] > continentsStats[continentName][property]) {
+										continentsStats[continentName][property] = countryData[property];
+										continentsStats['World_Sum'][property] = countryData[property];
 									}
-
-								}
-
-								if (continent) {
-									if (property !== 'countryInfo') {
-										continentsStats[continent] = continentsStats[continent] || {};
-										continentsStats[continent][property] = continentsStats[continent][property] || 0;
-
-										if (!continentsStats['America'].hasOwnProperty(property) && (continent === 'North_America' || continent === 'South_America')) {
-											continentsStats['America'][property] = 0;
-										}
-
-										if (!continentsStats['World_Sum'].hasOwnProperty(property)) {
-											continentsStats['World_Sum'][property] = 0;
-										}
-
-										if (property === 'continent') {
-											continentsStats[continent][property] = countryData[property];
-										}
-
-										if (property !== 'updated' && property !== 'continent') {
-											continentsStats[continent][property] = continentsStats[continent][property] + countryData[property];
-											continentsStats['World_Sum'][property] = continentsStats['World_Sum'][property] + countryData[property];
-										} else {
-											// Zeitstempel 'updated' aktualisieren -> neusten Wert der Länder nehmen
-											if (countryData[property] > continentsStats[continent][property]) {
-												continentsStats[continent][property] = countryData[property];
-												continentsStats['World_Sum'][property] = countryData[property];
-											}
-										}
-
-
-										if (continent === 'North_America' || continent === 'South_America') {
-											if (property !== 'updated') {
-												continentsStats['America'][property] = continentsStats['America'][property] + countryData[property];
-											} else {
-												// Zeitstempel 'updated' aktualisieren -> neusten Wert der Länder nehmen
-												if (countryData[property] > continentsStats['America'][property]) {
-													continentsStats['America'][property] = countryData[property];
-												}
-											}
-										}
-									} else {
-										// Liste mit Ländern & casesPerMillion berechnung über Einwohnerzahl
-										continentsStats[continent] = continentsStats[continent] || {};
-										continentsStats[continent]['countries'] = continentsStats[continent]['countries'] || [];				// Liste mit Ländern
-										continentsStats[continent]['inhabitants'] = continentsStats[continent]['inhabitants'] || 0;				// Einwohner wird zum berechnen der casesPerMillion benötigt
-
-										if (!continentsStats['World_Sum'].hasOwnProperty('inhabitants')) {
-											continentsStats['World_Sum']['inhabitants'] = 0;
-										}
-
-										if (!continentsStats['America'].hasOwnProperty('countries') && (continent === 'North_America' || continent === 'South_America')) {
-											continentsStats['America']['countries'] = [];
-											continentsStats['America']['inhabitants'] = 0;
-										}
-
-										continentsStats[continent]['countries'].push(rawCountry);
-
-										continentsStats[continent]['inhabitants'] = continentsStats[continent]['inhabitants'] + (countryData['cases'] / countryData['casesPerOneMillion']);
-										continentsStats['World_Sum']['inhabitants'] = continentsStats['World_Sum']['inhabitants'] + (countryData['cases'] / countryData['casesPerOneMillion']);
-
-										if (continent === 'North_America' || continent === 'South_America') {
-											continentsStats['America']['countries'].push(rawCountry);
-
-											continentsStats['America']['inhabitants'] = continentsStats['America']['inhabitants'] + (countryData['cases'] / countryData['casesPerOneMillion']);
+									if (continentName.match(americaRegex)) {
+										if (countryData[property] > continentsStats['America'][property]) {
+											continentsStats['America'][property] = countryData[property];
 										}
 									}
-								}
+									break;
+
+								default:
+									continentsStats[continentName][property] += countryData[property];
+									continentsStats['World_Sum'][property] += countryData[property];
+									if (continentName === 'North_America' || continentName === 'South_America') {
+										continentsStats['America'][property] += countryData[property];
+									}
 							}
 						}
 					}
@@ -818,36 +788,37 @@ class Covid19 extends utils.Adapter {
 	 * @param {string} country
 	 * @param {Object} countryInfo
 	 */
-	async getIsoCountry(country, countryInfo) {
+	getCountryObject(country, countryInfo) {
 		try {
 			let countryObj = undefined;
-			if (countryInfo.iso2 && countryInfo.iso2 !== null) {
-				// Country Objekt über iso2 suchen
-				return countryJs.findByIso2(countryInfo.iso2);
 
-			} else if (countryInfo.iso3 && countryInfo.iso3 !== null) {
+			if (countryInfo.iso3) {
 				// Country Objekt über iso3 suchen
 				return countryJs.findByIso3(countryInfo.iso3);
-
-			} else {
-				// kein iso info vorhanden, über Name suchen
-				countryObj = countryJs.findByName(country.replace(/_/g, ' ').replace(/é/g, 'e').replace(/ç/g, 'c'));
-
-				if (countryObj) {
-					if (countryObj.continent) {
-						return countryObj;
-					}
-				} else {
-					countryObj = countryJs.findByName(countryTranslator[country]);
-					if (countryObj) {
-						return countryObj;
-					} else {
-						if (country !== 'Diamond Princess' && country !== 'MS Zaandam') {
-							this.log.warn(`${country} (iso2: ${countryInfo.iso2}, iso3: ${countryInfo.iso3}) not found in lib! Must be added to the country name translator.`);
-						}
-					}
-				}
 			}
+
+			if (countryInfo.iso2) {
+				// Country Objekt über iso2 suchen
+				return countryJs.findByIso2(countryInfo.iso2);
+			}
+
+			// kein iso info vorhanden, über Name suchen
+			countryObj = countryJs.findByName(country.replace(/_/g, ' ').replace(/é/g, 'e').replace(/ç/g, 'c'));
+
+			if (countryObj && countryObj.continent) {
+				return countryObj;
+			}
+
+			countryObj = countryJs.findByName(countryTranslator[country]);
+
+			if (countryObj && countryObj.continent) {
+				return countryObj;
+			}
+
+			if (country !== 'Diamond Princess' && country !== 'MS Zaandam') {
+				this.log.warn(`${country} (iso2: ${countryInfo.iso2}, iso3: ${countryInfo.iso3}) not found in lib! Must be added to the country name translator.`);
+			}
+
 		} catch (error) {
 			this.errorHandling('getIsoCountry', error);
 		}
