@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.3-0",
+        "version": "0.8.3",
         "news": {
+            "0.8.3": {
+                "en": "Code refactoring\nBugfix: Unwanted deletion of data points for Germany solved",
+                "de": "Code Refactoring\nBugfix: Ungewolltes Löschen von Datenpunkten für Deutschland behoben",
+                "ru": "Рефакторинг кода\nИсправление: решено нежелательное удаление точек данных для Германии.",
+                "pt": "Refatoração de código\nCorreção de bug: exclusão indesejada de pontos de dados para a Alemanha resolvida",
+                "nl": "Code refactoring\nBugfix: Ongewenste verwijdering van datapunten voor Duitsland opgelost",
+                "fr": "Refactorisation de code\nCorrection de bug : la suppression indésirable de points de données pour l'Allemagne a été résolue",
+                "it": "Refactoring del codice\nBugfix: eliminazione indesiderata di punti dati per la Germania risolta",
+                "es": "Código de refactorización\nCorrección de error: se solucionó la eliminación no deseada de puntos de datos para Alemania",
+                "pl": "Refaktoryzacja kodu\nBugfix: Niepożądane usuwanie punktów danych dla Niemiec rozwiązane",
+                "zh-cn": "代码重构\n错误修正：解决了德国数据点的意外删除问题"
+            },
             "0.8.3-0": {
                 "en": "Code refactoring\nBugfix: Unwanted deletion of data points for Germany solved",
                 "de": "Code Refactoring\nBugfix: Ungewolltes Löschen von Datenpunkten für Deutschland behoben",
