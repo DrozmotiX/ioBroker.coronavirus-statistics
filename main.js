@@ -1,5 +1,8 @@
 'use strict';
 
+const HospitalService = require('./lib/services/hospital.service');
+const VaccinationService = require('./lib/services/vaccination.service');
+
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
@@ -13,7 +16,8 @@ const warnMessages = {};
 // For Germany, arrays to store federal states, city and  counties to store in object
 let allGermanyFederalStates = [], allGermanCountyDetails = [], allGermanyCounties = [], allGermanyCities = [];
 let allGermanyFederalStatesLoaded = null, allGermanyCountiesLoaded = null, allGermanyCitiesLoaded = null;
-let vaccinationData;
+let vaccinationData$;
+let germanHospitalData$;
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
@@ -128,9 +132,12 @@ class Covid19 extends utils.Adapter {
 						if (countryIsChecked) {
 							try {
 								await this.createFolderStructure(country);
-								await this.writeVaccinationDataForCountry(country, await this.getVaccinationDataByIsoCode(countryObject.code.iso3));
+								await this.writeVaccinationDataForCountry(country, await VaccinationService.getVaccinationDataByIsoCode(vaccinationData$, countryObject.code.iso3));
+								if (country === 'Germany') {
+									await this.writeHospitalDataForId(country, await HospitalService.getGermanOverallHospitalData(germanHospitalData$));
+								}
 							} catch (error) {
-								this.log.debug(`Cannot write vaccination data for ${country}: ${error}`);
+								this.log.debug(`Cannot write data for ${country}: ${error}`);
 							}
 						} else {
 							if (this.config.deleteUnused === true) {
@@ -331,9 +338,9 @@ class Covid19 extends utils.Adapter {
 					// Get Vaccination Data from api.corona-zahlen.org/
 					let vaccDataGermany = null;
 					try {
-						vaccDataGermany = await axios.get('https://api.corona-zahlen.org/vaccinations');
-						this.log.debug(`Data from api.corona-zahlen.org received : ${vaccDataGermany.data}`);
-						vaccDataGermany = vaccDataGermany.data;
+						vaccDataGermany = await axios.get('https://api.corona-zahlen.org/vaccinations')
+							.then(data => data.data);
+						this.log.debug(`Data from api.corona-zahlen.org received : ${vaccDataGermany}`);
 					} catch (error) {
 						this.log.warn(`[germanyBundesland] Unable to contact api.corona-zahlen.org : ${error}`);
 
@@ -344,7 +351,6 @@ class Covid19 extends utils.Adapter {
 
 					if (vaccDataGermany != null) {
 						for (const vaccStates in vaccDataGermany.data.states) {
-							console.log(vaccDataGermany.data.states[vaccStates].name);
 							germanyVaccinationData[vaccDataGermany.data.states[vaccStates].name] = {
 								'allVacc': vaccDataGermany.data.states[vaccStates].administeredVaccinations,
 								'firstVacc': vaccDataGermany.data.states[vaccStates].vaccinated,
@@ -380,6 +386,12 @@ class Covid19 extends utils.Adapter {
 								},
 								native: {},
 							});
+
+							try {
+								await this.writeHospitalDataForId(channelName, await HospitalService.getGermanHospitalDataByFederalState(germanHospitalData$, federalStateName));
+							} catch (error) {
+								this.log.error(`Cannot write hospital data for ${channelName}: ${error}`);
+							}
 
 							if (vaccDataGermany != null) {
 								if (germanyVaccinationData[federalStateName]) {
@@ -486,13 +498,6 @@ class Covid19 extends utils.Adapter {
 								}
 							}
 						}
-					}
-
-					try {
-						await this.writeVaccinationDataForCountry('Germany', await this.getVaccinationDataByIsoCode('DEU'));
-
-					} catch (e) {
-						this.log.debug(`Cannot get vaccination data for Germany from our world in data ${e}`);
 					}
 
 					await this.localDeleteState(`Germany._Impfungen`);
@@ -675,9 +680,10 @@ class Covid19 extends utils.Adapter {
 			const timer1 = (Math.random() * (10 - 1) + 1) * 1000;
 			await wait(timer1);
 
-			vaccinationData = this.refreshVaccinationData();	// load all vaccination data
-			await loadAll();		// Global Worldwide statistics
-			await loadCountries(); 	// Detailed Worldwide statistics by country
+			vaccinationData$ = VaccinationService.refreshVaccinationData();		// load all vaccination data
+			germanHospitalData$ = HospitalService.refreshGermanHospitalData();	// load german hospital data
+			await loadAll();													// Global Worldwide statistics
+			await loadCountries(); 												// Detailed Worldwide statistics by country
 
 			if (this.config.getGermanyFederalStates || !allGermanyFederalStatesLoaded) {
 				await this.extendObjectAsync(`Germany.Bundesland`, {
@@ -854,58 +860,10 @@ class Covid19 extends utils.Adapter {
 	}
 
 	/**
-	 * calls our world in data api to get the vaccination data
-	 *
-	 * @returns whole vaccination data object
-	 */
-	async refreshVaccinationData() {
-		return axios.get('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
-			.then(response => response.data)
-			// reduce data to latest day of all countries
-			.then(jsonData => {
-				if (!jsonData || jsonData.length === 0) throw new Error();
-				for (const country of jsonData) {
-					country.data = country.data[country.data.length - 1];
-				}
-				return jsonData;
-			})
-			.catch(e => {
-				this.log.error(`Cannot get vaccination data from our world in data ${e}`);
-				return null;
-			});
-	}
-
-	/**
-	 * filters the vaccination data by given isoCode
-	 *
-	 * @param isoCode
-	 * @returns {Promise<*>} latest day of vaccination data for germany
-	 */
-	async getVaccinationDataByIsoCode(isoCode) {
-		return vaccinationData
-			// filter german only
-			.then(data => data.filter(item => item.iso_code.toLocaleLowerCase().includes(isoCode.toLowerCase()))[0])
-			.then(data => {
-				if (!data || data.length === 0) throw new Error();
-				return data;
-			})
-			// just the data
-			.then(countryData => {
-				if (!countryData || countryData.length === 0) throw new Error();
-				return countryData.data;
-			})
-			.catch(e => {
-				this.log.debug(`Cannot get vaccination data for ${isoCode} from our world in data ${e}`);
-				return null;
-			});
-	}
-
-	/**
 	 * writes vaccination data to folder of country
 	 *
-	 * @param country
-	 * @param data
-	 * @returns {Promise<void>}
+	 * @param country				"Germany"
+	 * @param data					Object to write
 	 */
 	async writeVaccinationDataForCountry(country, data) {
 		if (data) {
@@ -913,7 +871,22 @@ class Covid19 extends utils.Adapter {
 				await this.localCreateState(`${country}.Vaccination.${key}`, key, data[key]);
 			}
 		} else {
-			this.log.debug(`Cannot handle vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
+			this.log.debug(`Cannot write vaccination data for ${country}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
+		}
+	}
+
+	/**
+	 * @param id				"Germany"
+	 * @param data					Object to write
+	 */
+	async writeHospitalDataForId(id, data) {
+		if (!data) {
+			this.log.debug(`Cannot write hospital data for ${id}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
+			return;
+		}
+
+		for (const key of Object.keys(data)) {
+			await this.localCreateState(`${id}.Hospital.${key}`, key, data[key]);
 		}
 	}
 
