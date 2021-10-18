@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.3",
+        "version": "0.8.4-0",
         "news": {
             "0.8.3": {
                 "en": "Code refactoring\nBugfix: Unwanted deletion of data points for Germany solved",
@@ -275,7 +275,7 @@
         },
         "dependencies": [
             {
-                "js-controller": ">=1.4.2"
+                "js-controller": ">=2.0.0"
             }
         ]
     },

@@ -719,7 +719,7 @@ class Covid19 extends utils.Adapter {
 			this.errorHandling('onReady', error);
 
 			// Ensure termination at error
-			this.terminate ? this.terminate('Adapter cosed unexpectedly, not all data processed') : process.exit();
+			this.terminate ? this.terminate('Adapter closed unexpectedly, not all data processed') : process.exit();
 		}
 	}
 
