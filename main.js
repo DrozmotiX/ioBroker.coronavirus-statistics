@@ -64,7 +64,7 @@ class Covid19 extends utils.Adapter {
 				let apiResult = null;
 				try {
 					// Try to reach API and receive data
-					apiResult = await axios.get('https://corona.lmao.ninja/v3/covid-19/all');
+					apiResult = await axios.get('https://disease.sh/v3/covid-19/all');
 				} catch (error) {
 					this.log.warn(`[loadAll] Unable to contact COVID-19 API : ${error}`);
 					return;
@@ -92,7 +92,7 @@ class Covid19 extends utils.Adapter {
 
 					// Try to call API and get country information
 					try {
-						apiResult = await axios.get('https://corona.lmao.ninja/v3/covid-19/countries?sort=cases')
+						apiResult = await axios.get('https://disease.sh/v3/covid-19/countries?sort=cases')
 							.then(response => response.data);
 						this.log.debug(`Data from COVID-19 API received : ${JSON.stringify(apiResult)}`);
 						this.log.debug(`load all country's : ${this.config.loadAllCountrys} as ${typeof this.config.loadAllCountrys}`);
