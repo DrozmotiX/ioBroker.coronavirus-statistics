@@ -389,6 +389,14 @@ class Covid19 extends utils.Adapter {
 
 							try {
 								await this.writeHospitalDataForId(channelName, await HospitalService.getGermanHospitalDataByFederalState(germanHospitalData$, federalStateName));
+								// Create hospital channel for each Federal State
+								await this.extendObjectAsync(`${channelName}.Hospital`, {
+									type: 'channel',
+									common: {
+										name: `Hospital`,
+									},
+									native: {},
+								});
 							} catch (error) {
 								this.log.error(`Cannot write hospital data for ${channelName}: ${error}`);
 							}
@@ -884,6 +892,15 @@ class Covid19 extends utils.Adapter {
 			this.log.debug(`Cannot write hospital data for ${id}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
 			return;
 		}
+
+
+		await this.extendObjectAsync(`${id}.Hospital`, {
+			type: 'channel',
+			common: {
+				name: `Hospital`,
+			},
+			native: {},
+		});
 
 		for (const key of Object.keys(data)) {
 			await this.localCreateState(`${id}.Hospital.${key}`, key, data[key]);
