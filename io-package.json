@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.4-0",
+        "version": "0.8.4",
         "news": {
+            "0.8.4": {
+                "en": "Bugfix: New DNS entry for COVID api\nHospital data for Germany added\nfix umlauts in hospital service\nextend api timer to fix 502 errors",
+                "de": "Bugfix: Neuer DNS-Eintrag für COVID-API\nKrankenhausdaten für Deutschland hinzugefügt\nUmlaute im Krankenhausdienst korrigieren\nErweitern Sie den API-Timer, um 502-Fehler zu beheben",
+                "ru": "Исправление: новая запись DNS для COVID api\nДобавлены данные больниц по Германии\nисправить умляуты в больничной службе\nрасширить таймер API, чтобы исправить 502 ошибки",
+                "pt": "Correção de bug: nova entrada DNS para API COVID\nDados hospitalares da Alemanha adicionados\nconsertar tremas em serviço hospitalar\nestenda o cronômetro da API para corrigir erros 502",
+                "nl": "Bugfix: nieuwe DNS-vermelding voor COVID api\nZiekenhuisgegevens voor Duitsland toegevoegd\numlauts in de ziekenhuisdienst oplossen\nverleng api-timer om 502-fouten op te lossen",
+                "fr": "Correction de bug : nouvelle entrée DNS pour l'api COVID\nAjout des données hospitalières pour l'Allemagne\ncorriger les trémas dans le service hospitalier\nétendre le minuteur api pour corriger les erreurs 502",
+                "it": "Bugfix: nuova voce DNS per l'API COVID\nAggiunti dati ospedalieri per la Germania\ncorreggere le dieresi nel servizio ospedaliero\nestendere il timer API per correggere gli errori 502",
+                "es": "Corrección de error: nueva entrada de DNS para COVID api\nSe agregaron datos hospitalarios para Alemania\narreglar diéresis en el servicio hospitalario\nextender el temporizador de api para corregir errores 502",
+                "pl": "Bugfix: Nowy wpis DNS dla COVID api\nDodano dane szpitalne dla Niemiec\nnaprawić umlauty w służbie szpitalnej\nprzedłużyć licznik API, aby naprawić błędy 502",
+                "zh-cn": "错误修复：COVID api 的新 DNS 条目\n添加了德国的医院数据\n修复医院服务中的变音\n扩展 api 计时器以修复 502 错误"
+            },
             "0.8.3": {
                 "en": "Code refactoring\nBugfix: Unwanted deletion of data points for Germany solved",
                 "de": "Code Refactoring\nBugfix: Ungewolltes Löschen von Datenpunkten für Deutschland behoben",
