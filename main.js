@@ -677,7 +677,7 @@ class Covid19 extends utils.Adapter {
 			};
 
 			// Random number generator to avoid all ioBroker instances calling the API at the same time
-			const timer1 = (Math.random() * (10 - 1) + 1) * 1000;
+			const timer1 = Math.floor(Math.random() * 30 * 1000);
 			await wait(timer1);
 
 			vaccinationData$ = VaccinationService.refreshVaccinationData();		// load all vaccination data
