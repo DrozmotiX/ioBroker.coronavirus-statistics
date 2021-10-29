@@ -330,7 +330,7 @@ class Covid19 extends utils.Adapter {
 					}
 
 					// Cancel operation in case wrong information is received
-					if (typeof apiResult !== 'object') {
+					if (!apiResult || typeof apiResult !== 'object' || !apiResult.features) {
 						this.log.warn(`Incorrect data received from API Corona Bundesländer, values not updated`);
 						return;
 					}
@@ -339,17 +339,22 @@ class Covid19 extends utils.Adapter {
 					let vaccDataGermany = null;
 					try {
 						vaccDataGermany = await axios.get('https://api.corona-zahlen.org/vaccinations')
-							.then(data => data.data);
+							.then(response => response.data);
 						this.log.debug(`Data from api.corona-zahlen.org received : ${vaccDataGermany}`);
 					} catch (error) {
 						this.log.warn(`[germanyBundesland] Unable to contact api.corona-zahlen.org : ${error}`);
+					}
 
+					// Cancel operation in case wrong information is received
+					if (!vaccDataGermany || typeof vaccDataGermany !== 'object' || !vaccDataGermany.data || !vaccDataGermany.data.states) {
+						this.log.warn(`Incorrect data received from api.corona-zahlen.org received, values not updated`);
+						return;
 					}
 
 					const germanyVaccinationData = {};
 					// Structure API result to workable format
 
-					if (vaccDataGermany != null) {
+					if (!vaccDataGermany) {
 						for (const vaccStates in vaccDataGermany.data.states) {
 							germanyVaccinationData[vaccDataGermany.data.states[vaccStates].name] = {
 								'allVacc': vaccDataGermany.data.states[vaccStates].administeredVaccinations,
