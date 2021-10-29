@@ -354,16 +354,14 @@ class Covid19 extends utils.Adapter {
 					const germanyVaccinationData = {};
 					// Structure API result to workable format
 
-					if (!vaccDataGermany) {
-						for (const vaccStates in vaccDataGermany.data.states) {
-							germanyVaccinationData[vaccDataGermany.data.states[vaccStates].name] = {
-								'allVacc': vaccDataGermany.data.states[vaccStates].administeredVaccinations,
-								'firstVacc': vaccDataGermany.data.states[vaccStates].vaccinated,
-								'secondVacc': vaccDataGermany.data.states[vaccStates].secondVaccination.vaccinated,
-								'firstVaccQuote': vaccDataGermany.data.states[vaccStates].quote * 100,
-								'secondVaccQuote': vaccDataGermany.data.states[vaccStates].secondVaccination.quote * 100,
-							};
-						}
+					for (const vaccStates in vaccDataGermany.data.states) {
+						germanyVaccinationData[vaccDataGermany.data.states[vaccStates].name] = {
+							'allVacc': vaccDataGermany.data.states[vaccStates].administeredVaccinations,
+							'firstVacc': vaccDataGermany.data.states[vaccStates].vaccinated,
+							'secondVacc': vaccDataGermany.data.states[vaccStates].secondVaccination.vaccinated,
+							'firstVaccQuote': vaccDataGermany.data.states[vaccStates].quote * 100,
+							'secondVaccQuote': vaccDataGermany.data.states[vaccStates].secondVaccination.quote * 100,
+						};
 					}
 
 					for (const feature of apiResult.features) {
