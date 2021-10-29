@@ -401,7 +401,7 @@ class Covid19 extends utils.Adapter {
 									native: {},
 								});
 							} catch (error) {
-								this.log.error(`Cannot write hospital data for ${channelName}: ${error}`);
+								this.log.debug(`Cannot write hospital data for ${channelName}: ${error}`);
 							}
 
 							if (vaccDataGermany != null) {
