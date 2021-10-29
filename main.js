@@ -688,13 +688,14 @@ class Covid19 extends utils.Adapter {
 			};
 
 			// Random number generator to avoid all ioBroker instances calling the API at the same time
-			const timer1 = Math.floor(Math.random() * 30 * 1000);
-			await wait(timer1);
+			await wait(Math.floor(Math.random() * 30 * 1000));
 
-			vaccinationData$ = VaccinationService.refreshVaccinationData();		// load all vaccination data
-			germanHospitalData$ = HospitalService.refreshGermanHospitalData();	// load german hospital data
-			await loadAll();													// Global Worldwide statistics
-			await loadCountries(); 												// Detailed Worldwide statistics by country
+			vaccinationData$ = VaccinationService.refreshVaccinationData()
+				.catch(error => this.log.warn(`Vaccination Data Warning: ${error}`));		// load all vaccination data
+			germanHospitalData$ = HospitalService.refreshGermanHospitalData()
+				.catch(error => this.log.warn(`Hospital Data Warning: ${error}`));			// load german hospital data
+			await loadAll();																// Global Worldwide statistics
+			await loadCountries(); 															// Detailed Worldwide statistics by country
 
 			if (this.config.getGermanyFederalStates || !allGermanyFederalStatesLoaded) {
 				await this.extendObjectAsync(`Germany.Bundesland`, {
