@@ -94,8 +94,8 @@ As first value, the name from the warning message must be taken from the log. Th
 	### __WORK IN PROGRESS__
 	* (DutchmanNL) 
 -->
-### __WORK IN PROGRESS__
-* (jlssmt) added error handling for bundesländer if api is down 
+### 0.8.5 (2021-10-29)
+* (jlssmt) Error handling for bundesländer api implemented 
 
 ### 0.8.4 (2021-10-26)
 * (DutchmanNL) Bugfix: New DNS entry for COVID api

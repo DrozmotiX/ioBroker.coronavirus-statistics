@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.4",
+        "version": "0.8.5",
         "news": {
+            "0.8.5": {
+                "en": "Error handling for bundesländer api implemented",
+                "de": "Fehlerbehandlung für Bundesländer API implementiert",
+                "ru": "Реализована обработка ошибок для bundesländer api",
+                "pt": "Tratamento de erros para a API bundesländer implementada",
+                "nl": "Foutafhandeling voor bundesländer api geïmplementeerd",
+                "fr": "Gestion des erreurs pour l'API bundesländer implémentée",
+                "it": "Gestione degli errori per l'API bundesländer implementata",
+                "es": "Se implementó el manejo de errores para bundesländer api",
+                "pl": "Zaimplementowano obsługę błędów dla bundesländer api",
+                "zh-cn": "实现了 bundesländer api 的错误处理"
+            },
             "0.8.4": {
                 "en": "Bugfix: New DNS entry for COVID api\nHospital data for Germany added\nfix umlauts in hospital service\nextend api timer to fix 502 errors",
                 "de": "Bugfix: Neuer DNS-Eintrag für COVID-API\nKrankenhausdaten für Deutschland hinzugefügt\nUmlaute im Krankenhausdienst korrigieren\nErweitern Sie den API-Timer, um 502-Fehler zu beheben",
