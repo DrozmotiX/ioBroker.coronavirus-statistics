@@ -9,4 +9,30 @@
 .m .switch label .lever {
 	z-index: -1;
 }
+
+.m.react-blue .black-text {
+    color: #fff!important;
+}
+.m.react-blue .switch label input[type="checkbox"]:checked + .lever {
+    background-color: #436a93;
+}
+.m.react-blue .switch label .lever {
+    background-color: #4dabf5;
+}
+.m.react-blue .switch label .lever:after {
+    background-color: #436a93;
+}
+
+.m.react-dark .black-text {
+    color: #fff!important;
+}
+.m.react-dark .switch label input[type="checkbox"]:checked + .lever {
+    background-color: #436a93;
+}
+.m.react-dark .switch label .lever {
+    background-color: #4dabf5;
+}
+.m.react-dark .switch label .lever:after {
+    background-color: #436a93;
+}
 /* Add your styles here */
