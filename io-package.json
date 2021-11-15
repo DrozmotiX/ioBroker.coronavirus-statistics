@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.5",
+        "version": "0.8.6",
         "news": {
+            "0.8.6": {
+                "en": "Design Fix for Admin >=5.1.28 Dark/Blue Theme",
+                "de": "Design Fix für Admin >=5.1.28 Dunkel/Blaues Design",
+                "ru": "Исправление дизайна для администратора> = 5.1.28 Темно-синяя тема",
+                "pt": "Correção de design para Admin> = 5.1.28 Tema escuro / azul",
+                "nl": "Design Fix voor Admin >=5.1.28 Donker/blauw thema",
+                "fr": "Correctif de conception pour l'administrateur > = 5.1.28 Thème sombre/bleu",
+                "it": "Correzione del design per l'amministratore >=5.1.28 Tema scuro/blu",
+                "es": "Corrección de diseño para administrador> = 5.1.28 Tema azul oscuro / oscuro",
+                "pl": "Poprawka projektu dla administratora >= 5.1.28 Ciemny / niebieski motyw",
+                "zh-cn": "Admin >=5.1.28 Dark/Blue 主题的设计修复"
+            },
             "0.8.5": {
                 "en": "Error handling for bundesländer api implemented",
                 "de": "Fehlerbehandlung für Bundesländer API implementiert",
