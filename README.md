@@ -117,7 +117,7 @@ As first value, the name from the warning message must be taken from the log. Th
 ## License
 MIT License
 
-Copyright (c) 2020 DutchmanNL <rdrozda86@gmail.com>
+Copyright (c) 2021 DrozmotiX Holding B.V. <OSS@DrozmotiX.eu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
