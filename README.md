@@ -95,6 +95,10 @@ As first value, the name from the warning message must be taken from the log. Th
 	* (DutchmanNL) 
 -->
 
+### __WORK IN PROGRESS__
+* (DutchmanNL) Bugfix: Added missing definitions
+* (jlssmt) Optimize error handling for missing state attribute definitions
+
 ### 0.8.6 (2021-11-15)
 * (Simatec) Design Fix for Admin >=5.1.28 Dark/Blue Theme
 
