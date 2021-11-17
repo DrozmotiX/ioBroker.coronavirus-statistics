@@ -1,10 +1,19 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.7-0",
+        "version": "0.8.7",
         "news": {
-            "0.8.7-0": {
-                "en": "BugFix: Add missing attributes"
+            "0.8.7": {
+                "en": "Bugfix: Added missing definitions\nError handling for missing state attribute definitions Optimized",
+                "de": "Bugfix: Fehlende Definitionen hinzugefügt\nFehlerbehandlung bei fehlenden Zustandsattributdefinitionen Optimiert",
+                "ru": "Исправление: добавлены недостающие определения.\nОбработка ошибок при отсутствии определений атрибутов состояния Оптимизировано",
+                "pt": "Correção de bug: definições ausentes adicionadas\nTratamento de erros para definições de atributos de estado ausentes Otimizado",
+                "nl": "Bugfix: ontbrekende definities toegevoegd\nFoutafhandeling voor ontbrekende statusattribuutdefinities Geoptimaliseerd",
+                "fr": "Correction de bug : ajout de définitions manquantes\nGestion des erreurs pour les définitions d'attributs d'état manquantes Optimisé",
+                "it": "Bugfix: Aggiunte definizioni mancanti\nGestione degli errori per le definizioni degli attributi di stato mancanti Ottimizzato",
+                "es": "Corrección de error: se agregaron definiciones faltantes\nManejo de errores para definiciones de atributos de estado faltantes Optimizado",
+                "pl": "Bugfix: Dodano brakujące definicje\nObsługa błędów dla brakujących definicji atrybutów stanu Zoptymalizowana",
+                "zh-cn": "错误修正：添加了缺失的定义\n缺少状态属性定义的错误处理优化"
             },
             "0.8.6": {
                 "en": "Design Fix for Admin >=5.1.28 Dark/Blue Theme",
