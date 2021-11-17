@@ -744,7 +744,8 @@ class Covid19 extends utils.Adapter {
 				const warnMessage = `State attribute definition missing for ${name}`;
 				if (warnMessages[name] !== warnMessage) {
 					warnMessages[name] = warnMessage;
-					this.log.warn(`State attribute definition missing for ${name}`);
+					this.log.debug(warnMessage);
+					this.errorHandling('localCreateState', warnMessage, true);
 				}
 			}
 			const writable = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
@@ -983,8 +984,10 @@ class Covid19 extends utils.Adapter {
 		}
 	}
 
-	errorHandling(codePart, error) {
-		this.log.error(`[${codePart}] error: ${error.message}, stack: ${error.stack}`);
+	errorHandling(codePart, error, suppressFrontendLog) {
+		if (!suppressFrontendLog) {
+			this.log.error(`[${codePart}] error: ${error.message}, stack: ${error.stack}`);
+		}
 		if (this.supportsFeature && this.supportsFeature('PLUGINS')) {
 			const sentryInstance = this.getPluginInstance('sentry');
 			if (sentryInstance) {
