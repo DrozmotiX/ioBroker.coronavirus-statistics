@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "coronavirus-statistics",
-        "version": "0.8.7",
+        "version": "0.9.0-0",
         "news": {
+            "0.9.0-0": {
+                "en": "added hospital index for germany and federal states of germany",
+                "de": "Krankenhausindex für Deutschland und Bundesländer hinzugefügt",
+                "ru": "добавлен индекс больниц для Германии и федеральных земель германии",
+                "pt": "adicionado índice de hospitais para a Alemanha e estados federais da Alemanha",
+                "nl": "toegevoegde ziekenhuisindex voor duitsland en deelstaten van duitsland",
+                "fr": "index des hôpitaux ajouté pour l'allemagne et les états fédéraux d'allemagne",
+                "it": "aggiunto indice ospedaliero per la Germania e gli stati federali della Germania",
+                "es": "índice hospitalario agregado para alemania y los estados federales de alemania",
+                "pl": "dodano indeks szpitalny dla Niemiec i krajów związkowych Niemiec",
+                "zh-cn": "添加了德国和德国联邦州的医院索引"
+            },
             "0.8.7": {
                 "en": "Bugfix: Added missing definitions\nError handling for missing state attribute definitions Optimized",
                 "de": "Bugfix: Fehlende Definitionen hinzugefügt\nFehlerbehandlung bei fehlenden Zustandsattributdefinitionen Optimiert",
@@ -230,18 +242,6 @@
                 "es": "* \nagregue \"Casos por 100k\" en total y durante los últimos 7 días para los Bundesländer de Alemania",
                 "pl": "* \ndodać „Przypadki na 100 000” łącznie iw ciągu ostatnich 7 dni dla niemieckich landów",
                 "zh-cn": "* \n在过去7天里为德国的Bundesländer添加“每10万个案例数”"
-            },
-            "0.6.1": {
-                "en": "Added cases per 100k during the last 7 days for Germany",
-                "de": "In den letzten 7 Tagen wurden für Deutschland Fälle pro 100.000 hinzugefügt",
-                "ru": "Добавлены случаи на 100 тысяч за последние 7 дней для Германии",
-                "pt": "Adicionados casos por 100k durante os últimos 7 dias para a Alemanha",
-                "nl": "Toegevoegde gevallen per 100.000 gedurende de afgelopen 7 dagen voor Duitsland",
-                "fr": "Ajout de cas par 100 000 au cours des 7 derniers jours pour l'Allemagne",
-                "it": "Aggiunti casi per 100.000 negli ultimi 7 giorni per la Germania",
-                "es": "Casos agregados por cada 100k durante los últimos 7 días para Alemania",
-                "pl": "Dodano przypadki na 100 000 w ciągu ostatnich 7 dni dla Niemiec",
-                "zh-cn": "最近7天内德国每10万新增案件"
             }
         },
         "title": "COVID-19 live information",
