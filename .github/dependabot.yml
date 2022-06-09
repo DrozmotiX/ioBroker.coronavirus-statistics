@@ -6,8 +6,6 @@ updates:
       interval: "daily"
       time: "04:00"
       timezone: Europe/Berlin
-      allow:
-      - dependency-type: 'production'
     assignees:
     - DutchmanNL
     target-branch: "dependencyAutoUpdate"
