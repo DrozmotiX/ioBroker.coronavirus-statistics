@@ -345,8 +345,8 @@
             "type": "state",
             "common": {
                 "role": "",
-                "name": "Translator for unknow country names",
-                "type": "string",
+                "name": "Translator for unknown country names",
+                "type": "mixed",
                 "read": true,
                 "write": true,
                 "def": 0
