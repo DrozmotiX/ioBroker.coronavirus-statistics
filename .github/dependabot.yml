@@ -1,15 +1,17 @@
 version: 2
 updates:
-  - package-ecosystem: npm
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
-    interval: daily
-    time: "04:00"
-    timezone: Europe/Berlin
-    allow:
+      interval: "daily"
+      time: "04:00"
+      timezone: Europe/Berlin
+      allow:
       - dependency-type: 'production'
-  target-branch: "dependencyAutoUpdate"
-  open-pull-requests-limit: 20
-  assignees:
+    assignees:
     - DutchmanNL
-  versioning-strategy: increase
+    target-branch: "dependencyAutoUpdate"
+    # Labels on pull requests for security and version updates
+    labels:
+      - "npm dependencies"
+    versioning-strategy: increase
