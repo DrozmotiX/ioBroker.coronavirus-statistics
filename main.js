@@ -48,7 +48,7 @@ class Covid19 extends utils.Adapter {
 				common: {
 					'role': '',
 					'name': 'Translator for unknown country names',
-					'type': 'mixed',
+					'type': 'number',
 					'read': true,
 					'write': true,
 					'def': 0
