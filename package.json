@@ -1,6 +1,6 @@
 {
   "name": "iobroker.coronavirus-statistics",
-  "version": "0.8.7",
+  "version": "0.8.8-0",
   "description": "Adapter to show Global Corona Virus information and current reports",
   "author": {
     "name": "DutchmanNL",
@@ -21,7 +21,8 @@
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.0",
     "axios": "^0.21.4",
-    "country-list-js": "^3.1.7"
+    "country-list-js": "^3.1.7",
+    "csvtojson": "^2.0.10"
   },
   "devDependencies": {
     "@alcalzone/release-script": "3.5.9",

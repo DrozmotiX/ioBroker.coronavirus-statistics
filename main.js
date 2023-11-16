@@ -2,6 +2,7 @@
 
 const HospitalService = require('./lib/services/hospital.service');
 const VaccinationService = require('./lib/services/vaccination.service');
+const HospitalIndexService = require('./lib/services/hospital-index.service');
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
@@ -18,6 +19,7 @@ let allGermanyFederalStates = [], allGermanCountyDetails = [], allGermanyCountie
 let allGermanyFederalStatesLoaded = null, allGermanyCountiesLoaded = null, allGermanyCitiesLoaded = null;
 let vaccinationData$;
 let germanHospitalData$;
+let germanHospitalIndexData$;
 
 // Translator if country names are not iso conform
 const countryTranslator = require('./lib/countryTranslator');
@@ -150,6 +152,7 @@ class Covid19 extends utils.Adapter {
 								await this.writeVaccinationDataForCountry(country, await VaccinationService.getVaccinationDataByIsoCode(vaccinationData$, countryObject.code.iso3));
 								if (country === 'Germany') {
 									await this.writeHospitalDataForId(country, await HospitalService.getGermanOverallHospitalData(germanHospitalData$));
+									await this.writeHospitalIndexDataForId(country, await HospitalIndexService.getGermanHospitalIndexByFederalState(germanHospitalIndexData$, 'Bundesgebiet'));
 								}
 							} catch (error) {
 								this.log.debug(`Cannot write data for ${country}: ${error}`);
@@ -407,16 +410,14 @@ class Covid19 extends utils.Adapter {
 
 							try {
 								await this.writeHospitalDataForId(channelName, await HospitalService.getGermanHospitalDataByFederalState(germanHospitalData$, federalStateName));
-								// Create hospital channel for each Federal State
-								await this.extendObjectAsync(`${channelName}.Hospital`, {
-									type: 'channel',
-									common: {
-										name: `Hospital`,
-									},
-									native: {},
-								});
 							} catch (error) {
 								this.log.debug(`Cannot write hospital data for ${channelName}: ${error}`);
+							}
+
+							try {
+								await this.writeHospitalIndexDataForId(channelName, await HospitalIndexService.getGermanHospitalIndexByFederalState(germanHospitalIndexData$, federalStateName));
+							} catch (error) {
+								this.log.debug(`Cannot write hospital index data for ${channelName}: ${error}`);
 							}
 
 							if (vaccDataGermany != null) {
@@ -709,6 +710,8 @@ class Covid19 extends utils.Adapter {
 				.catch(error => this.log.warn(`Vaccination Data Warning: ${error}`));		// load all vaccination data
 			germanHospitalData$ = HospitalService.refreshGermanHospitalData()
 				.catch(error => this.log.warn(`Hospital Data Warning: ${error}`));			// load german hospital data
+			germanHospitalIndexData$ = HospitalIndexService.refreshGermanHospitalIndexData()
+				.catch(error => this.log.warn(`Hospital Index Data Warning: ${error}`));	// load german hospital index
 			await loadAll();																// Global Worldwide statistics
 			await loadCountries(); 															// Detailed Worldwide statistics by country
 
@@ -905,14 +908,13 @@ class Covid19 extends utils.Adapter {
 
 	/**
 	 * @param id				"Germany"
-	 * @param data					Object to write
+	 * @param data				Object to write
 	 */
 	async writeHospitalDataForId(id, data) {
-		if (!data) {
+		if (!id || !data) {
 			this.log.debug(`Cannot write hospital data for ${id}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
 			return;
 		}
-
 
 		await this.extendObjectAsync(`${id}.Hospital`, {
 			type: 'channel',
@@ -924,6 +926,29 @@ class Covid19 extends utils.Adapter {
 
 		for (const key of Object.keys(data)) {
 			await this.localCreateState(`${id}.Hospital.${key}`, key, data[key]);
+		}
+	}
+
+	/**
+	 * @param id				"Germany"
+	 * @param data				Object to write
+	 */
+	async writeHospitalIndexDataForId(id, data) {
+		if (!id || !data) {
+			this.log.debug(`Cannot write hospital index data for ${id}, if this error continues please report a bug to the developer! Totals: ${JSON.stringify(data)}`);
+			return;
+		}
+
+		await this.extendObjectAsync(`${id}.Hospital_Index`, {
+			type: 'channel',
+			common: {
+				name: `Hospital Index`,
+			},
+			native: {},
+		});
+
+		for (const key of Object.keys(data)) {
+			await this.localCreateState(`${id}.Hospital_Index.${key}`, key, data[key]);
 		}
 	}
 
