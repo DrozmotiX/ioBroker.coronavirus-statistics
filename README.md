@@ -96,8 +96,7 @@ As first value, the name from the warning message must be taken from the log. Th
 	### __WORK IN PROGRESS__
 	* (DutchmanNL) 
 -->
-
-### __WORK IN PROGRESS__ - Disable code for inactive APIs
+### 0.9.0 (2023-11-16)
 * (DutchmanNL) Remove specific data regarding germany as APIs are not available anymore
 * (DutchmanNL) Data source dedicated for https://coronavirus-19-api.herokuapp.com, we are unable to support more API due to changes and complexity
 
@@ -112,13 +111,7 @@ As first value, the name from the warning message must be taken from the log. Th
 * (Simatec) Design Fix for Admin >=5.1.28 Dark/Blue Theme
 
 ### 0.8.5 (2021-10-29)
-* (jlssmt) Error handling for bundesländer api implemented 
-
-### 0.8.4 (2021-10-26)
-* (DutchmanNL) Bugfix: New DNS entry for COVID api
-* (jlssmt) Hospital data for Germany added
-* (jlssmt) fix umlauts in hospital service
-* (jlssmt) extend api timer to fix 502 errors
+* (jlssmt) Error handling for bundesländer api implemented
 
 ## License
 MIT License

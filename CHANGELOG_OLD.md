@@ -1,10 +1,16 @@
 # Older changes
+## 0.8.4 (2021-10-26)
+* (DutchmanNL) Bugfix: New DNS entry for COVID api
+* (jlssmt) Hospital data for Germany added
+* (jlssmt) fix umlauts in hospital service
+* (jlssmt) extend api timer to fix 502 errors
+
 ## 0.8.3 (2021-08-20)
 * (jlssmt) Code refactoring
-* (DutchmanNL) Bugfix: Unwanted deletion of data points for Germany solved 
+* (DutchmanNL) Bugfix: Unwanted deletion of data points for Germany solved
 
 ## 0.8.2 (2021-08-17)
-* (DutchmanNL & jlssmt) Small code improvements to prepare stable release 
+* (DutchmanNL & jlssmt) Small code improvements to prepare stable release
 
 ## 0.8.1 (2021-08-16)
 * (DutchmanNL) added definitions for total_boosters
@@ -132,12 +138,11 @@ add "Cases per 100k" in total & during the last 7 days for Germany's Bundesländ
 
 ## 0.4.2 Federal States for Germany implemented
 * (DutchmanNL) Configuration redesigned, moved options to "Advanced Settings" tab
-* (DutchmanNL) Federal States for Germany implemented, thanks to : https://npgeo-corona-npgeo-de.hub.arcgis.com/ 
+* (DutchmanNL) Federal States for Germany implemented, thanks to : https://npgeo-corona-npgeo-de.hub.arcgis.com/
 
 ## 0.4.0 Data-points added for Top 5 of countries with most cases
 * (KLVN) BugFix : German (and some other) translations corrected
 * (DutchmanNL) Add gulp i18n translation structure
-
 
 ## 0.3.5 Data-points added for Top 5 of countries with most cases
 * (DutchmanNL) Data-points added for Top 5 of countries with most cases
@@ -152,14 +157,14 @@ add "Cases per 100k" in total & during the last 7 days for Germany's Bundesländ
 ## 0.3.3 Improved configuration page
 * (DutchmanNL) Improved configuration page
 * (DutchmanNL) Make country list in configuration variable	
-* (DutchmanNL) Implement choice if non-selected countrys should be deleted from states (if already there, default No!) 
+* (DutchmanNL) Implement choice if non-selected countrys should be deleted from states (if already there, default No!)
 
 ## 0.3.1
 * (DutchmanNL) Enable configuration
 
 ## 0.3.0 (2020-03-22)
 * (GermanBluefox) The number of data points was reduced by selection of countries
- 
+
 ## 0.2.5 
 * (Scrounger) Bugfix : Cabo_Verde not found in lib! Must be added to the country name translator
 
@@ -192,4 +197,3 @@ add "Cases per 100k" in total & during the last 7 days for Germany's Bundesländ
 
 ## 0.1.0
 * (DutchmanNL) initial release
-
