@@ -50,46 +50,6 @@ Generic Source : https://coronavirus-19-api.herokuapp.com
 | Continents | Group total amounts by a continent in separate state (Default: false) |
 | Delete unused States | Delete data when countries are deselected (Default: false) |
 
-```
-## For Germany only
-| Option | Description |
-|--|--|
-| Federal states| Get federal state data for Germany (Selected only, Default false) |
-| counties | Get data for Germany counties (Selected only, Default false) |
-| Cities | Get data for Germany cities (Selected only, Default false) |
-| All federal states | All Germany federal states  (Default false) |
-| All cities | All Germany cities (Default false) |
-| All counties | All Germany counties (Default false) |
-
-It's possible to get data for federal states (Bundesländer), cities (Städte) counties (Landeskreise).
-You can choose to receive all data or just select specific regions in advanced settings.
-
-<span style="color:red">Vaccination data is currently only available for Germany and will only be retrieved when *"Bundesländer"* is activated</span>
-```
-
-## Add missing countries
-It may happen that countries are not recognized correctly because the API delivers some country names not ISO conform. In such a case you will get a warning message in the log, which looks like this
-
-```
-coronavirus-statistics.0	2020-03-21 09:05:31.328	warn	(22937) Timor-Leste not found in lib! Must be added to the country name translator.
-```
-
-Using the datapoint `coronavirus-statistics.0.countryTranslator` you can assign a country yourself. Look for the name of the corresponding country here:
-
-[List with country names](https://github.com/i-rocky/country-list-js/blob/master/data/names.json)
-
-With the selected country name you have to create a JSON string and enter it in the datapoint `coronavirus-statistics.0.countryTranslator`.
-The JSON string then looks like this, for example:
-
-```
-{
-	"Cabo_Verde": "Cape Verde",
-	"Timor-Leste": "East Timor"
-}
-```
-
-As first value, the name from the warning message must be taken from the log. The name of the country from the [List with country names](https://github.com/i-rocky/country-list-js/blob/master/data/names.json) is then assigned to this.
-
 ## Changelog
 
 <!--
