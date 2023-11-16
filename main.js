@@ -708,30 +708,33 @@ class Covid19 extends utils.Adapter {
 
 			vaccinationData$ = VaccinationService.refreshVaccinationData()
 				.catch(error => this.log.warn(`Vaccination Data Warning: ${error}`));		// load all vaccination data
-			germanHospitalData$ = HospitalService.refreshGermanHospitalData()
-				.catch(error => this.log.warn(`Hospital Data Warning: ${error}`));			// load german hospital data
+			// Functionality removed in version 0.9, API not available anymore
+			// germanHospitalData$ = HospitalService.refreshGermanHospitalData()
+			// 	.catch(error => this.log.warn(`Hospital Data Warning: ${error}`));			// load german hospital data
 			germanHospitalIndexData$ = HospitalIndexService.refreshGermanHospitalIndexData()
 				.catch(error => this.log.warn(`Hospital Index Data Warning: ${error}`));	// load german hospital index
 			await loadAll();																// Global Worldwide statistics
 			await loadCountries(); 															// Detailed Worldwide statistics by country
 
-			if (this.config.getGermanyFederalStates || !allGermanyFederalStatesLoaded) {
-				await this.extendObjectAsync(`Germany.Bundesland`, {
-					type: 'channel',
-					common: {
-						name: 'Bundesland',
-					},
-					native: {},
-				});
-				await germanyBundesland(); // Detailed Federal state statistics for germany
-			} else {
+			// Functionality removed in version 0.9, API not available anymore
+			// if (this.config.getGermanyFederalStates || !allGermanyFederalStatesLoaded) {
+			// 	await this.extendObjectAsync(`Germany.Bundesland`, {
+			// 		type: 'channel',
+			// 		common: {
+			// 			name: 'Bundesland',
+			// 		},
+			// 		native: {},
+			// 	});
+			// 	await germanyBundesland(); // Detailed Federal state statistics for germany
+			// } else {
 				await this.localDeleteState(`Germany.Bundesland`);
-			}
+			// }
 
+			// Functionality removed in version 0.9, API not available anymore
 			// Get data for cities and counties of Germany, ensure tables always have values to load
-			if (this.config.getGermanyCities || this.config.getGermanyCounties || !allGermanyCitiesLoaded || !allGermanyCountiesLoaded) {
-				await germanyCounties(); // Detailed city state statistics for germany
-			}
+			// if (this.config.getGermanyCities || this.config.getGermanyCounties || !allGermanyCitiesLoaded || !allGermanyCountiesLoaded) {
+			// 	await germanyCounties(); // Detailed city state statistics for germany
+			// }
 
 			// Delete potential unused data for germany
 			if (!this.config.getGermanyCities) {

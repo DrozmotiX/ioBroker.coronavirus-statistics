@@ -39,8 +39,8 @@ The following information is available :
 | test | Total number of COVID-19 tests taken globally |
 | tests per one  million counties | Total number of COVID-19 tests taken globally per one  million |
 
-Please be aware this adapter uses as much as possible up-to-date information but there can be a delay of several hours depending on the country's report.  
-German Federal States : https://npgeo-corona-npgeo-de.hub.arcgis.com/  s
+Please be aware this adapter uses as much as possible up-to-date information, but there can be a delay of several hours depending on the country's report.  
+```German Federal States : https://npgeo-corona-npgeo-de.hub.arcgis.com/  s```
 Generic Source : https://coronavirus-19-api.herokuapp.com
 
 ## Advanced settings
@@ -50,6 +50,7 @@ Generic Source : https://coronavirus-19-api.herokuapp.com
 | Continents | Group total amounts by a continent in separate state (Default: false) |
 | Delete unused States | Delete data when countries are deselected (Default: false) |
 
+```
 ## For Germany only
 | Option | Description |
 |--|--|
@@ -64,6 +65,7 @@ It's possible to get data for federal states (Bundesländer), cities (Städte) c
 You can choose to receive all data or just select specific regions in advanced settings.
 
 <span style="color:red">Vaccination data is currently only available for Germany and will only be retrieved when *"Bundesländer"* is activated</span>
+```
 
 ## Add missing countries
 It may happen that countries are not recognized correctly because the API delivers some country names not ISO conform. In such a case you will get a warning message in the log, which looks like this
@@ -94,6 +96,10 @@ As first value, the name from the warning message must be taken from the log. Th
 	### __WORK IN PROGRESS__
 	* (DutchmanNL) 
 -->
+
+### __WORK IN PROGRESS__ - Disable code for inactive APIs
+* (DutchmanNL) Remove specific data regarding germany as APIs are not available anymore
+* (DutchmanNL) Data source dedicated for https://coronavirus-19-api.herokuapp.com, we are unable to support more API due to changes and complexity
 
 ### 0.8.8-0 (2021-11-19)
 * (jlssmt) added hospital index for germany and federal states of germany
