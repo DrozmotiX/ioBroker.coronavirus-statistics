@@ -43,6 +43,21 @@ class Covid19 extends utils.Adapter {
 	 */
 	async onReady() {
 		try {
+			// Needed to solve incorrect object typ for existing states  (normally created during adapter install)
+			// Fixes issue #340 & #347
+			await this.extendObjectAsync(`countryTranslator`, {
+				type: 'state',
+				common: {
+					'role': '',
+					'name': 'Translator for unknown country names',
+					'type': 'number',
+					'read': true,
+					'write': true,
+					'def': 0
+				},
+				'native': {}
+			});
+
 			// Load configuration
 			const selectedCountries = this.config.countries || [];
 			const selectedGermanyFederalStates = this.config.selectedGermanyFederalStates || [];
