@@ -96,9 +96,9 @@ As first value, the name from the warning message must be taken from the log. Th
 	### __WORK IN PROGRESS__
 	* (DutchmanNL) 
 -->
-### 0.9.0 (2023-11-16)
+### __WORK IN PROGRESS__
 * (DutchmanNL) Remove specific data regarding germany as APIs are not available anymore
-* (DutchmanNL) Data source dedicated for https://coronavirus-19-api.herokuapp.com, we are unable to support more API due to changes and complexity
+* (DutchmanNL) Data source dedicated for https://coronavirus-19-api.herokuapp.com, we are unable to support more APIs due to changes, complexity and available development capacity. But please feel free to provide PR's!
 
 ### 0.8.8-0 (2021-11-19)
 * (jlssmt) added hospital index for germany and federal states of germany
