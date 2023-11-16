@@ -1,357 +1,202 @@
 {
-    "common": {
-        "name": "coronavirus-statistics",
-        "version": "0.8.8-0",
-        "news": {
-            "0.8.8-0": {
-                "en": "added hospital index for germany and federal states of germany",
-                "de": "Krankenhausindex für Deutschland und Bundesländer hinzugefügt",
-                "ru": "добавлен индекс больниц для Германии и федеральных земель германии",
-                "pt": "adicionado índice de hospitais para a Alemanha e estados federais da Alemanha",
-                "nl": "toegevoegde ziekenhuisindex voor duitsland en deelstaten van duitsland",
-                "fr": "index des hôpitaux ajouté pour l'allemagne et les états fédéraux d'allemagne",
-                "it": "aggiunto indice ospedaliero per la Germania e gli stati federali della Germania",
-                "es": "índice hospitalario agregado para alemania y los estados federales de alemania",
-                "pl": "dodano indeks szpitalny dla Niemiec i krajów związkowych Niemiec",
-                "zh-cn": "添加了德国和德国联邦州的医院索引"
-            },
-            "0.8.7": {
-                "en": "Bugfix: Added missing definitions\nError handling for missing state attribute definitions Optimized",
-                "de": "Bugfix: Fehlende Definitionen hinzugefügt\nFehlerbehandlung bei fehlenden Zustandsattributdefinitionen Optimiert",
-                "ru": "Исправление: добавлены недостающие определения.\nОбработка ошибок при отсутствии определений атрибутов состояния Оптимизировано",
-                "pt": "Correção de bug: definições ausentes adicionadas\nTratamento de erros para definições de atributos de estado ausentes Otimizado",
-                "nl": "Bugfix: ontbrekende definities toegevoegd\nFoutafhandeling voor ontbrekende statusattribuutdefinities Geoptimaliseerd",
-                "fr": "Correction de bug : ajout de définitions manquantes\nGestion des erreurs pour les définitions d'attributs d'état manquantes Optimisé",
-                "it": "Bugfix: Aggiunte definizioni mancanti\nGestione degli errori per le definizioni degli attributi di stato mancanti Ottimizzato",
-                "es": "Corrección de error: se agregaron definiciones faltantes\nManejo de errores para definiciones de atributos de estado faltantes Optimizado",
-                "pl": "Bugfix: Dodano brakujące definicje\nObsługa błędów dla brakujących definicji atrybutów stanu Zoptymalizowana",
-                "zh-cn": "错误修正：添加了缺失的定义\n缺少状态属性定义的错误处理优化"
-            },
-            "0.8.6": {
-                "en": "Design Fix for Admin >=5.1.28 Dark/Blue Theme",
-                "de": "Design Fix für Admin >=5.1.28 Dunkel/Blaues Design",
-                "ru": "Исправление дизайна для администратора> = 5.1.28 Темно-синяя тема",
-                "pt": "Correção de design para Admin> = 5.1.28 Tema escuro / azul",
-                "nl": "Design Fix voor Admin >=5.1.28 Donker/blauw thema",
-                "fr": "Correctif de conception pour l'administrateur > = 5.1.28 Thème sombre/bleu",
-                "it": "Correzione del design per l'amministratore >=5.1.28 Tema scuro/blu",
-                "es": "Corrección de diseño para administrador> = 5.1.28 Tema azul oscuro / oscuro",
-                "pl": "Poprawka projektu dla administratora >= 5.1.28 Ciemny / niebieski motyw",
-                "zh-cn": "Admin >=5.1.28 Dark/Blue 主题的设计修复"
-            },
-            "0.8.5": {
-                "en": "Error handling for bundesländer api implemented",
-                "de": "Fehlerbehandlung für Bundesländer API implementiert",
-                "ru": "Реализована обработка ошибок для bundesländer api",
-                "pt": "Tratamento de erros para a API bundesländer implementada",
-                "nl": "Foutafhandeling voor bundesländer api geïmplementeerd",
-                "fr": "Gestion des erreurs pour l'API bundesländer implémentée",
-                "it": "Gestione degli errori per l'API bundesländer implementata",
-                "es": "Se implementó el manejo de errores para bundesländer api",
-                "pl": "Zaimplementowano obsługę błędów dla bundesländer api",
-                "zh-cn": "实现了 bundesländer api 的错误处理"
-            },
-            "0.8.4": {
-                "en": "Bugfix: New DNS entry for COVID api\nHospital data for Germany added\nfix umlauts in hospital service\nextend api timer to fix 502 errors",
-                "de": "Bugfix: Neuer DNS-Eintrag für COVID-API\nKrankenhausdaten für Deutschland hinzugefügt\nUmlaute im Krankenhausdienst korrigieren\nErweitern Sie den API-Timer, um 502-Fehler zu beheben",
-                "ru": "Исправление: новая запись DNS для COVID api\nДобавлены данные больниц по Германии\nисправить умляуты в больничной службе\nрасширить таймер API, чтобы исправить 502 ошибки",
-                "pt": "Correção de bug: nova entrada DNS para API COVID\nDados hospitalares da Alemanha adicionados\nconsertar tremas em serviço hospitalar\nestenda o cronômetro da API para corrigir erros 502",
-                "nl": "Bugfix: nieuwe DNS-vermelding voor COVID api\nZiekenhuisgegevens voor Duitsland toegevoegd\numlauts in de ziekenhuisdienst oplossen\nverleng api-timer om 502-fouten op te lossen",
-                "fr": "Correction de bug : nouvelle entrée DNS pour l'api COVID\nAjout des données hospitalières pour l'Allemagne\ncorriger les trémas dans le service hospitalier\nétendre le minuteur api pour corriger les erreurs 502",
-                "it": "Bugfix: nuova voce DNS per l'API COVID\nAggiunti dati ospedalieri per la Germania\ncorreggere le dieresi nel servizio ospedaliero\nestendere il timer API per correggere gli errori 502",
-                "es": "Corrección de error: nueva entrada de DNS para COVID api\nSe agregaron datos hospitalarios para Alemania\narreglar diéresis en el servicio hospitalario\nextender el temporizador de api para corregir errores 502",
-                "pl": "Bugfix: Nowy wpis DNS dla COVID api\nDodano dane szpitalne dla Niemiec\nnaprawić umlauty w służbie szpitalnej\nprzedłużyć licznik API, aby naprawić błędy 502",
-                "zh-cn": "错误修复：COVID api 的新 DNS 条目\n添加了德国的医院数据\n修复医院服务中的变音\n扩展 api 计时器以修复 502 错误"
-            },
-            "0.8.3": {
-                "en": "Code refactoring\nBugfix: Unwanted deletion of data points for Germany solved",
-                "de": "Code Refactoring\nBugfix: Ungewolltes Löschen von Datenpunkten für Deutschland behoben",
-                "ru": "Рефакторинг кода\nИсправление: решено нежелательное удаление точек данных для Германии.",
-                "pt": "Refatoração de código\nCorreção de bug: exclusão indesejada de pontos de dados para a Alemanha resolvida",
-                "nl": "Code refactoring\nBugfix: Ongewenste verwijdering van datapunten voor Duitsland opgelost",
-                "fr": "Refactorisation de code\nCorrection de bug : la suppression indésirable de points de données pour l'Allemagne a été résolue",
-                "it": "Refactoring del codice\nBugfix: eliminazione indesiderata di punti dati per la Germania risolta",
-                "es": "Código de refactorización\nCorrección de error: se solucionó la eliminación no deseada de puntos de datos para Alemania",
-                "pl": "Refaktoryzacja kodu\nBugfix: Niepożądane usuwanie punktów danych dla Niemiec rozwiązane",
-                "zh-cn": "代码重构\n错误修正：解决了德国数据点的意外删除问题"
-            },
-            "0.8.3-0": {
-                "en": "Code refactoring\nBugfix: Unwanted deletion of data points for Germany solved",
-                "de": "Code Refactoring\nBugfix: Ungewolltes Löschen von Datenpunkten für Deutschland behoben",
-                "ru": "Рефакторинг кода\nИсправление: решено нежелательное удаление точек данных для Германии.",
-                "pt": "Refatoração de código\nCorreção de bug: exclusão indesejada de pontos de dados para a Alemanha resolvida",
-                "nl": "Code refactoring\nBugfix: Ongewenste verwijdering van datapunten voor Duitsland opgelost",
-                "fr": "Refactorisation de code\nCorrection de bug : la suppression indésirable de points de données pour l'Allemagne a été résolue",
-                "it": "Refactoring del codice\nBugfix: eliminazione indesiderata di punti dati per la Germania risolta",
-                "es": "Código de refactorización\nCorrección de error: se solucionó la eliminación no deseada de puntos de datos para Alemania",
-                "pl": "Refaktoryzacja kodu\nBugfix: Niepożądane usuwanie punktów danych dla Niemiec rozwiązane",
-                "zh-cn": "代码重构\n错误修正：解决了德国数据点的意外删除问题"
-            },
-            "0.8.2": {
-                "en": "Small code improvements to prepare stable release",
-                "de": "Kleine Codeverbesserungen zur Vorbereitung einer stabilen Version",
-                "ru": "Небольшие улучшения кода для подготовки стабильного выпуска",
-                "pt": "Pequenas melhorias no código para preparar uma versão estável",
-                "nl": "Kleine codeverbeteringen om een stabiele release voor te bereiden",
-                "fr": "Petites améliorations du code pour préparer une version stable",
-                "it": "Piccoli miglioramenti al codice per preparare il rilascio stabile",
-                "es": "Pequeñas mejoras de código para preparar una versión estable",
-                "pl": "Małe ulepszenia kodu w celu przygotowania stabilnego wydania",
-                "zh-cn": "小代码改进以准备稳定版本"
-            },
-            "0.8.1": {
-                "en": "added definitions for total_boosters",
-                "de": "Definitionen für total_boosters hinzugefügt",
-                "ru": "добавлены определения для total_boosters",
-                "pt": "adicionadas definições para total_boosters",
-                "nl": "toegevoegde definities voor total_boosters",
-                "fr": "définitions ajoutées pour total_boosters",
-                "it": "Aggiunte definizioni per total_boosters",
-                "es": "definiciones agregadas para total_boosters",
-                "pl": "dodano definicje dla total_boosters",
-                "zh-cn": "为 total_boosters 添加了定义"
-            },
-            "0.8.0": {
-                "en": "Added vaccination data for all countries\nadded definitions for vaccination states\nFolder structure optimized with devices and channels\nCode improvement to handle state deletion more efficient\nChangeover to validated API for German vaccination data of Bundesländer\nEnsure (country) folder(s) including all states are removed if not selected",
-                "de": "Impfdaten für alle Länder hinzugefügt\nDefinitionen für Impfstaaten hinzugefügt\nOrdnerstruktur optimiert mit Geräten und Kanälen\nCodeverbesserung, um das Löschen des Status effizienter zu handhaben\nUmstellung auf validierte API für deutsche Impfdaten der Bundesländer\nStellen Sie sicher, dass (Land-)Ordner einschließlich aller Bundesstaaten entfernt werden, wenn sie nicht ausgewählt sind",
-                "ru": "Добавлены данные о вакцинации для всех стран.\nдобавлены определения состояний вакцинации\nСтруктура папок оптимизирована для устройств и каналов\nУлучшение кода для более эффективной обработки удаления состояния\nПереход на проверенный API для данных о вакцинации в Германии в Bundesländer\nУбедитесь, что папки (страны), включая все состояния, удалены, если не выбраны",
-                "pt": "Adicionados dados de vacinação para todos os países\nadicionadas definições para os estados de vacinação\nEstrutura de pasta otimizada com dispositivos e canais\nMelhoria de código para lidar com a exclusão de estado de forma mais eficiente\nMudança para API validada para dados de vacinação alemães de Bundesländer\nCertifique-se de que as pastas (países), incluindo todos os estados, sejam removidas se não forem selecionadas",
-                "nl": "Vaccinatiegegevens toegevoegd voor alle landen\ntoegevoegde definities voor vaccinatiestaten\nMapstructuur geoptimaliseerd met apparaten en kanalen\nCodeverbetering om het verwijderen van de status efficiënter te verwerken\nOvergang naar gevalideerde API voor Duitse vaccinatiegegevens van Bundesländer\nZorg ervoor dat (land)map(pen) inclusief alle staten worden verwijderd indien niet geselecteerd",
-                "fr": "Ajout de données de vaccination pour tous les pays\najout de définitions pour les états de vaccination\nStructure de dossier optimisée avec les appareils et les canaux\nAmélioration du code pour gérer la suppression d'état plus efficacement\nPassage à l'API validée pour les données de vaccination allemandes des Bundesländer\nAssurez-vous que le(s) dossier(s) (pays), y compris tous les états, sont supprimés s'ils ne sont pas sélectionnés",
-                "it": "Aggiunti dati sulla vaccinazione per tutti i paesi\nAggiunte definizioni per gli stati di vaccinazione\nStruttura delle cartelle ottimizzata con dispositivi e canali\nMiglioramento del codice per gestire in modo più efficiente l'eliminazione dello stato\nPassaggio all'API convalidata per i dati di vaccinazione tedeschi dei Bundesländer\nAssicurati che le cartelle (paese) inclusi tutti gli stati vengano rimosse se non selezionate",
-                "es": "Se agregaron datos de vacunación para todos los países.\ndefiniciones añadidas para los estados de vacunación\nEstructura de carpetas optimizada con dispositivos y canales.\nMejora del código para manejar la eliminación de estados de manera más eficiente\nCambio a API validada para los datos de vacunación alemanes de los Bundesländer\nAsegúrese de que la (s) carpeta (s) de (país), incluidos todos los estados, se eliminen si no se seleccionan",
-                "pl": "Dodano dane dotyczące szczepień dla wszystkich krajów\ndodano definicje stanów szczepień\nStruktura folderów zoptymalizowana pod kątem urządzeń i kanałów\nUlepszenie kodu w celu wydajniejszej obsługi usuwania stanu\nPrzejście na zwalidowane API dla niemieckich danych szczepień Bundesländer\nUpewnij się, że foldery (kraje) zawierające wszystkie stany zostały usunięte, jeśli nie zostały wybrane",
-                "zh-cn": "添加了所有国家的疫苗接种数据\n添加了疫苗接种状态的定义\n使用设备和频道优化的文件夹结构\n代码改进以更有效地处理状态删除\n转换为经验证的联邦德国疫苗接种数据 API\n如果未选择，确保（国家）文件夹（包括所有州）被删除"
-            },
-            "0.7.1": {
-                "en": "Bugfix: Vaccination data for Germany",
-                "de": "Bugfix: Impfdaten für Deutschland",
-                "ru": "Исправление: данные о вакцинации для Германии",
-                "pt": "Correção de bug: dados de vacinação para a Alemanha",
-                "nl": "Bugfix: Vaccinatiegegevens voor Duitsland",
-                "fr": "Correction d'un bug : données de vaccination pour l'Allemagne",
-                "it": "Bugfix: dati sulla vaccinazione per la Germania",
-                "es": "Corrección de error: datos de vacunación para Alemania",
-                "pl": "Bugfix: Dane o szczepieniach dla Niemiec",
-                "zh-cn": "错误修正：德国的疫苗接种数据"
-            },
-            "0.7.0": {
-                "en": "round Impfquote to 2 digits\nBugfix: Solved last_update is invalid warn message\nBugfix: State attribute definition missing for + undefined\nBugfix: Solved cannot read property 'Erstimpfung' of undefined\nBugfix: State value to set for \"xxx.BL\" has to be type \"number\" but received type \"string\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)\nBugfix: State value to set for \"xxx.Tests*\" has to be type \"string\" but received type \"number\", solves [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/237)\n(DutchmanNL/jlssmt) Bugfix: Vaccination data for Germany, several states missing in new API and will not be updated anymore !",
-                "de": "Impfquote auf 2 Stellen runden\nBugfix: Gelöst last_update ist ungültige Warnmeldung\nBugfix: Statusattributdefinition fehlt für + undefined\nBugfix: Gelöst kann Eigenschaft 'Erstimpfung' von undefined nicht lesen read\nBugfix: Statuswert für \"xxx.BL\" muss vom Typ \"Nummer\" sein, aber vom Typ \"String\" empfangen, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: Statuswert für \"xxx.Tests*\" muss vom Typ \"string\" sein, aber vom Typ \"number\" erhalten, löst [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) Bugfix: Impfdaten für Deutschland, mehrere Bundesländer fehlen in neuer API und werden nicht mehr aktualisiert !",
-                "ru": "округлить Impfquote до 2 цифр\nИсправление: решено, что last_update - недопустимое предупреждающее сообщение.\nИсправление: определение атрибута состояния отсутствует для + undefined\nИсправление: решено, не удается прочитать свойство Erstimpfung неопределенного значения.\nИсправление: значение состояния, устанавливаемое для «xxx.BL», должно быть типа «число», но полученный тип «строка» решает [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nИсправление: значение состояния, устанавливаемое для «xxx.Tests *», должно иметь тип «строка», но полученный тип «число» решает [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)\n(DutchmanNL / jlssmt) Исправление: данные о вакцинации для Германии, несколько состояний отсутствуют в новом API и больше не будут обновляться!",
-                "pt": "arredondar Impfquote para 2 dígitos\nCorreção de bug: last_update resolvido é uma mensagem de aviso inválida\nCorreção: definição de atributo de estado ausente para + indefinido\nCorreção de bug: resolvido, não é possível ler a propriedade 'Erstimpfung' de indefinido\nCorreção de bug: o valor do estado a ser definido para \"xxx.BL\" deve ser do tipo \"número\", mas recebido do tipo \"string\", resolve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorreção de bug: o valor do estado definido para \"xxx.Tests *\" deve ser do tipo \"string\", mas recebido do tipo \"número\", resolve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)\n(DutchmanNL / jlssmt) Correção de bug: Dados de vacinação para a Alemanha, vários estados ausentes na nova API e não serão mais atualizados!",
-                "nl": "rond Impfquote af op 2 cijfers\nBugfix: Opgelost last_update is ongeldig waarschuwingsbericht\nBugfix: Status attribuutdefinitie ontbreekt voor + undefined\nBugfix: Opgelost kan eigenschap 'Erstimpfung' van undefined read niet lezen\nBugfix: Statuswaarde die moet worden ingesteld voor \"xxx.BL\" moet van het type \"nummer\" zijn, maar het type \"string\" ontvangen, lost [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ op) 237)\nBugfix: Statuswaarde die moet worden ingesteld voor \"xxx.Tests*\" moet van het type \"string\" zijn, maar het type \"nummer\" ontvangen, lost [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues) op /237)\n(DutchmanNL/jlssmt) Bugfix: Vaccinatiegegevens voor Duitsland, verschillende staten ontbreken in nieuwe API en worden niet meer bijgewerkt!",
-                "fr": "arrondir Impfquote à 2 chiffres\nCorrection de bug : La dernière mise à jour résolue est un message d'avertissement invalide\nCorrection de bug : définition d'attribut d'état manquante pour + non défini\nCorrection de bug : résolu, impossible de lire la propriété 'Erstimpfung' d'undefined\nCorrectif : La valeur d'état à définir pour \"xxx.BL\" doit être de type \"numéro\" mais le type reçu \"chaîne\", résout [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorrection de bug : la valeur d'état à définir pour \"xxx.Tests*\" doit être de type \"string\" mais reçu le type \"number\", résout [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) Correction de bug : Données de vaccination pour l'Allemagne, plusieurs états manquants dans la nouvelle API et ne seront plus mis à jour !",
-                "it": "Round Impfquote a 2 cifre\nBugfix: risolto last_update è un messaggio di avviso non valido\nBugfix: definizione dell'attributo di stato mancante per + non definito\nBugfix: risolto non è possibile leggere la proprietà 'Erstimpfung' di undefined\nBugfix: il valore di stato da impostare per \"xxx.BL\" deve essere di tipo \"number\" ma ricevuto di tipo \"string\", risolve [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: il valore di stato da impostare per \"xxx.Tests*\" deve essere di tipo \"string\" ma ricevuto di tipo \"number\", risolve [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) Bugfix: Dati di vaccinazione per la Germania, diversi stati mancanti nella nuova API e non verranno più aggiornati!",
-                "es": "redondear Impfquote a 2 dígitos\nCorrección de error: last_update resuelto es un mensaje de advertencia no válido\nCorrección de error: falta la definición de atributo de estado para + indefinido\nCorrección de error: resuelto no se puede leer la propiedad 'Erstimpfung' de undefined\nCorrección de error: el valor de estado para establecer para \"xxx.BL\" debe ser el tipo \"número\" pero se recibió el tipo \"cadena\", resuelve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nCorrección de error: el valor de estado para establecer para \"xxx.Tests *\" tiene que ser de tipo \"cadena\" pero se recibió el tipo \"número\", resuelve [# 237] (https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues / 237)\n(DutchmanNL / jlssmt) Corrección de error: datos de vacunación para Alemania, faltan varios estados en la nueva API y ya no se actualizarán.",
-                "pl": "okrągły Impfquote do 2 cyfr\nBugfix: Rozwiązany last_update jest nieprawidłowy komunikat ostrzegawczy\nBugfix: Brak definicji atrybutu stanu dla + undefined\nBugfix: Rozwiązany nie można odczytać właściwości „Erstimpfung” undefined\nBugfix: Wartość stanu do ustawienia dla \"xxx.BL\" musi być typu \"number\", ale otrzymany typ \"string\", rozwiązuje [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\nBugfix: Wartość stanu do ustawienia dla \"xxx.Tests*\" musi być typu \"string\", ale otrzymany typ \"number\", rozwiązuje [#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) Bugfix: Dane dotyczące szczepień dla Niemiec, kilka stanów brakuje w nowym API i nie będą już aktualizowane!",
-                "zh-cn": "将 Impfquote 舍入为 2 位数\n修正：解决 last_update 无效警告信息\n错误修正：+ undefined 缺少状态属性定义\n修正：解决了无法读取未定义的属性 'Erstimpfung'\n修正：为“xxx.BL”设置的状态值必须是“数字”类型但接收类型是“字符串”，解决了[#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues/ 237)\n修正：为“xxx.Tests*”设置的状态值必须是“字符串”类型，但接收类型是“数字”，解决了[#237](https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/issues /237)\n(DutchmanNL/jlssmt) 修正：德国的疫苗接种数据，新 API 中缺少几个州，将不再更新！"
-            },
-            "0.6.9": {
-                "en": "Adapter issues with vaccination data from Germany solved",
-                "de": "Adapterprobleme mit Impfdaten aus Deutschland gelöst",
-                "ru": "Решены проблемы адаптера с данными о вакцинации из Германии",
-                "pt": "Problemas de adaptador com dados de vacinação da Alemanha resolvidos",
-                "nl": "Adapterproblemen met vaccinatiegegevens uit Duitsland opgelost",
-                "fr": "Problèmes d'adaptateur avec les données de vaccination d'Allemagne résolus",
-                "it": "Risolti i problemi dell'adattatore con i dati sulle vaccinazioni dalla Germania",
-                "es": "Problemas del adaptador con los datos de vacunación de Alemania resueltos",
-                "pl": "Rozwiązano problemy z adapterem z danymi szczepień z Niemiec",
-                "zh-cn": "来自德国的疫苗接种数据出现适配器问题"
-            },
-            "0.6.8": {
-                "en": "Bugfix : Gernmany vaccinaation data, source changed code updated\nRemoved states (not available anymore by RKI)\nImpfungen pro 1.000 Einwohner\nIndikation nach Alter \nBerufliche Indikation\nMedizinische Indikation\nPflegeheim-bewohnerIn\nNew states (provided by RKI)\nDifferenz zum Vortag \nGesamtzahl bisher verabreichter Impfstoffdosen\nGesamtzahl kumulatiev BioNTech\nGesamtzahl kumulatiev Moderna\nImpf-quote\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
-                "de": "Bugfix: Gernmany Impfdaten, Quellcode geändert\nEntfernte Zustände (von RKI nicht mehr verfügbar)\nImpfungen pro 1.000 Einwohner\nIndikation nach Alter\nBerufliche Indikation\nMedizinische Indikation\nPflegeheim-bebewohnerIn\nNeue Staaten (bereitgestellt von RKI)\nDifferenz zum Vortag\nBewährter vorherigerer Impfstoffdosen\nErkennen kumulatiev BioNTech\nErkennen kumulatiev Moderna\nImpf-Zitat\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
-                "ru": "Исправление: данные о вакцинации в Германии, обновлен исходный код.\nУдаленные состояния (больше не доступны RKI)\nImpfungen pro 1.000 Einwohner\nИндикация нах Альтер\nBerufliche Indikation\nМедицинская индикация\nPflegeheim-bewohnerIn\nНовые состояния (предоставлено RKI)\nDifferenz zum Vortag\nGesamtzahl bisher verabreichter Impfstoffdosen\nГесамцахл кумулатиев BioNTech\nГесамцахл кумулатиев Модерна\nImpf-цитата\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
-                "pt": "Correção de bug: dados de vacinação de Gernmany, código alterado de fonte atualizado\nEstados removidos (não está mais disponível por RKI)\nImpfungen pro 1.000 Einwohner\nIndikation nach Alter\nBerufliche Indikation\nMedizinische Indikation\nPflegeheim-bewohnerIn\nNovos estados (fornecidos por RKI)\nDifferenz zum Vortag\nGesamtzahl bisher verabreichter Impfstoffdosen\nGesamtzahl kumulatiev BioNTech\nGesamtzahl kumulatiev Moderna\nCitação Impf\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
-                "nl": "Bugfix: Gernmany vaccinatiegegevens, broncode gewijzigd bijgewerkt\nStaten verwijderd (niet meer beschikbaar door RKI)\nImpfungen pro 1.000 Einwohner\nIndikation nach Alter\nBerufliche-indikatie\nMedizinische Indikation\nPflegeheim-bewohnerIn\nNieuwe staten (geleverd door RKI)\nDifferenz zum Vortag\nGesamtzahl bisher verabreichter Impfstoffdosen\nGesamtzahl kumulatiev BioNTech\nGesamtzahl kumulatiev Moderna\nImpf-citaat\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
-                "fr": "Correction de bug: données de vaccination contre le Gernmany, code source modifié mis à jour\nÉtats supprimés (plus disponible par RKI)\nImpfungen pro 1.000 Einwohner\nIndikation nach Alter\nIndikation Berufliche\nIndikation Medizinische\nPflegeheim-bewohnerIn\nNouveaux états (fournis par RKI)\nDifferenz zum Vortag\nGesamtzahl bisher verabreichter Impfstoffdosen\nGesamtzahl kumulatiev BioNTech\nGesamtzahl kumulatiev Moderna\nDevis impf\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
-                "it": "Errore corretto: dati di vaccinazione di Gernmany, codice modificato sorgente aggiornato\nStati rimossi (non più disponibile da RKI)\nImpfungen pro 1.000 Einwohner\nIndikation nach Alter\nBerufliche Indikation\nMedizinische Indikation\nPflegeheim-bewohnerIn\nNuovi stati (fornito da RKI)\nDifferenz zum Vortag\nGesamtzahl bisher verabreichter Impfstoffdosen\nGesamtzahl kumulatiev BioNTech\nGesamtzahl kumulatiev Moderna\nImpf-quote\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
-                "es": "Corrección de error: datos de vacunación de Alemania, código fuente modificado actualizado\nEstados eliminados (ya no está disponible por RKI)\nImpfungen pro 1.000 Einwohner\nIndicación nach Alter\nIndicación Berufliche\nIndicación Medizinische\nPflegeheim-bewohnerIn\nNuevos estados (proporcionados por RKI)\nDifferenz zum Vortag\nGesamtzahl bisher verabreichter Impfstoffdosen\nGesamtzahl kumulatiev BioNTech\nGesamtzahl kumulatiev Moderna\nImpf-cotización\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
-                "pl": "Poprawka: dane szczepień Gernmany, zaktualizowano kod źródłowy\nUsunięte stany (niedostępne już przez RKI)\nImpfungen pro 1.000 Einwohner\nIndikation nach Alter\nBerufliche Indikation\nMedizinische Indikation\nPflegeheim-bewohnerIn\nNowe stany (dostarczone przez RKI)\nDifferenz zum Vortag\nGesamtzahl bisher verabreichter Impfstoffdosen\nGesamtzahl kumulatiev BioNTech\nGesamtzahl kumulatiev Moderna\nCytat impf\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag",
-                "zh-cn": "错误修正：Gernmany疫苗接种数据，源代码已更改\n删除的状态（RKI不再可用）\nImpfungen pro 1.000 Einwohner\n适应症\nBerufliche指示\nMedizinische Indikation\nPflegeheim-bewohnerIn\n新州（由RKI提供）\nDifferenz zum Vortag\nGesamtzahl bisher verabreichter Impfstoffdosen\nGesamtzahl kumulatiev BioNTech\n现代化的现代艺术\n引号\nZweit Impfungen kumulativ\nZweit Impfungen Differenz zum Vortag"
-            },
-            "0.6.7": {
-                "en": "Added Impfungen pro 1.000 Einwohner\nBugfix : Proper error handling if excel data cannot be retrieved",
-                "de": "Impfungen pro 1.000 Einwohner hinzugefügt\nBugfix: Richtige Fehlerbehandlung, wenn Excel-Daten nicht abgerufen werden können",
-                "ru": "Добавлен Impfungen pro 1.000 Einwohner.\nИсправление: правильная обработка ошибок, если данные Excel не могут быть получены.",
-                "pt": "Adicionado Impfungen pro 1.000 Einwohner\nCorreção: tratamento adequado de erros se os dados do Excel não puderem ser recuperados",
-                "nl": "Impfungen pro 1.000 Einwohner toegevoegd\nBugfix: juiste foutafhandeling als Excel-gegevens niet kunnen worden opgehaald",
-                "fr": "Ajout de Impfungen pro 1.000 Einwohner\nCorrection de bug: gestion correcte des erreurs si les données Excel ne peuvent pas être récupérées",
-                "it": "Aggiunto Impfungen pro 1.000 Einwohner\nBugfix: corretta gestione degli errori se i dati di Excel non possono essere recuperati",
-                "es": "Se agregó Impfungen pro 1.000 Einwohner\nCorrección de errores: manejo adecuado de errores si no se pueden recuperar los datos de Excel",
-                "pl": "Dodano Impfungen pro 1.000 Einwohner\nPoprawka: Właściwa obsługa błędów, jeśli nie można pobrać danych programu Excel",
-                "zh-cn": "添加了Impfungen pro 1.000 Einwohner\n错误修正：正确的错误处理，如果无法检索Excel数据"
-            },
-            "0.6.6": {
-                "en": "Bugfix : Wrong channel creation of _Impfungen\nBugfixWindows :Error: ENOENT: no such file or directory, open 'C:\\opt\\iobroker\\iobroker-data\\files\\Impfquotenmonitoring.xlsx'",
-                "de": "Bugfix: Falsche Kanalerstellung von _Impfungen\nBugfixWindows: Fehler: ENOENT: Keine solche Datei oder kein solches Verzeichnis. Öffnen Sie 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'.",
-                "ru": "Исправление: неправильное создание канала _Impfungen\nBugfixWindows: Ошибка: ENOENT: нет такого файла или каталога, откройте C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx '",
-                "pt": "Correção: criação de canal incorreto de _Impfungen\nBugfixWindows: Erro: ENOENT: nenhum arquivo ou diretório, abra 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
-                "nl": "Bugfix: verkeerde kanaalaanmaak van _Impfungen\nBugfixWindows: Error: ENOENT: geen bestand of directory, open 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
-                "fr": "Correctif: mauvaise création de canal de _Impfungen\nBugfixWindows: Erreur: ENOENT: aucun fichier ou répertoire de ce type, ouvrez 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
-                "it": "Bugfix: errata creazione del canale di _Impfungen\nBugfixWindows: Errore: ENOENT: nessun file o directory di questo tipo, apri \"C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx\"",
-                "es": "Corrección de error: creación de canal incorrecta de _Impfungen\nBugfixWindows: Error: ENOENT: no existe tal archivo o directorio, abra 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
-                "pl": "Poprawka: nieprawidłowe tworzenie kanału _Impfungen\nBugfixWindows: Błąd: ENOENT: brak takiego pliku lub katalogu, otwórz 'C: \\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'",
-                "zh-cn": "错误修正：_Impfungen的频道创建错误\nBugfixWindows：错误：ENOENT：没有这样的文件或目录，打开'C：\\ opt \\ iobroker \\ iobroker-data \\ files \\ Impfquotenmonitoring.xlsx'"
-            },
-            "0.6.5": {
-                "en": "* implement Vaccination data for Germany, thank you @winnyschuster for\n[RKI-Impfquotenmonitoring Deutschland](https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
-                "de": "* Impfdaten für Deutschland implementieren, danke @winnyschuster für\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
-                "ru": "* внедрить данные о вакцинации для Германии, спасибо @winnyschuster за\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
-                "pt": "* implementar dados de vacinação para a Alemanha, obrigado @winnyschuster por\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
-                "nl": "* Implementeer vaccinatiegegevens voor Duitsland, bedankt @winnyschuster voor\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
-                "fr": "* mettre en œuvre les données de vaccination pour l'Allemagne, merci @winnyschuster pour\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
-                "it": "* implementare i dati sulle vaccinazioni per la Germania, grazie @winnyschuster per\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
-                "es": "* implementar datos de vacunación para Alemania, gracias @winnyschuster por\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
-                "pl": "* wprowadź dane dotyczące szczepień w Niemczech, dziękuję @winnyschuster za\n[RKI-Impfquotenmonitoring Deutschland] (https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3)",
-                "zh-cn": "*实施德国的疫苗接种数据，谢谢@winnyschuster\n[RKI-Impfquotenmonitoring德国]（https://forum.iobroker.net/topic/40394/skript-rki-impfquotenmonitoring-deutschland-incl-b-länder/3）"
-            },
-            "0.6.4": {
-                "en": "change API from V2 to V3\nAdd Last_Updated for city's/counties",
-                "de": "Ändern Sie die API von V2 in V3\nFügen Sie Last_Updated für Städte / Landkreise hinzu",
-                "ru": "изменить API с V2 на V3\nДобавить Last_Updated для города / округа",
-                "pt": "alterar API de V2 para V3\nAdicionar Last_Updated para cidade / condados",
-                "nl": "verander API van V2 naar V3\nVoeg Last_Updated toe voor steden / provincies",
-                "fr": "changer l'API de V2 à V3\nAjouter Last_Updated pour la ville / les comtés",
-                "it": "cambia API da V2 a V3\nAggiungi Last_Updated per città / contee",
-                "es": "cambiar API de V2 a V3\nAgregar Last_Updated para ciudades / condados",
-                "pl": "zmień API z V2 na V3\nDodaj Last_Updated dla miasta / hrabstw",
-                "zh-cn": "将API从V2更改为V3\n为城市/县添加Last_Updated"
-            },
-            "0.6.3": {
-                "en": "Bugfix : Error warnings to wrong type in states\nBugfix : Error values.features is not iterable solved",
-                "de": "Bugfix: Fehlerwarnungen bei falschem Typ in Zuständen\nBugfix: Fehler values.features ist nicht iterabel gelöst",
-                "ru": "Исправление: предупреждения об ошибках неправильного типа в состояниях\nИсправление: значения ошибок. Функции не повторяются.",
-                "pt": "Correção de bug: avisos de erro para o tipo errado nos estados\nCorreção de bug: Error values.features is not iterable solved",
-                "nl": "Bugfix: Foutwaarschuwingen voor verkeerd type in staten\nBugfix: foutwaarden. Functies is niet itereerbaar opgelost",
-                "fr": "Correction de bogue: avertissements d'erreur de type incorrect dans les états\nCorrection de bug: les valeurs d'erreur. Les fonctionnalités ne sont pas itérables résolues",
-                "it": "Bugfix: avvisi di errore per il tipo sbagliato negli stati\nBugfix: Error values.features non è iterabile risolto",
-                "es": "Corrección de errores: advertencias de error al tipo incorrecto en los estados\nCorrección de error: valores de error. Las características no se resuelven iterablemente",
-                "pl": "Poprawka: ostrzeżenia o błędach dotyczące nieprawidłowego typu w stanach\nPoprawka: Wartości błędów. Cechy nie są rozwiązane iterowalnie",
-                "zh-cn": "错误修正：错误警告错误的状态类型\n错误修正：错误values.features无法迭代解决"
-            },
-            "0.6.2": {
-                "en": "* \nadd \"Cases per 100k\" in total & during the last 7 days for Germany's Bundesländer",
-                "de": "* \nFügen Sie \"Fälle pro 100.000\" insgesamt und in den letzten 7 Tagen für die deutschen Bundesländer hinzu",
-                "ru": "* \nдобавить \"Случаев на 100 тыс.\" всего и за последние 7 дней для Бундеслендер Германии",
-                "pt": "* \nadicione \"Casos por 100k\" no total e durante os últimos 7 dias para Bundesländer da Alemanha",
-                "nl": "* \nvoeg \"Cases per 100k\" toe in totaal & gedurende de afgelopen 7 dagen voor de Duitse Bundesländer",
-                "fr": "* \najoutez \"Cas par 100 000\" au total et au cours des 7 derniers jours pour le Bundesländer allemand",
-                "it": "* \naggiungi \"Casi per 100.000\" in totale e negli ultimi 7 giorni per i Bundesländer tedeschi",
-                "es": "* \nagregue \"Casos por 100k\" en total y durante los últimos 7 días para los Bundesländer de Alemania",
-                "pl": "* \ndodać „Przypadki na 100 000” łącznie iw ciągu ostatnich 7 dni dla niemieckich landów",
-                "zh-cn": "* \n在过去7天里为德国的Bundesländer添加“每10万个案例数”"
-            }
-        },
-        "title": "COVID-19 live information",
-        "titleLang": {
-            "en": "Live information about COVID-19",
-            "de": "Live-Informationen zu COVID-19",
-            "ru": "Актуальная информация о COVID-19",
-            "pt": "Informação ao vivo sobre COVID-19",
-            "nl": "Live informatie over COVID-19",
-            "fr": "Informations en direct sur COVID-19",
-            "it": "Informazioni in diretta su COVID-19",
-            "es": "Información en vivo sobre COVID-19",
-            "pl": "Informacje na żywo o COVID-19",
-            "zh-cn": "有关COVID-19的实时信息"
-        },
-        "desc": {
-            "en": "Adapter to show Global Corona Virus information and current reports",
-            "de": "Adapter zur Anzeige von Informationen zum globalen Corona-Virus und aktuellen Berichten",
-            "ru": "Адаптер для отображения информации о корона вирусе и текущих отчетов",
-            "pt": "Adaptador para mostrar informações sobre o vírus Corona global e relatórios atuais",
-            "nl": "Adapter om Global Corona Virus-informatie en actuele rapporten weer te geven",
-            "fr": "Adaptateur pour afficher les informations sur le virus Corona global et les rapports actuels",
-            "it": "Adattatore per mostrare le informazioni del Global Corona Virus e i rapporti correnti",
-            "es": "Adaptador para mostrar información e informes actuales del Virus Global Corona",
-            "pl": "Adapter do wyświetlania informacji o globalnym wirusie Corona i bieżących raportów",
-            "zh-cn": "显示全球冠状病毒信息和当前报告的适配器"
-        },
-        "authors": [
-            "DutchmanNL <rdrozda86@gmail.com>"
-        ],
-        "contributors": [
-            "GermanBluefox",
-            "AlCalzone",
-            "Scrounger",
-            "Kampfratte",
-            "Jey-Cee",
-            "KLNV",
-            "winnyschuster"
-        ],
-        "keywords": [
-            "virus",
-            "covid",
-            "corona",
-            "pandemie"
-        ],
-        "license": "MIT",
-        "noConfig": false,
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "coronavirus-statistics.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.coronavirus-statistics/main/admin/coronavirus-statistics.png",
-        "readme": "https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/blob/main/README.md",
-        "loglevel": "info",
-        "mode": "schedule",
-        "schedule": "*/15 * * * *",
-        "allowInit": true,
-        "type": "health",
-        "compact": true,
-        "connectionType": "cloud",
-        "dataSource": "poll",
-        "materialize": true,
-        "plugins": {
-            "sentry": {
-                "dsn": "https://f47e656ccf1246e288f594c83cf146f3@sentry.iobroker.net/30"
-            }
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=2.0.0"
-            }
-        ]
+  "common": {
+    "name": "coronavirus-statistics",
+    "version": "0.9.0",
+    "news": {
+      "0.9.0": {
+        "en": "Remove specific data regarding germany as APIs are not available anymore\nData source dedicated for https://coronavirus-19-api.herokuapp.com, we are unable to support more APIs due to changes, complexity and available development capacity. But please feel free to provide PR's!",
+        "de": "Entfernen van Daten über Deutschland die nicht mehr perAPI verfügbar sind\nDatenquelle für https://coronavirus-19-api.herokuapp.com, wir sind nicht in der Lage, mehr APIs durch Änderungen, Komplexität und verfügbare Entwicklungskapazität zu unterstützen. Aber bitte fühlen Sie sich frei, PR zu bieten!",
+        "ru": "Удалить конкретные данные о Германии, поскольку API больше не доступны\nИсточник данных, предназначенный для https://coronavirus-19-api.herokuapp.com, мы не можем поддерживать больше API из-за изменений, сложности и доступной мощности разработки. Но, пожалуйста, не стесняйтесь предоставить PR's!",
+        "pt": "Remover dados específicos sobre a Alemanha como APIs não estão mais disponíveis\nFonte de dados dedicada para https://coronavirus-19-api.herokuapp.com, não podemos suportar mais APIs devido a alterações, complexidade e capacidade de desenvolvimento disponível. Mas, por favor, sinta-se livre para fornecer PR's!",
+        "nl": "Verwijder specifieke gegevens over Duitsland voor API's die niet meer beschikbaar zijn\nData bron gewijd voor HTTP's: 'coronavirus-19-api.Hrokuap.com, we zijn niet in staat meer API's te ondersteunen vanwege veranderingen, complexiteit en beschikbare ontwikkelingscapaciteit. Maar voel je vrij om PR's te geven!",
+        "fr": "Retirer les données spécifiques concernant l'allemand car les API ne sont plus disponibles\nSource de données dédiée à https://coronavirus-19-api.herokuapp.com, nous ne sommes pas en mesure de soutenir plus d'API en raison des changements, de la complexité et de la capacité de développement disponible. Mais s'il vous plaît n'hésitez pas à fournir des PR!",
+        "it": "Rimuovere i dati specifici per quanto riguarda la germania come API non sono più disponibili\nFonte dati dedicata per https://coronavirus-19-api.herokuapp.com, non siamo in grado di supportare più API a causa di modifiche, complessità e capacità di sviluppo disponibili. Ma non esitate a fornire PR!",
+        "es": "Eliminar datos específicos relativos a Alemania como API ya no están disponibles\nFuente de datos dedicada a https://coronavirus-19-api.herokuapp.com, no podemos apoyar más API debido a cambios, complejidad y capacidad de desarrollo disponible. Pero por favor no dude en proporcionar PR's!",
+        "pl": "Przewiduje się, że dane dotyczące germanizacji nie są już dostępne\nŹródło danych poświęconych https:/coronavirus-19-api.herokuapp.com nie jest w stanie wspierać więcej API z powodu zmian, złożoności i możliwości rozwoju. Ale chcę uwolnić by udostępnić!",
+        "uk": "Видаліть конкретні дані щодо німецьких, як API не доступні\nEnglishDeutschPусский简体中文中國傳統EspañolالعربيةFrançaisελληνικάDanskАнглійскаябългарскиCatalàČeskýEestiSuomiGaeilgeहिन्दीHrvatskiMagyarIndonesiaIcelandicItalianoעברי日本の한국의LietuvosLatvijasмакедонскиMalayMaltiNederlandsNorskPolskiPortuguêsRomânescSlovenskýSlovenskiShqiptarCрпскиSvenskaไทยTürkçeYкраїнськийTiếng việtייִדישKiswahili Ми можемо самі зателефонувати одержувачу!",
+        "zh-cn": "不用关于作为非专利制度的特定数据\n数据来源专门用于http://corona病毒-19-api.herokuapp.com,由于变化、复杂性和可利用的发展能力,我们无法支持更多的非传染性倾向。 但请自由提供投资政策审查!"
+      },
+      "0.8.8-0": {
+        "en": "added hospital index for germany and federal states of germany",
+        "de": "Krankenhausindex für Deutschland und Bundesländer hinzugefügt",
+        "ru": "добавлен индекс больниц для Германии и федеральных земель германии",
+        "pt": "adicionado índice de hospitais para a Alemanha e estados federais da Alemanha",
+        "nl": "toegevoegde ziekenhuisindex voor duitsland en deelstaten van duitsland",
+        "fr": "index des hôpitaux ajouté pour l'allemagne et les états fédéraux d'allemagne",
+        "it": "aggiunto indice ospedaliero per la Germania e gli stati federali della Germania",
+        "es": "índice hospitalario agregado para alemania y los estados federales de alemania",
+        "pl": "dodano indeks szpitalny dla Niemiec i krajów związkowych Niemiec",
+        "zh-cn": "添加了德国和德国联邦州的医院索引"
+      },
+      "0.8.7": {
+        "en": "Bugfix: Added missing definitions\nError handling for missing state attribute definitions Optimized",
+        "de": "Bugfix: Fehlende Definitionen hinzugefügt\nFehlerbehandlung bei fehlenden Zustandsattributdefinitionen Optimiert",
+        "ru": "Исправление: добавлены недостающие определения.\nОбработка ошибок при отсутствии определений атрибутов состояния Оптимизировано",
+        "pt": "Correção de bug: definições ausentes adicionadas\nTratamento de erros para definições de atributos de estado ausentes Otimizado",
+        "nl": "Bugfix: ontbrekende definities toegevoegd\nFoutafhandeling voor ontbrekende statusattribuutdefinities Geoptimaliseerd",
+        "fr": "Correction de bug : ajout de définitions manquantes\nGestion des erreurs pour les définitions d'attributs d'état manquantes Optimisé",
+        "it": "Bugfix: Aggiunte definizioni mancanti\nGestione degli errori per le definizioni degli attributi di stato mancanti Ottimizzato",
+        "es": "Corrección de error: se agregaron definiciones faltantes\nManejo de errores para definiciones de atributos de estado faltantes Optimizado",
+        "pl": "Bugfix: Dodano brakujące definicje\nObsługa błędów dla brakujących definicji atrybutów stanu Zoptymalizowana",
+        "zh-cn": "错误修正：添加了缺失的定义\n缺少状态属性定义的错误处理优化"
+      },
+      "0.8.6": {
+        "en": "Design Fix for Admin >=5.1.28 Dark/Blue Theme",
+        "de": "Design Fix für Admin >=5.1.28 Dunkel/Blaues Design",
+        "ru": "Исправление дизайна для администратора> = 5.1.28 Темно-синяя тема",
+        "pt": "Correção de design para Admin> = 5.1.28 Tema escuro / azul",
+        "nl": "Design Fix voor Admin >=5.1.28 Donker/blauw thema",
+        "fr": "Correctif de conception pour l'administrateur > = 5.1.28 Thème sombre/bleu",
+        "it": "Correzione del design per l'amministratore >=5.1.28 Tema scuro/blu",
+        "es": "Corrección de diseño para administrador> = 5.1.28 Tema azul oscuro / oscuro",
+        "pl": "Poprawka projektu dla administratora >= 5.1.28 Ciemny / niebieski motyw",
+        "zh-cn": "Admin >=5.1.28 Dark/Blue 主题的设计修复"
+      },
+      "0.8.5": {
+        "en": "Error handling for bundesländer api implemented",
+        "de": "Fehlerbehandlung für Bundesländer API implementiert",
+        "ru": "Реализована обработка ошибок для bundesländer api",
+        "pt": "Tratamento de erros para a API bundesländer implementada",
+        "nl": "Foutafhandeling voor bundesländer api geïmplementeerd",
+        "fr": "Gestion des erreurs pour l'API bundesländer implémentée",
+        "it": "Gestione degli errori per l'API bundesländer implementata",
+        "es": "Se implementó el manejo de errores para bundesländer api",
+        "pl": "Zaimplementowano obsługę błędów dla bundesländer api",
+        "zh-cn": "实现了 bundesländer api 的错误处理"
+      },
+      "0.8.4": {
+        "en": "Bugfix: New DNS entry for COVID api\nHospital data for Germany added\nfix umlauts in hospital service\nextend api timer to fix 502 errors",
+        "de": "Bugfix: Neuer DNS-Eintrag für COVID-API\nKrankenhausdaten für Deutschland hinzugefügt\nUmlaute im Krankenhausdienst korrigieren\nErweitern Sie den API-Timer, um 502-Fehler zu beheben",
+        "ru": "Исправление: новая запись DNS для COVID api\nДобавлены данные больниц по Германии\nисправить умляуты в больничной службе\nрасширить таймер API, чтобы исправить 502 ошибки",
+        "pt": "Correção de bug: nova entrada DNS para API COVID\nDados hospitalares da Alemanha adicionados\nconsertar tremas em serviço hospitalar\nestenda o cronômetro da API para corrigir erros 502",
+        "nl": "Bugfix: nieuwe DNS-vermelding voor COVID api\nZiekenhuisgegevens voor Duitsland toegevoegd\numlauts in de ziekenhuisdienst oplossen\nverleng api-timer om 502-fouten op te lossen",
+        "fr": "Correction de bug : nouvelle entrée DNS pour l'api COVID\nAjout des données hospitalières pour l'Allemagne\ncorriger les trémas dans le service hospitalier\nétendre le minuteur api pour corriger les erreurs 502",
+        "it": "Bugfix: nuova voce DNS per l'API COVID\nAggiunti dati ospedalieri per la Germania\ncorreggere le dieresi nel servizio ospedaliero\nestendere il timer API per correggere gli errori 502",
+        "es": "Corrección de error: nueva entrada de DNS para COVID api\nSe agregaron datos hospitalarios para Alemania\narreglar diéresis en el servicio hospitalario\nextender el temporizador de api para corregir errores 502",
+        "pl": "Bugfix: Nowy wpis DNS dla COVID api\nDodano dane szpitalne dla Niemiec\nnaprawić umlauty w służbie szpitalnej\nprzedłużyć licznik API, aby naprawić błędy 502",
+        "zh-cn": "错误修复：COVID api 的新 DNS 条目\n添加了德国的医院数据\n修复医院服务中的变音\n扩展 api 计时器以修复 502 错误"
+      },
+      "0.8.3": {
+        "en": "Code refactoring\nBugfix: Unwanted deletion of data points for Germany solved",
+        "de": "Code Refactoring\nBugfix: Ungewolltes Löschen von Datenpunkten für Deutschland behoben",
+        "ru": "Рефакторинг кода\nИсправление: решено нежелательное удаление точек данных для Германии.",
+        "pt": "Refatoração de código\nCorreção de bug: exclusão indesejada de pontos de dados para a Alemanha resolvida",
+        "nl": "Code refactoring\nBugfix: Ongewenste verwijdering van datapunten voor Duitsland opgelost",
+        "fr": "Refactorisation de code\nCorrection de bug : la suppression indésirable de points de données pour l'Allemagne a été résolue",
+        "it": "Refactoring del codice\nBugfix: eliminazione indesiderata di punti dati per la Germania risolta",
+        "es": "Código de refactorización\nCorrección de error: se solucionó la eliminación no deseada de puntos de datos para Alemania",
+        "pl": "Refaktoryzacja kodu\nBugfix: Niepożądane usuwanie punktów danych dla Niemiec rozwiązane",
+        "zh-cn": "代码重构\n错误修正：解决了德国数据点的意外删除问题"
+      }
     },
-    "native": {
-        "deleteUnused": false,
-        "getContinents": false,
-        "getGermanyFederalStates": false,
-        "getGermanyCities": false,
-        "getGermanyCounties": false,
-        "getAllGermanyFederalStates": false,
-        "getAllGermanyCities": false,
-        "getAllGermanyCounties": false,
-        "loadAllCountrys": false,
-        "selectedGermanyFederalStates": [
-            ""
-        ],
-        "selectedGermanyCities": [
-            ""
-        ],
-        "selectedGermanyCounties": [
-            ""
-        ],
-        "countries": [
-            ""
-        ]
+    "title": "COVID-19 live information",
+    "titleLang": {
+      "en": "Live information about COVID-19",
+      "de": "Live-Informationen zu COVID-19",
+      "ru": "Актуальная информация о COVID-19",
+      "pt": "Informação ao vivo sobre COVID-19",
+      "nl": "Live informatie over COVID-19",
+      "fr": "Informations en direct sur COVID-19",
+      "it": "Informazioni in diretta su COVID-19",
+      "es": "Información en vivo sobre COVID-19",
+      "pl": "Informacje na żywo o COVID-19",
+      "zh-cn": "有关COVID-19的实时信息"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "countryTranslator",
-            "type": "state",
-            "common": {
-                "role": "",
-                "name": "Translator for unknown country names",
-                "type": "mixed",
-                "read": true,
-                "write": true,
-                "def": 0
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Adapter to show Global Corona Virus information and current reports",
+      "de": "Adapter zur Anzeige von Informationen zum globalen Corona-Virus und aktuellen Berichten",
+      "ru": "Адаптер для отображения информации о корона вирусе и текущих отчетов",
+      "pt": "Adaptador para mostrar informações sobre o vírus Corona global e relatórios atuais",
+      "nl": "Adapter om Global Corona Virus-informatie en actuele rapporten weer te geven",
+      "fr": "Adaptateur pour afficher les informations sur le virus Corona global et les rapports actuels",
+      "it": "Adattatore per mostrare le informazioni del Global Corona Virus e i rapporti correnti",
+      "es": "Adaptador para mostrar información e informes actuales del Virus Global Corona",
+      "pl": "Adapter do wyświetlania informacji o globalnym wirusie Corona i bieżących raportów",
+      "zh-cn": "显示全球冠状病毒信息和当前报告的适配器"
+    },
+    "authors": [
+      "DutchmanNL <rdrozda86@gmail.com>"
+    ],
+    "contributors": [
+      "GermanBluefox",
+      "AlCalzone",
+      "Scrounger",
+      "Kampfratte",
+      "Jey-Cee",
+      "KLNV",
+      "winnyschuster"
+    ],
+    "keywords": [
+      "virus",
+      "covid",
+      "corona",
+      "pandemie"
+    ],
+    "license": "MIT",
+    "noConfig": false,
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "coronavirus-statistics.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.coronavirus-statistics/main/admin/coronavirus-statistics.png",
+    "readme": "https://github.com/DrozmotiX/ioBroker.coronavirus-statistics/blob/main/README.md",
+    "loglevel": "info",
+    "mode": "schedule",
+    "schedule": "*/15 * * * *",
+    "allowInit": true,
+    "type": "health",
+    "compact": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "materialize": true,
+    "plugins": {
+      "sentry": {
+        "dsn": "https://f47e656ccf1246e288f594c83cf146f3@sentry.iobroker.net/30"
+      }
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
     ]
+  },
+  "native": {
+    "deleteUnused": false,
+    "getContinents": false,
+    "getGermanyFederalStates": false,
+    "getGermanyCities": false,
+    "getGermanyCounties": false,
+    "getAllGermanyFederalStates": false,
+    "getAllGermanyCities": false,
+    "getAllGermanyCounties": false,
+    "loadAllCountrys": false,
+    "selectedGermanyFederalStates": [
+      ""
+    ],
+    "selectedGermanyCities": [
+      ""
+    ],
+    "selectedGermanyCounties": [
+      ""
+    ],
+    "countries": [
+      ""
+    ]
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "countryTranslator",
+      "type": "state",
+      "common": {
+        "role": "",
+        "name": "Translator for unknown country names",
+        "type": "mixed",
+        "read": true,
+        "write": true,
+        "def": 0
+      },
+      "native": {}
+    }
+  ]
 }

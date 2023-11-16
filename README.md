@@ -96,7 +96,7 @@ As first value, the name from the warning message must be taken from the log. Th
 	### __WORK IN PROGRESS__
 	* (DutchmanNL) 
 -->
-### __WORK IN PROGRESS__ - Remove unsupported APIs
+### 0.9.0 (2023-11-16) - Remove unsupported APIs
 * (DutchmanNL) Remove specific data regarding germany as APIs are not available anymore
 * (DutchmanNL) Data source dedicated for https://coronavirus-19-api.herokuapp.com, we are unable to support more APIs due to changes, complexity and available development capacity. But please feel free to provide PR's!
 
