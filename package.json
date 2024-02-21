@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.0.4",
-    "axios": "^0.21.4",
+    "axios": "^0.28.0",
     "country-list-js": "^3.1.7",
     "csvtojson": "^2.0.10"
   },
