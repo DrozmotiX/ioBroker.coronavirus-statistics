@@ -132,7 +132,10 @@
       "corona",
       "pandemie"
     ],
-    "license": "MIT",
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    },
     "noConfig": false,
     "platform": "Javascript/Node.js",
     "main": "main.js",
