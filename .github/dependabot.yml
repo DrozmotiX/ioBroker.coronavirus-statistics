@@ -1,3 +1,4 @@
+# Dependabot will run on day 2 of each month at 01:05 (Europe/Berlin timezone)
 version: 2
 updates:
   - package-ecosystem: "npm"
@@ -5,13 +6,13 @@ updates:
     schedule:
       interval: "daily"
       time: "04:00"
-      timezone: Europe/Berlin
+      timezone: "Europe/Berlin"
       allow:
-      - dependency-type: 'production'
+        - dependency-type: "production"
     assignees:
-    - DutchmanNL
+      - "DutchmanNL"
     target-branch: "dependencyAutoUpdate"
-    # Labels on pull requests for security and version updates
     labels:
       - "npm dependencies"
-    versioning-strategy: increase
+    versioning-strategy: "increase"
+    open-pull-requests-limit: 15
