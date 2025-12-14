@@ -135,7 +135,6 @@
     "license": "MIT",
     "noConfig": false,
     "platform": "Javascript/Node.js",
-    "main": "main.js",
     "icon": "coronavirus-statistics.png",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.coronavirus-statistics/main/admin/coronavirus-statistics.png",
