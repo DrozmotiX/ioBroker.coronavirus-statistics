@@ -7,11 +7,15 @@ updates:
       time: "04:00"
       timezone: Europe/Berlin
       allow:
-      - dependency-type: 'production'
+        - dependency-type: 'production'
     assignees:
-    - DutchmanNL
+      - DutchmanNL
     target-branch: "dependencyAutoUpdate"
     # Labels on pull requests for security and version updates
     labels:
       - "npm dependencies"
     versioning-strategy: increase
+    ignore:
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-major
