@@ -1,17 +1,21 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "daily"
-      time: "04:00"
+      interval: 'daily'
+      time: '04:00'
       timezone: Europe/Berlin
       allow:
-      - dependency-type: 'production'
+        - dependency-type: 'production'
     assignees:
-    - DutchmanNL
-    target-branch: "dependencyAutoUpdate"
+      - DutchmanNL
+    target-branch: 'dependencyAutoUpdate'
     # Labels on pull requests for security and version updates
     labels:
-      - "npm dependencies"
+      - 'npm dependencies'
     versioning-strategy: increase
+    ignore:
+      - dependency-name: '@types/node'
+        update-types:
+          - 'version-update:semver-major'
