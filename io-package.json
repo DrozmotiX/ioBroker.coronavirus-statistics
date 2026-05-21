@@ -133,7 +133,6 @@
       "pandemie"
     ],
     "license": "MIT",
-    "noConfig": false,
     "platform": "Javascript/Node.js",
     "main": "main.js",
     "icon": "coronavirus-statistics.png",
