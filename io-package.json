@@ -16,18 +16,6 @@
         "uk": "Видаліть конкретні дані щодо німецьких, як API не доступні\nEnglishDeutschPусский简体中文中國傳統EspañolالعربيةFrançaisελληνικάDanskАнглійскаябългарскиCatalàČeskýEestiSuomiGaeilgeहिन्दीHrvatskiMagyarIndonesiaIcelandicItalianoעברי日本の한국의LietuvosLatvijasмакедонскиMalayMaltiNederlandsNorskPolskiPortuguêsRomânescSlovenskýSlovenskiShqiptarCрпскиSvenskaไทยTürkçeYкраїнськийTiếng việtייִדישKiswahili Ми можемо самі зателефонувати одержувачу!",
         "zh-cn": "不用关于作为非专利制度的特定数据\n数据来源专门用于http://corona病毒-19-api.herokuapp.com,由于变化、复杂性和可利用的发展能力,我们无法支持更多的非传染性倾向。 但请自由提供投资政策审查!"
       },
-      "0.8.8-0": {
-        "en": "added hospital index for germany and federal states of germany",
-        "de": "Krankenhausindex für Deutschland und Bundesländer hinzugefügt",
-        "ru": "добавлен индекс больниц для Германии и федеральных земель германии",
-        "pt": "adicionado índice de hospitais para a Alemanha e estados federais da Alemanha",
-        "nl": "toegevoegde ziekenhuisindex voor duitsland en deelstaten van duitsland",
-        "fr": "index des hôpitaux ajouté pour l'allemagne et les états fédéraux d'allemagne",
-        "it": "aggiunto indice ospedaliero per la Germania e gli stati federali della Germania",
-        "es": "índice hospitalario agregado para alemania y los estados federales de alemania",
-        "pl": "dodano indeks szpitalny dla Niemiec i krajów związkowych Niemiec",
-        "zh-cn": "添加了德国和德国联邦州的医院索引"
-      },
       "0.8.7": {
         "en": "Bugfix: Added missing definitions\nError handling for missing state attribute definitions Optimized",
         "de": "Bugfix: Fehlende Definitionen hinzugefügt\nFehlerbehandlung bei fehlenden Zustandsattributdefinitionen Optimiert",
@@ -89,7 +77,6 @@
         "zh-cn": "代码重构\n错误修正：解决了德国数据点的意外删除问题"
       }
     },
-    "title": "COVID-19 live information",
     "titleLang": {
       "en": "Live information about COVID-19",
       "de": "Live-Informationen zu COVID-19",
@@ -117,25 +104,13 @@
     "authors": [
       "DutchmanNL <rdrozda86@gmail.com>"
     ],
-    "contributors": [
-      "GermanBluefox",
-      "AlCalzone",
-      "Scrounger",
-      "Kampfratte",
-      "Jey-Cee",
-      "KLNV",
-      "winnyschuster"
-    ],
     "keywords": [
       "virus",
       "covid",
       "corona",
       "pandemie"
     ],
-    "license": "MIT",
-    "noConfig": false,
     "platform": "Javascript/Node.js",
-    "main": "main.js",
     "icon": "coronavirus-statistics.png",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/DrozmotiX/ioBroker.coronavirus-statistics/main/admin/coronavirus-statistics.png",
@@ -156,7 +131,17 @@
     },
     "dependencies": [
       {
-        "js-controller": ">=2.0.0"
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
+    "tier": 3,
+    "globalDependencies": [
+      {
+        "admin": ">=7.6.20"
       }
     ]
   },
@@ -189,7 +174,7 @@
       "_id": "countryTranslator",
       "type": "state",
       "common": {
-        "role": "",
+        "role": "state",
         "name": "Translator for unknown country names",
         "type": "mixed",
         "read": true,
