@@ -1,7 +1,10 @@
+.DS_Store
 .git
 .idea
 *.code-workspace
 .vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 node_modules
 nbproject
 /.dev-server
@@ -15,3 +18,6 @@ Thumbs.db
 admin/i18n/flat.txt
 admin/i18n/*/flat.txt
 /iob_npm.done
+
+# Exclude commitinfo file
+.commitinfo
