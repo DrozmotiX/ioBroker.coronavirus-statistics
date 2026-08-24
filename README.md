@@ -60,6 +60,7 @@ Generic Source : https://coronavirus-19-api.herokuapp.com
 -->
 ### __WORK IN PROGRESS__
 * (DutchmanNL) Maintenance: raise Node.js to 22, modernise CI and release tooling, update dependencies, resolve repository checker findings
+* (DutchmanNL) Update axios to 1.x
 
 ### 0.9.0 (2023-11-16) - Remove unsupported APIs
 * (DutchmanNL) Remove specific data regarding germany as APIs are not available anymore
