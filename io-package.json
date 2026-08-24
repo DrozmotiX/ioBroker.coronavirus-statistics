@@ -26,6 +26,7 @@
         "it": "Bugfix: Aggiunte definizioni mancanti\nGestione degli errori per le definizioni degli attributi di stato mancanti Ottimizzato",
         "es": "Corrección de error: se agregaron definiciones faltantes\nManejo de errores para definiciones de atributos de estado faltantes Optimizado",
         "pl": "Bugfix: Dodano brakujące definicje\nObsługa błędów dla brakujących definicji atrybutów stanu Zoptymalizowana",
+        "uk": "Виправлення: додано відсутні визначення\nОптимізовано обробку помилок для відсутніх визначень атрибутів стану",
         "zh-cn": "错误修正：添加了缺失的定义\n缺少状态属性定义的错误处理优化"
       },
       "0.8.6": {
@@ -38,6 +39,7 @@
         "it": "Correzione del design per l'amministratore >=5.1.28 Tema scuro/blu",
         "es": "Corrección de diseño para administrador> = 5.1.28 Tema azul oscuro / oscuro",
         "pl": "Poprawka projektu dla administratora >= 5.1.28 Ciemny / niebieski motyw",
+        "uk": "Виправлення дизайну для темної/синьої теми Admin >=5.1.28",
         "zh-cn": "Admin >=5.1.28 Dark/Blue 主题的设计修复"
       },
       "0.8.5": {
@@ -50,6 +52,7 @@
         "it": "Gestione degli errori per l'API bundesländer implementata",
         "es": "Se implementó el manejo de errores para bundesländer api",
         "pl": "Zaimplementowano obsługę błędów dla bundesländer api",
+        "uk": "Реалізовано обробку помилок для API федеральних земель",
         "zh-cn": "实现了 bundesländer api 的错误处理"
       },
       "0.8.4": {
@@ -62,6 +65,7 @@
         "it": "Bugfix: nuova voce DNS per l'API COVID\nAggiunti dati ospedalieri per la Germania\ncorreggere le dieresi nel servizio ospedaliero\nestendere il timer API per correggere gli errori 502",
         "es": "Corrección de error: nueva entrada de DNS para COVID api\nSe agregaron datos hospitalarios para Alemania\narreglar diéresis en el servicio hospitalario\nextender el temporizador de api para corregir errores 502",
         "pl": "Bugfix: Nowy wpis DNS dla COVID api\nDodano dane szpitalne dla Niemiec\nnaprawić umlauty w służbie szpitalnej\nprzedłużyć licznik API, aby naprawić błędy 502",
+        "uk": "Виправлення: новий запис DNS для API COVID\nДодано дані лікарень для Німеччини\nвиправлено умлаути в лікарняній службі\nзбільшено таймер API для усунення помилок 502",
         "zh-cn": "错误修复：COVID api 的新 DNS 条目\n添加了德国的医院数据\n修复医院服务中的变音\n扩展 api 计时器以修复 502 错误"
       },
       "0.8.3": {
@@ -74,6 +78,7 @@
         "it": "Refactoring del codice\nBugfix: eliminazione indesiderata di punti dati per la Germania risolta",
         "es": "Código de refactorización\nCorrección de error: se solucionó la eliminación no deseada de puntos de datos para Alemania",
         "pl": "Refaktoryzacja kodu\nBugfix: Niepożądane usuwanie punktów danych dla Niemiec rozwiązane",
+        "uk": "Рефакторинг коду\nВиправлення: усунено небажане видалення точок даних для Німеччини",
         "zh-cn": "代码重构\n错误修正：解决了德国数据点的意外删除问题"
       }
     },
@@ -87,6 +92,7 @@
       "it": "Informazioni in diretta su COVID-19",
       "es": "Información en vivo sobre COVID-19",
       "pl": "Informacje na żywo o COVID-19",
+      "uk": "Актуальна інформація про COVID-19",
       "zh-cn": "有关COVID-19的实时信息"
     },
     "desc": {
@@ -99,6 +105,7 @@
       "it": "Adattatore per mostrare le informazioni del Global Corona Virus e i rapporti correnti",
       "es": "Adaptador para mostrar información e informes actuales del Virus Global Corona",
       "pl": "Adapter do wyświetlania informacji o globalnym wirusie Corona i bieżących raportów",
+      "uk": "Адаптер для відображення інформації про глобальний коронавірус та поточних звітів",
       "zh-cn": "显示全球冠状病毒信息和当前报告的适配器"
     },
     "authors": [
@@ -123,7 +130,9 @@
     "compact": true,
     "connectionType": "cloud",
     "dataSource": "poll",
-    "materialize": true,
+    "adminUI": {
+      "config": "materialize"
+    },
     "plugins": {
       "sentry": {
         "dsn": "https://f47e656ccf1246e288f594c83cf146f3@sentry.iobroker.net/30"
